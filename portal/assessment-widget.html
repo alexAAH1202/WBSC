@@ -513,6 +513,15 @@
   .quiz-save-state.saved{color:#2f7a3d;font-weight:700;}
   .quiz-save-state.local{color:var(--ink-soft);}
   .quiz-save-state.failed{color:var(--red-600);font-weight:700;}
+  .rules-note{border-left:5px solid var(--gold-500);background:var(--paper);padding:14px 20px;margin-bottom:20px;font-size:0.92rem;color:var(--ink-soft);}
+  .rules-note strong{color:var(--navy-950);}
+  .quiz-attempt{margin-top:6px;font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;font-size:0.78rem;color:var(--gold-500);}
+  .quiz-result{margin-top:14px;}
+  .result-pill{display:inline-block;font-family:var(--font-display);font-weight:900;text-transform:uppercase;letter-spacing:0.08em;font-size:0.9rem;padding:6px 16px;}
+  .result-pill.pass{background:#2f7a3d;color:var(--white);}
+  .result-pill.fail{background:var(--red-600);color:var(--white);}
+  .quiz-result p{margin-top:10px;font-size:0.95rem;color:var(--ink-soft);}
+  #quiz-try-again{margin:6px 0 4px;}
   #quiz-retry-save{margin-bottom:6px;}
   .quiz-next{border-top:1px solid var(--line);margin-top:22px;padding-top:22px;}
   .quiz-next .label{font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;font-size:0.78rem;color:var(--ink-soft);margin-bottom:10px;}
@@ -591,6 +600,10 @@
 
   <section class="identity">
     <div class="wrap">
+      <div class="rules-note" id="rules-note">
+        <strong>Pass mark: 85%.</strong> That means all 5 questions correct in a Manual Knowledge Check, and at least 9 of 10 in a Presentation Competency Assessment.
+        <strong>You have a maximum of 2 attempts</strong> at each assessment, and the limit is checked when your result is saved.
+      </div>
       <div class="identity-panel">
         <h2>Your Details</h2>
         <p class="desc">Required once per visit before starting an assessment, so your result can be recorded against you. This information is only used for your completion record — it's sent to the program administrator together with your score.</p>
@@ -619,7 +632,7 @@
   </section>
 
 
-  <section class="quiz-section" id="quiz">
+  <section class="quiz-section" id="quiz" style="display:none;">
     <div class="wrap">
       <div class="quiz-frame">
 
@@ -627,6 +640,7 @@
           <div class="quiz-top">
             <span class="eyebrow" id="quiz-eyebrow">Module 01 &middot; Manual Knowledge Check</span>
             <h2 id="quiz-module-title">Foundations Learning Guide</h2>
+            <p class="quiz-attempt" id="quiz-attempt-label"></p>
           </div>
           <div class="quiz-progress-row">
             <span class="quiz-progress-label" id="quiz-progress-label">Question 1 of 5</span>
@@ -649,9 +663,14 @@
         <div id="quiz-complete" class="quiz-body quiz-complete" style="display:none;">
           <p class="eyebrow" style="color:var(--red-600);">Assessment Complete</p>
           <div class="quiz-score"><span id="quiz-score-frac">5 / 5</span><span class="pct" id="quiz-score-pct">100%</span></div>
+          <div class="quiz-result" id="quiz-result">
+            <span class="result-pill" id="quiz-result-pill"></span>
+            <p id="quiz-result-text"></p>
+          </div>
           <p class="quiz-save-state" id="quiz-save-state" role="status" aria-live="polite">Recording your result&hellip;</p>
           <button class="btn btn-outline-navy" id="quiz-retry-save" type="button" style="display:none;">Try saving again</button>
-          <div class="quiz-next">
+          <button class="btn btn-primary" id="quiz-try-again" type="button" style="display:none;">Try again</button>
+          <div class="quiz-next" id="quiz-next-block">
             <p class="label">Next</p>
             <p class="next-title" id="quiz-next-title">Continue to Presentations &mdash; Foundations to Appendix 4</p>
             <a class="btn btn-primary" id="quiz-continue-btn" href="https://claude.ai/code/artifact/cb3212fb-9ef0-4740-9194-5c92f37bf6c2#pres-01-05">Continue Training</a>
@@ -1591,6 +1610,7 @@ var QUIZ_BANK = {
 
   var DEFAULT_KEY = 'm01-mkc';
   var currentKey = null;
+  var attemptNo = null;   // which attempt this is (1 or 2), when the server could tell us
   var QUESTIONS = [];
   var state = { index: 0, answered: false, score: 0, selected: null };
 
@@ -1613,6 +1633,12 @@ var QUIZ_BANK = {
     scorePct: document.getElementById('quiz-score-pct'),
     saveState: document.getElementById('quiz-save-state'),
     retryBtn: document.getElementById('quiz-retry-save'),
+    tryAgain: document.getElementById('quiz-try-again'),
+    resultPill: document.getElementById('quiz-result-pill'),
+    resultText: document.getElementById('quiz-result-text'),
+    nextBlock: document.getElementById('quiz-next-block'),
+    attemptLabel: document.getElementById('quiz-attempt-label'),
+    quizSection: document.getElementById('quiz'),
     nextTitle: document.getElementById('quiz-next-title'),
     continueBtn: document.getElementById('quiz-continue-btn')
   };
@@ -1709,6 +1735,8 @@ var QUIZ_BANK = {
     var pct = Math.round((state.score / total) * 100);
     els.scoreFrac.textContent = state.score + ' / ' + total;
     els.scorePct.textContent = pct + '%';
+    var passedNow = state.score * 100 >= PASS_MARK * total;
+    showResult(passedNow, attemptNo, false);
     var scoreBox = els.scoreFrac.parentNode;
     scoreBox.setAttribute('tabindex', '-1');
     scoreBox.focus({ preventScroll: true });
@@ -1735,6 +1763,13 @@ var QUIZ_BANK = {
   // attached. Do NOT wait for the iframe's "load" event first: a freshly
   // created iframe with no src never fires it, so submit() is never reached.
   // ---------------------------------------------------------------
+  // Pass mark and attempt limit. The SERVER enforces both (see Code.gs); these
+  // values only drive what is displayed, so keep them equal to Code.gs.
+  var PASS_MARK = 85;
+  var MAX_ATTEMPTS = 2;
+  var CONTACT_EMAIL = 'umpiredirector@wbscoceania.org';
+  var LOOKUP_TIMEOUT_MS = 8000;
+
   var SAVE_TIMEOUT_MS = 25000;
   var pendingSave = null;   // { id, payload, timer, frame, form }
 
@@ -1806,8 +1841,17 @@ var QUIZ_BANK = {
     if (!trustedOrigin(ev.origin)) return;
     cleanupSave();
     if (m.success) {
-      var n = m.attemptNumber ? ' (attempt ' + m.attemptNumber + ')' : '';
+      var max = m.maxAttempts || MAX_ATTEMPTS;
+      var n = m.attemptNumber ? ' (attempt ' + m.attemptNumber + ' of ' + max + ')' : '';
       setSaveState('saved', '✓ Your result has been recorded' + n + '.', false);
+      if (m.result) showResult(m.result === 'PASS', m.attemptNumber, true);   // the server's decision is final
+      pendingSave = null;
+    } else if (m.code === 'max_attempts') {
+      // Nothing was saved. This is final, so no Retry.
+      setSaveState('failed', m.error || ('You have already used the maximum of ' + MAX_ATTEMPTS + ' attempts for this assessment.'), false);
+      els.resultPill.className = 'result-pill fail'; els.resultPill.textContent = 'Not recorded';
+      els.resultText.textContent = 'This attempt was not counted.';
+      els.nextBlock.style.display = 'none';
       pendingSave = null;
     } else {
       setSaveState('failed', 'Your result could not be recorded: ' + (m.error || 'unknown error') + '. Press "Try saving again", and tell your program administrator if it keeps failing.', true);
@@ -1820,6 +1864,22 @@ var QUIZ_BANK = {
     setSaveState('local', 'Recording your result…', false);
     postToWebApp(pendingSave.payload);   // same submissionId: the server de-duplicates
   });
+
+  // Shows PASS / NOT PASSED and what happens next. `confirmed` is true once the
+  // server has recorded the attempt (so the attempt number is known to count).
+  function showResult(passed, attemptNumber, confirmed){
+    els.resultPill.className = 'result-pill ' + (passed ? 'pass' : 'fail');
+    els.resultPill.textContent = passed ? 'Passed' : 'Not passed';
+    var left = attemptNumber ? MAX_ATTEMPTS - attemptNumber : null;
+    var text;
+    if (passed) text = 'You reached the pass mark of ' + PASS_MARK + '%.';
+    else if (!confirmed) text = 'The pass mark is ' + PASS_MARK + '%.';
+    else if (left > 0) text = 'You did not reach the pass mark of ' + PASS_MARK + '%. You have ' + left + ' attempt' + (left === 1 ? '' : 's') + ' left.';
+    else text = 'You did not reach the pass mark of ' + PASS_MARK + '% and have used all ' + MAX_ATTEMPTS + ' attempts. Please contact ' + CONTACT_EMAIL + '.';
+    els.resultText.textContent = text;
+    els.nextBlock.style.display = passed ? '' : 'none';
+    els.tryAgain.style.display = (!passed && confirmed && left > 0) ? '' : 'none';
+  }
 
   function saveResult(score, total, pct){
     var bank = QUIZ_BANK[currentKey];
@@ -1865,10 +1925,82 @@ var QUIZ_BANK = {
   // section, resetting all state and repainting the header, the next-
   // step pointer, and the first question.
   // ---------------------------------------------------------------
-  function loadAssessment(key){
+  // Asks the server how many attempts this person has used on this assessment.
+  // A <script> tag (JSONP) is used so it works from any host. If the lookup
+  // fails the learner may still start; the server checks again when saving.
+  var lookupSeq = 0;
+  function lookupAttempts(key, done){
+    var bank = QUIZ_BANK[key];
+    if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('REPLACE_WITH') === 0) { done(null); return; }
+    var cbName = 'wbscAttempts' + (++lookupSeq) + '_' + Date.now();
+    var script = document.createElement('script');
+    var finished = false;
+    function finish(info){
+      if (finished) return;
+      finished = true;
+      clearTimeout(timer);
+      try { delete window[cbName]; } catch (e) { window[cbName] = undefined; }
+      if (script.parentNode) script.parentNode.removeChild(script);
+      done(info && info.ok ? info : null);
+    }
+    var timer = setTimeout(function(){ finish(null); }, LOOKUP_TIMEOUT_MS);
+    window[cbName] = finish;
+    script.onerror = function(){ finish(null); };
+    script.src = APPS_SCRIPT_URL + '?action=attempts&callback=' + cbName +
+      '&email=' + encodeURIComponent(document.getElementById('inp-email').value.trim()) +
+      '&umpireId=' + encodeURIComponent(document.getElementById('inp-umpid').value.trim()) +
+      '&module=' + encodeURIComponent(bank.module) + '&type=' + encodeURIComponent(bank.kind);
+    document.body.appendChild(script);
+  }
+
+  var starting = false;
+  function showBanner(text){
+    els.validationBanner.textContent = text;
+    els.validationBanner.classList.add('show');
+  }
+
+  // The single way to begin an assessment: used by the Start links, the Try
+  // again button and the browser's back/forward buttons.
+  function startAssessment(key){
+    if (!QUIZ_BANK[key] || starting) return;
+    if (pendingSave) {
+      showBanner('Your last result has not been confirmed as recorded yet. Press "Try saving again" on the results screen first.');
+      return;
+    }
+    if (!validateIdentity()) {
+      showBanner('Enter your full name and email address above before starting an assessment.');
+      document.querySelector('.identity-panel').scrollIntoView({behavior:'smooth', block:'center'});
+      return;
+    }
+    els.validationBanner.classList.remove('show');
+    starting = true;
+    showBanner('Checking your attempts\u2026');
+    lookupAttempts(key, function(info){
+      starting = false;
+      if (info && info.remaining <= 0) {
+        showBanner('You have already used the maximum of ' + (info.max || MAX_ATTEMPTS) + ' attempts for this assessment' +
+          (info.passed ? ' (you have passed it)' : '') + '. Please contact ' + CONTACT_EMAIL + ' if you need help.');
+        return;
+      }
+      els.validationBanner.classList.remove('show');
+      loadAssessment(key, info);
+      try { history.pushState(null, '', '#assessment-' + key); } catch (e) {}
+      scrollToQuiz();
+    });
+  }
+
+  els.tryAgain.addEventListener('click', function(){ startAssessment(currentKey); });
+
+  function loadAssessment(key, info){
     var bank = QUIZ_BANK[key];
     if (!bank) return false;
     currentKey = key;
+    attemptNo = info ? info.attempts + 1 : null;
+    els.attemptLabel.textContent = attemptNo
+      ? 'Attempt ' + attemptNo + ' of ' + MAX_ATTEMPTS + ' \u00b7 Pass mark ' + PASS_MARK + '%'
+      : 'Maximum ' + MAX_ATTEMPTS + ' attempts \u00b7 Pass mark ' + PASS_MARK + '%';
+    els.quizSection.style.display = '';
+    els.tryAgain.style.display = 'none';
     QUESTIONS = bank.questions.map(shuffleOptions);
     state = { index: 0, answered: false, score: 0, selected: null };
 
@@ -1896,21 +2028,9 @@ var QUIZ_BANK = {
     return m ? m[1] : null;
   }
 
-  function handleHashRoute(shouldScroll){
-    var hash = window.location.hash;
-    var key = parseAssessmentKey(hash);
-    if (key && QUIZ_BANK[key]) {
-      loadAssessment(key);
-      if (shouldScroll) scrollToQuiz();
-      return;
-    }
-    // Legacy support: links built before this page supported per-module
-    // routing point here with a plain "#quiz" fragment — treat that as
-    // a request for the Module 01 Manual Knowledge Check, same as before.
-    if (hash === '#quiz') {
-      loadAssessment(DEFAULT_KEY);
-      if (shouldScroll) scrollToQuiz();
-    }
+  function handleHashRoute(){
+    var key = parseAssessmentKey(window.location.hash);
+    if (key && QUIZ_BANK[key]) startAssessment(key);
   }
 
   // Every "Start Knowledge Check" / "Start Assessment" link in the
@@ -1922,26 +2042,8 @@ var QUIZ_BANK = {
   // button works.
   document.querySelectorAll('.assess-start-link').forEach(function(link){
     link.addEventListener('click', function(e){
-      if (pendingSave) {
-        // The last result has not been confirmed yet; starting another assessment would hide its Retry button.
-        e.preventDefault();
-        els.validationBanner.textContent = 'Your last result has not been confirmed as recorded yet. Press "Try saving again" on the results screen first.';
-        els.validationBanner.classList.add('show');
-        return;
-      }
-      els.validationBanner.textContent = 'Enter your full name and email address above before starting a Knowledge Check.';
-      if (!validateIdentity()) {
-        e.preventDefault();
-        els.validationBanner.classList.add('show');
-        document.querySelector('.identity-panel').scrollIntoView({behavior:'smooth', block:'center'});
-        return;
-      }
-      els.validationBanner.classList.remove('show');
-      var key = link.getAttribute('data-assessment');
-      if (key) {
-        loadAssessment(key);
-        scrollToQuiz();
-      }
+      e.preventDefault();
+      startAssessment(link.getAttribute('data-assessment'));
     });
   });
 
@@ -1972,25 +2074,12 @@ var QUIZ_BANK = {
     if (midQuiz || pendingSave) { e.preventDefault(); e.returnValue = ''; }
   });
 
-  window.addEventListener('hashchange', function(){ handleHashRoute(true); });
+  window.addEventListener('hashchange', handleHashRoute);
 
-  // Initial load: if the page was reached with a specific assessment
-  // (or the legacy #quiz) already in the URL — e.g. from the Manuals
-  // or Presentations page — load and scroll to it. Otherwise show the
-  // Module 01 Manual Knowledge Check by default so the section isn't
-  // empty on a fresh visit.
-  (function(){
-    var key = parseAssessmentKey(window.location.hash);
-    if (key && QUIZ_BANK[key]) {
-      loadAssessment(key);
-      scrollToQuiz();
-    } else if (window.location.hash === '#quiz') {
-      loadAssessment(DEFAULT_KEY);
-      scrollToQuiz();
-    } else {
-      loadAssessment(DEFAULT_KEY);
-    }
-  })();
+  // Initial load: nothing is shown until an assessment is started, so no one can
+  // answer questions without their details and attempts being checked. If the
+  // page is opened on #assessment-<key> it starts that one (once details are in).
+  handleHashRoute();
 })();
 </script>
 </body>

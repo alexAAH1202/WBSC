@@ -49,11 +49,18 @@ ok('retry of the same submissionId: no new row, no second email, same attempt', 
   assert.strictEqual(m.success, true); assert.strictEqual(m.duplicate, true); assert.strictEqual(m.attemptNumber, 1);
   assert.strictEqual(env.rows.length, 2); assert.strictEqual(env.mails.length, 1);
 });
-ok('second attempt counts 2 even with different email case/spaces and numeric-looking ID', () => {
+ok('second attempt counts 2 even with different email case/spaces; a third (even via the umpire ID) is refused', () => {
   const m = msgOf(post(env, base({ submissionId: 'sub-bbbb2222', participantEmail: ' JO@X.com ' })));
-  assert.strictEqual(m.attemptNumber, 2);
+  assert.strictEqual(m.attemptNumber, 2); assert.strictEqual(m.success, true);
+  const before = env.rows.length, mails = env.mails.length;
   const m2 = msgOf(post(env, base({ submissionId: 'sub-cccc3333', participantEmail: 'other@x.com' }))); // same umpire ID 007
-  assert.strictEqual(m2.attemptNumber, 3);
+  assert.strictEqual(m2.success, false); assert.strictEqual(m2.code, 'max_attempts');
+  assert.ok(/maximum of 2 attempts/.test(m2.error) && /umpiredirector@wbscoceania\.org/.test(m2.error));
+  assert.strictEqual(env.rows.length, before, 'no row written for the refused attempt'); assert.strictEqual(env.mails.length, mails, 'no email sent');
+});
+ok('retrying the saved second attempt after the limit is reached still confirms it (no duplicate)', () => {
+  const m = msgOf(post(env, base({ submissionId: 'sub-bbbb2222', participantEmail: ' JO@X.com ' })));
+  assert.strictEqual(m.success, true); assert.strictEqual(m.duplicate, true); assert.strictEqual(m.attemptNumber, 2);
 });
 ok('different module restarts at attempt 1', () => {
   assert.strictEqual(msgOf(post(env, base({ submissionId: 'sub-dddd4444', module: 'Module 02' }))).attemptNumber, 1);
@@ -96,5 +103,48 @@ ok('legacy raw-JSON POST still works and returns both ok and success', () => {
 ok('reply page cannot be broken out of by hostile text', () => {
   const e = makeEnv(); const out = post(e, base({ submissionId: 'sub-ffff6666', participantName: '</script><script>alert(1)</script>' }));
   assert.ok(!/<\/script><script>alert/.test(out.html));
+});
+
+// ---- pass mark (85%) and result column
+ok('pass mark 85% is exact: 5/5 and 9/10 and 17/20 pass; 4/5, 8/10 and 16/20 do not; client percentage ignored', () => {
+  const cases = [[5, 5, 'PASS'], [4, 5, 'NOT PASSED'], [9, 10, 'PASS'], [8, 10, 'NOT PASSED'], [17, 20, 'PASS'], [16, 20, 'NOT PASSED'], [0, 5, 'NOT PASSED']];
+  cases.forEach(([sc, tot, want], i) => {
+    const e = makeEnv(); const m = msgOf(post(e, base({ submissionId: 'sub-pass-' + i + '-xxxx', score: sc, totalQuestions: tot, percentage: 100 })));
+    assert.strictEqual(m.result, want, sc + '/' + tot); assert.strictEqual(m.passed, want === 'PASS');
+    assert.strictEqual(e.rows[1][16], want, 'Result column'); assert.ok(e.rows[0][16] === 'Result');
+    assert.ok(new RegExp('Result: ' + want).test(e.mails[0][2]) && /Attempt number: 1 of 2/.test(e.mails[0][2]) && e.mails[0][1].includes(want));
+  });
+});
+ok('each assessment type has its own two attempts', () => {
+  const e = makeEnv();
+  for (const [id, type] of [['a1', 'Manual Knowledge Check'], ['a2', 'Manual Knowledge Check'], ['b1', 'Presentation Competency Assessment'], ['b2', 'Presentation Competency Assessment']]) {
+    assert.strictEqual(msgOf(post(e, base({ submissionId: 'sub-type-' + id + '-xx', assessmentType: type }))).success, true, id);
+  }
+  assert.strictEqual(msgOf(post(e, base({ submissionId: 'sub-type-a3-xx', assessmentType: 'Manual Knowledge Check' }))).code, 'max_attempts');
+  assert.strictEqual(msgOf(post(e, base({ submissionId: 'sub-type-b3-xx', assessmentType: 'Presentation Competency Assessment' }))).code, 'max_attempts');
+});
+ok('attempts lookup (JSONP) reports used / remaining / passed for exactly one person, module and type', () => {
+  const e = makeEnv();
+  const q = (extra) => e.ctx.doGet({ parameter: Object.assign({ action: 'attempts', callback: 'cb1', email: 'JO@x.com', module: 'Module 01 — Foundations', type: 'Manual Knowledge Check' }, extra) });
+  let t = q({}).text; assert.ok(/^cb1\(.*\);$/.test(t)); let j = JSON.parse(t.slice(4, -2));
+  assert.deepStrictEqual([j.ok, j.attempts, j.remaining, j.max, j.passed], [true, 0, 2, 2, false]);
+  post(e, base({ submissionId: 'sub-look-a1-xx', score: 4 }));
+  j = JSON.parse(q({}).text.slice(4, -2)); assert.deepStrictEqual([j.attempts, j.remaining, j.passed], [1, 1, false]);
+  post(e, base({ submissionId: 'sub-look-a2-xx', score: 5 }));
+  j = JSON.parse(q({}).text.slice(4, -2)); assert.deepStrictEqual([j.attempts, j.remaining, j.passed], [2, 0, true]);
+  j = JSON.parse(q({ type: 'Presentation Competency Assessment' }).text.slice(4, -2)); assert.strictEqual(j.attempts, 0, 'other type unaffected');
+  j = JSON.parse(q({ email: 'someone.else@x.com' }).text.slice(4, -2)); assert.strictEqual(j.attempts, 0, 'other person unaffected');
+  assert.ok(!('name' in j) && !('email' in j), 'no personal data returned');
+});
+ok('attempts lookup rejects unsafe callbacks and missing details', () => {
+  const e = makeEnv();
+  const bad = e.ctx.doGet({ parameter: { action: 'attempts', callback: 'alert(1);//', email: 'a@b.co', module: 'M', type: 'T' } });
+  assert.ok(!/alert/.test(bad.text) && bad.text.startsWith('{'), 'falls back to plain JSON');
+  const miss = JSON.parse(e.ctx.doGet({ parameter: { action: 'attempts', callback: 'cb', module: 'M' } }).text.slice(3, -2));
+  assert.strictEqual(miss.ok, false);
+});
+ok('plain GET without the page file still answers (page is hosted on GitHub now)', () => {
+  const e = makeEnv(); e.ctx.HtmlService.createHtmlOutputFromFile = () => { throw new Error('no file'); };
+  assert.ok(/results service/.test(e.ctx.doGet({ parameter: {} }).text));
 });
 console.log(n + ' Code.gs checks passed');
