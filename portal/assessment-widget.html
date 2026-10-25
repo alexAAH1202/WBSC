@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Assessment — WBSC Umpire Mechanics Training (Embedded Widget)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -89,7 +94,7 @@
     white-space:nowrap;
     max-width:100%;
   }
-  @media (max-width:600px){
+  @media (max-width:900px){
     .btn{white-space:normal;text-align:center;justify-content:center;}
   }
   .btn-primary{background:var(--red-600);color:var(--white);border-color:var(--red-600);}
@@ -514,27 +519,36 @@
   }
   .validation-banner.show{display:block;}
 
+  /* ---------- Mobile spacing tightening ---------- */
+  @media (max-width:760px){
+    section{padding:48px 0;}
+    .hero{padding:56px 0 48px;}
+    .intro{padding:48px 0;}
+    .cta-band{padding:40px 0;}
+    .af-panel{min-height:0;padding:40px 26px;}
+    .pillar{padding:22px 20px;}
+    .step{padding:18px 16px;}
+    .seq-col{padding:22px 22px;}
+    .page-hero{padding:48px 0 40px;}
+    .identity{padding:40px 0 8px;}
+    .directory{padding:40px 0 16px;}
+    .quiz-section{padding:44px 0 56px;}
+  }
 </style>
+</head>
+<body>
 
 <a class="skip-link" href="#main">Skip to main content</a>
 
 
 <!--
-  Standalone embeddable widget version of the Assessments page, built for
-  pasting into a Google Sites "Embed code" block, or for serving from a
-  Google Apps Script Web App (doGet) and embedding that URL via Sites'
-  "Embed > By URL" option. It has no header/nav/footer of its own — Google
-  Sites supplies the page chrome (logo, navigation, footer) around it.
+  Assessments page. Originally an embeddable widget for Google Sites; it is
+  now a standalone page (no site header/navigation/footer of its own yet).
 -->
 
 <div class="embed-root" style="background:var(--white,#fff);">
 <main id="main">
 
-  <div class="page-strip">
-    <div class="wrap">
-      <p><strong>Note:</strong> this is a working prototype. All 12 assessments below are functional and grounded in the official WBSC manuals, but results are only saved once a program administrator connects the results spreadsheet (see Code.gs) — until then your score is calculated and shown, but not recorded. See the <a href="https://claude.ai/code/artifact/a170af0f-f856-4cab-9395-f3f7fa20b6ef#top">temporary site notice</a> on the homepage.</p>
-    </div>
-  </div>
 
   <section class="page-hero" id="top">
     <div class="wrap">
@@ -789,7 +803,7 @@
   // its URL here. Until this is set, results are scored and shown to
   // the learner but not saved anywhere.
   // ---------------------------------------------------------------
-  var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwIOKRLYcr51besbCOsw-bjQeLwTZA9MuanSrv-ey3mhLT5ZIBijUMDsp5bPEWtqk3F/exec';
+  var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylyWtZwWLOhXVBj6O6zwlsh8xqVtLaZNtT-xfVuZeqHpqAqqhzGt2qi0u-DO_k80pROw/exec';
 
   // -----------------------------------------------------------------
   // All 12 assessments (6 modules × Manual Knowledge Check +
@@ -1867,3 +1881,5 @@ var QUIZ_BANK = {
   })();
 })();
 </script>
+</body>
+</html>
