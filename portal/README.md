@@ -26,7 +26,7 @@ Only the **save step** was rebuilt; the questions and page layout are as supplie
 ## Deploying
 1. Paste `Code.gs` into the Apps Script project and `assessment-widget.html` into its `assessment-widget` file.
 2. Deploy -> Manage deployments -> pencil -> **New version** -> Deploy. The Web App URL does not change.
-3. Submit one test result from the live Sites page and check: the page says "recorded", a row appears with
+3. Submit one test result from the live page and check: the page says "recorded", a row appears with
    `Email Status` = `sent`, and pressing Retry (or submitting again) adds no duplicate row.
 
 ## Widget behaviour
@@ -40,5 +40,5 @@ Only the **save step** was rebuilt; the questions and page layout are as supplie
 - `node portal/tests/code-gs.test.js`: `Code.gs` against a mock of Sheets, Mail and Lock (12 checks). Runs in CI.
 - `node portal/tests/widget.test.js` (needs `npm i -D playwright`): the widget in a real browser with Google's reply simulated (8 checks).
 
-The widget tests That does **not** prove the real
-Apps Script reply reaches the widget inside the Sites embed; step 3 above is the check that does.
+The browser tests do **not** prove the real Apps Script reply reaches the widget on the live site;
+step 3 under "Deploying" is the check that does.
