@@ -26,6 +26,13 @@ for (const m of modules) for (const t of ['mkc', 'pca']) {
     if (q.options.some(o => /\b(all|none) of the above\b/i.test(o))) errors.push(`${at}: option depends on position, which breaks shuffling`);
   });
 }
+// Required page furniture: the temporary-site disclosure, a privacy page that exists, and no ./ brand link.
+if (!/not the official WBSC\.org website/.test(html)) errors.push('temporary-site notice is missing from assessment-widget.html');
+const privacy = path.join(__dirname, '..', 'privacy.html');
+if (!fs.existsSync(privacy)) errors.push('privacy.html is missing');
+else if (!/not the official WBSC\.org website/.test(fs.readFileSync(privacy, 'utf8'))) errors.push('temporary-site notice is missing from privacy.html');
+if (!/href="privacy\.html"/.test(html)) errors.push('assessment page does not link to privacy.html');
+if (/class="brand" href="\.\/?"/.test(html)) errors.push('brand link points at a directory with no index page');
 const extra = Object.keys(BANK).filter(k => !modules.some(m => k.startsWith(m)));
 if (extra.length) errors.push('unexpected assessments: ' + extra.join(', '));
 const dups = {}; Object.values(BANK).forEach(x => x.questions.forEach(q => { dups[q.q] = (dups[q.q] || 0) + 1; }));
