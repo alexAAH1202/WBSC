@@ -48,17 +48,57 @@ var COLUMNS = [
   'Completion Date/Time',      // 13
   'Program / Manual Version',  // 14
   'Submission ID',             // 15 (new)
-  'Email Status'               // 16 (new)
+  'Email Status',              // 16 (new)
+  'Result'                     // 17 (new): PASS or NOT PASSED, decided here from the score
 ];
-var COL_ATTEMPT = 12, COL_SUBMISSION = 15, COL_EMAIL_STATUS = 16;
+var COL_ATTEMPT = 12, COL_SUBMISSION = 15, COL_EMAIL_STATUS = 16, COL_RESULT = 17;
+
+// Pass mark (percent) and the most attempts allowed for each assessment (per
+// person, module and assessment type). Both are enforced here, on the server.
+var PASS_MARK = 85;
+var MAX_ATTEMPTS = 2;
+// Contact shown to a learner who has used all their attempts.
+var CONTACT_EMAIL = 'umpiredirector@wbscoceania.org';
 
 var MAX_TEXT = 200;
 var MAX_QUESTIONS = 100;
 
 function doGet(e) {
-  return HtmlService.createHtmlOutputFromFile('assessment-widget')
-    .setTitle('Assessment - WBSC Umpire Mechanics Training')
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+  var p = (e && e.parameter) || {};
+  if (p.action === 'attempts') return attemptsReply_(p);
+  try {
+    return HtmlService.createHtmlOutputFromFile('assessment-widget')
+      .setTitle('Assessment - WBSC Umpire Mechanics Training')
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+  } catch (err) {
+    // The page is hosted on GitHub now; this project no longer needs to serve it.
+    return ContentService.createTextOutput('WBSC Umpire Mechanics Training results service.');
+  }
+}
+
+// How many attempts someone has used on one assessment. Returned as JSONP
+// (callback=fn) so the page can read it with a <script> tag from any origin.
+// Only counts for the one person/module/type asked about are returned.
+function attemptsReply_(p) {
+  var out;
+  try {
+    var probe = {
+      email: text_(p.email), umpireId: idText_(p.umpireId),
+      module: text_(p.module), assessmentType: text_(p.type)
+    };
+    if (!probe.module || !probe.assessmentType || (!probe.email && !probe.umpireId)) throw new Error('Missing details');
+    var info = attemptInfo_(getSheet_(), probe);
+    out = { ok: true, attempts: info.count, max: MAX_ATTEMPTS, remaining: Math.max(0, MAX_ATTEMPTS - info.count),
+            passed: info.passed, passMark: PASS_MARK };
+  } catch (err) {
+    out = { ok: false, error: 'Could not check attempts' };
+  }
+  var cb = String(p.callback || '');
+  var json = JSON.stringify(out);
+  if (/^[A-Za-z_$][A-Za-z0-9_$]{0,40}$/.test(cb)) {
+    return ContentService.createTextOutput(cb + '(' + json + ');').setMimeType(ContentService.MimeType.JAVASCRIPT);
+  }
+  return ContentService.createTextOutput(json).setMimeType(ContentService.MimeType.JSON);
 }
 
 function doPost(e) {
@@ -84,18 +124,31 @@ function doPost(e) {
         result.success = true;
         result.duplicate = true;
         result.attemptNumber = sheet.getRange(existing, COL_ATTEMPT).getValue();
+        result.result = String(sheet.getRange(existing, COL_RESULT).getValue() || '');
+        result.passed = result.result === 'PASS';
+        result.maxAttempts = MAX_ATTEMPTS;
+      } else if (attemptInfo_(sheet, clean).count >= MAX_ATTEMPTS) {
+        // Hard limit: nothing is saved or emailed.
+        result.success = false;
+        result.code = 'max_attempts';
+        result.attemptNumber = null;
+        result.maxAttempts = MAX_ATTEMPTS;
+        result.error = 'You have already used the maximum of ' + MAX_ATTEMPTS + ' attempts for this assessment. Please contact ' + CONTACT_EMAIL + '.';
       } else {
-        var attemptNumber = computeAttemptNumber_(sheet, clean);
+        var attemptNumber = attemptInfo_(sheet, clean).count + 1;
         var now = new Date();
         sheet.appendRow([
           now, clean.name, clean.email, clean.umpireId, clean.association,
           clean.module, clean.assessmentType, clean.score, clean.total, clean.percentage,
           clean.completionStatus, attemptNumber, now, clean.programVersion,
-          clean.submissionId, 'pending'
+          clean.submissionId, 'pending', clean.result
         ]);
         var rowIndex = sheet.getLastRow();
         result.success = true;
         result.attemptNumber = attemptNumber;
+        result.result = clean.result;
+        result.passed = clean.passed;
+        result.maxAttempts = MAX_ATTEMPTS;
         emailNeeded = { clean: clean, attemptNumber: attemptNumber, rowIndex: rowIndex };
       }
     } finally {
@@ -140,6 +193,10 @@ function replyPage_(result) {
     submissionId: result.submissionId || '',
     attemptNumber: result.attemptNumber || null,
     duplicate: !!result.duplicate,
+    result: result.result || '',
+    passed: !!result.passed,
+    maxAttempts: result.maxAttempts || MAX_ATTEMPTS,
+    code: result.code || '',
     error: result.error || ''
   };
   var json = JSON.stringify(msg).replace(/</g, '\\u003c');
@@ -191,6 +248,8 @@ function validate_(data) {
   c.score = score;
   c.total = total;
   c.percentage = Math.round(score / total * 100);   // computed here; the client's figure is not trusted
+  c.passed = score * 100 >= PASS_MARK * total;      // exact, so 84.6% can never round up to a pass
+  c.result = c.passed ? 'PASS' : 'NOT PASSED';
   c.completionStatus = text_(data.completionStatus) || 'Complete';
   c.programVersion = text_(data.programVersion) || '2026-2029';
   return c;
@@ -243,27 +302,31 @@ function norm_(v) {
   return String(v == null ? '' : v).replace(/^'/, '').trim().toLowerCase();
 }
 
-// Counts earlier rows for the same person (by email OR umpire ID), module and
+// Looks at earlier rows for the same person (by email OR umpire ID), module and
 // assessment type. Comparisons ignore case and spacing, and treat numbers and
-// text alike. This is the real attempt number; the client's value is ignored.
-function computeAttemptNumber_(sheet, c) {
+// text alike. Returns { count, passed }. The client's attempt number is ignored.
+function attemptInfo_(sheet, c) {
   var last = sheet.getLastRow();
-  if (last < 2) return 1;
+  if (last < 2) return { count: 0, passed: false };
   var rows = sheet.getRange(2, 2, last - 1, 6).getValues(); // B:G = Name, Email, UmpireID, Assoc, Module, Type
+  var results = sheet.getRange(2, COL_RESULT, last - 1, 1).getValues();
   var email = norm_(c.email), id = norm_(c.umpireId), mod = norm_(c.module), type = norm_(c.assessmentType);
-  var count = 0;
+  var count = 0, passed = false;
   for (var i = 0; i < rows.length; i++) {
     var r = rows[i];
     var same = (email && norm_(r[1]) === email) || (id && norm_(r[2]) === id);
-    if (same && norm_(r[4]) === mod && norm_(r[5]) === type) count++;
+    if (same && norm_(r[4]) === mod && norm_(r[5]) === type) {
+      count++;
+      if (String(results[i][0]) === 'PASS') passed = true;
+    }
   }
-  return count + 1;
+  return { count: count, passed: passed };
 }
 
 // ------------------------------------------------------------------ email
 
 function sendAdminNotification_(c, attemptNumber) {
-  var subject = 'WBSC Umpire Training - Assessment Completed: ' + c.name + ' - ' + c.module;
+  var subject = 'WBSC Umpire Training - ' + c.result + ': ' + c.name + ' - ' + c.module;
   var body =
     'A WBSC Umpire Mechanics Training assessment has been completed.\n\n' +
     'Participant: ' + c.name + '\n' +
@@ -273,7 +336,8 @@ function sendAdminNotification_(c, attemptNumber) {
     'Module: ' + c.module + '\n' +
     'Assessment type: ' + c.assessmentType + '\n' +
     'Score: ' + c.score + ' / ' + c.total + ' (' + c.percentage + '%)\n' +
-    'Attempt number: ' + attemptNumber + '\n' +
+    'Result: ' + c.result + ' (pass mark ' + PASS_MARK + '%)\n' +
+    'Attempt number: ' + attemptNumber + ' of ' + MAX_ATTEMPTS + '\n' +
     'Completed: ' + new Date().toString() + '\n\n' +
     'Full results: ' + SPREADSHEET_URL;
   MailApp.sendEmail(DIRECTOR_EMAIL, subject, body);
