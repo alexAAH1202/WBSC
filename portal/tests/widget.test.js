@@ -12,7 +12,7 @@ const BANK = vm.runInNewContext(html.slice(html.indexOf('var QUIZ_BANK'), html.i
 const RIGHT = {};   // question text -> right answer text
 Object.values(BANK).forEach(b => b.questions.forEach(q => { RIGHT[q.q] = q.options[q.correct]; }));
 
-const POST_URL = 'https://script.google.com/macros/s/AKfycbylyWtZwWLOhXVBj6O6zwlsh8xqVtLaZNtT-xfVuZeqHpqAqqhzGt2qi0u-DO_k80pROw/exec';
+const POST_URL = 'https://script.google.com/macros/s/AKfycbxm_gObsmIO7RUn1wcKS22r6Gsp0ccrhdm7kgVfmw9-DIDS4ndstk_DYtQAYL80DP0f/exec';
 const reply = m => `<!doctype html><body><script>(function(){var m=${JSON.stringify(m)};var w=window;try{while(w!==w.top){w=w.parent;try{w.postMessage(m,"*");}catch(e){}}}catch(e){}})();<\/script>`;
 const page_ = body => ({ status: 200, contentType: 'text/html', body });
 let PORT, n = 0;
