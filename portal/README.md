@@ -29,7 +29,16 @@ Only the **save step** was rebuilt; the questions and page layout are as supplie
 3. Submit one test result from the live Sites page and check: the page says "recorded", a row appears with
    `Email Status` = `sent`, and pressing Retry (or submitting again) adds no duplicate row.
 
+## Widget behaviour
+- Answer options are shuffled on every attempt (the answer key is remapped), because the correct answer was B in 53 of 90 questions.
+- Options are announced as a radio group; focus moves to each new question and to the result.
+- A browser warning appears if you leave mid-assessment or before a result is confirmed.
+- Name, email, ID and association are remembered for the visit (this tab only) so a refresh does not mean retyping them.
+
 ## Tests
-`node tests/code-gs.test.js` runs `Code.gs` against a mock of Sheets, Mail and Lock (12 checks).
-The widget was also run in a real browser with Google's reply simulated. That does **not** prove the real
+- `node portal/tests/bank.test.js`: 12 assessments, 5 questions per Knowledge Check and 10 per Competency Assessment, answer keys in range, no duplicate options or questions. Runs in CI.
+- `node portal/tests/code-gs.test.js`: `Code.gs` against a mock of Sheets, Mail and Lock (12 checks). Runs in CI.
+- `node portal/tests/widget.test.js` (needs `npm i -D playwright`): the widget in a real browser with Google's reply simulated (8 checks).
+
+The widget tests That does **not** prove the real
 Apps Script reply reaches the widget inside the Sites embed; step 3 above is the check that does.
