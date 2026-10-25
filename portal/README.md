@@ -3,6 +3,11 @@
 `Code.gs` and `assessment-widget.html` for the Google Apps Script Web App behind the Google Site.
 Only the **save step** was rebuilt; the questions and page layout are as supplied.
 
+## Pages
+- `index.html`: the program home page (hero, temporary-site notice, Four Pillars, Required Learning Sequence, how to complete, Appendix 4 and 5).
+- `assessment-widget.html`: the 12 assessments. Each module has an anchor (`#module-01` to `#module-06`) that the home page links to.
+- `privacy.html`: what the portal records and how long it is kept.
+
 ## How a result is saved
 1. The widget posts a hidden `<form>` (field `payload`, JSON) into a hidden `<iframe>`. Google Sites blocks
    `fetch()`/XHR (`connect-src`) but allows form posts (`form-action`).
