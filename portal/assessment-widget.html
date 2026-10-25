@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Assessments — WBSC Umpire Mechanics Training</title>
-<meta name="description" content="Temporary training site for the WBSC 2026–2029 Softball Umpire Mechanics accreditation and reaccreditation program. Not the official WBSC.org website.">
+<meta name="description" content="Temporary training site for the WBSC 2026–2029 Softball Umpire Mechanics accreditation and reaccreditation program. Not the official WBSC website.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="../images/wbsc-logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,7 +41,7 @@
      explicitly throughout so the page holds correctly on any host ground. */
 
   *,*::before,*::after{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+  html{scroll-behavior:smooth;scroll-padding-top:92px;}
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto;}
     *,*::before,*::after{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important;}
@@ -393,9 +393,10 @@
     position:fixed;left:50%;bottom:28px;transform:translate(-50%,140%);
     background:var(--navy-950);color:var(--white);border:1px solid var(--gold-500);
     padding:14px 22px;font-family:var(--font-display);font-weight:600;font-size:0.88rem;
-    letter-spacing:0.02em;z-index:300;transition:transform 0.25s ease;max-width:90vw;text-align:center;
+    letter-spacing:0.02em;z-index:300;transition:transform 0.25s ease,opacity 0.25s ease,visibility 0.25s;max-width:90vw;text-align:center;
+    opacity:0;visibility:hidden;pointer-events:none;
   }
-  .toast.show{transform:translate(-50%,0);}
+  .toast.show{transform:translate(-50%,0);opacity:1;visibility:visible;}
 
   /* ---------- Assessments page additions ---------- */
   .page-strip{background:var(--paper);border-bottom:1px solid var(--line);padding:14px 0;}
@@ -546,10 +547,11 @@
 
 <header class="site-header">
   <div class="wrap header-row">
-    <a class="brand" href="assessment-widget.html" aria-label="WBSC Umpire Mechanics Training: Assessments">
+    <a class="brand" href="index.html" aria-label="WBSC Umpire Mechanics Training: home">
       <img class="brand-logo" src="../images/wbsc-logo.svg" alt="WBSC logo">
     </a>
     <nav class="primary-nav" id="primary-nav" aria-label="Primary">
+      <a href="index.html">Home</a>
       <a href="assessment-widget.html" aria-current="page">Assessments</a>
       <a href="privacy.html">Privacy</a>
     </nav>
@@ -560,19 +562,20 @@
 </header>
 
 <div class="notice-wrap" role="region" aria-labelledby="temp-notice-title">
-  <div class="wrap">
-    <div class="notice">
-      <div class="notice-bar" aria-hidden="true"></div>
-      <div class="notice-body">
-        <div class="notice-head" id="temp-notice-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16.5v.5"/></svg>
-          Temporary training site
+    <div class="wrap">
+      <div class="notice">
+        <div class="notice-bar" aria-hidden="true"></div>
+        <div class="notice-body">
+          <div class="notice-head" id="temp-notice-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M12 8v5M12 16.2v.1"/></svg>
+            Important
+          </div>
+          <p><strong>This is not the official WBSC website.</strong> This temporary training site has been established to support WBSC Softball Umpires during the implementation of the 2026&ndash;2029 Umpire Mechanics Program, while WBSC transitions the training program to the My.WBSC Officials Training Academy.</p>
+          <p>All official WBSC manuals and publications accessed through this site remain hosted on the official WBSC website.</p>
         </div>
-        <p>This is a <strong>temporary site</strong> for the <strong>WBSC 2026&ndash;2029 Softball Umpire Mechanics</strong> accreditation and reaccreditation program. It is <strong>not the official WBSC.org website</strong> and does not replace it. Official WBSC information, rules and manuals are published at <a href="https://www.wbsc.org" target="_blank" rel="noopener">wbsc.org</a>.</p>
       </div>
     </div>
   </div>
-</div>
 
 <div class="embed-root" style="background:var(--white,#fff);">
 <main id="main">
@@ -668,7 +671,7 @@
       </div>
 
       <!-- MODULE 01 -->
-      <article class="assess-block">
+      <article class="assess-block" id="module-01">
         <div class="assess-head">
           <span class="assess-eyebrow">Module 01</span>
           <h2>Foundations Learning Guide</h2>
@@ -692,7 +695,7 @@
       </article>
 
       <!-- MODULE 02 -->
-      <article class="assess-block">
+      <article class="assess-block" id="module-02">
         <div class="assess-head">
           <span class="assess-eyebrow">Module 02</span>
           <h2>Foundations &mdash; One-Umpire Field Mechanics</h2>
@@ -716,7 +719,7 @@
       </article>
 
       <!-- MODULE 03 -->
-      <article class="assess-block">
+      <article class="assess-block" id="module-03">
         <div class="assess-head">
           <span class="assess-eyebrow">Module 03</span>
           <h2>Foundations &mdash; Two-Umpire Field Mechanics</h2>
@@ -740,7 +743,7 @@
       </article>
 
       <!-- MODULE 04 -->
-      <article class="assess-block">
+      <article class="assess-block" id="module-04">
         <div class="assess-head">
           <span class="assess-eyebrow">Module 04</span>
           <h2>Foundations &mdash; Three-Umpire Field Mechanics</h2>
@@ -770,7 +773,7 @@
       </div>
 
       <!-- MODULE 05 -->
-      <article class="assess-block">
+      <article class="assess-block" id="module-05">
         <div class="assess-head">
           <span class="assess-eyebrow">Module 05</span>
           <h2>Appendix 4: Elite Umpire Mechanics, Positioning Philosophies</h2>
@@ -794,7 +797,7 @@
       </article>
 
       <!-- MODULE 06 -->
-      <article class="assess-block">
+      <article class="assess-block" id="module-06">
         <div class="assess-head">
           <span class="assess-eyebrow">Module 06</span>
           <h2>Appendix 5: Elite Three, Four, Five &amp; Six-Umpire Field Mechanics</h2>
@@ -828,11 +831,12 @@
     <div class="footer-grid">
       <div class="footer-col">
         <img class="footer-logo" src="../images/wbsc-logo.svg" alt="WBSC logo">
-        <p class="footer-about">Assessments for the WBSC 2026&ndash;2029 Softball Umpire Mechanics program. A temporary training site, not the official WBSC.org website.</p>
+        <p class="footer-about">Training and assessments for the WBSC 2026&ndash;2029 Softball Umpire Mechanics program. A temporary training site, not the official WBSC website.</p>
       </div>
       <div class="footer-col">
         <h4>This site</h4>
         <ul>
+          <li><a href="index.html">Home</a></li>
           <li><a href="assessment-widget.html">Assessments</a></li>
           <li><a href="privacy.html">Privacy</a></li>
         </ul>
@@ -846,7 +850,7 @@
     </div>
     <div class="footer-legal">
       <span>WBSC Softball Umpire Mechanics Program 2026&ndash;2029</span>
-      <span>Temporary training site &middot; not official WBSC.org</span>
+      <span>Temporary training site &middot; not the official WBSC website</span>
     </div>
   </div>
 </footer>

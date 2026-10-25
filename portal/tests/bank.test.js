@@ -27,10 +27,22 @@ for (const m of modules) for (const t of ['mkc', 'pca']) {
   });
 }
 // Required page furniture: the temporary-site disclosure, a privacy page that exists, and no ./ brand link.
-if (!/not the official WBSC\.org website/.test(html)) errors.push('temporary-site notice is missing from assessment-widget.html');
-const privacy = path.join(__dirname, '..', 'privacy.html');
-if (!fs.existsSync(privacy)) errors.push('privacy.html is missing');
-else if (!/not the official WBSC\.org website/.test(fs.readFileSync(privacy, 'utf8'))) errors.push('temporary-site notice is missing from privacy.html');
+const NOTICE = /This is not the official WBSC website/;
+for (const f of ['assessment-widget.html', 'index.html', 'privacy.html']) {
+  const fp = path.join(__dirname, '..', f);
+  if (!fs.existsSync(fp)) { errors.push(f + ' is missing'); continue; }
+  const h = fs.readFileSync(fp, 'utf8');
+  if (!NOTICE.test(h)) errors.push('temporary-site notice is missing from ' + f);
+  if (/claude\.ai/.test(h) && f !== 'assessment-widget.html') errors.push(f + ' links to a private claude.ai page');
+  for (const m of h.matchAll(/href="([^"#]+\.html)(#[^"]*)?"/g)) {
+    if (!fs.existsSync(path.join(__dirname, '..', m[1]))) errors.push(`${f}: link to missing page ${m[1]}`);
+  }
+}
+// every module link on the home page must land on a real section of the assessments page
+const home = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+for (const m of home.matchAll(/assessment-widget\.html#(module-\d+)/g)) {
+  if (!html.includes(`id="${m[1]}"`)) errors.push('home page links to missing section ' + m[1]);
+}
 if (!/href="privacy\.html"/.test(html)) errors.push('assessment page does not link to privacy.html');
 if (/class="brand" href="\.\/?"/.test(html)) errors.push('brand link points at a directory with no index page');
 const extra = Object.keys(BANK).filter(k => !modules.some(m => k.startsWith(m)));
