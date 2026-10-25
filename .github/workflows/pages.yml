@@ -26,6 +26,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Stop a broken questions.js or mismatched ?v= values from being published.
+      - name: Validate questions and pages
+        run: node scripts/validate.js
+
       # enablement: true turns Pages on (build type "workflow") if it isn't already.
       - name: Configure Pages
         uses: actions/configure-pages@v5

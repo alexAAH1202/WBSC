@@ -241,3 +241,13 @@
     .quiz-setup-grid { grid-template-columns:1fr; }
     .quiz-setup-record { grid-template-columns:1fr; }
   }
+
+/* Privacy notice on the recorded-quiz form, privacy page, footer links */
+.record-privacy { grid-column:1 / -1; margin:0; color:#C9D3EA; font-size:.78rem; line-height:1.5; }
+.record-privacy a { color:var(--gold); font-weight:700; }
+.prose a { color:var(--navy); font-weight:700; }
+.footer-bottom a { color:inherit; }
+.lesson-link { display:inline-block; text-decoration:none; }
+.prose { max-width:760px; }
+.prose h2 { margin:30px 0 8px; color:var(--navy); font-size:1.15rem; font-weight:900; }
+.prose p, .prose li { color:var(--body); font-size:.95rem; line-height:1.65; }

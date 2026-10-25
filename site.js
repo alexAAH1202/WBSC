@@ -138,6 +138,22 @@
     selectChip(els.categoryOptions, 'category', preset);
   }
 
+  // Fisher-Yates. Each attempt gets a fresh question order and answer order, so the
+  // right answer is not always in the same position. `correct` is remapped to match.
+  function shuffle(list) {
+    const a = list.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function shuffleOptions(q) {
+    const order = shuffle(q.options.map((_, i) => i));
+    return { ...q, options: order.map(i => q.options[i]), correct: order.indexOf(q.correct) };
+  }
+
   function getQuestionSet(category, difficulty) {
     let list = QUESTION_BANK.filter(q => q.active && q.category === category && q.difficulty === difficulty);
     let fellBack = false;
@@ -154,7 +170,7 @@
       els.setupHint.textContent = 'No questions are available yet for this category.';
       return;
     }
-    state.questions = list;
+    state.questions = shuffle(list).map(shuffleOptions);
     state.index = 0;
     state.correctCount = 0;
     state.missed = [];
