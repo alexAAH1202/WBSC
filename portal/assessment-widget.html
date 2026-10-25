@@ -3,7 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Assessment — WBSC Umpire Mechanics Training (Embedded Widget)</title>
+<title>Assessments — WBSC Umpire Mechanics Training</title>
+<meta name="description" content="Temporary training site for the WBSC 2026–2029 Softball Umpire Mechanics accreditation and reaccreditation program. Not the official WBSC.org website.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../images/wbsc-logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;500;700;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
@@ -541,10 +544,35 @@
 <a class="skip-link" href="#main">Skip to main content</a>
 
 
-<!--
-  Assessments page. Originally an embeddable widget for Google Sites; it is
-  now a standalone page (no site header/navigation/footer of its own yet).
--->
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="assessment-widget.html" aria-label="WBSC Umpire Mechanics Training: Assessments">
+      <img class="brand-logo" src="../images/wbsc-logo.svg" alt="WBSC logo">
+    </a>
+    <nav class="primary-nav" id="primary-nav" aria-label="Primary">
+      <a href="assessment-widget.html" aria-current="page">Assessments</a>
+      <a href="privacy.html">Privacy</a>
+    </nav>
+    <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="primary-nav">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="notice-wrap" role="region" aria-labelledby="temp-notice-title">
+  <div class="wrap">
+    <div class="notice">
+      <div class="notice-bar" aria-hidden="true"></div>
+      <div class="notice-body">
+        <div class="notice-head" id="temp-notice-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16.5v.5"/></svg>
+          Temporary training site
+        </div>
+        <p>This is a <strong>temporary site</strong> for the <strong>WBSC 2026&ndash;2029 Softball Umpire Mechanics</strong> accreditation and reaccreditation program. It is <strong>not the official WBSC.org website</strong> and does not replace it. Official WBSC information, rules and manuals are published at <a href="https://www.wbsc.org" target="_blank" rel="noopener">wbsc.org</a>.</p>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="embed-root" style="background:var(--white,#fff);">
 <main id="main">
@@ -794,6 +822,34 @@
 
 </main>
 </div>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <img class="footer-logo" src="../images/wbsc-logo.svg" alt="WBSC logo">
+        <p class="footer-about">Assessments for the WBSC 2026&ndash;2029 Softball Umpire Mechanics program. A temporary training site, not the official WBSC.org website.</p>
+      </div>
+      <div class="footer-col">
+        <h4>This site</h4>
+        <ul>
+          <li><a href="assessment-widget.html">Assessments</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Official WBSC</h4>
+        <ul>
+          <li><a href="https://www.wbsc.org" target="_blank" rel="noopener">wbsc.org</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <span>WBSC Softball Umpire Mechanics Program 2026&ndash;2029</span>
+      <span>Temporary training site &middot; not official WBSC.org</span>
+    </div>
+  </div>
+</footer>
 
 <script>
 (function(){
@@ -1899,6 +1955,12 @@ var QUIZ_BANK = {
         sessionStorage.setItem('wbscIdentity', JSON.stringify(o));
       } catch (e) {}
     });
+  });
+
+  var navToggle = document.getElementById('nav-toggle');
+  navToggle.addEventListener('click', function(){
+    var open = document.getElementById('primary-nav').classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', String(open));
   });
 
   window.addEventListener('beforeunload', function(e){
