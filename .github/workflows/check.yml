@@ -13,8 +13,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Validate questions and pages
-        run: node scripts/validate.js
+        run: node demo/scripts/validate.js
       - name: Portal question bank
-        run: node portal/tests/bank.test.js
+        run: node tests/bank.test.js
       - name: Portal Code.gs
-        run: node portal/tests/code-gs.test.js
+        run: node tests/code-gs.test.js
+      - name: Links and images on every page
+        run: node tests/site.test.js
