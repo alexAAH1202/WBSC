@@ -28,7 +28,10 @@ jobs:
 
       # Stop a broken questions.js or mismatched ?v= values from being published.
       - name: Validate questions and pages
-        run: node scripts/validate.js
+        run: |
+          node demo/scripts/validate.js
+          node tests/bank.test.js
+          node tests/site.test.js
 
       # enablement: true turns Pages on (build type "workflow") if it isn't already.
       - name: Configure Pages

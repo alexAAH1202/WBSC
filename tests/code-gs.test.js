@@ -1,5 +1,5 @@
 const fs = require('fs'), vm = require('vm'), assert = require('assert');
-const code = fs.readFileSync(require('path').join(__dirname, '..', 'Code.gs'), 'utf8');
+const code = fs.readFileSync(require('path').join(__dirname, '..', 'apps-script', 'Code.gs'), 'utf8');
 
 function makeEnv({ failMail = false } = {}) {
   const rows = []; const raw = [];                          // rows[0] is the header row (1-based row = index+1)
