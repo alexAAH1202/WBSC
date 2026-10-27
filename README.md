@@ -7,6 +7,7 @@ Script Web App into a Google Sheet.
 | Path | What it is |
 |---|---|
 | `index.html` | Home page (front page of the site) |
+| `manuals.html` | The six official manuals (PDFs on Google Drive), each with its Knowledge Check |
 | `presentations.html` | The training presentations (MP4 and PowerPoint, opened from the Umpires Commission drive) |
 | `assessment-widget.html` | The 12 assessments |
 | `privacy.html` | What is recorded and how long it is kept |
@@ -17,6 +18,7 @@ Script Web App into a Google Sheet.
 
 ## Pages
 - `index.html`: the program home page (hero, temporary-site notice, Four Pillars, Required Learning Sequence, how to complete, Appendix 4 and 5).
+- `manuals.html`: the six official manuals (Read), each linked to its Manual Knowledge Check and its presentation. The PDFs are on Google Drive and are not hosted here.
 - `presentations.html`: the four training presentations (modules 01-05 share one; module 06 has three parts). Each links to the matching Presentation Competency Assessment, and each Knowledge Check's Continue button lands on the right presentation. The videos and PowerPoints are on Google Drive and are not hosted here.
 - `assessment-widget.html`: the 12 assessments. Each module has an anchor (`#module-01` to `#module-06`) that the home page links to.
 - `privacy.html`: what the portal records and how long it is kept.

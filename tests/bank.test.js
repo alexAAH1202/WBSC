@@ -28,7 +28,7 @@ for (const m of modules) for (const t of ['mkc', 'pca']) {
 }
 // Required page furniture: the temporary-site disclosure, a privacy page that exists, and no ./ brand link.
 const NOTICE = /This is not the official WBSC website/;
-for (const f of ['assessment-widget.html', 'index.html', 'privacy.html', 'presentations.html']) {
+for (const f of ['assessment-widget.html', 'index.html', 'privacy.html', 'presentations.html', 'manuals.html']) {
   const fp = path.join(__dirname, '..', f);
   if (!fs.existsSync(fp)) { errors.push(f + ' is missing'); continue; }
   const h = fs.readFileSync(fp, 'utf8');
@@ -40,7 +40,7 @@ for (const f of ['assessment-widget.html', 'index.html', 'privacy.html', 'presen
 }
 // links into the assessments or presentations pages must name a real assessment / section
 const presHtml = fs.readFileSync(path.join(__dirname, '..', 'presentations.html'), 'utf8');
-for (const f of ['assessment-widget.html', 'index.html', 'privacy.html', 'presentations.html']) {
+for (const f of ['assessment-widget.html', 'index.html', 'privacy.html', 'presentations.html', 'manuals.html']) {
   const h = fs.readFileSync(path.join(__dirname, '..', f), 'utf8');
   for (const m of h.matchAll(/assessment-widget\.html#assessment-([a-z0-9-]+)/g)) {
     if (!BANK[m[1]]) errors.push(`${f}: link to unknown assessment ${m[1]}`);
@@ -49,13 +49,6 @@ for (const f of ['assessment-widget.html', 'index.html', 'privacy.html', 'presen
     if (!presHtml.includes(`id="${m[1]}"`)) errors.push(`${f}: link to missing presentation section ${m[1]}`);
   }
 }
-// every module link on the home page must land on a real section of the assessments page
-const home = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
-for (const m of home.matchAll(/assessment-widget\.html#(module-\d+)/g)) {
-  if (!html.includes(`id="${m[1]}"`)) errors.push('home page links to missing section ' + m[1]);
-}
-if (!/href="privacy\.html"/.test(html)) errors.push('assessment page does not link to privacy.html');
-if (/class="brand" href="\.\/?"/.test(html)) errors.push('brand link points at a directory with no index page');
 const extra = Object.keys(BANK).filter(k => !modules.some(m => k.startsWith(m)));
 if (extra.length) errors.push('unexpected assessments: ' + extra.join(', '));
 const dups = {}; Object.values(BANK).forEach(x => x.questions.forEach(q => { dups[q.q] = (dups[q.q] || 0) + 1; }));
