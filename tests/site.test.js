@@ -23,6 +23,12 @@ for (const page of pages) {
     else if (fs.existsSync(target) && fs.statSync(target).isDirectory()) target = path.join(target, 'index.html');
     checked++;
     if (!fs.existsSync(target)) errors.push(`${path.relative(root, page)}: "${m[1]}" does not exist`);
+    // a link to a section of another page must name an id that exists there
+    // (#assessment-<key> is a routed hash handled by the assessments page and is checked in bank.test.js)
+    const frag = m[1].split('#')[1];
+    if (frag && fs.existsSync(target) && target.endsWith('.html') && !frag.startsWith('assessment-') && path.resolve(target) !== path.resolve(page)) {
+      if (!fs.readFileSync(target, 'utf8').includes(`id="${frag}"`)) errors.push(`${path.relative(root, page)}: "${m[1]}" points to a missing section`);
+    }
     if (!target.startsWith(root)) errors.push(`${path.relative(root, page)}: "${m[1]}" points outside the site`);
   }
 }
