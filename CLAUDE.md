@@ -23,3 +23,4 @@ mark and attempt rules, and how to deploy. The earlier generic quiz lives in [`d
   fail if it is removed.
 - Before pushing, run: `node tests/bank.test.js && node tests/site.test.js && node tests/code-gs.test.js`.
 - **Secrets stay in Script properties** (`RESULTS_PASSWORD`, `ALERT_EMAIL`). `results.html` must stay `noindex` and unlinked from the menu.
+- **Questions live in `questions.js`**, not in the page. Only the `Presentation Competency Assessment` is recorded; `Manual Knowledge Check` is unmarked practice and the server refuses to save it.

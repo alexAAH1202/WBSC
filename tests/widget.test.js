@@ -9,7 +9,7 @@ const server = http.createServer((req, res) => {
   fs.readFile(f, (e, d) => e ? (res.writeHead(404), res.end()) : (res.writeHead(200, { 'Content-Type': type }), res.end(d)));
 });
 const html = fs.readFileSync(path.join(root, 'assessment-widget.html'), 'utf8');
-const BANK = vm.runInNewContext(html.slice(html.indexOf('var QUIZ_BANK'), html.indexOf('// Answer options are shuffled')) + '\n;QUIZ_BANK', {});
+const BANK = vm.runInNewContext(fs.readFileSync(path.join(root, 'questions.js'), 'utf8') + '\n;QUIZ_BANK', {});
 const RIGHT = {};   // question text -> right answer text
 Object.values(BANK).forEach(b => b.questions.forEach(q => { RIGHT[q.q] = q.options[q.correct]; }));
 
@@ -39,7 +39,7 @@ async function newPage(b, opts, saveHandler) {
     const params = new URLSearchParams(r.request().postData() || '');
     const action = params.get('action');
     if (action) {                                   // login calls
-      const id = params.get('id'); calls.push({ action, email: params.get('email'), code: params.get('code') });
+      const id = params.get('id'); calls.push({ action, email: params.get('email'), code: params.get('code'), website: params.get('website') });
       if (action === 'sendCode') {
         return r.fulfill(page_(reply(opts.sendCode === 'rate'
           ? { wbscAuth: true, id, action, success: false, code: 'rate', error: 'Too many codes have been requested for this address. Please wait a while and try again.' }
@@ -67,7 +67,7 @@ async function verifyEmail(pg, code = '123456') {
   await pg.waitForFunction(() => /Email verified|not right/.test(document.getElementById('verify-state').textContent));
 }
 // answers every question; `wrong` = how many to get wrong (from the start)
-async function runQuiz(pg, key = 'm01-mkc', wrong = 0) {
+async function runQuiz(pg, key = 'm01-pca', wrong = 0) {
   await pg.click(`[data-assessment="${key}"]`); await pg.waitForSelector('#quiz-question', { state: 'visible' });
   const count = BANK[key].questions.length;
   for (let i = 0; i < count; i++) {
@@ -87,7 +87,7 @@ const verifyText = pg => pg.textContent('#verify-state');
   // ====================================================================  email verification
   t = await newPage(b, { unverified: true });
   assert.ok(!(await t.pg.isVisible('#quiz')), 'quiz hidden on arrival');
-  await t.pg.click('[data-assessment="m01-mkc"]');
+  await t.pg.click('[data-assessment="m01-pca"]');
   assert.ok(/Confirm your email address first/.test(await t.pg.textContent('#validation-banner')));
   assert.ok(!(await t.pg.isVisible('#quiz'))); assert.strictEqual(t.lookups.length, 0, 'no lookup before verification');
   ok('Start is blocked until the email is verified (no lookup, quiz hidden)');
@@ -112,7 +112,7 @@ const verifyText = pg => pg.textContent('#verify-state');
   // changing the address un-verifies; a verified session survives a reload
   await t.pg.fill('#inp-email', 'other@x.com');
   assert.ok(!/Email verified/.test(await verifyText(t.pg)), 'verification dropped'); assert.ok(await t.pg.isVisible('#verify-send-btn'));
-  await t.pg.click('[data-assessment="m01-mkc"]'); assert.ok(/Confirm your email address first/.test(await t.pg.textContent('#validation-banner')));
+  await t.pg.click('[data-assessment="m01-pca"]'); assert.ok(/Confirm your email address first/.test(await t.pg.textContent('#validation-banner')));
   await t.pg.fill('#inp-email', 'jo@x.com');   // same person again, but the session was dropped
   assert.ok(!/Email verified/.test(await verifyText(t.pg)));
   ok('changing the email address cancels the verification');
@@ -120,7 +120,7 @@ const verifyText = pg => pg.textContent('#verify-state');
   t = await newPage(b, {});
   await t.pg.evaluate(() => history.replaceState(null, '', location.pathname)); await t.pg.reload();
   assert.ok(/Email verified: jo@x\.com/.test(await verifyText(t.pg)), 'still verified after a reload');
-  await t.pg.click('[data-assessment="m01-mkc"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
+  await t.pg.click('[data-assessment="m01-pca"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
   ok('the verified session survives a reload (this tab only)');
 
   // the lookup and the save carry the session, never rely on the typed address
@@ -134,23 +134,23 @@ const verifyText = pg => pg.textContent('#verify-state');
 
   // ====================================================================  attempts, pass mark
   t = await newPage(b, { attempts: { attempts: 1, remaining: 1, passed: false } });
-  await t.pg.click('[data-assessment="m01-mkc"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
-  assert.strictEqual((await t.pg.textContent('#quiz-attempt-label')).trim(), 'Attempt 2 of 2 · Pass mark 85%');
-  assert.ok(/Module 01/.test(t.lookups[0].module)); assert.strictEqual(t.lookups[0].type, 'Manual Knowledge Check');
+  await t.pg.click('[data-assessment="m01-pca"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
+  assert.strictEqual((await t.pg.textContent('#quiz-attempt-label')).trim(), 'Attempt 2 of 2 (last attempt) · Pass mark 85% (9 of 10 correct to pass)');
+  assert.ok(/Module 01/.test(t.lookups[0].module)); assert.strictEqual(t.lookups[0].type, 'Presentation Competency Assessment');
   ok('attempt label comes from the server count; the lookup names the module and type');
 
   t = await newPage(b, { attempts: { attempts: 2, remaining: 0, passed: false } });
-  await t.pg.click('[data-assessment="m01-mkc"]'); await t.pg.waitForFunction(() => /maximum of 2 attempts/.test(document.getElementById('validation-banner').textContent));
+  await t.pg.click('[data-assessment="m01-pca"]'); await t.pg.waitForFunction(() => /maximum of 2 attempts/.test(document.getElementById('validation-banner').textContent));
   assert.ok(!(await t.pg.isVisible('#quiz')) && /umpiredirector@wbscoceania\.org/.test(await t.pg.textContent('#validation-banner')));
   ok('with 2 attempts used, starting is blocked and shows the contact address');
 
   t = await newPage(b, { lookup: 'fail' });
-  await t.pg.click('[data-assessment="m01-mkc"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
+  await t.pg.click('[data-assessment="m01-pca"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
   assert.ok(/Maximum 2 attempts/.test(await t.pg.textContent('#quiz-attempt-label')));
   ok('if the attempts lookup fails the quiz still starts (the server checks again when saving)');
 
   t = await newPage(b, { lookupAuth: 'expired' });
-  await t.pg.click('[data-assessment="m01-mkc"]'); await t.pg.waitForFunction(() => /verification has expired/.test(document.getElementById('validation-banner').textContent));
+  await t.pg.click('[data-assessment="m01-pca"]'); await t.pg.waitForFunction(() => /verification has expired/.test(document.getElementById('validation-banner').textContent));
   assert.ok(!(await t.pg.isVisible('#quiz'))); assert.ok(!/Email verified/.test(await verifyText(t.pg)), 'asks to verify again');
   ok('an expired session is caught when starting: the learner is asked to verify again');
 
@@ -160,22 +160,22 @@ const verifyText = pg => pg.textContent('#verify-state');
   assert.ok(await t.pg.isVisible('#quiz-next-block')); assert.ok(!(await t.pg.isVisible('#quiz-try-again')));
   assert.strictEqual(t.posts.length, 1); assert.ok(/x-www-form-urlencoded/.test(t.posts[0].ct)); assert.strictEqual(t.fetches.length, 0);
   assert.strictEqual(t.posts[0].payload.percentage, 100);
-  ok('5/5 = Passed, recorded only after the reply; form POST, no fetch');
+  ok('10/10 = Passed, recorded only after the reply; form POST, no fetch');
 
   const state = { attempts: { attempts: 0, remaining: 2, passed: false } };
   t = await newPage(b, state);
-  await runQuiz(t.pg, 'm01-mkc', 1); await t.pg.waitForFunction(() => /recorded/.test(document.getElementById('quiz-save-state').textContent));
+  await runQuiz(t.pg, 'm01-pca', 2); await t.pg.waitForFunction(() => /recorded/.test(document.getElementById('quiz-save-state').textContent));
   assert.strictEqual(t.posts[0].payload.percentage, 80);
   assert.strictEqual((await t.pg.textContent('#quiz-result-pill')).trim(), 'Not passed');
   assert.ok(/1 attempt left/.test(await t.pg.textContent('#quiz-result-text')));
   assert.ok(await t.pg.isVisible('#quiz-try-again')); assert.ok(!(await t.pg.isVisible('#quiz-next-block')));
   state.attempts = { attempts: 1, remaining: 1, passed: false };
   await t.pg.click('#quiz-try-again'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
-  assert.strictEqual((await t.pg.textContent('#quiz-attempt-label')).trim(), 'Attempt 2 of 2 · Pass mark 85%');
-  ok('4/5 = 80% is Not passed; "1 attempt left"; Try again begins attempt 2 of 2');
+  assert.strictEqual((await t.pg.textContent('#quiz-attempt-label')).trim(), 'Attempt 2 of 2 (last attempt) · Pass mark 85% (9 of 10 correct to pass)');
+  ok('8/10 = 80% is Not passed; "1 attempt left"; Try again begins attempt 2 of 2');
 
   t = await newPage(b, { attempts: { attempts: 1, remaining: 1, passed: false } }, (r, p) => r.fulfill(page_(reply({ wbscSave: true, success: true, submissionId: p.submissionId, attemptNumber: 2, maxAttempts: 2, result: 'NOT PASSED' }))));
-  await runQuiz(t.pg, 'm01-mkc', 2); await t.pg.waitForFunction(() => /recorded/.test(document.getElementById('quiz-save-state').textContent));
+  await runQuiz(t.pg, 'm01-pca', 2); await t.pg.waitForFunction(() => /recorded/.test(document.getElementById('quiz-save-state').textContent));
   assert.ok(/used all 2 attempts/.test(await t.pg.textContent('#quiz-result-text')) && /umpiredirector@wbscoceania\.org/.test(await t.pg.textContent('#quiz-result-text')));
   assert.ok(!(await t.pg.isVisible('#quiz-try-again')));
   ok('failing attempt 2 of 2 shows no Try again and the contact address');
@@ -229,8 +229,78 @@ const verifyText = pg => pg.textContent('#verify-state');
   assert.ok(/Email verified: jo@x\.com/.test(await verifyText(t.pg)), 'a spoofed login reply is ignored too');
   await t.pg.clock.runFor(26000); txt = await saveText(t.pg);
   assert.ok(/could not confirm/.test(txt) && await t.pg.isVisible('#quiz-retry-save'), txt);
-  await t.pg.click('[data-assessment="m02-mkc"]'); assert.ok(/not been confirmed/.test(await t.pg.textContent('#validation-banner')));
+  await t.pg.click('[data-assessment="m02-pca"]'); assert.ok(/not been confirmed/.test(await t.pg.textContent('#validation-banner')));
   ok('messages from a non-Google origin cannot fake a result or a login; no reply in 25 s -> "could not confirm"; starting another is blocked meanwhile');
+
+  // ====================================================================  practice (Manual Knowledge Check) and marked feedback
+  t = await newPage(b, { unverified: true });
+  await t.pg.fill('#inp-name', ''); await t.pg.fill('#inp-email', '');
+  await t.pg.click('[data-assessment="m01-mkc"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
+  assert.ok(/Practice/.test(await t.pg.textContent('#quiz-attempt-label'))); assert.strictEqual(t.lookups.length, 0); assert.strictEqual(t.calls.length, 0);
+  {
+    const q = await t.pg.textContent('#quiz-question'); const opts = await t.pg.$$eval('.quiz-option .opt-text', a => a.map(x => x.textContent));
+    const right = opts.indexOf(RIGHT[q]), wrongI = (right + 1) % opts.length;
+    await t.pg.click(`.quiz-option >> nth=${wrongI}`); await t.pg.click('#quiz-submit-btn');
+    assert.ok(await t.pg.locator(`.quiz-option >> nth=${right}`).evaluate(e => e.classList.contains('correct')), 'practice shows the right answer');
+    assert.ok(/The correct answer is/.test(await t.pg.textContent('#quiz-feedback-body')));
+  }
+  await t.pg.click('#quiz-submit-btn');
+  for (let i = 1; i < BANK['m01-mkc'].questions.length; i++) {
+    const q = await t.pg.textContent('#quiz-question'); const opts = await t.pg.$$eval('.quiz-option .opt-text', a => a.map(x => x.textContent));
+    await t.pg.click(`.quiz-option >> nth=${opts.indexOf(RIGHT[q])}`); await t.pg.click('#quiz-submit-btn'); await t.pg.click('#quiz-submit-btn');
+  }
+  assert.ok(/Practice only/.test(await t.pg.textContent('#quiz-result-text')));
+  assert.ok(await t.pg.isVisible('#quiz-practice-note') && await t.pg.isVisible('#quiz-next-block') && await t.pg.isVisible('#quiz-try-again'));
+  assert.ok(!(await t.pg.isVisible('#quiz-save-state'))); await t.pg.waitForTimeout(300);
+  assert.strictEqual(t.posts.length, 0, 'nothing sent to the server'); assert.strictEqual(t.lookups.length, 0);
+  await t.pg.click('#quiz-try-again'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
+  ok('Knowledge Check is practice: no details, no code, no lookup, no save; answers shown; Continue and Try again available');
+
+  t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false } });
+  await t.pg.click('[data-assessment="m01-pca"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
+  {
+    const q = await t.pg.textContent('#quiz-question'); const opts = await t.pg.$$eval('.quiz-option .opt-text', a => a.map(x => x.textContent));
+    const right = opts.indexOf(RIGHT[q]), wrongI = (right + 1) % opts.length;
+    await t.pg.click(`.quiz-option >> nth=${wrongI}`); await t.pg.click('#quiz-submit-btn');
+    assert.strictEqual(await t.pg.locator('.quiz-option.correct').count(), 0, 'the right answer is not highlighted');
+    const fb = await t.pg.textContent('#quiz-feedback'); assert.ok(!fb.includes(RIGHT[q]), 'the answer text is not shown'); assert.ok(/Revisit this section of the manual/.test(fb));
+    assert.ok(BANK['m01-pca'].questions.find(x => x.q === q).ref.length > 5 && fb.includes(BANK['m01-pca'].questions.find(x => x.q === q).ref), 'the manual section is shown');
+    await t.pg.click('#quiz-submit-btn');
+    const q2 = await t.pg.textContent('#quiz-question'), o2 = await t.pg.$$eval('.quiz-option .opt-text', a => a.map(x => x.textContent));
+    await t.pg.click(`.quiz-option >> nth=${o2.indexOf(RIGHT[q2])}`); await t.pg.click('#quiz-submit-btn');
+    assert.ok(/Correct/.test(await t.pg.textContent('#quiz-feedback-head')) && await t.pg.locator('.quiz-option.correct').count() === 1);
+  }
+  ok('marked assessment: a wrong answer shows the manual section, not the answer; a right one is confirmed');
+
+  t = await newPage(b, { attempts: { attempts: 1, remaining: 1, passed: false } }, (r, p) => r.fulfill(page_(reply({ wbscSave: true, success: true, submissionId: p.submissionId, attemptNumber: 2, maxAttempts: 2, result: 'NOT PASSED' }))));
+  await runQuiz(t.pg, 'm01-pca', 2); await t.pg.waitForFunction(() => /recorded/.test(document.getElementById('quiz-save-state').textContent));
+  assert.ok(await t.pg.isVisible('#quiz-review')); assert.strictEqual(await t.pg.locator('#quiz-review li').count(), 2);
+  const missed = await t.pg.locator('#quiz-review li').first().textContent(); assert.ok(/Correct answer:/.test(missed));
+  ok('after the last attempt is used without a pass, the missed questions are reviewed with their answers');
+
+  t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false } }, (r, p) => r.fulfill(page_(reply({ wbscSave: true, success: true, submissionId: p.submissionId, attemptNumber: 1, maxAttempts: 2, result: 'NOT PASSED' }))));
+  await runQuiz(t.pg, 'm01-pca', 2); await t.pg.waitForFunction(() => /recorded/.test(document.getElementById('quiz-save-state').textContent));
+  assert.ok(!(await t.pg.isVisible('#quiz-review')), 'no answers while an attempt is left');
+  ok('with an attempt still left, no answers are revealed');
+
+  t = await newPage(b, {});
+  await runQuiz(t.pg); await t.pg.waitForFunction(() => /recorded/.test(document.getElementById('quiz-save-state').textContent));
+  assert.strictEqual(typeof t.posts[0].payload.elapsedSeconds, 'number'); assert.strictEqual(t.posts[0].payload.website, '');
+  assert.strictEqual(t.posts[0].payload.assessmentType, 'Presentation Competency Assessment');
+  ok('bot check: the save carries the time taken and an empty honeypot');
+
+  t = await newPage(b, { unverified: true });
+  await t.pg.evaluate(() => { document.getElementById('inp-website').value = 'http://x'; });
+  await t.pg.click('#verify-send-btn'); await t.pg.waitForSelector('#verify-code-row', { state: 'visible' });
+  assert.strictEqual(t.calls[0].website, 'http://x'); assert.ok((await t.pg.locator('#inp-website').boundingBox()).x < -1000, 'honeypot is off screen');
+  ok('bot check: the honeypot value is sent with the code request and the field is invisible');
+
+  // the pass requirement follows the number of questions
+  t = await newPage(b, {});
+  await t.pg.evaluate(() => { var q = QUIZ_BANK['m01-pca']; for (var i = 0; i < 10; i++) q.questions.push(q.questions[i]); return null; });
+  await t.pg.click('[data-assessment="m01-pca"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
+  assert.ok(/\(17 of 20 correct to pass\)/.test(await t.pg.textContent('#quiz-attempt-label')), await t.pg.textContent('#quiz-attempt-label'));
+  ok('with 20 questions the page says 17 of 20 are needed');
 
   // ====================================================================  options, accessibility, details, leave warning
   {

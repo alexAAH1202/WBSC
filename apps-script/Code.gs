@@ -97,6 +97,7 @@ var COL_ATTEMPT = 12, COL_SUBMISSION = 15, COL_EMAIL_STATUS = 16, COL_RESULT = 1
 
 var MAX_TEXT = 200;
 var MAX_QUESTIONS = 100;
+var MIN_SECONDS_PER_QUESTION = 2;   // bot check: a result sent faster than this per question is refused
 
 // ------------------------------------------------------------------ entry points
 
@@ -205,6 +206,10 @@ function attemptsReply_(p) {
 function handleSendCode_(p) {
   var msg = { wbscAuth: true, id: String(p.id || '').slice(0, 64), action: 'sendCode', success: false };
   try {
+    if (String(p.website || '') !== '') {   // honeypot: people never see or fill this field, so pretend it worked
+      msg.success = true; msg.expiresIn = CODE_TTL_S;
+      return messagePage_(msg);
+    }
     var email = cleanEmail_(p.email);
     if (!rateHit_('codeH:' + sha_(email), CODE_EMAIL_HOURLY, 3600) ||
         !rateHit_('code6:' + sha_(email), CODE_EMAIL_6H, 21600)) {
@@ -446,11 +451,17 @@ function validate_(data) {
   c.module = text_(data.module);
   c.assessmentType = text_(data.assessmentType);
   if (!c.module || !c.assessmentType) throw new Error('Missing module or assessment type');
+  // Only the marked assessment is recorded. Manual Knowledge Checks are practice and are never saved.
+  if (c.assessmentType.toLowerCase() !== COMPLETION_TYPE.toLowerCase()) throw new Error('Invalid assessment type: only the ' + COMPLETION_TYPE + ' is recorded');
 
   var score = Number(data.score), total = Number(data.totalQuestions);
   if (!(isFinite(score) && isFinite(total) && total >= 1 && total <= MAX_QUESTIONS &&
         score >= 0 && score <= total && score === Math.floor(score) && total === Math.floor(total))) {
     throw new Error('Invalid score');
+  }
+  var elapsed = Number(data.elapsedSeconds);
+  if (String(data.website || '') !== '' || !(isFinite(elapsed) && elapsed >= MIN_SECONDS_PER_QUESTION * total)) {
+    throw new Error('Invalid submission: the assessment was completed too quickly to be a real attempt');
   }
   c.score = score;
   c.total = total;
