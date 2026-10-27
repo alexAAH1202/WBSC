@@ -24,7 +24,7 @@ Script Web App into a Google Sheet.
 - `questions.js`: the question bank (edit this to add questions; see its header). `assessment-widget.html` loads it.
 - `assessment-widget.html`: the 12 assessments. Each module has an anchor (`#module-01` to `#module-06`) that the home page links to.
 - `privacy.html`: what the portal records and how long it is kept.
-- `results.html`: the Director of Umpires' results page (password, `noindex`, not linked from the menu): completion tiles, per-module progress, per-umpire detail, printable completion summary, CSV downloads.
+- `results.html`: the Director of Umpires' results page (password, `noindex`, linked only from the footer as "Director login"): completion tiles, per-module progress, per-umpire detail, printable completion summary, CSV downloads.
 
 ## Pass mark and attempts
 - **Pass mark 85%.** Decided on the server from the score (`PASS_MARK` in `Code.gs`), never from the browser. It is 85% of however many questions an assessment has (9 of 10, 17 of 20, 26 of 30), so the bank can grow without code changes.
