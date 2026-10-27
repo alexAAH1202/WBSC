@@ -1,0 +1,920 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presentations — Umpire Mechanics Training</title>
+<meta name="description" content="Temporary training site for the WBSC 2026–2029 Softball Umpire Mechanics accreditation and reaccreditation program. Not the official WBSC website.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="images/wbsc-logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;500;700;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* ---------- Tokens ---------- */
+  :root{
+    --navy-950:#0b1a33;
+    --navy-800:#132a4d;
+    --navy-700:#1c3760;
+    --white:#ffffff;
+    --paper:#f6f3ea;         /* pale gold-neutral, for the temporary-site notice */
+    --ink:#0f1526;           /* near-black, navy-tinted, for on-white text */
+    --ink-soft:#3c4457;      /* secondary on-white text */
+    --line:#dcd6c6;          /* warm-grey border, biased toward gold */
+    --line-on-navy:rgba(255,255,255,0.16);
+    --red-600:#c31f2f;
+    --red-700:#a11826;
+    --gold-500:#c8a13a;
+    --gold-100:#efe3bd;
+
+    --font-display:'Roboto Condensed', 'Arial Narrow', Arial, sans-serif;
+    --font-body:'Roboto', Arial, sans-serif;
+
+    --content-w:1180px;
+  }
+
+  /* This is a fixed corporate/brand identity (navy · white · red · gold) rather
+     than a preference-driven surface, so the palette is intentionally constant
+     across light and dark OS settings — the same way wbsc.org itself would not
+     re-skin for a visitor's system theme. Background and colors are still painted
+     explicitly throughout so the page holds correctly on any host ground. */
+
+  *,*::before,*::after{box-sizing:border-box;}
+  html{scroll-behavior:smooth;scroll-padding-top:92px;}
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    *,*::before,*::after{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important;}
+  }
+  body{
+    margin:0;
+    background:var(--white);
+    color:var(--ink);
+    font-family:var(--font-body);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{max-width:100%;display:block;}
+  a{color:inherit;}
+  .wrap{max-width:var(--content-w);margin:0 auto;padding:0 24px;}
+
+  h1,h2,h3,h4{
+    font-family:var(--font-display);
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+    text-wrap:balance;
+    margin:0;
+    color:var(--navy-950);
+  }
+  p{margin:0;}
+  .eyebrow{
+    font-family:var(--font-display);
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.14em;
+    font-size:0.78rem;
+  }
+
+  :focus-visible{outline:3px solid var(--gold-500);outline-offset:3px;}
+  .skip-link{
+    position:absolute;left:-9999px;top:0;background:var(--navy-950);color:var(--white);
+    padding:12px 20px;z-index:200;font-family:var(--font-display);text-transform:uppercase;letter-spacing:0.06em;
+  }
+  .skip-link:focus{left:24px;top:24px;}
+
+  button{font-family:var(--font-body);cursor:pointer;}
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;
+    font-size:0.92rem;
+    padding:15px 28px;
+    border:2px solid transparent;
+    text-decoration:none;
+    white-space:nowrap;
+    max-width:100%;
+  }
+  @media (max-width:900px){
+    .btn{white-space:normal;text-align:center;justify-content:center;}
+  }
+  .btn-primary{background:var(--red-600);color:var(--white);border-color:var(--red-600);}
+  .btn-primary:hover{background:var(--red-700);border-color:var(--red-700);}
+  .btn-outline-light{background:transparent;color:var(--white);border-color:rgba(255,255,255,0.6);}
+  .btn-outline-light:hover{border-color:var(--white);background:rgba(255,255,255,0.08);}
+  .btn-outline-navy{background:transparent;color:var(--navy-950);border-color:var(--navy-950);}
+  .btn-outline-navy:hover{background:var(--navy-950);color:var(--white);}
+  .btn-ghost{
+    font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;font-size:0.85rem;
+    color:var(--navy-950);text-decoration:underline;text-underline-offset:4px;background:none;border:none;padding:4px 0;
+  }
+
+  /* ---------- Header ---------- */
+  header.site-header{
+    background:var(--navy-950);
+    border-bottom:3px solid var(--gold-500);
+    position:sticky;top:0;z-index:100;
+  }
+  .header-row{
+    display:flex;align-items:center;justify-content:space-between;
+    height:76px;gap:24px;
+  }
+  .brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--white);}
+  .brand-logo{height:38px;width:auto;flex-shrink:0;}
+  .brand-mark{
+    display:flex;flex-direction:column;line-height:1;
+    font-family:var(--font-display);font-weight:900;letter-spacing:0.02em;
+  }
+  .brand-mark .top{font-size:1.5rem;}
+  .brand-mark .bottom{font-size:0.62rem;letter-spacing:0.2em;color:#c9d3e6;margin-top:2px;text-transform:uppercase;}
+  .footer-logo{height:46px;width:auto;margin-bottom:14px;}
+
+  nav.primary-nav{display:flex;align-items:center;gap:4px;}
+  nav.primary-nav a{
+    font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:0.08em;
+    font-size:0.88rem;color:var(--white);text-decoration:none;
+    padding:10px 16px;border-bottom:3px solid transparent;position:relative;
+  }
+  nav.primary-nav a:hover{border-bottom-color:var(--line-on-navy);}
+  nav.primary-nav a[aria-current="page"]{border-bottom-color:var(--gold-500);color:var(--gold-500);}
+  .nav-soon{
+    font-family:var(--font-display);font-size:0.6rem;letter-spacing:0.08em;
+    color:var(--navy-950);background:var(--gold-500);
+    padding:1px 5px;margin-left:6px;vertical-align:2px;
+  }
+  .header-cta{display:flex;align-items:center;gap:18px;}
+  .nav-toggle{
+    display:none;background:none;border:2px solid var(--line-on-navy);color:var(--white);
+    width:44px;height:44px;align-items:center;justify-content:center;
+  }
+  .nav-toggle svg{width:20px;height:20px;}
+
+  @media (max-width:860px){
+    nav.primary-nav{
+      display:none;position:absolute;top:76px;left:0;right:0;
+      background:var(--navy-950);flex-direction:column;align-items:stretch;
+      border-top:1px solid var(--line-on-navy);border-bottom:3px solid var(--gold-500);
+    }
+    nav.primary-nav.open{display:flex;}
+    nav.primary-nav a{padding:16px 24px;border-bottom:1px solid var(--line-on-navy);}
+    nav.primary-nav a[aria-current="page"]{border-left:4px solid var(--gold-500);}
+    .header-cta .btn-primary{display:none;}
+    .nav-toggle{display:flex;}
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;background:var(--navy-950);color:var(--white);
+    overflow:hidden;padding:96px 0 88px;
+  }
+  .hero-field{position:absolute;inset:0;opacity:0.55;}
+  .hero-field svg{width:100%;height:100%;}
+  .hero-inner{position:relative;z-index:2;max-width:720px;}
+  .hero .eyebrow{color:var(--gold-500);margin-bottom:18px;}
+  .hero h1{color:var(--white);font-size:clamp(2.4rem,5.2vw,4rem);line-height:1.03;margin-bottom:18px;}
+  .hero .sub{font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:0.04em;font-size:1.15rem;color:#c9d3e6;margin-bottom:26px;}
+  .hero .philosophy{
+    display:inline-block;font-family:var(--font-display);font-weight:700;text-transform:uppercase;
+    font-size:1rem;letter-spacing:0.06em;color:var(--navy-950);background:var(--gold-500);
+    padding:8px 16px;margin-bottom:38px;
+  }
+  .hero-ctas{display:flex;flex-wrap:wrap;gap:16px;}
+
+  /* ---------- Section scaffolding ---------- */
+  section{padding:76px 0;}
+  .section-head{max-width:760px;margin-bottom:44px;}
+  .section-head .eyebrow{color:var(--red-600);margin-bottom:10px;display:block;}
+  .section-head h2{font-size:clamp(1.7rem,3.2vw,2.4rem);}
+  .section-head .desc{font-size:1.05rem;color:var(--ink-soft);margin-top:14px;max-width:62ch;}
+  .on-navy .section-head .eyebrow{color:var(--gold-500);}
+  .on-navy .section-head h2{color:var(--white);}
+  .on-navy .section-head .desc{color:#c9d3e6;}
+  .rule{border:none;border-top:1px solid var(--line);margin:0;}
+
+  /* ---------- Notice ---------- */
+  .notice-wrap{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .notice{
+    display:flex;gap:22px;padding:36px 0;
+  }
+  .notice-bar{width:5px;flex-shrink:0;background:var(--gold-500);}
+  .notice-body{flex:1;}
+  .notice-head{
+    display:flex;align-items:center;gap:10px;margin-bottom:12px;
+    font-family:var(--font-display);font-weight:900;text-transform:uppercase;letter-spacing:0.08em;
+    font-size:0.95rem;color:var(--navy-950);
+  }
+  .notice-head svg{width:20px;height:20px;flex-shrink:0;color:var(--navy-950);}
+  .notice p{color:var(--ink-soft);max-width:78ch;}
+  .notice p + p{margin-top:12px;}
+  .notice strong{color:var(--navy-950);}
+
+  /* ---------- Intro ---------- */
+  .intro{padding:80px 0;}
+  .intro-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:56px;align-items:start;}
+  .intro-copy p{font-size:1.08rem;color:var(--ink-soft);max-width:62ch;}
+  .intro-copy p + p{margin-top:16px;}
+  .intro-signature{
+    margin-top:26px;padding:22px 24px;border:2px solid var(--navy-950);
+    font-family:var(--font-display);font-weight:700;text-transform:uppercase;font-size:1.02rem;letter-spacing:0.02em;color:var(--navy-950);
+  }
+  .intro-signature .why{color:var(--red-600);}
+  .intro-signature .how{color:var(--gold-500);background:var(--navy-950);padding:0 4px;}
+  .intro-flow{border:1px solid var(--line);padding:28px;}
+  .intro-flow .eyebrow{color:var(--red-600);display:block;margin-bottom:18px;}
+  .flow-step{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line);}
+  .flow-step:last-child{border-bottom:none;}
+  .flow-num{
+    font-family:var(--font-display);font-weight:900;font-size:0.85rem;color:var(--white);
+    background:var(--navy-950);width:26px;height:26px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .flow-text{font-family:var(--font-display);font-weight:700;text-transform:uppercase;font-size:0.86rem;letter-spacing:0.02em;color:var(--navy-950);align-self:center;}
+
+  @media (max-width:860px){
+    .intro-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- Four Pillars ---------- */
+  .pillars-section{background:#faf9f6;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .pillars{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+    border:1px solid var(--navy-950);
+  }
+  .pillar{
+    background:var(--white);padding:32px 26px;position:relative;
+    border-right:1px solid var(--navy-950);
+    display:flex;flex-direction:column;gap:14px;min-height:100%;
+  }
+  .pillar:last-child{border-right:none;}
+  .pillar.elite{background:var(--navy-950);color:var(--white);}
+  .pillar-top{display:flex;align-items:center;justify-content:space-between;}
+  .pillar-num{font-family:var(--font-display);font-weight:900;font-size:2.1rem;color:var(--line);}
+  .pillar.elite .pillar-num{color:var(--gold-500);}
+  .pillar-connector{color:var(--red-600);font-family:var(--font-display);font-weight:900;font-size:1.3rem;}
+  .pillar.elite .pillar-connector{color:var(--gold-500);}
+  .pillar h3{font-size:1.15rem;}
+  .pillar.elite h3{color:var(--white);}
+  .pillar p.pillar-desc{color:var(--ink-soft);font-size:0.95rem;}
+  .pillar.elite p.pillar-desc{color:#c9d3e6;}
+  .pillar .corresponds{font-size:0.8rem;color:var(--ink-soft);}
+  .pillar.elite .corresponds{color:#9fb0cc;}
+  .pillar .corresponds strong{display:block;font-family:var(--font-display);text-transform:uppercase;letter-spacing:0.05em;font-size:0.72rem;color:var(--navy-950);margin-bottom:4px;}
+  .pillar.elite .corresponds strong{color:var(--gold-500);}
+  .status-pill{
+    margin-top:auto;display:inline-flex;align-items:center;gap:6px;
+    border:1px solid var(--line);padding:5px 10px;width:fit-content;
+    font-family:var(--font-display);font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-soft);
+  }
+  .pillar.elite .status-pill{border-color:var(--line-on-navy);color:#c9d3e6;}
+  .status-pill svg{width:12px;height:12px;}
+  .pillar-link{font-family:var(--font-display);font-weight:700;text-transform:uppercase;font-size:0.78rem;letter-spacing:0.05em;color:var(--red-600);text-decoration:none;border-bottom:1px solid var(--red-600);width:fit-content;}
+  .pillar.elite .pillar-link{color:var(--gold-500);border-color:var(--gold-500);}
+
+  @media (max-width:940px){
+    .pillars{grid-template-columns:1fr;}
+    .pillar{border-right:none;border-bottom:1px solid var(--navy-950);}
+    .pillar:last-child{border-bottom:none;}
+    .pillar-connector{transform:rotate(90deg);}
+  }
+
+  /* ---------- Sequence ---------- */
+  .sequence-cols{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--navy-950);}
+  .seq-col{padding:32px 34px;}
+  .seq-col + .seq-col{border-left:1px solid var(--navy-950);}
+  .seq-col.elite{background:var(--navy-950);color:var(--white);}
+  .seq-col-title{font-family:var(--font-display);font-weight:900;text-transform:uppercase;letter-spacing:0.1em;font-size:0.92rem;color:var(--red-600);margin-bottom:20px;}
+  .seq-col.elite .seq-col-title{color:var(--gold-500);}
+  .seq-item{display:flex;align-items:center;gap:14px;padding:13px 10px;margin:0 -10px;border-top:1px solid var(--line);text-decoration:none;color:inherit;transition:background 0.15s ease;}
+  .seq-col.elite .seq-item{border-top:1px solid var(--line-on-navy);}
+  .seq-item:first-of-type{border-top:none;}
+  a.seq-item:hover,a.seq-item:focus-visible{background:var(--paper);}
+  .seq-col.elite a.seq-item:hover,.seq-col.elite a.seq-item:focus-visible{background:var(--navy-800);}
+  .seq-item .seq-arrow{margin-left:auto;color:var(--red-600);font-family:var(--font-display);font-weight:700;flex-shrink:0;}
+  .seq-col.elite .seq-item .seq-arrow{color:var(--gold-500);}
+  .seq-n{font-family:var(--font-display);font-weight:900;font-size:1rem;color:var(--navy-950);width:22px;flex-shrink:0;}
+  .seq-col.elite .seq-n{color:var(--gold-500);}
+  .seq-item p{font-size:0.98rem;}
+  @media (max-width:760px){
+    .sequence-cols{grid-template-columns:1fr;}
+    .seq-col + .seq-col{border-left:none;border-top:1px solid var(--navy-950);}
+  }
+  .sequence-note{
+    margin-top:30px;padding:24px 26px;background:var(--paper);border-left:5px solid var(--gold-500);
+  }
+  .sequence-note p{color:var(--ink-soft);max-width:78ch;}
+  .sequence-note .sig{margin-top:12px;font-family:var(--font-display);font-weight:700;text-transform:uppercase;font-size:0.92rem;color:var(--navy-950);}
+  .sequence-note .sig .why{color:var(--red-600);}
+  .sequence-note .sig .how{color:var(--gold-500);background:var(--navy-950);padding:1px 5px;}
+
+  /* ---------- How to complete ---------- */
+  .steps{
+    display:grid;grid-template-columns:repeat(5,1fr);gap:0;border:1px solid var(--navy-950);
+  }
+  .step{
+    background:var(--white);padding:26px 20px;border-right:1px solid var(--navy-950);
+    display:flex;flex-direction:column;gap:12px;
+  }
+  .step:last-child{border-right:none;}
+  .step.current{background:var(--gold-100);}
+  .step-top{display:flex;align-items:center;justify-content:space-between;}
+  .step-index{font-family:var(--font-display);font-weight:900;font-size:0.75rem;color:var(--ink-soft);letter-spacing:0.05em;}
+  .step-state{width:22px;height:22px;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .step.current .step-state{border-color:var(--gold-500);background:var(--gold-500);}
+  .step-state svg{width:12px;height:12px;color:var(--navy-950);}
+  .step h3{font-size:1.05rem;}
+  .step p{font-size:0.9rem;color:var(--ink-soft);}
+  .step-arrow{display:none;}
+  @media (max-width:940px){
+    .steps{grid-template-columns:1fr;}
+    .step{border-right:none;border-bottom:1px solid var(--navy-950);}
+    .step:last-child{border-bottom:none;}
+  }
+  .steps-legend{display:flex;flex-wrap:wrap;gap:22px;margin-top:20px;}
+  .legend-item{display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--ink-soft);}
+  .legend-swatch{width:16px;height:16px;border:2px solid var(--line);flex-shrink:0;}
+  .legend-swatch.done{background:var(--navy-950);border-color:var(--navy-950);}
+  .legend-swatch.current{background:var(--gold-500);border-color:var(--gold-500);}
+  .steps-note{margin-top:18px;font-size:0.92rem;color:var(--ink-soft);font-style:italic;}
+
+  /* ---------- Appendix 4/5 feature ---------- */
+  .appendix-feature{padding:0;}
+  .af-grid{display:grid;grid-template-columns:1fr 1fr;}
+  .af-panel{padding:64px 48px;min-height:420px;display:flex;flex-direction:column;}
+  .af-panel.why{background:var(--navy-950);color:var(--white);}
+  .af-panel.how{background:var(--white);color:var(--navy-950);border:1px solid var(--navy-950);border-left:none;}
+  .af-tag{font-family:var(--font-display);font-weight:900;font-size:0.85rem;letter-spacing:0.14em;}
+  .af-panel.why .af-tag{color:var(--gold-500);}
+  .af-panel.how .af-tag{color:var(--red-600);}
+  .af-appendix{font-size:0.95rem;margin-top:8px;color:#c9d3e6;font-family:var(--font-display);text-transform:uppercase;letter-spacing:0.05em;}
+  .af-panel.how .af-appendix{color:var(--ink-soft);}
+  .af-title{font-size:clamp(2.6rem,6vw,4.4rem);margin-top:18px;line-height:0.95;}
+  .af-panel.why .af-title{color:var(--white);}
+  .af-list{list-style:none;margin:30px 0 0;padding:0;display:flex;flex-direction:column;gap:12px;}
+  .af-list li{
+    font-family:var(--font-display);font-weight:500;text-transform:uppercase;letter-spacing:0.03em;font-size:1rem;
+    padding-bottom:10px;border-bottom:1px solid var(--line-on-navy);
+  }
+  .af-panel.how .af-list li{border-bottom:1px solid var(--line);}
+  .af-foot{margin-top:auto;padding-top:28px;font-size:0.88rem;color:#9fb0cc;}
+  .af-panel.how .af-foot{color:var(--ink-soft);}
+  @media (max-width:860px){
+    .af-grid{grid-template-columns:1fr;}
+    .af-panel.how{border-left:1px solid var(--navy-950);border-top:none;}
+  }
+
+  /* ---------- CTA band ---------- */
+  .cta-band{background:var(--red-600);color:var(--white);padding:64px 0;text-align:center;}
+  .cta-band h2{color:var(--white);font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:14px;}
+  .cta-band p{color:#f7d9dc;max-width:56ch;margin:0 auto 30px;font-size:1.05rem;}
+  .cta-band .btn-primary{background:var(--navy-950);border-color:var(--navy-950);}
+  .cta-band .btn-primary:hover{background:var(--navy-800);border-color:var(--navy-800);}
+  .cta-actions{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--navy-950);color:#c9d3e6;padding:60px 0 28px;}
+  .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.3fr;gap:40px;padding-bottom:40px;border-bottom:1px solid var(--line-on-navy);}
+  .footer-about{margin-top:14px;font-size:0.92rem;max-width:34ch;color:#9fb0cc;}
+  .footer-col h4{font-family:var(--font-display);font-weight:700;color:var(--white);text-transform:uppercase;letter-spacing:0.08em;font-size:0.85rem;margin-bottom:16px;}
+  .footer-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;}
+  .footer-col a{font-size:0.92rem;color:#c9d3e6;text-decoration:none;}
+  .footer-col a:hover{color:var(--gold-500);}
+  .footer-legal{padding-top:26px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:0.82rem;color:#8394b4;}
+  @media (max-width:860px){
+    .footer-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:560px){
+    .footer-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- Toast (nav "soon" pages) ---------- */
+  .toast{
+    position:fixed;left:50%;bottom:28px;transform:translate(-50%,140%);
+    background:var(--navy-950);color:var(--white);border:1px solid var(--gold-500);
+    padding:14px 22px;font-family:var(--font-display);font-weight:600;font-size:0.88rem;
+    letter-spacing:0.02em;z-index:300;transition:transform 0.25s ease,opacity 0.25s ease,visibility 0.25s;max-width:90vw;text-align:center;
+    opacity:0;visibility:hidden;pointer-events:none;
+  }
+  .toast.show{transform:translate(-50%,0);opacity:1;visibility:visible;}
+
+  /* ---------- Assessments page additions ---------- */
+  .page-strip{background:var(--paper);border-bottom:1px solid var(--line);padding:14px 0;}
+  .page-strip p{font-size:0.86rem;color:var(--ink-soft);}
+  .page-strip a{color:var(--navy-950);text-decoration:underline;text-underline-offset:3px;}
+
+  .page-hero{background:var(--navy-950);color:var(--white);padding:64px 0 52px;}
+  .page-hero .eyebrow{color:var(--gold-500);margin-bottom:14px;display:block;}
+  .page-hero h1{color:var(--white);font-size:clamp(2rem,4.4vw,3rem);margin-bottom:16px;}
+  .page-hero p{color:#c9d3e6;max-width:68ch;font-size:1.05rem;}
+
+  /* Identity panel */
+  .identity{padding:54px 0 10px;}
+  .identity-panel{border:1px solid var(--navy-950);padding:30px 32px;background:#faf9f6;}
+  .identity-panel h2{font-size:1.05rem;margin-bottom:8px;}
+  .identity-panel .desc{font-size:0.92rem;color:var(--ink-soft);margin-bottom:22px;max-width:70ch;}
+  .identity-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+  .field label{display:block;font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;font-size:0.72rem;color:var(--navy-950);margin-bottom:6px;}
+  .field label .opt{color:var(--ink-soft);font-weight:500;text-transform:none;letter-spacing:0;}
+  .field input{
+    width:100%;border:1.5px solid var(--line);padding:11px 12px;font-family:var(--font-body);font-size:0.94rem;color:var(--ink);
+    background:var(--white);
+  }
+  .field input:focus-visible{outline:3px solid var(--gold-500);outline-offset:1px;border-color:var(--navy-950);}
+  .field.invalid input{border-color:var(--red-600);}
+  .field-error{font-size:0.78rem;color:var(--red-600);margin-top:5px;display:none;}
+  .field.invalid .field-error{display:block;}
+  @media (max-width:860px){ .identity-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:560px){ .identity-grid{grid-template-columns:1fr;} }
+
+  /* Directory */
+  .directory{padding:54px 0 20px;}
+  .tier-divider{display:flex;align-items:center;gap:18px;margin:8px 0 34px;flex-wrap:wrap;}
+  .tier-divider .tier-label{font-family:var(--font-display);font-weight:900;text-transform:uppercase;letter-spacing:0.12em;font-size:0.82rem;color:var(--red-600);white-space:nowrap;}
+  .tier-divider.elite .tier-label{color:var(--gold-500);}
+  .tier-divider .tier-rule{height:1px;background:var(--line);flex:1;min-width:24px;}
+  .tier-divider .tier-note{font-size:0.85rem;color:var(--ink-soft);white-space:nowrap;}
+  @media (max-width:560px){
+    .tier-divider .tier-rule{display:none;}
+    .tier-divider .tier-note{white-space:normal;width:100%;order:3;margin-top:-4px;}
+  }
+
+  .assess-block{border:1px solid var(--navy-950);margin-bottom:24px;}
+  .assess-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;padding:18px 24px;background:var(--navy-950);color:var(--white);}
+  .assess-eyebrow{font-family:var(--font-display);font-weight:900;letter-spacing:0.1em;font-size:0.76rem;color:var(--gold-500);}
+  .assess-head h2{color:var(--white);font-size:1.05rem;letter-spacing:0.01em;}
+  .assess-body{display:grid;grid-template-columns:1fr 1fr;}
+  .assess-card{padding:22px 24px;}
+  .assess-card + .assess-card{border-left:1px solid var(--line);}
+  .assess-kind{font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;font-size:0.72rem;color:var(--red-600);display:block;margin-bottom:6px;}
+  .assess-card.pca .assess-kind{color:var(--navy-950);}
+  .assess-qcount{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-display);font-weight:700;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.05em;border:1px solid var(--line);padding:3px 8px;margin-bottom:10px;color:var(--ink-soft);}
+  .assess-desc{font-size:0.85rem;color:var(--ink-soft);margin-bottom:16px;min-height:2.6em;}
+  .assess-status{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-display);font-size:0.66rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--ink-soft);margin-top:12px;}
+  .assess-status svg{width:11px;height:11px;}
+  .assess-status.live{color:var(--red-600);}
+  @media (max-width:700px){
+    .assess-body{grid-template-columns:1fr;}
+    .assess-card + .assess-card{border-left:none;border-top:1px solid var(--line);}
+  }
+
+  /* Quiz */
+  .quiz-section{padding:60px 0 80px;}
+  .quiz-frame{border:2px solid var(--navy-950);max-width:760px;margin:0 auto;}
+  .quiz-top{background:var(--navy-950);color:var(--white);padding:22px 30px;}
+  .quiz-top .eyebrow{color:var(--gold-500);display:block;margin-bottom:6px;}
+  .quiz-top h2{color:var(--white);font-size:1.2rem;}
+  .quiz-progress-row{display:flex;align-items:center;justify-content:space-between;padding:18px 30px 0;}
+  .quiz-progress-label{font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;font-size:0.8rem;color:var(--navy-950);}
+  .quiz-dots{display:flex;gap:7px;}
+  .quiz-dot{width:10px;height:10px;border:2px solid var(--line);flex-shrink:0;}
+  .quiz-dot.done{background:var(--navy-950);border-color:var(--navy-950);}
+  .quiz-dot.current{background:var(--gold-500);border-color:var(--gold-500);}
+  .quiz-body{padding:26px 30px 32px;}
+  .quiz-question{font-family:var(--font-display);font-weight:700;font-size:1.15rem;color:var(--navy-950);margin-bottom:22px;line-height:1.35;}
+  .quiz-options{display:flex;flex-direction:column;gap:12px;margin-bottom:24px;}
+  .quiz-option{
+    display:flex;align-items:center;gap:14px;text-align:left;
+    border:1.5px solid var(--line);background:var(--white);padding:14px 16px;
+    font-family:var(--font-body);font-size:0.96rem;color:var(--ink);cursor:pointer;width:100%;
+  }
+  .quiz-option:hover:not(:disabled){border-color:var(--navy-950);}
+  .quiz-option:focus-visible{outline:3px solid var(--gold-500);outline-offset:2px;}
+  .quiz-option .opt-letter{
+    font-family:var(--font-display);font-weight:900;font-size:0.85rem;color:var(--navy-950);
+    width:26px;height:26px;border:1.5px solid var(--navy-950);flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  }
+  .quiz-option.selected{border-color:var(--navy-950);background:var(--paper);}
+  .quiz-option.selected .opt-letter{background:var(--navy-950);color:var(--white);}
+  .quiz-option.correct{border-color:#2f7a3d;background:#eaf5ec;}
+  .quiz-option.correct .opt-letter{background:#2f7a3d;color:var(--white);border-color:#2f7a3d;}
+  .quiz-option.incorrect{border-color:var(--red-600);background:#fbeceb;}
+  .quiz-option.incorrect .opt-letter{background:var(--red-600);color:var(--white);border-color:var(--red-600);}
+  .quiz-option:disabled{cursor:default;}
+  .quiz-option .opt-mark{margin-left:auto;font-family:var(--font-display);font-weight:900;font-size:0.85rem;}
+  .quiz-option.correct .opt-mark{color:#2f7a3d;}
+  .quiz-option.incorrect .opt-mark{color:var(--red-600);}
+
+  .quiz-feedback{border-left:5px solid var(--line);padding:16px 20px;margin-bottom:22px;background:#faf9f6;}
+  .quiz-feedback.correct{border-color:#2f7a3d;}
+  .quiz-feedback.incorrect{border-color:var(--red-600);}
+  .quiz-feedback-head{display:flex;align-items:center;gap:8px;font-family:var(--font-display);font-weight:900;text-transform:uppercase;font-size:0.9rem;margin-bottom:8px;}
+  .quiz-feedback.correct .quiz-feedback-head{color:#2f7a3d;}
+  .quiz-feedback.incorrect .quiz-feedback-head{color:var(--red-600);}
+  .quiz-feedback p{font-size:0.92rem;color:var(--ink-soft);}
+  .quiz-feedback .ref{margin-top:8px;font-size:0.8rem;color:var(--ink-soft);font-style:italic;}
+
+  .quiz-actions{display:flex;justify-content:flex-end;}
+
+  .quiz-complete{text-align:center;padding:10px 0;}
+  .quiz-score{font-family:var(--font-display);font-weight:900;font-size:3rem;color:var(--navy-950);}
+  .quiz-score .pct{font-size:1.4rem;color:var(--ink-soft);display:block;margin-top:4px;}
+  .quiz-save-state{margin:18px 0 8px;font-size:0.92rem;}
+  .quiz-save-state.saved{color:#2f7a3d;font-weight:700;}
+  .quiz-save-state.local{color:var(--ink-soft);}
+  .quiz-save-state.failed{color:var(--red-600);font-weight:700;}
+  #quiz-retry-save{margin-bottom:6px;}
+  .quiz-next{border-top:1px solid var(--line);margin-top:22px;padding-top:22px;}
+  .quiz-next .label{font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;font-size:0.78rem;color:var(--ink-soft);margin-bottom:10px;}
+  .quiz-next .next-title{font-family:var(--font-display);font-weight:900;font-size:1.05rem;color:var(--navy-950);margin-bottom:16px;}
+
+  .validation-banner{
+    display:none;border-left:5px solid var(--red-600);background:#fbeceb;padding:14px 20px;margin-bottom:20px;font-size:0.9rem;color:var(--navy-950);
+  }
+  .validation-banner.show{display:block;}
+
+  /* ---------- Mobile spacing tightening ---------- */
+  @media (max-width:760px){
+    section{padding:48px 0;}
+    .hero{padding:56px 0 48px;}
+    .intro{padding:48px 0;}
+    .cta-band{padding:40px 0;}
+    .af-panel{min-height:0;padding:40px 26px;}
+    .pillar{padding:22px 20px;}
+    .step{padding:18px 16px;}
+    .seq-col{padding:22px 22px;}
+    .page-hero{padding:48px 0 40px;}
+    .identity{padding:40px 0 8px;}
+    .directory{padding:40px 0 16px;}
+    .quiz-section{padding:44px 0 56px;}
+  }
+
+  /* ---------- Source note (compact, in-section) ---------- */
+  .source-note{
+    margin-top:32px;padding:16px 22px;background:var(--paper);border-left:3px solid var(--gold-500);
+    display:flex;gap:14px;flex-wrap:wrap;align-items:baseline;
+  }
+  .source-note-tag{
+    font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:0.08em;
+    font-size:0.78rem;color:var(--navy-950);flex-shrink:0;
+  }
+  .source-note p{margin:0;font-size:0.92rem;color:var(--ink-soft);}
+  .source-note strong{color:var(--navy-950);}
+
+  /* ---------- Federation guidance note ---------- */
+  .federation-note{
+    display:flex;gap:16px;margin-top:20px;padding:18px 22px;
+    background:var(--paper);border-left:3px solid var(--gold-500);
+  }
+  .federation-note-tag{
+    flex-shrink:0;font-family:var(--font-display);font-weight:700;text-transform:uppercase;
+    letter-spacing:0.06em;font-size:0.76rem;color:var(--navy-950);
+    max-width:9ch;line-height:1.3;
+  }
+  .federation-note p{margin:0;font-size:0.92rem;color:var(--ink-soft);max-width:78ch;}
+  .federation-note p + p{margin-top:8px;}
+  .federation-note strong{color:var(--navy-950);}
+  @media (max-width:760px){
+    .federation-note{flex-direction:column;gap:6px;}
+    .federation-note-tag{max-width:none;}
+  }
+
+  /* ---------- Presentations page additions ---------- */
+  .pptx-note{
+    display:flex;gap:16px;background:var(--paper);border-left:5px solid var(--gold-500);
+    padding:22px 26px;margin:0 0 54px;
+  }
+  .pptx-note svg{width:22px;height:22px;flex-shrink:0;color:var(--navy-950);margin-top:2px;}
+  .pptx-note h3{font-size:0.95rem;text-transform:uppercase;color:var(--navy-950);margin-bottom:8px;}
+  .pptx-note p{font-size:0.92rem;color:var(--ink-soft);max-width:78ch;}
+  .pptx-note p + p{margin-top:8px;}
+
+  .presentations{padding:0 0 70px;}
+  .presentations .federation-note{margin:0 0 34px;}
+
+  .pres-block{border:1px solid var(--navy-950);margin-bottom:36px;}
+  .pres-head{
+    display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;
+    padding:22px 28px;background:var(--navy-950);color:var(--white);
+  }
+  .pres-eyebrow{font-family:var(--font-display);font-weight:900;letter-spacing:0.1em;font-size:0.8rem;color:var(--gold-500);}
+  .pres-head h2{color:var(--white);font-size:1.25rem;letter-spacing:0.01em;}
+  .pres-duration{
+    margin-left:auto;font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;
+    font-size:0.72rem;border:1px solid var(--line-on-navy);color:#c9d3e6;padding:4px 10px;white-space:nowrap;
+  }
+
+  .pres-body{display:grid;grid-template-columns:1.3fr 1fr;}
+  .pres-panel{padding:30px 28px;}
+  .pres-panel + .pres-panel{border-left:1px solid var(--line);}
+  .format-kicker{
+    font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:0.08em;
+    font-size:0.75rem;margin-bottom:10px;display:block;
+  }
+  .primary-panel .format-kicker{color:var(--red-600);}
+  .secondary-panel .format-kicker{color:var(--ink-soft);}
+  .format-title{font-family:var(--font-display);font-weight:900;text-transform:uppercase;font-size:1.1rem;color:var(--navy-950);margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+  .format-desc{font-size:0.94rem;color:var(--ink-soft);margin-bottom:20px;max-width:52ch;}
+  .format-tag{
+    display:inline-block;font-family:var(--font-display);font-weight:700;font-size:0.68rem;letter-spacing:0.08em;
+    text-transform:uppercase;border:1px solid var(--line);padding:2px 8px;color:var(--ink-soft);margin-bottom:16px;
+  }
+  .primary-panel .format-tag{border-color:var(--red-600);color:var(--red-600);}
+  .play-icon{width:16px;height:16px;flex-shrink:0;}
+  .secondary-panel{background:#faf9f6;}
+  .secondary-panel .btn-outline-navy{border-color:var(--line);color:var(--ink-soft);}
+  .secondary-panel .btn-outline-navy:hover{border-color:var(--navy-950);color:var(--navy-950);background:transparent;}
+  .format-note{margin-top:12px;font-size:0.78rem;color:var(--ink-soft);}
+
+  @media (max-width:760px){
+    .pres-body{grid-template-columns:1fr;}
+    .pres-panel + .pres-panel{border-left:none;border-top:1px solid var(--line);}
+    .pres-duration{margin-left:0;}
+    .presentations{padding:0 0 44px;}
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="index.html" aria-label="WBSC Umpire Mechanics Training: home">
+      <img class="brand-logo" src="images/wbsc-logo.svg" alt="WBSC logo">
+    </a>
+    <nav class="primary-nav" id="primary-nav" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="presentations.html" aria-current="page">Presentations</a>
+      <a href="assessment-widget.html">Assessments</a>
+      <a href="privacy.html">Privacy</a>
+    </nav>
+    <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="primary-nav">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+<div class="notice-wrap" role="region" aria-labelledby="temp-notice-title">
+    <div class="wrap">
+      <div class="notice">
+        <div class="notice-bar" aria-hidden="true"></div>
+        <div class="notice-body">
+          <div class="notice-head" id="temp-notice-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M12 8v5M12 16.2v.1"/></svg>
+            Important
+          </div>
+          <p><strong>This is not the official WBSC website.</strong> This temporary training site has been established to support WBSC Softball Umpires during the implementation of the 2026&ndash;2029 Umpire Mechanics Program, while WBSC transitions the training program to the My.WBSC Officials Training Academy.</p>
+          <p>All official WBSC manuals and publications accessed through this site remain hosted on the official WBSC website.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<main id="main">
+
+  <div class="page-strip">
+    <div class="wrap">
+      <p><strong>Note:</strong> these presentations are opened directly from the WBSC Umpires Commission working drive, the same source as the Manuals page. This training site does not host copies of them. See the <a href="index.html#top">temporary site notice</a> on the homepage.</p>
+    </div>
+  </div>
+
+  <section class="page-hero" id="top">
+    <div class="wrap">
+      <span class="eyebrow">WBSC Softball Umpires</span>
+      <h1>Presentations</h1>
+      <p>Training presentations in the same sequence as the Manuals. For individual study, watch the MP4 &mdash; it's the recommended format. The PowerPoint is provided as a secondary, trainer/reference version.</p>
+    </div>
+  </section>
+
+  <section class="presentations">
+    <div class="wrap">
+
+      <div class="pptx-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M12 8v5M12 16.2v.1"/></svg>
+        <div>
+          <h3>PowerPoint Note</h3>
+          <p>The PowerPoint file is provided primarily for WBSC trainers, instructors and users who require access to the original presentation. Because of animations, embedded media and presentation formatting, the PowerPoint version may not provide the best experience for individual study.</p>
+          <p>Umpires completing the reaccreditation program should normally use the MP4 presentation.</p>
+        </div>
+      </div>
+
+      <div class="tier-divider">
+        <span class="tier-label">Foundation &rarr; Elite Philosophies</span>
+        <span class="tier-rule" aria-hidden="true"></span>
+        <span class="tier-note">Covers Modules 01&ndash;05</span>
+      </div>
+
+      <!-- COMBINED FOUNDATIONS-APPENDIX 4 PRESENTATION -->
+      <article class="pres-block" id="pres-01-05">
+        <div class="pres-head">
+          <span class="pres-eyebrow">Modules 01&ndash;05</span>
+          <h2>Foundations to Appendix 4: Elite Philosophies</h2>
+        </div>
+        <p style="padding:20px 28px 0;font-size:0.88rem;color:var(--ink-soft);max-width:78ch;">This single introductory session covers the Foundations Learning Guide, an overview of Appendices 1&ndash;3, and the Appendix 4 elite positioning philosophies, in five parts: the review process, the Foundations manual, Appendices 1&ndash;3, Appendix 4 elite mechanics, and rule changes &amp; integrity. Presented by members of the WBSC Umpires Commission Mechanics Working Group, including Leigh Evans and Frankie Billingsley.</p>
+        <div class="pres-body">
+          <div class="pres-panel primary-panel">
+            <span class="format-kicker">Recommended Learning Format</span>
+            <p class="format-title">
+              <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              Watch Training Presentation
+            </p>
+            <span class="format-tag">MP4</span>
+            <p class="format-desc">Recommended for individual study while completing the reaccreditation program.</p>
+            <a class="btn btn-primary" href="https://drive.google.com/file/d/1E7w5eVX3b_UaqyNANPuzkkf5LvYV2TNA/view?usp=sharing" target="_blank" rel="noopener">Watch Training Presentation</a>
+          </div>
+          <div class="pres-panel secondary-panel">
+            <span class="format-kicker">Trainer / Reference Version</span>
+            <p class="format-title">Download PowerPoint</p>
+            <span class="format-tag">PPTX</span>
+            <p class="format-desc">Original presentation file for trainers and instructors.</p>
+            <a class="btn btn-outline-navy" href="https://drive.google.com/file/d/1Bs-PVG0Wp7uDUz5A2KnjjDVB9mwbcEC5/view?usp=sharing" target="_blank" rel="noopener">Download PowerPoint Presentation</a>
+            <p class="format-note">See PowerPoint Note above.</p>
+          </div>
+        </div>
+      </article>
+
+      <div style="margin:-12px 0 40px;padding:20px 28px;background:var(--paper);border:1px solid var(--line);">
+        <p style="margin:0 0 12px;font-family:var(--font-display);font-weight:900;text-transform:uppercase;font-size:0.82rem;letter-spacing:.04em;color:var(--navy-950);">Presentation Competency Assessment</p>
+        <p style="margin:0 0 14px;font-size:0.85rem;color:var(--ink-soft);max-width:70ch;">10 questions per module, applying this presentation to realistic scenarios. Choose the module you just watched:</p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;">
+          <a class="btn btn-outline-navy" href="assessment-widget.html#assessment-m01-pca">Module 01</a>
+          <a class="btn btn-outline-navy" href="assessment-widget.html#assessment-m02-pca">Module 02</a>
+          <a class="btn btn-outline-navy" href="assessment-widget.html#assessment-m03-pca">Module 03</a>
+          <a class="btn btn-outline-navy" href="assessment-widget.html#assessment-m04-pca">Module 04</a>
+          <a class="btn btn-outline-navy" href="assessment-widget.html#assessment-m05-pca">Module 05</a>
+        </div>
+      </div>
+
+      <div class="federation-note">
+        <span class="federation-note-tag">Softball Australia Guidance</span>
+        <div>
+          <p><strong>Mechanics Bulletin MB-2026-1</strong> applies this framework within the Softball Australia pathway: Elite mechanics (Appendices 4 and 5) are used at U18, U23 and Open National Championships, and are assessed for umpires at Levels 5 and 6. Umpires at Levels 1&ndash;4 continue to be trained and assessed on Foundational mechanics.</p>
+          <p>Other Federations should confirm the equivalent guidance for their own accreditation pathway.</p>
+        </div>
+      </div>
+
+      <div class="tier-divider elite">
+        <span class="tier-label">Elite &mdash; Appendix 5</span>
+        <span class="tier-rule" aria-hidden="true"></span>
+        <span class="tier-note">Module 06 &middot; three parts, watch in order</span>
+      </div>
+
+      <!-- APPENDIX 5A &MDASH; KEY CONCEPTS -->
+      <article class="pres-block" id="pres-5a">
+        <div class="pres-head">
+          <span class="pres-eyebrow">Module 06 &middot; Part 1</span>
+          <h2>Appendix 5a &mdash; Key Concepts</h2>
+          <span class="pres-duration">~25 min</span>
+        </div>
+        <p style="padding:20px 28px 0;font-size:0.88rem;color:var(--ink-soft);max-width:78ch;">Introduces the Appendix 5 Key Concepts Framework: the Four Essential Element Theory (FEET), dynamic movement, parallax error, and optimising angle and distance. Watch this part first &mdash; Parts 2 and 3 build directly on it.</p>
+        <div class="pres-body">
+          <div class="pres-panel primary-panel">
+            <span class="format-kicker">Recommended Learning Format</span>
+            <p class="format-title">
+              <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              Watch Training Presentation
+            </p>
+            <span class="format-tag">MP4</span>
+            <p class="format-desc">Recommended for individual study while completing the reaccreditation program.</p>
+            <a class="btn btn-primary" href="https://drive.google.com/file/d/1-Ua1gJZxiBE7cqkZRPDzFxGXBPuo95_T/view?usp=sharing" target="_blank" rel="noopener">Watch Training Presentation</a>
+          </div>
+          <div class="pres-panel secondary-panel">
+            <span class="format-kicker">Trainer / Reference Version</span>
+            <p class="format-title">Download PowerPoint</p>
+            <span class="format-tag">PPTX</span>
+            <p class="format-desc">Original presentation file for trainers and instructors.</p>
+            <a class="btn btn-outline-navy" href="https://drive.google.com/file/d/18_IeQO2wrNhmSLbbevJVi3E2qPr2QmNy/view?usp=sharing" target="_blank" rel="noopener">Download PowerPoint Presentation</a>
+            <p class="format-note">See PowerPoint Note above.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- APPENDIX 5B &MDASH; THREE-UMPIRE SYSTEM -->
+      <article class="pres-block" id="pres-5b">
+        <div class="pres-head">
+          <span class="pres-eyebrow">Module 06 &middot; Part 2</span>
+          <h2>Appendix 5b &mdash; Three-Umpire System</h2>
+          <span class="pres-duration">~40 min</span>
+        </div>
+        <p style="padding:20px 28px 0;font-size:0.88rem;color:var(--ink-soft);max-width:78ch;">Applies the Appendix 5 key concepts to the three-umpire system: starting positions, rotations and tag-up responsibilities. Presented by Stuart Tyler, WBSC Umpires Commission Mechanics Working Group. Watch Part 1 (Key Concepts) first.</p>
+        <div class="pres-body">
+          <div class="pres-panel primary-panel">
+            <span class="format-kicker">Recommended Learning Format</span>
+            <p class="format-title">
+              <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              Watch Training Presentation
+            </p>
+            <span class="format-tag">MP4</span>
+            <p class="format-desc">Recommended for individual study while completing the reaccreditation program.</p>
+            <a class="btn btn-primary" href="https://drive.google.com/file/d/1VURZ3jx3ggoOY-3W0WnV1up7xM6Mm4NU/view?usp=sharing" target="_blank" rel="noopener">Watch Training Presentation</a>
+          </div>
+          <div class="pres-panel secondary-panel">
+            <span class="format-kicker">Trainer / Reference Version</span>
+            <p class="format-title">Download PowerPoint</p>
+            <span class="format-tag">PPTX</span>
+            <p class="format-desc">Original presentation file for trainers and instructors.</p>
+            <a class="btn btn-outline-navy" href="https://drive.google.com/file/d/1ZK-mlMDqX7xn1hl4rNfDHaE7ayqrLCkO/view?usp=sharing" target="_blank" rel="noopener">Download PowerPoint Presentation</a>
+            <p class="format-note">See PowerPoint Note above.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- APPENDIX 5C &MDASH; FOUR, FIVE &AMP; SIX-UMPIRE SYSTEMS -->
+      <article class="pres-block" id="pres-5c">
+        <div class="pres-head">
+          <span class="pres-eyebrow">Module 06 &middot; Part 3</span>
+          <h2>Appendix 5c &mdash; Four, Five &amp; Six-Umpire Systems</h2>
+          <span class="pres-duration">~26 min</span>
+        </div>
+        <p style="padding:20px 28px 0;font-size:0.88rem;color:var(--ink-soft);max-width:78ch;">Applies the key concepts to four-, five- and six-umpire systems: starting positions, rotations and tag-up responsibilities. Presented by James English and Florian Lautenschl&auml;ger, WBSC Umpires Commission Mechanics Working Group. Watch Parts 1 and 2 first.</p>
+        <div class="pres-body">
+          <div class="pres-panel primary-panel">
+            <span class="format-kicker">Recommended Learning Format</span>
+            <p class="format-title">
+              <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              Watch Training Presentation
+            </p>
+            <span class="format-tag">MP4</span>
+            <p class="format-desc">Recommended for individual study while completing the reaccreditation program.</p>
+            <a class="btn btn-primary" href="https://drive.google.com/file/d/1NrRby_j92GtpAH-apTgCDAewV82luzn0/view?usp=sharing" target="_blank" rel="noopener">Watch Training Presentation</a>
+          </div>
+          <div class="pres-panel secondary-panel">
+            <span class="format-kicker">Trainer / Reference Version</span>
+            <p class="format-title">Download PowerPoint</p>
+            <span class="format-tag">PPTX</span>
+            <p class="format-desc">Original presentation file for trainers and instructors.</p>
+            <a class="btn btn-outline-navy" href="https://drive.google.com/file/d/1CPnD4Avx5x6XyZQeQC9fvqyiDrfKhNYd/view?usp=sharing" target="_blank" rel="noopener">Download PowerPoint Presentation</a>
+            <p class="format-note">See PowerPoint Note above.</p>
+          </div>
+        </div>
+      </article>
+
+      <div style="margin:-12px 0 40px;padding:20px 28px;background:var(--paper);border:1px solid var(--line);">
+        <p style="margin:0 0 12px;font-family:var(--font-display);font-weight:900;text-transform:uppercase;font-size:0.82rem;letter-spacing:.04em;color:var(--navy-950);">Presentation Competency Assessment</p>
+        <p style="margin:0 0 14px;font-size:0.85rem;color:var(--ink-soft);max-width:70ch;">One 10-question assessment covers all three parts of Appendix 5, once you've watched them in order.</p>
+        <a class="btn btn-primary" href="assessment-widget.html#assessment-m06-pca">Start Presentation Competency Assessment</a>
+      </div>
+
+      <div class="sequence-note" style="margin-top:10px;">
+        <p>Modules 01&ndash;05 share a single introductory presentation. Module 06 (Appendix 5) is delivered as three sequential parts &mdash; watch Key Concepts, then the Three-Umpire System, then the Four, Five &amp; Six-Umpire Systems. Each module's Presentation Competency Assessment (10 questions) is linked directly below its presentation, and all are also listed on the Assessments page.</p>
+        <p class="sig"><span class="why">Appendix 4</span> provides the why. <span class="how">Appendix 5</span> provides the how.</p>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <img class="footer-logo" src="images/wbsc-logo.svg" alt="WBSC logo">
+        <p class="footer-about">Training and assessments for the WBSC 2026&ndash;2029 Softball Umpire Mechanics program. A temporary training site, not the official WBSC website.</p>
+      </div>
+      <div class="footer-col">
+        <h4>This site</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="presentations.html">Presentations</a></li>
+          <li><a href="assessment-widget.html">Assessments</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Official WBSC</h4>
+        <ul>
+          <li><a href="https://www.wbsc.org" target="_blank" rel="noopener">wbsc.org</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <span>WBSC Softball Umpire Mechanics Program 2026&ndash;2029</span>
+      <span>Temporary training site &middot; not the official WBSC website</span>
+    </div>
+  </div>
+</footer>
+<script>
+  (function(){
+    var toggle = document.getElementById('nav-toggle');
+    var nav = document.getElementById('primary-nav');
+    if (toggle && nav) {
+      toggle.addEventListener('click', function(){
+        var open = nav.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    }
+
+    var toast = document.getElementById('toast');
+    var toastTimer;
+    document.querySelectorAll('[data-soon]').forEach(function(el){
+      el.addEventListener('click', function(e){
+        e.preventDefault();
+        toast.textContent = el.getAttribute('data-soon');
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 3200);
+      });
+    });
+    // If the page is opened with a #fragment (e.g. #sequence), scroll to it explicitly once rendered.
+    if (window.location.hash) {
+      var hashTarget = document.getElementById(window.location.hash.slice(1));
+      if (hashTarget) {
+        window.setTimeout(function(){
+          hashTarget.scrollIntoView({behavior: 'auto', block: 'start'});
+        }, 60);
+      }
+    }
+  })();
+</script>
+</body>
+</html>

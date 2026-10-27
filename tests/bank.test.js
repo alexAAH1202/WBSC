@@ -28,7 +28,7 @@ for (const m of modules) for (const t of ['mkc', 'pca']) {
 }
 // Required page furniture: the temporary-site disclosure, a privacy page that exists, and no ./ brand link.
 const NOTICE = /This is not the official WBSC website/;
-for (const f of ['assessment-widget.html', 'index.html', 'privacy.html']) {
+for (const f of ['assessment-widget.html', 'index.html', 'privacy.html', 'presentations.html']) {
   const fp = path.join(__dirname, '..', f);
   if (!fs.existsSync(fp)) { errors.push(f + ' is missing'); continue; }
   const h = fs.readFileSync(fp, 'utf8');
@@ -36,6 +36,17 @@ for (const f of ['assessment-widget.html', 'index.html', 'privacy.html']) {
   if (/claude\.ai/.test(h) && f !== 'assessment-widget.html') errors.push(f + ' links to a private claude.ai page');
   for (const m of h.matchAll(/href="([^"#]+\.html)(#[^"]*)?"/g)) {
     if (!fs.existsSync(path.join(__dirname, '..', m[1]))) errors.push(`${f}: link to missing page ${m[1]}`);
+  }
+}
+// links into the assessments or presentations pages must name a real assessment / section
+const presHtml = fs.readFileSync(path.join(__dirname, '..', 'presentations.html'), 'utf8');
+for (const f of ['assessment-widget.html', 'index.html', 'privacy.html', 'presentations.html']) {
+  const h = fs.readFileSync(path.join(__dirname, '..', f), 'utf8');
+  for (const m of h.matchAll(/assessment-widget\.html#assessment-([a-z0-9-]+)/g)) {
+    if (!BANK[m[1]]) errors.push(`${f}: link to unknown assessment ${m[1]}`);
+  }
+  for (const m of h.matchAll(/presentations\.html#([a-z0-9-]+)/g)) {
+    if (!presHtml.includes(`id="${m[1]}"`)) errors.push(`${f}: link to missing presentation section ${m[1]}`);
   }
 }
 // every module link on the home page must land on a real section of the assessments page
