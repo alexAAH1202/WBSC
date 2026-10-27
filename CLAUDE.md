@@ -17,6 +17,8 @@ mark and attempt rules, and how to deploy. The earlier generic quiz lives in [`d
 - **Update the existing Apps Script deployment with a new version.** A "New deployment" creates a different
   URL and breaks the page. If the URL ever changes, update `APPS_SCRIPT_URL` in `assessment-widget.html` and
   `tests/widget.test.js`.
+- **Only the WBSC logo (`images/wbsc-logo.svg`) may appear on the site.** No partner, sponsor or other organisation logos. `tests/site.test.js` fails if one is added.
+- **Fonts are hosted in `fonts/`** (Roboto, OFL licence). Do not load Google Fonts or any other third-party font service.
 - **The temporary-site notice must stay on every page** ("This is not the official WBSC website"). The tests
   fail if it is removed.
 - Before pushing, run: `node tests/bank.test.js && node tests/site.test.js && node tests/code-gs.test.js`.

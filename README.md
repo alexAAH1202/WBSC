@@ -12,7 +12,8 @@ Script Web App into a Google Sheet.
 | `assessment-widget.html` | The 12 assessments |
 | `privacy.html` | What is recorded and how long it is kept |
 | `apps-script/Code.gs` | The Apps Script backend (deployed in Google, not served by Pages) |
-| `images/` | Logos and photos (shared by the portal and the demo) |
+| `images/` | The WBSC logo and the demo's photos. Only the WBSC logo is allowed on this site |
+| `fonts/` | Roboto and Roboto Condensed (SIL Open Font License), hosted here so visitors do not contact Google |
 | `tests/` | `bank`, `site` and `code-gs` tests run in CI; `widget` needs Playwright |
 | `demo/` | The earlier generic quiz site (own README), kept at `/demo/`, not linked from the portal, `noindex` |
 

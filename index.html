@@ -7,9 +7,9 @@
 <meta name="description" content="Temporary training site for the WBSC 2026–2029 Softball Umpire Mechanics accreditation and reaccreditation program. Not the official WBSC website.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="images/wbsc-logo.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;500;700;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/roboto-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/roboto-condensed-latin-900-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css">
 <style>
   /* ---------- Tokens ---------- */
   :root{
@@ -676,7 +676,6 @@
           <h3>Foundations</h3>
           <p class="pillar-desc">Core umpiring principles that underpin every level of officiating.</p>
           <p class="corresponds"><strong>Corresponds to</strong>Foundations Learning Guide</p>
-          <span class="status-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg>Not started</span>
           <a class="pillar-link" href="https://drive.google.com/file/d/114_zeKeveKtpbHoBT8kYQtFycEYgDtWY/view?usp=sharing" target="_blank" rel="noopener" aria-label="View the Foundations Learning Guide (PDF, opens in a new tab)">View Manual &rarr;</a>
         </div>
         <div class="pillar">
@@ -684,7 +683,6 @@
           <h3>Field Mechanics</h3>
           <p class="pillar-desc">One, two and three-umpire systems built on those foundations.</p>
           <p class="corresponds"><strong>Corresponds to</strong>One-, Two- &amp; Three-Umpire Field Mechanics</p>
-          <span class="status-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg>Not started</span>
           <span class="pillar-links">
             <a class="pillar-link" href="https://drive.google.com/file/d/1sQ8A8xePiR2yT8il3odktgi-1qmRTewj/view?usp=sharing" target="_blank" rel="noopener" aria-label="View the One-Umpire Field Mechanics manual (PDF, opens in a new tab)">One-umpire manual &rarr;</a>
             <a class="pillar-link" href="https://drive.google.com/file/d/1Voe1LAQQjz5SDlX_WMiPMOc-023LUYq3/view?usp=sharing" target="_blank" rel="noopener" aria-label="View the Two-Umpire Field Mechanics manual (PDF, opens in a new tab)">Two-umpire manual &rarr;</a>
@@ -696,7 +694,6 @@
           <h3>Elite Philosophies</h3>
           <p class="pillar-desc">The reasoning, positioning philosophies and visual strategies behind elite officiating.</p>
           <p class="corresponds"><strong>Corresponds to</strong>Appendix 4</p>
-          <span class="status-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg>Not started</span>
           <a class="pillar-link" href="https://drive.google.com/file/d/1tiB_QGWkUN2xLHEY6_coZ4R7tt7PxpGw/view?usp=sharing" target="_blank" rel="noopener" aria-label="View Appendix 4: Elite Umpire Mechanics, Positioning Philosophies (PDF, opens in a new tab)">View Manual &rarr;</a>
         </div>
         <div class="pillar elite">
@@ -704,7 +701,6 @@
           <h3>Elite Field Mechanics</h3>
           <p class="pillar-desc">Advanced movement patterns and crew configurations up to six umpires.</p>
           <p class="corresponds"><strong>Corresponds to</strong>Appendix 5</p>
-          <span class="status-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg>Not started</span>
           <a class="pillar-link" href="https://drive.google.com/file/d/13Ycd4EJSSQcVkRb7F4bBdFjIb316duX0/view?usp=sharing" target="_blank" rel="noopener" aria-label="View Appendix 5: Elite Three, Four, Five and Six-Umpire Field Mechanics (PDF, opens in a new tab)">View Manual &rarr;</a>
         </div>
       </div>
@@ -765,39 +761,33 @@
       </div>
 
       <div class="steps">
-        <div class="step current">
-          <div class="step-top"><span class="step-index">Step 1</span><span class="step-state" aria-hidden="true"></span></div>
+        <div class="step">
+          <div class="step-top"><span class="step-index">Step 1</span></div>
           <h3>Read</h3>
           <p>Read the prescribed WBSC manual.</p>
         </div>
         <div class="step">
-          <div class="step-top"><span class="step-index">Step 2</span><span class="step-state" aria-hidden="true"></span></div>
+          <div class="step-top"><span class="step-index">Step 2</span></div>
           <h3>Check</h3>
           <p>Complete the 5-question Manual Knowledge Check.</p>
         </div>
         <div class="step">
-          <div class="step-top"><span class="step-index">Step 3</span><span class="step-state" aria-hidden="true"></span></div>
+          <div class="step-top"><span class="step-index">Step 3</span></div>
           <h3>Watch</h3>
           <p>Watch the corresponding MP4 training presentation.</p>
         </div>
         <div class="step">
-          <div class="step-top"><span class="step-index">Step 4</span><span class="step-state" aria-hidden="true"></span></div>
+          <div class="step-top"><span class="step-index">Step 4</span></div>
           <h3>Assess</h3>
           <p>Complete the 10-question Presentation Competency Assessment.</p>
         </div>
         <div class="step">
-          <div class="step-top"><span class="step-index">Step 5</span><span class="step-state" aria-hidden="true"></span></div>
+          <div class="step-top"><span class="step-index">Step 5</span></div>
           <h3>Progress</h3>
           <p>Continue to the next learning module.</p>
         </div>
       </div>
 
-      <div class="steps-legend">
-        <span class="legend-item"><span class="legend-swatch current" aria-hidden="true"></span>Current step</span>
-        <span class="legend-item"><span class="legend-swatch done" aria-hidden="true"></span>Completed</span>
-        <span class="legend-item"><span class="legend-swatch" aria-hidden="true"></span>Not yet reached</span>
-      </div>
-      <p class="steps-note">Shown here for Module 01. Your own progress through Read &rarr; Check &rarr; Watch &rarr; Assess &rarr; Progress will be tracked for each module once training begins.</p>
       <p class="steps-note" style="font-style:normal;">The pass mark for every assessment is <strong>85%</strong>, and you have a maximum of <strong>2 attempts</strong> at each one.</p>
     </div>
   </section>
