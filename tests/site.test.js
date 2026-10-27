@@ -32,6 +32,13 @@ for (const page of pages) {
     if (!target.startsWith(root)) errors.push(`${path.relative(root, page)}: "${m[1]}" points outside the site`);
   }
 }
+// Drive links on the home page must be the same manuals as on the Manuals page (and well-formed)
+const manualDrive = new Set([...fs.readFileSync(path.join(root, 'manuals.html'), 'utf8').matchAll(/https:\/\/drive\.google\.com\/file\/d\/[^"]+/g)].map(m => m[0]));
+for (const m of fs.readFileSync(path.join(root, 'index.html'), 'utf8').matchAll(/href="(https:\/\/drive\.google\.com[^"]*)"[^>]*>/g)) {
+  if (!/^https:\/\/drive\.google\.com\/file\/d\/[\w-]+\/view\?usp=sharing$/.test(m[1])) errors.push('home page: malformed Drive link ' + m[1]);
+  else if (!manualDrive.has(m[1])) errors.push('home page: Drive link is not one of the manuals on manuals.html: ' + m[1]);
+  if (!/target="_blank"/.test(m[0]) || !/noopener/.test(m[0])) errors.push('home page: Drive link must open in a new tab with rel="noopener": ' + m[1]);
+}
 errors.forEach(e => console.error('error: ' + e));
 console.log(`${pages.length} pages, ${checked} local references checked, ${errors.length} error(s)`);
 process.exit(errors.length ? 1 : 0);
