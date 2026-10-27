@@ -1,11 +1,23 @@
-const fs = require('fs'), vm = require('vm'), assert = require('assert');
-const code = fs.readFileSync(require('path').join(__dirname, '..', 'apps-script', 'Code.gs'), 'utf8');
+// Tests for apps-script/Code.gs against a mock of Google's services (Sheets, Mail, Cache,
+// Properties, Triggers, Lock, Utilities). Run: node tests/code-gs.test.js
+const fs = require('fs'), vm = require('vm'), assert = require('assert'), crypto = require('crypto'), path = require('path');
+const code = fs.readFileSync(path.join(__dirname, '..', 'apps-script', 'Code.gs'), 'utf8');
 
-function makeEnv({ failMail = false } = {}) {
-  const rows = []; const raw = [];                          // rows[0] is the header row (1-based row = index+1)
+function makeEnv({ failMail = null, quota = 100, quiet = true } = {}) {
+  const clock = { now: Date.UTC(2026, 9, 27, 0, 0, 0) };
+  class FakeDate extends Date {
+    constructor(...a) { if (a.length) super(...a); else super(clock.now); }
+    static now() { return clock.now; }
+  }
+  const rows = [], raw = [], mails = [], cacheStore = new Map(), props = new Map(), triggers = [];
+  const env = { quota, throwOnSheet: false };
   const sheet = {
-    getLastRow: () => rows.length,
-    appendRow: r => { raw.push(r.slice()); rows.push(r.map(v => typeof v === 'string' && /^'\d+$/.test(v) ? v.slice(1) : (typeof v === 'string' && v[0] === "'" ? v.slice(1) : v))); },
+    getLastRow: () => { if (env.throwOnSheet) throw new Error('Sheet unavailable'); return rows.length; },
+    appendRow: r => {
+      if (env.throwOnSheet) throw new Error('Sheet unavailable');
+      raw.push(r.slice());
+      rows.push(r.map(v => typeof v === 'string' && v[0] === "'" ? v.slice(1) : v));
+    },
     setFrozenRows() {},
     getRange(r, c, nr = 1, nc = 1) {
       return {
@@ -15,136 +27,359 @@ function makeEnv({ failMail = false } = {}) {
       };
     }
   };
-  const mails = [];
+  const digestBytes = (s) => [...crypto.createHash('sha256').update(String(s)).digest()].map(b => (b > 127 ? b - 256 : b));
   const ctx = {
+    Date: FakeDate, console: quiet ? { error() {}, log() {} } : console,
     SpreadsheetApp: { getActiveSpreadsheet: () => ({ getSheetByName: () => sheet, getSheets: () => [sheet] }) },
     LockService: { getScriptLock: () => ({ waitLock() {}, releaseLock() {} }) },
-    MailApp: { sendEmail: (...a) => { if (failMail) throw new Error('quota'); mails.push(a); } },
+    MailApp: {
+      sendEmail: (to, subject, body) => {
+        if (failMail && failMail(to, subject)) throw new Error('Service invoked too many times: email');
+        mails.push({ to, subject, body });
+      },
+      getRemainingDailyQuota: () => env.quota
+    },
+    CacheService: { getScriptCache: () => ({
+      get: k => { const e = cacheStore.get(k); if (!e) return null; if (e.exp <= clock.now) { cacheStore.delete(k); return null; } return e.v; },
+      put: (k, v, ttl) => { assert.ok(ttl <= 21600, 'cache TTL must not exceed 6 hours, got ' + ttl); cacheStore.set(k, { v, exp: clock.now + ttl * 1000 }); },
+      remove: k => cacheStore.delete(k)
+    }) },
+    PropertiesService: { getScriptProperties: () => ({ getProperty: k => props.has(k) ? props.get(k) : null, setProperty: (k, v) => props.set(k, v) }) },
+    ScriptApp: {
+      getProjectTriggers: () => triggers.slice(),
+      deleteTrigger: t => { const i = triggers.indexOf(t); if (i >= 0) triggers.splice(i, 1); },
+      newTrigger: fn => {
+        const t = { getHandlerFunction: () => fn, spec: { fn } };
+        const b = { timeBased: () => b, everyDays: d => { t.spec.days = d; return b; }, atHour: h => { t.spec.hour = h; return b; }, create: () => { triggers.push(t); return t; } };
+        return b;
+      }
+    },
+    Session: { getEffectiveUser: () => ({ getEmail: () => 'owner@example.com' }) },
+    Utilities: { getUuid: () => crypto.randomUUID(), computeDigest: (a, s) => digestBytes(s), DigestAlgorithm: { SHA_256: 'SHA_256' }, Charset: { UTF_8: 'UTF_8' } },
     HtmlService: { XFrameOptionsMode: { ALLOWALL: 'ALLOWALL' }, createHtmlOutput: h => ({ html: h, setXFrameOptionsMode(m) { this.mode = m; return this; } }) },
-    ContentService: { MimeType: { JSON: 'json' }, createTextOutput: t => ({ text: t, setMimeType() { return this; } }) },
-    console
+    ContentService: { MimeType: { JSON: 'json', JAVASCRIPT: 'js' }, createTextOutput: t => ({ text: t, setMimeType(m) { this.mime = m; return this; } }) }
   };
   vm.createContext(ctx); vm.runInContext(code, ctx);
-  return { ctx, rows, raw, mails };
+  return Object.assign(env, { ctx, rows, raw, mails, props, triggers, clock, cache: cacheStore });
 }
-const base = o => Object.assign({ submissionId: 'sub-aaaa1111', participantName: 'Jo Ump', participantEmail: 'jo@x.com', umpireId: '007',
-  association: 'Assoc', module: 'Module 01 — Foundations', assessmentType: 'Manual Knowledge Check', score: 4, totalQuestions: 5, percentage: 99, completionStatus: 'Complete' }, o);
-const post = (env, d) => env.ctx.doPost({ parameter: { payload: JSON.stringify(d) } });
-const msgOf = out => { const m = out.html.match(/var m=(\{.*?\});var w/)[1]; return JSON.parse(m); };
+
+// ---- helpers
+let seq = 0; const uid = () => 'sub-' + (++seq).toString().padStart(6, '0') + '-xx';
+const msgOf = out => JSON.parse(out.html.match(/var m=(\{.*?\});var w/)[1]);
+const act = (env, action, fields) => msgOf(env.ctx.doPost({ parameter: Object.assign({ action, id: 'req1' }, fields) }));
+const lastMailTo = (env, to) => [...env.mails].reverse().find(m => m.to === to);
+function login(env, email = 'jo@x.com') {
+  const s = act(env, 'sendCode', { email });
+  assert.strictEqual(s.success, true, s.error);
+  const c = lastMailTo(env, email.trim().toLowerCase()).body.match(/code is (\d{6})/)[1];
+  const v = act(env, 'verifyCode', { email, code: c });
+  assert.strictEqual(v.success, true, v.error);
+  return v.token;
+}
+const base = o => Object.assign({ submissionId: uid(), participantName: 'Jo Ump', participantEmail: 'typed-by-learner@x.com', umpireId: '007',
+  association: 'Assoc', module: 'Module 01 — Foundations', assessmentType: 'Presentation Competency Assessment', score: 9, totalQuestions: 10, percentage: 99, completionStatus: 'Complete' }, o);
+const save = (env, token, d) => msgOf(env.ctx.doPost({ parameter: { payload: JSON.stringify(Object.assign(base(), d, { token })) } }));
+const mod = k => `Module 0${k} — Module name ${k}`;
 
 let n = 0; const ok = (name, fn) => { fn(); console.log('  ok -', name); n++; };
+const MIN = 60 * 1000, HOUR = 60 * MIN;
 
+// =====================================================================  login
 let env = makeEnv();
-ok('saves, confirms, then emails; header + new columns written', () => {
-  const out = post(env, base());
-  const m = msgOf(out);
-  assert.strictEqual(m.success, true); assert.strictEqual(m.attemptNumber, 1); assert.strictEqual(m.submissionId, 'sub-aaaa1111');
-  assert.strictEqual(out.mode, 'ALLOWALL');
-  assert.strictEqual(env.rows.length, 2); assert.strictEqual(env.rows[0][14], 'Submission ID'); assert.strictEqual(env.rows[0][15], 'Email Status');
-  assert.strictEqual(env.rows[1][9], 80, 'percentage recomputed server-side (client sent 99)');
-  assert.strictEqual(env.rows[1][15], 'sent'); assert.strictEqual(env.mails.length, 1);
+ok('email code: sent to the address; wrong code counts a try; right code gives a 64-hex session; single use', () => {
+  assert.strictEqual(act(env, 'sendCode', { email: 'Jo@X.com ' }).success, true);
+  const mail = lastMailTo(env, 'jo@x.com'); assert.ok(mail, 'mail goes to the lower-cased address');
+  assert.ok(/Your WBSC training verification code: \d{6}/.test(mail.subject) && /expires in 10 minutes/.test(mail.body));
+  const good = mail.body.match(/code is (\d{6})/)[1], bad = good === '000000' ? '111111' : '000000';
+  const w = act(env, 'verifyCode', { email: 'jo@x.com', code: bad });
+  assert.strictEqual(w.success, false); assert.strictEqual(w.code, 'wrong'); assert.ok(/4 tries left/.test(w.error));
+  const v = act(env, 'verifyCode', { email: 'JO@x.com', code: good });
+  assert.strictEqual(v.success, true); assert.ok(/^[a-f0-9]{64}$/.test(v.token)); assert.strictEqual(v.email, 'jo@x.com');
+  const again = act(env, 'verifyCode', { email: 'jo@x.com', code: good });
+  assert.strictEqual(again.success, false); assert.strictEqual(again.code, 'expired');
+  assert.ok(![...env.cache.keys()].some(k => k.includes('jo@x.com')), 'no email address used as a cache key');
 });
-ok('retry of the same submissionId: no new row, no second email, same attempt', () => {
-  const m = msgOf(post(env, base()));
-  assert.strictEqual(m.success, true); assert.strictEqual(m.duplicate, true); assert.strictEqual(m.attemptNumber, 1);
-  assert.strictEqual(env.rows.length, 2); assert.strictEqual(env.mails.length, 1);
+ok('a code expires after 10 minutes', () => {
+  const e = makeEnv(); act(e, 'sendCode', { email: 'a@x.com' });
+  const c = lastMailTo(e, 'a@x.com').body.match(/code is (\d{6})/)[1];
+  e.clock.now += 10 * MIN + 1000;
+  assert.strictEqual(act(e, 'verifyCode', { email: 'a@x.com', code: c }).code, 'expired');
 });
-ok('second attempt counts 2 even with different email case/spaces; a third (even via the umpire ID) is refused', () => {
-  const m = msgOf(post(env, base({ submissionId: 'sub-bbbb2222', participantEmail: ' JO@X.com ' })));
-  assert.strictEqual(m.attemptNumber, 2); assert.strictEqual(m.success, true);
-  const before = env.rows.length, mails = env.mails.length;
-  const m2 = msgOf(post(env, base({ submissionId: 'sub-cccc3333', participantEmail: 'other@x.com' }))); // same umpire ID 007
-  assert.strictEqual(m2.success, false); assert.strictEqual(m2.code, 'max_attempts');
-  assert.ok(/maximum of 2 attempts/.test(m2.error) && /umpiredirector@wbscoceania\.org/.test(m2.error));
-  assert.strictEqual(env.rows.length, before, 'no row written for the refused attempt'); assert.strictEqual(env.mails.length, mails, 'no email sent');
+ok('five wrong guesses burn the code, even if the right one is then entered', () => {
+  const e = makeEnv(); act(e, 'sendCode', { email: 'a@x.com' });
+  const c = lastMailTo(e, 'a@x.com').body.match(/code is (\d{6})/)[1], bad = c === '123456' ? '654321' : '123456';
+  for (let i = 0; i < 5; i++) assert.strictEqual(act(e, 'verifyCode', { email: 'a@x.com', code: bad }).code, 'wrong');
+  const m = act(e, 'verifyCode', { email: 'a@x.com', code: c });
+  assert.strictEqual(m.success, false); assert.strictEqual(m.code, 'expired');
 });
-ok('retrying the saved second attempt after the limit is reached still confirms it (no duplicate)', () => {
-  const m = msgOf(post(env, base({ submissionId: 'sub-bbbb2222', participantEmail: ' JO@X.com ' })));
-  assert.strictEqual(m.success, true); assert.strictEqual(m.duplicate, true); assert.strictEqual(m.attemptNumber, 2);
-});
-ok('different module restarts at attempt 1', () => {
-  assert.strictEqual(msgOf(post(env, base({ submissionId: 'sub-dddd4444', module: 'Module 02' }))).attemptNumber, 1);
-});
-ok('a numeric umpire ID already stored as a number still matches', () => {
-  const e = makeEnv(); post(e, base({ umpireId: '12' }));
-  e.rows[1][3] = 12;                                  // sheet had converted it to a number
-  assert.strictEqual(msgOf(post(e, base({ submissionId: 'sub-eeee5555', participantEmail: 'x@y.com', umpireId: '12' }))).attemptNumber, 2);
-});
-ok('formula injection is neutralised (text marker added; Sheets stores it as text)', () => {
-  const e = makeEnv(); post(e, base({ participantName: '=HYPERLINK("http://evil","x")', association: '+cmd', umpireId: '-5' }));
-  const r = e.raw[1];
-  assert.ok(r[1].startsWith("'="), 'name written with a leading apostrophe');
-  assert.ok(r[4].startsWith("'+"), 'association too');
-  assert.ok(r[3].startsWith("'-"), 'umpire id too');
-});
-ok('plain numeric umpire ID is written as text, not a number', () => {
-  const e = makeEnv(); post(e, base({ umpireId: '007' }));
-  assert.strictEqual(e.raw[1][3], "'007");
-});
-ok('invalid scores and emails are rejected and nothing is written', () => {
+ok('codes are rate limited per address (3 an hour) and the window resets', () => {
   const e = makeEnv();
-  for (const bad of [{ score: 6 }, { score: -1 }, { totalQuestions: 0 }, { score: 2.5 }, { participantEmail: 'nope' }, { participantName: '' }, { submissionId: 'x' }]) {
-    const m = msgOf(post(e, base(bad))); assert.strictEqual(m.success, false, JSON.stringify(bad)); assert.ok(m.error);
-  }
-  assert.strictEqual(e.rows.length, 0); assert.strictEqual(e.mails.length, 0);
+  for (let i = 0; i < 3; i++) assert.strictEqual(act(e, 'sendCode', { email: 'a@x.com' }).success, true);
+  const r = act(e, 'sendCode', { email: 'a@x.com' }); assert.strictEqual(r.success, false); assert.strictEqual(r.code, 'rate');
+  assert.strictEqual(e.mails.length, 3, 'no fourth email');
+  e.clock.now += HOUR + MIN;
+  assert.strictEqual(act(e, 'sendCode', { email: 'a@x.com' }).success, true);
 });
-ok('garbage body returns a failure message, not an exception', () => {
-  const e = makeEnv(); const out = e.ctx.doPost({ parameter: { payload: '{not json' } });
-  assert.strictEqual(msgOf(out).success, false); assert.strictEqual(msgOf(out).error, 'The server could not save the result');
+ok('a flood of codes to many addresses is refused and the owner is alerted once', () => {
+  const e = makeEnv();
+  for (let i = 0; i < 60; i++) assert.strictEqual(act(e, 'sendCode', { email: `u${i}@x.com` }).success, true, 'request ' + i);
+  assert.strictEqual(act(e, 'sendCode', { email: 'u61@x.com' }).code, 'rate');
+  assert.strictEqual(act(e, 'sendCode', { email: 'u62@x.com' }).code, 'rate');
+  const alerts = e.mails.filter(m => m.to === 'owner@example.com' && /login codes/.test(m.subject));
+  assert.strictEqual(alerts.length, 1, 'one alert, not one per refused request');
 });
-ok('email failure: row stays saved, success still reported, status recorded', () => {
-  const e = makeEnv({ failMail: true }); const m = msgOf(post(e, base()));
-  assert.strictEqual(m.success, true); assert.strictEqual(e.rows.length, 2); assert.ok(/^FAILED: Error: quota/.test(e.rows[1][15]));
+ok('bad addresses are refused and nothing is emailed', () => {
+  const e = makeEnv();
+  for (const bad of ['', 'nope', 'a@b', 'a@b.c,d@e.fg', '<x>@y.com']) assert.strictEqual(act(e, 'sendCode', { email: bad }).success, false, bad);
+  assert.strictEqual(e.mails.length, 0);
 });
-ok('legacy raw-JSON POST still works and returns both ok and success', () => {
-  const e = makeEnv(); const out = e.ctx.doPost({ postData: { contents: JSON.stringify(base()) } });
-  const j = JSON.parse(out.text); assert.strictEqual(j.ok, true); assert.strictEqual(j.success, true);
-});
-ok('reply page cannot be broken out of by hostile text', () => {
-  const e = makeEnv(); const out = post(e, base({ submissionId: 'sub-ffff6666', participantName: '</script><script>alert(1)</script>' }));
-  assert.ok(!/<\/script><script>alert/.test(out.html));
+ok('a session lasts 6 hours', () => {
+  const e = makeEnv(); const t = login(e);
+  e.clock.now += 5 * HOUR; assert.strictEqual(save(e, t, {}).success, true);
+  e.clock.now += 2 * HOUR; const r = save(e, t, { module: mod(2) });
+  assert.strictEqual(r.success, false); assert.strictEqual(r.code, 'auth');
 });
 
-// ---- pass mark (85%) and result column
-ok('pass mark 85% is exact: 5/5 and 9/10 and 17/20 pass; 4/5, 8/10 and 16/20 do not; client percentage ignored', () => {
-  const cases = [[5, 5, 'PASS'], [4, 5, 'NOT PASSED'], [9, 10, 'PASS'], [8, 10, 'NOT PASSED'], [17, 20, 'PASS'], [16, 20, 'NOT PASSED'], [0, 5, 'NOT PASSED']];
-  cases.forEach(([sc, tot, want], i) => {
-    const e = makeEnv(); const m = msgOf(post(e, base({ submissionId: 'sub-pass-' + i + '-xxxx', score: sc, totalQuestions: tot, percentage: 100 })));
-    assert.strictEqual(m.result, want, sc + '/' + tot); assert.strictEqual(m.passed, want === 'PASS');
-    assert.strictEqual(e.rows[1][16], want, 'Result column'); assert.ok(e.rows[0][16] === 'Result');
-    assert.ok(new RegExp('Result: ' + want).test(e.mails[0][2]) && /Attempt number: 1 of 2/.test(e.mails[0][2]) && e.mails[0][1].includes(want));
-  });
+// =====================================================================  saving needs a verified email
+env = makeEnv();
+const token = login(env);
+ok('no token or a made-up token: nothing saved; code "auth"', () => {
+  for (const t of [undefined, '', 'x'.repeat(64), 'a'.repeat(64)]) {
+    const m = save(env, t, {}); assert.strictEqual(m.success, false, String(t)); assert.strictEqual(m.code, 'auth');
+  }
+  assert.strictEqual(env.rows.length, 0);
+});
+ok('a verified save is recorded against the VERIFIED address, whatever was typed', () => {
+  const m = save(env, token, { submissionId: 'sub-first-0001', score: 10, percentage: 5 });
+  assert.strictEqual(m.success, true); assert.strictEqual(m.attemptNumber, 1); assert.strictEqual(m.result, 'PASS'); assert.strictEqual(m.passed, true);
+  assert.strictEqual(env.rows.length, 2); assert.strictEqual(env.rows[1][2], 'jo@x.com');
+  assert.strictEqual(env.rows[0].length, 18); assert.strictEqual(env.rows[0][17], 'Receipt Status'); assert.strictEqual(env.rows[1][9], 100);
+});
+ok('attempts lookup needs a verified session and answers for that session only', () => {
+  const q = (extra) => env.ctx.doGet({ parameter: Object.assign({ action: 'attempts', callback: 'cb1', token, email: 'someone.else@x.com', module: 'Module 01 — Foundations', type: 'Presentation Competency Assessment' }, extra) });
+  let j = JSON.parse(q({}).text.slice(4, -2)); assert.deepStrictEqual([j.ok, j.attempts, j.remaining, j.passed], [true, 1, 1, true], 'counts the verified address, ignoring the email parameter');
+  j = JSON.parse(q({ token: 'a'.repeat(64) }).text.slice(4, -2)); assert.deepStrictEqual([j.ok, j.code], [false, 'auth']);
+  j = JSON.parse(q({ token: undefined }).text.slice(4, -2)); assert.strictEqual(j.code, 'auth');
+  assert.ok(!/name|email/.test(JSON.stringify(JSON.parse(q({}).text.slice(4, -2)))), 'no personal data returned');
+});
+
+// =====================================================================  receipts, Director notice
+ok('a result emails the Director and a receipt to the learner; statuses recorded', () => {
+  const e = makeEnv(); const t = login(e, 'Jo@X.com');
+  const before = e.mails.length;
+  const m = save(e, t, { score: 8, module: 'Module 02 — Foundations: One-Umpire' });   // 80% = not passed
+  assert.strictEqual(m.result, 'NOT PASSED');
+  const sent = e.mails.slice(before);
+  assert.strictEqual(sent.length, 2);
+  const [dir, rec] = sent;
+  assert.strictEqual(dir.to, 'umpiredirector@wbscoceania.org'); assert.ok(/NOT PASSED: Jo Ump/.test(dir.subject));
+  assert.strictEqual(rec.to, 'jo@x.com'); assert.ok(/receipt/i.test(rec.subject) && /NOT PASSED/.test(rec.subject));
+  for (const need of ['Hello Jo Ump', 'Score: 8 / 10 (80%)', 'Result: NOT PASSED (pass mark 85%)', 'Attempt: 1 of 2', '1 attempt left', 'not an official WBSC certificate', 'Module 02: not passed yet (best 80%, 1 of 2 attempts used)', 'Module 01: not attempted yet']) {
+    assert.ok(rec.body.includes(need), 'receipt contains: ' + need);
+  }
+  assert.ok(/Reference: [A-Z0-9-]{8}\n/.test(rec.body));
+  assert.strictEqual(e.rows[1][15], 'sent'); assert.strictEqual(e.rows[1][17], 'sent');
+});
+ok('the final failed attempt tells the learner who to contact', () => {
+  const e = makeEnv(); const t = login(e);
+  save(e, t, { score: 5 }); const before = e.mails.length; save(e, t, { score: 6 });
+  const rec = e.mails.slice(before).find(m => m.to === 'jo@x.com');
+  assert.ok(/used all 2 attempts/.test(rec.body) && /umpiredirector@wbscoceania\.org/.test(rec.body));
+});
+ok('a receipt failure never undoes the save; the owner is alerted (once an hour) and the status says FAILED', () => {
+  const e = makeEnv({ failMail: (to, subject) => to === 'jo@x.com' && /receipt/i.test(subject) });
+  const t = login(e);
+  const a = save(e, t, { module: mod(1) }); assert.strictEqual(a.success, true);
+  assert.ok(/^FAILED: Error: Service invoked too many times/.test(e.rows[1][17])); assert.strictEqual(e.rows[1][15], 'sent');
+  const b = save(e, t, { module: mod(2) }); assert.strictEqual(b.success, true);
+  const alerts = () => e.mails.filter(m => m.to === 'owner@example.com' && /receipt/i.test(m.subject));
+  assert.strictEqual(alerts().length, 1, 'one alert per hour for the same fault');
+  e.clock.now += HOUR + MIN; save(e, t, { module: mod(3) });
+  assert.strictEqual(alerts().length, 2, 'alerts again after the hour');
+});
+ok("a failed Director email alerts the owner and is recorded; the learner still gets a receipt", () => {
+  const e = makeEnv({ failMail: (to) => to === 'umpiredirector@wbscoceania.org' });
+  const t = login(e); const m = save(e, t, {});
+  assert.strictEqual(m.success, true); assert.ok(/^FAILED/.test(e.rows[1][15])); assert.strictEqual(e.rows[1][17], 'sent');
+  assert.ok(e.mails.some(x => x.to === 'owner@example.com' && /Director/.test(x.subject)));
+});
+
+// =====================================================================  completion summary
+ok('passing the sixth module: completion notice to the Director once, summary in the receipt, completedAll in the reply', () => {
+  const e = makeEnv(); const t = login(e);
+  for (let i = 1; i <= 5; i++) { const m = save(e, t, { module: mod(i) }); assert.strictEqual(m.completedAll, false, 'module ' + i); }
+  assert.strictEqual(e.mails.filter(m => /PROGRAM COMPLETED/.test(m.subject)).length, 0);
+  const before = e.mails.length;
+  const m6 = save(e, t, { module: mod(6) });
+  assert.strictEqual(m6.completedAll, true);
+  const sent = e.mails.slice(before);
+  const done = sent.filter(m => /PROGRAM COMPLETED: Jo Ump/.test(m.subject));
+  assert.strictEqual(done.length, 1); assert.strictEqual(done[0].to, 'umpiredirector@wbscoceania.org');
+  for (let i = 1; i <= 6; i++) assert.ok(done[0].body.includes(`Module 0${i}: PASSED (90%, 1 attempt used)`), 'summary line ' + i);
+  const rec = sent.find(m => m.to === 'jo@x.com'); assert.ok(/passed all 6 modules/.test(rec.body));
+  const b2 = e.mails.length; save(e, t, { module: mod(6), score: 10 });
+  assert.strictEqual(e.mails.slice(b2).filter(m => /PROGRAM COMPLETED/.test(m.subject)).length, 0, 'not repeated');
+});
+ok('only the marked assessment counts: Knowledge Checks and a different person do not complete the program', () => {
+  const e = makeEnv(); const t = login(e), t2 = login(e, 'other@x.com');
+  for (let i = 1; i <= 5; i++) save(e, t, { module: mod(i) });
+  save(e, t, { module: mod(6), assessmentType: 'Manual Knowledge Check', totalQuestions: 5, score: 5 });
+  save(e, t2, { module: mod(6), umpireId: '999' });
+  assert.strictEqual(e.mails.filter(m => /PROGRAM COMPLETED/.test(m.subject)).length, 0);
+  const m = save(e, t, { module: mod(6) }); assert.strictEqual(m.completedAll, true);
+});
+ok('a failed attempt in the last module does not complete the program; a later pass does', () => {
+  const e = makeEnv(); const t = login(e);
+  for (let i = 1; i <= 5; i++) save(e, t, { module: mod(i) });
+  assert.strictEqual(save(e, t, { module: mod(6), score: 8 }).completedAll, false);
+  assert.strictEqual(save(e, t, { module: mod(6), score: 9 }).completedAll, true);
+  assert.strictEqual(e.mails.filter(m => /PROGRAM COMPLETED/.test(m.subject)).length, 1);
+});
+
+// =====================================================================  attempts and pass mark (unchanged rules)
+ok('attempt counting is case/space-insensitive across the verified address and the Umpire ID; a third attempt is refused', () => {
+  const e = makeEnv(); const t = login(e, 'jo@x.com');
+  assert.strictEqual(save(e, t, { score: 8 }).attemptNumber, 1);
+  assert.strictEqual(save(e, t, { score: 8, umpireId: ' 007 ' }).attemptNumber, 2);
+  const mails = e.mails.length, rows = e.rows.length;
+  const t2 = login(e, 'other@x.com');                       // a different verified address, same Umpire ID
+  const mailsAfterLogin = e.mails.length;
+  const r = save(e, t2, { score: 10, umpireId: '007' });
+  assert.strictEqual(r.success, false); assert.strictEqual(r.code, 'max_attempts');
+  assert.ok(/maximum of 2 attempts/.test(r.error) && /umpiredirector@wbscoceania\.org/.test(r.error));
+  assert.strictEqual(e.rows.length, rows); assert.strictEqual(e.mails.length, mailsAfterLogin, 'no result or receipt email for a refused attempt');
+  assert.ok(mails <= mailsAfterLogin);
+});
+ok('retrying a saved attempt after the limit still confirms it, with no duplicate row or email', () => {
+  const e = makeEnv(); const t = login(e);
+  save(e, t, { submissionId: 'sub-aaaaaaaa', score: 8 }); save(e, t, { submissionId: 'sub-bbbbbbbb', score: 8 });
+  const rows = e.rows.length, mails = e.mails.length;
+  const m = save(e, t, { submissionId: 'sub-bbbbbbbb', score: 8 });
+  assert.strictEqual(m.success, true); assert.strictEqual(m.duplicate, true); assert.strictEqual(m.attemptNumber, 2);
+  assert.strictEqual(e.rows.length, rows); assert.strictEqual(e.mails.length, mails);
+});
+ok('85% is exact: 9/10 and 17/20 pass, 8/10 and 16/20 do not; the browser percentage is ignored', () => {
+  for (const [sc, tot, want] of [[5, 5, 'PASS'], [4, 5, 'NOT PASSED'], [9, 10, 'PASS'], [8, 10, 'NOT PASSED'], [17, 20, 'PASS'], [16, 20, 'NOT PASSED'], [0, 5, 'NOT PASSED']]) {
+    const e = makeEnv(); const t = login(e); const m = save(e, t, { score: sc, totalQuestions: tot, percentage: 100 });
+    assert.strictEqual(m.result, want, sc + '/' + tot); assert.strictEqual(e.rows[1][16], want);
+  }
 });
 ok('each assessment type has its own two attempts', () => {
-  const e = makeEnv();
-  for (const [id, type] of [['a1', 'Manual Knowledge Check'], ['a2', 'Manual Knowledge Check'], ['b1', 'Presentation Competency Assessment'], ['b2', 'Presentation Competency Assessment']]) {
-    assert.strictEqual(msgOf(post(e, base({ submissionId: 'sub-type-' + id + '-xx', assessmentType: type }))).success, true, id);
+  const e = makeEnv(); const t = login(e);
+  for (const type of ['Manual Knowledge Check', 'Manual Knowledge Check', 'Presentation Competency Assessment', 'Presentation Competency Assessment']) assert.strictEqual(save(e, t, { assessmentType: type }).success, true, type);
+  assert.strictEqual(save(e, t, { assessmentType: 'Manual Knowledge Check' }).code, 'max_attempts');
+  assert.strictEqual(save(e, t, { assessmentType: 'Presentation Competency Assessment' }).code, 'max_attempts');
+});
+ok('invalid scores and names are rejected and nothing is written or emailed', () => {
+  const e = makeEnv(); const t = login(e); const mails = e.mails.length;
+  for (const bad of [{ score: 11 }, { score: -1 }, { totalQuestions: 0 }, { score: 2.5 }, { participantName: '' }, { submissionId: 'x' }]) {
+    const m = save(e, t, bad); assert.strictEqual(m.success, false, JSON.stringify(bad)); assert.ok(m.error);
   }
-  assert.strictEqual(msgOf(post(e, base({ submissionId: 'sub-type-a3-xx', assessmentType: 'Manual Knowledge Check' }))).code, 'max_attempts');
-  assert.strictEqual(msgOf(post(e, base({ submissionId: 'sub-type-b3-xx', assessmentType: 'Presentation Competency Assessment' }))).code, 'max_attempts');
+  assert.strictEqual(e.rows.length, 0); assert.strictEqual(e.mails.length, mails);
 });
-ok('attempts lookup (JSONP) reports used / remaining / passed for exactly one person, module and type', () => {
-  const e = makeEnv();
-  const q = (extra) => e.ctx.doGet({ parameter: Object.assign({ action: 'attempts', callback: 'cb1', email: 'JO@x.com', module: 'Module 01 — Foundations', type: 'Manual Knowledge Check' }, extra) });
-  let t = q({}).text; assert.ok(/^cb1\(.*\);$/.test(t)); let j = JSON.parse(t.slice(4, -2));
-  assert.deepStrictEqual([j.ok, j.attempts, j.remaining, j.max, j.passed], [true, 0, 2, 2, false]);
-  post(e, base({ submissionId: 'sub-look-a1-xx', score: 4 }));
-  j = JSON.parse(q({}).text.slice(4, -2)); assert.deepStrictEqual([j.attempts, j.remaining, j.passed], [1, 1, false]);
-  post(e, base({ submissionId: 'sub-look-a2-xx', score: 5 }));
-  j = JSON.parse(q({}).text.slice(4, -2)); assert.deepStrictEqual([j.attempts, j.remaining, j.passed], [2, 0, true]);
-  j = JSON.parse(q({ type: 'Presentation Competency Assessment' }).text.slice(4, -2)); assert.strictEqual(j.attempts, 0, 'other type unaffected');
-  j = JSON.parse(q({ email: 'someone.else@x.com' }).text.slice(4, -2)); assert.strictEqual(j.attempts, 0, 'other person unaffected');
-  assert.ok(!('name' in j) && !('email' in j), 'no personal data returned');
+ok('text starting = + - @ is stored as text; numeric Umpire IDs are stored as text', () => {
+  const e = makeEnv(); const t = login(e);
+  save(e, t, { participantName: '=HYPERLINK("http://evil","x")', association: '+cmd', umpireId: '007' });
+  assert.ok(e.raw[1][1].startsWith("'=") && e.raw[1][4].startsWith("'+") && e.raw[1][3] === "'007");
 });
-ok('attempts lookup rejects unsafe callbacks and missing details', () => {
-  const e = makeEnv();
-  const bad = e.ctx.doGet({ parameter: { action: 'attempts', callback: 'alert(1);//', email: 'a@b.co', module: 'M', type: 'T' } });
-  assert.ok(!/alert/.test(bad.text) && bad.text.startsWith('{'), 'falls back to plain JSON');
-  const miss = JSON.parse(e.ctx.doGet({ parameter: { action: 'attempts', callback: 'cb', module: 'M' } }).text.slice(3, -2));
-  assert.strictEqual(miss.ok, false);
+ok('hostile text cannot break out of the reply page', () => {
+  const e = makeEnv(); const t = login(e);
+  const out = e.ctx.doPost({ parameter: { payload: JSON.stringify(Object.assign(base({ participantName: 'x' }), { submissionId: '</script><script>alert(1)</script>', token: t })) } });
+  assert.ok(!/<\/script><script>alert/.test(out.html));
+  const LS = String.fromCharCode(8232), PS = String.fromCharCode(8233);   // line and paragraph separators
+  const ls = e.ctx.doPost({ parameter: { payload: JSON.stringify(Object.assign(base(), { submissionId: 'a' + LS + 'b' + PS + 'c-12345', token: t })) } });
+  assert.ok(!ls.html.includes(LS) && !ls.html.includes(PS), 'line separators are escaped');
 });
-ok('plain GET without the page file still answers (page is hosted on GitHub now)', () => {
+ok('garbage and legacy raw-JSON posts behave', () => {
+  const e = makeEnv(); const t = login(e);
+  assert.strictEqual(msgOf(e.ctx.doPost({ parameter: { payload: '{not json' } })).error, 'The server could not save the result');
+  const j = JSON.parse(e.ctx.doPost({ postData: { contents: JSON.stringify(Object.assign(base(), { token: t })) } }).text);
+  assert.strictEqual(j.ok, true); assert.strictEqual(j.success, true);
+  const noTok = JSON.parse(e.ctx.doPost({ postData: { contents: JSON.stringify(base()) } }).text);
+  assert.strictEqual(noTok.success, false); assert.strictEqual(noTok.code, 'auth');
+});
+ok('plain GET without the page file still answers (the page is hosted on GitHub)', () => {
   const e = makeEnv(); e.ctx.HtmlService.createHtmlOutputFromFile = () => { throw new Error('no file'); };
   assert.ok(/results service/.test(e.ctx.doGet({ parameter: {} }).text));
+  const bad = e.ctx.doGet({ parameter: { action: 'attempts', callback: 'alert(1);//', token: 'x' } });
+  assert.ok(!/alert/.test(bad.text) && bad.text.startsWith('{'), 'unsafe callback falls back to plain JSON');
 });
+
+// =====================================================================  Director's results page
+ok('results: not configured, wrong password, then the data for the right one (no secrets, compact)', () => {
+  const e = makeEnv(); const t = login(e); save(e, t, { score: 8 }); save(e, t, { module: mod(2) });
+  assert.strictEqual(act(e, 'results', { password: 'x' }).code, 'not_configured');
+  e.props.set('RESULTS_PASSWORD', 'correct horse');
+  const w = act(e, 'results', { password: 'nope' }); assert.strictEqual(w.success, false); assert.strictEqual(w.code, 'wrong'); assert.ok(!('rows' in w));
+  const r = act(e, 'results', { password: 'correct horse' });
+  assert.strictEqual(r.success, true); assert.strictEqual(r.rows.length, 2);
+  assert.deepStrictEqual(r.cols.slice(0, 4), ['timestamp', 'name', 'email', 'umpireId']);
+  const row = Object.fromEntries(r.cols.map((c, i) => [c, r.rows[0][i]]));
+  assert.strictEqual(row.email, 'jo@x.com'); assert.strictEqual(row.result, 'NOT PASSED'); assert.strictEqual(row.attempt, 1); assert.strictEqual(row.percent, 80);
+  assert.deepStrictEqual(r.config, { passMark: 85, maxAttempts: 2, totalModules: 6, completionType: 'Presentation Competency Assessment' });
+  assert.ok(!JSON.stringify(r).includes('correct horse'));
+});
+ok('results: 10 wrong passwords lock the page for 15 minutes (even for the right password) and alert the owner', () => {
+  const e = makeEnv(); e.props.set('RESULTS_PASSWORD', 'pw');
+  for (let i = 0; i < 10; i++) assert.strictEqual(act(e, 'results', { password: 'bad' + i }).code, 'wrong');
+  assert.strictEqual(act(e, 'results', { password: 'bad-11' }).code, 'wrong');   // the attempt that trips the lock
+  const locked = act(e, 'results', { password: 'pw' }); assert.strictEqual(locked.code, 'locked'); assert.strictEqual(locked.success, false);
+  assert.strictEqual(e.mails.filter(m => m.to === 'owner@example.com' && /locked/.test(m.subject)).length, 1);
+  e.clock.now += 16 * MIN;
+  assert.strictEqual(act(e, 'results', { password: 'pw' }).success, true, 'unlocks after 15 minutes');
+});
+ok('results: a good login clears the wrong-password count', () => {
+  const e = makeEnv(); e.props.set('RESULTS_PASSWORD', 'pw');
+  for (let i = 0; i < 8; i++) act(e, 'results', { password: 'bad' });
+  assert.strictEqual(act(e, 'results', { password: 'pw' }).success, true);
+  for (let i = 0; i < 8; i++) assert.strictEqual(act(e, 'results', { password: 'bad' }).code, 'wrong');
+  assert.strictEqual(act(e, 'results', { password: 'pw' }).success, true, 'not locked: the count restarted');
+});
+
+// =====================================================================  alerts and health check
+ok('an unexpected server error alerts the owner and is counted; the learner gets a generic message', () => {
+  const e = makeEnv(); const t = login(e); e.throwOnSheet = true;
+  const m = save(e, t, {}); assert.strictEqual(m.success, false); assert.strictEqual(m.error, 'The server could not save the result');
+  const a = e.mails.filter(x => x.to === 'owner@example.com' && /could not be saved/.test(x.subject));
+  assert.strictEqual(a.length, 1); assert.ok(/Sheet unavailable/.test(a[0].body));
+  save(e, t, {}); assert.strictEqual(e.mails.filter(x => x.to === 'owner@example.com' && /could not be saved/.test(x.subject)).length, 1, 'rate limited');
+  const log = JSON.parse(e.props.get('errlog')); assert.strictEqual(Object.values(log)[0].n, 2);
+});
+ok('alerts go to ALERT_EMAIL when set, otherwise to the script owner', () => {
+  const e = makeEnv(); e.ctx.alertOwner_('k1', 'Hello', 'detail'); assert.strictEqual(e.mails.pop().to, 'owner@example.com');
+  e.props.set('ALERT_EMAIL', 'tech@example.org'); e.ctx.alertOwner_('k2', 'Hello', 'detail'); assert.strictEqual(e.mails.pop().to, 'tech@example.org');
+});
+ok('daily check: all well -> an [OK] email; HEALTH_REPORT=problems stays quiet', () => {
+  const e = makeEnv(); const t = login(e); save(e, t, {}); const before = e.mails.length;
+  const r = e.ctx.dailyHealthCheck(); assert.strictEqual(r.ok, true);
+  const mail = e.mails[before]; assert.strictEqual(mail.to, 'owner@example.com'); assert.ok(/Daily check: OK/.test(mail.subject));
+  assert.ok(/Results in the last 24 hours: 1 \(1 passed\)/.test(mail.body) && /Email quota left today: 100/.test(mail.body) && /RESULTS_PASSWORD is not set/.test(mail.body));
+  e.props.set('HEALTH_REPORT', 'problems'); const n2 = e.mails.length; const q = e.ctx.dailyHealthCheck();
+  assert.strictEqual(q.sent, false); assert.strictEqual(e.mails.length, n2);
+});
+ok('daily check flags failed emails, stuck results, low quota, logged errors and a damaged header', () => {
+  const e = makeEnv({ quota: 5 }); const t = login(e); save(e, t, {});
+  e.rows[1][15] = 'FAILED: Error: x'; e.rows[1][17] = 'FAILED: Error: y';
+  save(e, t, { module: mod(2) }); e.rows[2][15] = 'pending'; e.clock.now += 40 * MIN;
+  e.ctx.logError_('save', new Error('boom'));
+  e.rows[0][9] = 'Wrong';
+  const before = e.mails.length; const r = e.ctx.dailyHealthCheck();
+  assert.strictEqual(r.ok, false);
+  const body = e.mails[before].body, subj = e.mails[before].subject;
+  assert.ok(/ATTENTION NEEDED/.test(subj));
+  for (const need of ['email to the Director FAILED', 'receipt(s) in the last 7 days FAILED', 'still "pending"', 'Only 5 emails left', '1 server error(s)', 'column 10 should be "Percentage"']) assert.ok(body.includes(need), need);
+  e.props.set('HEALTH_REPORT', 'problems'); const n2 = e.mails.length; e.ctx.dailyHealthCheck(); assert.strictEqual(e.mails.length, n2 + 1, 'problems are still reported in problems-only mode');
+});
+ok('installTriggers schedules one daily check (and can be re-run); sendTestAlert reaches the owner', () => {
+  const e = makeEnv(); e.ctx.installTriggers(); e.ctx.installTriggers();
+  assert.strictEqual(e.triggers.length, 1); assert.deepStrictEqual(e.triggers[0].spec, { fn: 'dailyHealthCheck', days: 1, hour: 7 });
+  e.ctx.removeTriggers(); assert.strictEqual(e.triggers.length, 0);
+  assert.ok(/owner@example.com/.test(e.ctx.sendTestAlert())); assert.ok(/Test alert/.test(e.mails.pop().subject));
+});
+ok('no secret or address ends up in the cache key names', () => {
+  const e = makeEnv(); e.props.set('RESULTS_PASSWORD', 'S3cret-pw'); const t = login(e, 'priv@x.com'); save(e, t, {});
+  act(e, 'results', { password: 'S3cret-pw' });
+  const keys = [...e.cache.keys()].join('|'); assert.ok(!/priv@x\.com|S3cret/.test(keys), keys);
+});
+
 console.log(n + ' Code.gs checks passed');

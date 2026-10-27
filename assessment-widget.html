@@ -513,6 +513,14 @@
   .quiz-save-state.saved{color:#2f7a3d;font-weight:700;}
   .quiz-save-state.local{color:var(--ink-soft);}
   .quiz-save-state.failed{color:var(--red-600);font-weight:700;}
+  .verify-box{margin-top:22px;padding-top:20px;border-top:1px solid var(--line);}
+  .verify-state{font-size:0.92rem;color:var(--ink-soft);margin-bottom:12px;min-height:1.4em;}
+  .verify-state.ok{color:#2f7a3d;font-weight:700;}
+  .verify-state.bad{color:var(--red-600);font-weight:700;}
+  .verify-row{display:flex;flex-wrap:wrap;align-items:flex-end;gap:14px;}
+  .verify-hint{font-size:0.84rem;color:var(--ink-soft);max-width:46ch;align-self:center;}
+  .verify-code-field{width:170px;}
+  .verify-code-field input{letter-spacing:0.25em;font-size:1.05rem;}
   .rules-note{border-left:5px solid var(--gold-500);background:var(--paper);padding:14px 20px;margin-bottom:20px;font-size:0.92rem;color:var(--ink-soft);}
   .rules-note strong{color:var(--navy-950);}
   .quiz-attempt{margin-top:6px;font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;font-size:0.78rem;color:var(--gold-500);}
@@ -608,7 +616,7 @@
       </div>
       <div class="identity-panel">
         <h2>Your Details</h2>
-        <p class="desc">Required once per visit before starting an assessment, so your result can be recorded against you. This information is only used for your completion record — it's sent to the program administrator together with your score.</p>
+        <p class="desc">Required once per visit before starting an assessment, so your result can be recorded against you. You will confirm your email address with a one-time code. This information is only used for your completion record — it's sent to the program administrator together with your score.</p>
         <div class="identity-grid">
           <div class="field" id="field-name">
             <label for="inp-name">Full name</label>
@@ -627,6 +635,24 @@
           <div class="field" id="field-assoc">
             <label for="inp-assoc">Association / Federation <span class="opt">(optional)</span></label>
             <input type="text" id="inp-assoc" placeholder="e.g. Softball Australia">
+          </div>
+        </div>
+        <div class="verify-box" id="verify-box">
+          <p class="verify-state" id="verify-state" role="status" aria-live="polite"></p>
+          <div class="verify-row" id="verify-send-row">
+            <button class="btn btn-outline-navy" id="verify-send-btn" type="button">Email me a code</button>
+            <span class="verify-hint">We will send a 6-digit code to the email address above to confirm it is yours.</span>
+          </div>
+          <div class="verify-row" id="verify-code-row" style="display:none;">
+            <div class="field verify-code-field">
+              <label for="inp-code">6-digit code</label>
+              <input type="text" id="inp-code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]*" placeholder="123456">
+            </div>
+            <button class="btn btn-primary" id="verify-check-btn" type="button">Verify</button>
+            <button class="btn-ghost" id="verify-resend-btn" type="button" disabled>Send a new code</button>
+          </div>
+          <div class="verify-row" id="verify-done-row" style="display:none;">
+            <button class="btn-ghost" id="verify-change-btn" type="button">Use a different email address</button>
           </div>
         </div>
       </div>
@@ -1774,8 +1800,150 @@ var QUIZ_BANK = {
   var CONTACT_EMAIL = 'umpiredirector@wbscoceania.org';
   var LOOKUP_TIMEOUT_MS = 8000;
 
+  var AUTH_TIMEOUT_MS = 20000;
+  var RESEND_WAIT_MS = 30000;
   var SAVE_TIMEOUT_MS = 25000;
   var pendingSave = null;   // { id, payload, timer, frame, form }
+
+  // ---------------------------------------------------------------
+  // EMAIL VERIFICATION (one-time code)
+  // The learner proves they control the email address with a 6-digit code the
+  // server emails them. The server then gives this page a session token, which
+  // is kept for this visit only (sessionStorage) and sent with every attempts
+  // lookup and result. Results are always recorded against the VERIFIED address.
+  // ---------------------------------------------------------------
+  var session = null;      // { token, email, exp }
+  try {
+    var storedSession = JSON.parse(sessionStorage.getItem('wbscSession') || 'null');
+    if (storedSession && storedSession.token && storedSession.exp > Date.now()) session = storedSession;
+  } catch (e) {}
+
+  function saveSession(){
+    try { if (session) sessionStorage.setItem('wbscSession', JSON.stringify(session)); else sessionStorage.removeItem('wbscSession'); } catch (e) {}
+  }
+  function isVerified(){
+    return !!(session && session.exp > Date.now() &&
+      session.email === document.getElementById('inp-email').value.trim().toLowerCase());
+  }
+  function clearSession(){ session = null; saveSession(); refreshVerifyUI(); }
+
+  var verifyEls = {
+    state: document.getElementById('verify-state'),
+    sendRow: document.getElementById('verify-send-row'), sendBtn: document.getElementById('verify-send-btn'),
+    codeRow: document.getElementById('verify-code-row'), code: document.getElementById('inp-code'),
+    checkBtn: document.getElementById('verify-check-btn'), resendBtn: document.getElementById('verify-resend-btn'),
+    doneRow: document.getElementById('verify-done-row'), changeBtn: document.getElementById('verify-change-btn')
+  };
+  var codeSentTo = '';     // the address a code was last sent to
+
+  function setVerifyState(kind, text){
+    verifyEls.state.className = 'verify-state' + (kind ? ' ' + kind : '');
+    verifyEls.state.textContent = text;
+  }
+
+  function refreshVerifyUI(){
+    var typed = document.getElementById('inp-email').value.trim().toLowerCase();
+    if (isVerified()) {
+      verifyEls.sendRow.style.display = 'none'; verifyEls.codeRow.style.display = 'none'; verifyEls.doneRow.style.display = '';
+      setVerifyState('ok', '\u2713 Email verified: ' + session.email);
+    } else if (codeSentTo && codeSentTo === typed) {
+      verifyEls.sendRow.style.display = 'none'; verifyEls.doneRow.style.display = 'none'; verifyEls.codeRow.style.display = '';
+    } else {
+      verifyEls.codeRow.style.display = 'none'; verifyEls.doneRow.style.display = 'none'; verifyEls.sendRow.style.display = '';
+      if (verifyEls.state.className.indexOf('ok') !== -1) setVerifyState('', 'Confirm your email address to continue.');
+      else if (!verifyEls.state.textContent) setVerifyState('', 'Confirm your email address to continue.');
+    }
+  }
+
+  // One request to the server and one reply, through a hidden form and iframe
+  // (same technique as saving a result). `done` is called once with the reply.
+  var pendingCalls = {};
+  function callServer(action, fields, done){
+    var id = 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+    var frameName = 'wbsc-call-' + id;
+    var frame = document.createElement('iframe');
+    frame.name = frameName; frame.title = 'Request'; frame.setAttribute('aria-hidden', 'true'); frame.tabIndex = -1;
+    frame.style.cssText = 'position:absolute;width:0;height:0;border:0;visibility:hidden;';
+    var form = document.createElement('form');
+    form.method = 'POST'; form.action = APPS_SCRIPT_URL; form.target = frameName; form.acceptCharset = 'utf-8'; form.style.display = 'none';
+    var all = { action: action, id: id };
+    Object.keys(fields).forEach(function(k){ all[k] = fields[k]; });
+    Object.keys(all).forEach(function(k){
+      var f = document.createElement('input'); f.type = 'hidden'; f.name = k; f.value = all[k]; form.appendChild(f);
+    });
+    function cleanup(){
+      clearTimeout(call.timer);
+      delete pendingCalls[id];
+      if (frame.parentNode) frame.parentNode.removeChild(frame);
+      if (form.parentNode) form.parentNode.removeChild(form);
+    }
+    var call = { done: function(reply){ cleanup(); done(reply); }, timer: null };
+    call.timer = setTimeout(function(){ call.done({ success: false, error: 'The service did not answer. Please check your connection and try again.' }); }, AUTH_TIMEOUT_MS);
+    pendingCalls[id] = call;
+    document.body.appendChild(frame);
+    document.body.appendChild(form);
+    form.submit();
+  }
+
+  function sendCode(){
+    var email = document.getElementById('inp-email').value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      document.getElementById('field-email').classList.add('invalid');
+      setVerifyState('bad', 'Enter a valid email address above first.');
+      return;
+    }
+    document.getElementById('field-email').classList.remove('invalid');
+    verifyEls.sendBtn.disabled = true; verifyEls.resendBtn.disabled = true;
+    setVerifyState('', 'Sending a code to ' + email + '\u2026');
+    callServer('sendCode', { email: email }, function(r){
+      verifyEls.sendBtn.disabled = false;
+      if (r.success) {
+        codeSentTo = email.toLowerCase();
+        refreshVerifyUI();
+        setVerifyState('', 'We sent a 6-digit code to ' + email + '. It can take a minute to arrive; check your spam folder too.');
+        verifyEls.code.value = ''; verifyEls.code.focus();
+        setTimeout(function(){ verifyEls.resendBtn.disabled = false; }, RESEND_WAIT_MS);
+      } else {
+        verifyEls.resendBtn.disabled = false;
+        refreshVerifyUI();
+        setVerifyState('bad', r.error || 'We could not send the code. Please try again.');
+      }
+    });
+  }
+
+  function checkCode(){
+    var email = document.getElementById('inp-email').value.trim();
+    var code = verifyEls.code.value.replace(/\s+/g, '');
+    if (!/^\d{6}$/.test(code)) { setVerifyState('bad', 'Enter the 6-digit code from the email.'); verifyEls.code.focus(); return; }
+    verifyEls.checkBtn.disabled = true;
+    setVerifyState('', 'Checking the code\u2026');
+    callServer('verifyCode', { email: email, code: code }, function(r){
+      verifyEls.checkBtn.disabled = false;
+      if (r.success && r.token) {
+        session = { token: r.token, email: String(r.email || email).toLowerCase(), exp: Date.now() + ((r.expiresIn || 21600) - 120) * 1000 };
+        saveSession(); codeSentTo = '';
+        els.validationBanner.classList.remove('show');
+        refreshVerifyUI();
+      } else {
+        if (r.code === 'expired') { codeSentTo = ''; refreshVerifyUI(); }
+        setVerifyState('bad', r.error || 'That code did not work. Please try again.');
+      }
+    });
+  }
+
+  verifyEls.sendBtn.addEventListener('click', sendCode);
+  verifyEls.resendBtn.addEventListener('click', sendCode);
+  verifyEls.checkBtn.addEventListener('click', checkCode);
+  verifyEls.code.addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); checkCode(); } });
+  verifyEls.changeBtn.addEventListener('click', function(){
+    clearSession(); codeSentTo = ''; setVerifyState('', 'Confirm your email address to continue.');
+    document.getElementById('inp-email').focus();
+  });
+  document.getElementById('inp-email').addEventListener('input', function(){
+    if (session && !isVerified()) { session = null; saveSession(); }
+    if (codeSentTo && codeSentTo !== this.value.trim().toLowerCase()) codeSentTo = '';
+    refreshVerifyUI();
+  });
 
   function newSubmissionId(){
     if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
@@ -1820,7 +1988,10 @@ var QUIZ_BANK = {
     var field = document.createElement('input');
     field.type = 'hidden';
     field.name = 'payload';
-    field.value = JSON.stringify(payload);
+    var body = {};
+    Object.keys(payload).forEach(function(k){ body[k] = payload[k]; });
+    body.token = session ? session.token : '';      // added at send time, so a retry after re-verifying uses the new session
+    field.value = JSON.stringify(body);
     form.appendChild(field);
 
     document.body.appendChild(frame);
@@ -1841,15 +2012,26 @@ var QUIZ_BANK = {
 
   window.addEventListener('message', function(ev){
     var m = ev.data;
+    if (m && m.wbscAuth === true) {
+      if (trustedOrigin(ev.origin) && pendingCalls[m.id]) pendingCalls[m.id].done(m);
+      return;
+    }
     if (!m || m.wbscSave !== true || !pendingSave || m.submissionId !== pendingSave.id) return;
     if (!trustedOrigin(ev.origin)) return;
     cleanupSave();
     if (m.success) {
       var max = m.maxAttempts || MAX_ATTEMPTS;
       var n = m.attemptNumber ? ' (attempt ' + m.attemptNumber + ' of ' + max + ')' : '';
-      setSaveState('saved', '✓ Your result has been recorded' + n + '.', false);
+      setSaveState('saved', '✓ Your result has been recorded' + n + '. A receipt will be emailed to ' + (session ? session.email : 'you') + '.', false);
       if (m.result) showResult(m.result === 'PASS', m.attemptNumber, true);   // the server's decision is final
+      if (m.completedAll) els.resultText.textContent += ' You have now passed all 6 modules. A summary will be emailed to you.';
       pendingSave = null;
+    } else if (m.code === 'auth') {
+      // The verification expired (or was never completed). Nothing was saved; the same
+      // result can be sent again after verifying, and it is never recorded twice.
+      clearSession();
+      setSaveState('failed', 'Your email verification has expired. Verify your email again in "Your Details" at the top of the page, then press "Try saving again". Your score is kept.', true);
+      document.querySelector('.identity-panel').scrollIntoView({behavior:'smooth', block:'center'});
     } else if (m.code === 'max_attempts') {
       // Nothing was saved. This is final, so no Retry.
       setSaveState('failed', m.error || ('You have already used the maximum of ' + MAX_ATTEMPTS + ' attempts for this assessment.'), false);
@@ -1865,6 +2047,11 @@ var QUIZ_BANK = {
 
   els.retryBtn.addEventListener('click', function(){
     if (!pendingSave) return;
+    if (!isVerified()) {
+      setSaveState('failed', 'Verify your email address in "Your Details" first, then press "Try saving again".', true);
+      document.querySelector('.identity-panel').scrollIntoView({behavior:'smooth', block:'center'});
+      return;
+    }
     setSaveState('local', 'Recording your result…', false);
     postToWebApp(pendingSave.payload);   // same submissionId: the server de-duplicates
   });
@@ -1890,7 +2077,7 @@ var QUIZ_BANK = {
     var payload = {
       submissionId: newSubmissionId(),
       participantName: document.getElementById('inp-name').value.trim(),
-      participantEmail: document.getElementById('inp-email').value.trim(),
+      participantEmail: session ? session.email : document.getElementById('inp-email').value.trim(),
       umpireId: document.getElementById('inp-umpid').value.trim(),
       association: document.getElementById('inp-assoc').value.trim(),
       module: bank.module,
@@ -1945,13 +2132,13 @@ var QUIZ_BANK = {
       clearTimeout(timer);
       try { delete window[cbName]; } catch (e) { window[cbName] = undefined; }
       if (script.parentNode) script.parentNode.removeChild(script);
-      done(info && info.ok ? info : null);
+      done(info && info.ok ? info : (info && info.code === 'auth' ? { authFailed: true } : null));
     }
     var timer = setTimeout(function(){ finish(null); }, LOOKUP_TIMEOUT_MS);
     window[cbName] = finish;
     script.onerror = function(){ finish(null); };
     script.src = APPS_SCRIPT_URL + '?action=attempts&callback=' + cbName +
-      '&email=' + encodeURIComponent(document.getElementById('inp-email').value.trim()) +
+      '&token=' + encodeURIComponent(session ? session.token : '') +
       '&umpireId=' + encodeURIComponent(document.getElementById('inp-umpid').value.trim()) +
       '&module=' + encodeURIComponent(bank.module) + '&type=' + encodeURIComponent(bank.kind);
     document.body.appendChild(script);
@@ -1976,11 +2163,22 @@ var QUIZ_BANK = {
       document.querySelector('.identity-panel').scrollIntoView({behavior:'smooth', block:'center'});
       return;
     }
+    if (!isVerified()) {
+      showBanner('Confirm your email address first: press "Email me a code" in Your Details, then enter the code.');
+      document.querySelector('.identity-panel').scrollIntoView({behavior:'smooth', block:'center'});
+      return;
+    }
     els.validationBanner.classList.remove('show');
     starting = true;
     showBanner('Checking your attempts\u2026');
     lookupAttempts(key, function(info){
       starting = false;
+      if (info && info.authFailed) {
+        clearSession();
+        showBanner('Your email verification has expired. Please verify your email again in Your Details.');
+        document.querySelector('.identity-panel').scrollIntoView({behavior:'smooth', block:'center'});
+        return;
+      }
       if (info && info.remaining <= 0) {
         showBanner('You have already used the maximum of ' + (info.max || MAX_ATTEMPTS) + ' attempts for this assessment' +
           (info.passed ? ' (you have passed it)' : '') + '. Please contact ' + CONTACT_EMAIL + ' if you need help.');
@@ -2072,6 +2270,8 @@ var QUIZ_BANK = {
     var open = document.getElementById('primary-nav').classList.toggle('open');
     navToggle.setAttribute('aria-expanded', String(open));
   });
+
+  refreshVerifyUI();
 
   window.addEventListener('beforeunload', function(e){
     var midQuiz = els.active.style.display !== 'none' && (state.index > 0 || state.answered || state.selected !== null);

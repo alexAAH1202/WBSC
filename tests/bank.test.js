@@ -28,7 +28,7 @@ for (const m of modules) for (const t of ['mkc', 'pca']) {
 }
 // Required page furniture: the temporary-site disclosure, a privacy page that exists, and no ./ brand link.
 const NOTICE = /This is not the official WBSC website/;
-for (const f of ['assessment-widget.html', 'index.html', 'privacy.html', 'presentations.html', 'manuals.html']) {
+for (const f of ['assessment-widget.html', 'index.html', 'privacy.html', 'presentations.html', 'manuals.html', 'results.html']) {
   const fp = path.join(__dirname, '..', f);
   if (!fs.existsSync(fp)) { errors.push(f + ' is missing'); continue; }
   const h = fs.readFileSync(fp, 'utf8');
@@ -40,7 +40,7 @@ for (const f of ['assessment-widget.html', 'index.html', 'privacy.html', 'presen
 }
 // links into the assessments or presentations pages must name a real assessment / section
 const presHtml = fs.readFileSync(path.join(__dirname, '..', 'presentations.html'), 'utf8');
-for (const f of ['assessment-widget.html', 'index.html', 'privacy.html', 'presentations.html', 'manuals.html']) {
+for (const f of ['assessment-widget.html', 'index.html', 'privacy.html', 'presentations.html', 'manuals.html', 'results.html']) {
   const h = fs.readFileSync(path.join(__dirname, '..', f), 'utf8');
   for (const m of h.matchAll(/assessment-widget\.html#assessment-([a-z0-9-]+)/g)) {
     if (!BANK[m[1]]) errors.push(`${f}: link to unknown assessment ${m[1]}`);
