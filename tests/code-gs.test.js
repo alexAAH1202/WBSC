@@ -77,7 +77,7 @@ function login(env, email = 'jo@x.com') {
   return v.token;
 }
 const base = o => Object.assign({ submissionId: uid(), participantName: 'Jo Ump', participantEmail: 'typed-by-learner@x.com', umpireId: '007',
-  association: 'Assoc', module: 'Module 01 — Foundations', assessmentType: 'Presentation Competency Assessment', score: 9, totalQuestions: 10, percentage: 99, completionStatus: 'Complete' }, o);
+  association: 'Assoc', module: 'Module 01 — Foundations', assessmentType: 'Presentation Competency Assessment', score: 9, totalQuestions: 10, percentage: 99, completionStatus: 'Complete', elapsedSeconds: 90 }, o);
 const save = (env, token, d) => msgOf(env.ctx.doPost({ parameter: { payload: JSON.stringify(Object.assign(base(), d, { token })) } }));
 const mod = k => `Module 0${k} — Module name ${k}`;
 
@@ -220,11 +220,10 @@ ok('passing the sixth module: completion notice to the Director once, summary in
   const b2 = e.mails.length; save(e, t, { module: mod(6), score: 10 });
   assert.strictEqual(e.mails.slice(b2).filter(m => /PROGRAM COMPLETED/.test(m.subject)).length, 0, 'not repeated');
 });
-ok('only the marked assessment counts: Knowledge Checks and a different person do not complete the program', () => {
+ok('only the marked assessment counts: a different person does not complete the program', () => {
   const e = makeEnv(); const t = login(e), t2 = login(e, 'other@x.com');
   for (let i = 1; i <= 5; i++) save(e, t, { module: mod(i) });
-  save(e, t, { module: mod(6), assessmentType: 'Manual Knowledge Check', totalQuestions: 5, score: 5 });
-  save(e, t2, { module: mod(6), umpireId: '999' });
+    save(e, t2, { module: mod(6), umpireId: '999' });
   assert.strictEqual(e.mails.filter(m => /PROGRAM COMPLETED/.test(m.subject)).length, 0);
   const m = save(e, t, { module: mod(6) }); assert.strictEqual(m.completedAll, true);
 });
@@ -264,11 +263,35 @@ ok('85% is exact: 9/10 and 17/20 pass, 8/10 and 16/20 do not; the browser percen
     assert.strictEqual(m.result, want, sc + '/' + tot); assert.strictEqual(e.rows[1][16], want);
   }
 });
-ok('each assessment type has its own two attempts', () => {
+ok('each module has its own two attempts on the marked assessment', () => {
   const e = makeEnv(); const t = login(e);
-  for (const type of ['Manual Knowledge Check', 'Manual Knowledge Check', 'Presentation Competency Assessment', 'Presentation Competency Assessment']) assert.strictEqual(save(e, t, { assessmentType: type }).success, true, type);
-  assert.strictEqual(save(e, t, { assessmentType: 'Manual Knowledge Check' }).code, 'max_attempts');
-  assert.strictEqual(save(e, t, { assessmentType: 'Presentation Competency Assessment' }).code, 'max_attempts');
+  assert.strictEqual(save(e, t, { module: mod(1) }).success, true); assert.strictEqual(save(e, t, { module: mod(1) }).success, true);
+  assert.strictEqual(save(e, t, { module: mod(1) }).code, 'max_attempts');
+  assert.strictEqual(save(e, t, { module: mod(2) }).success, true);
+});
+ok('Knowledge Checks are practice: the server refuses to record one', () => {
+  const e = makeEnv(); const t = login(e); const mails = e.mails.length;
+  const m = save(e, t, { assessmentType: 'Manual Knowledge Check', totalQuestions: 5, score: 5 });
+  assert.strictEqual(m.success, false); assert.ok(/only the Presentation Competency Assessment is recorded/.test(m.error));
+  assert.strictEqual(e.rows.length, 0, 'nothing written'); assert.strictEqual(e.mails.length, mails);
+});
+ok('bot check: honeypot filled, or finished faster than 2 seconds a question, or no timing at all, is refused', () => {
+  const e = makeEnv(); const t = login(e);
+  for (const bad of [{ website: 'http://spam' }, { elapsedSeconds: 19 }, { elapsedSeconds: undefined }, { elapsedSeconds: 'x' }]) {
+    const m = save(e, t, bad); assert.strictEqual(m.success, false, JSON.stringify(bad)); assert.ok(/too quickly/.test(m.error));
+  }
+  assert.strictEqual(e.rows.length, 0);
+  assert.strictEqual(save(e, t, { elapsedSeconds: 20 }).success, true, 'exactly 2 s a question is fine');
+});
+ok('bot check: a filled honeypot on the code request pretends to succeed but sends nothing', () => {
+  const e = makeEnv(); const before = e.mails.length;
+  const r = act(e, 'sendCode', { email: 'bot@x.com', website: 'x' });
+  assert.strictEqual(r.success, true); assert.strictEqual(e.mails.length, before);
+});
+ok('the bank can grow: 20 and 30 question assessments are scored by percentage', () => {
+  for (const [sc, tot, want] of [[17, 20, 'PASS'], [16, 20, 'NOT PASSED'], [26, 30, 'PASS'], [25, 30, 'NOT PASSED']]) {
+    const e = makeEnv(); const t = login(e); assert.strictEqual(save(e, t, { score: sc, totalQuestions: tot, elapsedSeconds: 600 }).result, want, sc + '/' + tot);
+  }
 });
 ok('invalid scores and names are rejected and nothing is written or emailed', () => {
   const e = makeEnv(); const t = login(e); const mails = e.mails.length;

@@ -2,18 +2,20 @@
 // Run: node portal/tests/bank.test.js   (exit 1 on any error; warnings do not fail)
 const fs = require('fs'), path = require('path'), vm = require('vm');
 const html = fs.readFileSync(path.join(__dirname, '..', 'assessment-widget.html'), 'utf8');
-const a = html.indexOf('var QUIZ_BANK'), b = html.indexOf('var shuffleOptions') > -1 ? -1 : -1;
-const end = html.indexOf('// Answer options are shuffled');
-const BANK = vm.runInNewContext(html.slice(a, end) + '\n;QUIZ_BANK', {});
+const BANK = vm.runInNewContext(fs.readFileSync(path.join(__dirname, '..', 'questions.js'), 'utf8') + '\n;QUIZ_BANK', {});
+if (!/<script src="questions\.js"><\/script>/.test(html)) { console.error('assessment-widget.html does not load questions.js'); process.exit(1); }
 
 const errors = [], warnings = [];
 const modules = ['m01', 'm02', 'm03', 'm04', 'm05', 'm06'];
-const expected = { mkc: 5, pca: 10 };
+const minimum = { mkc: 5, pca: 10 };   // more is fine: the pass mark is 85% of however many there are
+const kinds = { mkc: 'Manual Knowledge Check', pca: 'Presentation Competency Assessment' };
 for (const m of modules) for (const t of ['mkc', 'pca']) {
   const key = `${m}-${t}`, bank = BANK[key];
   if (!bank) { errors.push(`${key}: missing assessment`); continue; }
   for (const f of ['module', 'moduleShort', 'kind', 'title', 'nextLabel', 'nextHref']) if (!bank[f]) errors.push(`${key}: ${f} is empty`);
-  if (bank.questions.length !== expected[t]) errors.push(`${key}: ${bank.questions.length} questions, expected ${expected[t]}`);
+  if (bank.questions.length < minimum[t]) errors.push(`${key}: ${bank.questions.length} questions, at least ${minimum[t]} needed`);
+  if (bank.questions.length > 100) errors.push(`${key}: more than 100 questions (Code.gs MAX_QUESTIONS)`);
+  if (bank.kind !== kinds[t]) errors.push(`${key}: kind is "${bank.kind}", expected "${kinds[t]}"`);
   if (/claude\.ai/.test(bank.nextHref)) warnings.push(`${key}: "Continue" links to a private claude.ai page`);
   bank.questions.forEach((q, i) => {
     const at = `${key} Q${i + 1}`;

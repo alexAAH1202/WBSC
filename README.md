@@ -21,13 +21,16 @@ Script Web App into a Google Sheet.
 - `index.html`: the program home page (hero, temporary-site notice, Four Pillars, Required Learning Sequence, how to complete, Appendix 4 and 5).
 - `manuals.html`: the six official manuals (Read), each linked to its Manual Knowledge Check and its presentation. The PDFs are on Google Drive and are not hosted here.
 - `presentations.html`: the four training presentations (modules 01-05 share one; module 06 has three parts). Each links to the matching Presentation Competency Assessment, and each Knowledge Check's Continue button lands on the right presentation. The videos and PowerPoints are on Google Drive and are not hosted here.
+- `questions.js`: the question bank (edit this to add questions; see its header). `assessment-widget.html` loads it.
 - `assessment-widget.html`: the 12 assessments. Each module has an anchor (`#module-01` to `#module-06`) that the home page links to.
 - `privacy.html`: what the portal records and how long it is kept.
 - `results.html`: the Director of Umpires' results page (password, `noindex`, not linked from the menu): completion tiles, per-module progress, per-umpire detail, printable completion summary, CSV downloads.
 
 ## Pass mark and attempts
-- **Pass mark 85%.** Decided on the server from the score (`PASS_MARK` in `Code.gs`), never from the browser. For these assessments that means 5/5 on a Manual Knowledge Check and at least 9/10 on a Presentation Competency Assessment (4/5 is 80% and does not pass).
-- **Maximum 2 attempts** per person for each module and assessment type (`MAX_ATTEMPTS` in `Code.gs`). A third attempt is refused by the server: nothing is saved or emailed, and the learner is told to contact the Director of Umpires.
+- **Pass mark 85%.** Decided on the server from the score (`PASS_MARK` in `Code.gs`), never from the browser. It is 85% of however many questions an assessment has (9 of 10, 17 of 20, 26 of 30), so the bank can grow without code changes.
+- **Two kinds of assessment.** The **Presentation Competency Assessment** is the marked one: it needs the email code, is limited to 2 attempts, is recorded, and is the only thing that counts towards completion. The **Manual Knowledge Check** is unmarked practice: no details or code, unlimited tries, correct answers shown, nothing saved. The server refuses to record a Knowledge Check.
+- **Feedback on the marked assessment.** A wrong answer points to the manual section to revisit and does not show the answer. The missed questions are reviewed with their answers only once both attempts are used without a pass.
+- **Maximum 2 attempts** per person for each module (`MAX_ATTEMPTS` in `Code.gs`). A third attempt is refused by the server: nothing is saved or emailed, and the learner is told to contact the Director of Umpires.
 - Before an assessment starts, the page asks the server how many attempts are used (`doGet?action=attempts`, JSONP). If that lookup fails the learner can still start; the server checks again when saving. The quiz is not shown until an assessment is started.
 - A new **Result** column (PASS / NOT PASSED) is added to the Sheet. The notification email shows the result and "Attempt n of 2".
 - Attempts are matched by email **or** Umpire ID (ignoring case and spacing). This is only as strong as the details entered: someone who enters a different email and no Umpire ID looks like a new person. A login (for example My.WBSC) would be needed to make the limit tamper-proof.
@@ -50,6 +53,7 @@ Script Web App into a Google Sheet.
 - **Login.** Before an assessment, the learner enters their email and a 6-digit code emailed to them (valid 10 minutes, 5 tries, 3 codes per address per hour). The server then issues a 6-hour session token; saves and attempt lookups need it, and the **verified** email replaces whatever was typed. Learners must be able to read that inbox.
 - **Receipts.** After each saved attempt the learner is emailed a receipt (result, attempt n of 2, reference, progress, "not an official WBSC certificate"). The Director is emailed the notice as before. When a learner first passes all 6 modules, a completion notice goes to the Director. Statuses are in the `Email Status` and `Receipt Status` columns. A mail failure never undoes a save.
 - **Results page.** `/results.html` asks for the password held in the Script property `RESULTS_PASSWORD` (never in the repo). 10 wrong passwords in 15 minutes locks it for 15 minutes (this is global, so it can lock the Director out too; the owner is alerted).
+- **Bot checks.** A hidden honeypot field (a filled one gets a fake success and no email), per-address and global limits on login codes, and a minimum of 2 seconds per question before a marked result is accepted (the page sends the time taken). These stop simple scripts only. If bots become a problem, Cloudflare Turnstile can be added to the login step; it needs a free Cloudflare account and a server-side check in `Code.gs`, so it is not built in.
 - **Alerts and daily health check.** Failures (mail, unexpected errors, code floods, results lockout) email the owner, at most one per kind per hour. `dailyHealthCheck` runs about 07:00 and reports header mismatches, FAILED emails in the last 7 days, results stuck `pending`, low mail quota and logged errors.
 - Mail quota: each attempt sends a receipt and a Director notice, plus login codes. A consumer Google account allows about 100 emails a day; Workspace allows 1500.
 
@@ -80,10 +84,10 @@ Script Web App into a Google Sheet.
 - Name, email, ID and association are remembered for the visit (this tab only) so a refresh does not mean retyping them.
 
 ## Tests
-- `node tests/bank.test.js`: 12 assessments, 5 questions per Knowledge Check and 10 per Competency Assessment, answer keys in range, no duplicate options or questions. Runs in CI.
+- `node tests/bank.test.js`: 12 assessments in `questions.js`, at least 5 questions per Knowledge Check and 10 per Competency Assessment (more is fine, up to 100), answer keys in range, no duplicate options or questions. Runs in CI.
 - `node tests/site.test.js`: every local link, script, stylesheet and image on every page exists. Runs in CI.
-- `node tests/code-gs.test.js`: `Code.gs` against a mock of Sheets, Mail and Lock (35 checks, including login, receipts, results password, alerts and the health check). Runs in CI.
-- `node tests/widget.test.js` (needs `npm i -D playwright`): the widget in a real browser with Google's reply simulated (20 checks).
+- `node tests/code-gs.test.js`: `Code.gs` against a mock of Sheets, Mail and Lock (39 checks, including login, receipts, results password, alerts and the health check). Runs in CI.
+- `node tests/widget.test.js` (needs `npm i -D playwright`): the widget in a real browser with Google's reply simulated (27 checks).
 - `node tests/results.test.js` (needs Playwright): `results.html` with simulated replies (25 checks).
 
 The browser tests do **not** prove the real Apps Script reply reaches the widget on the live site;
