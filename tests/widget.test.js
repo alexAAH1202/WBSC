@@ -24,7 +24,7 @@ const ok = m => { console.log('  ok -', m); n++; };
 //       sendCode ('rate' to refuse), tokens (queue of tokens to hand out on successful verification)
 async function newPage(b, opts, saveHandler) {
   opts = opts || {};
-  const pg = await (await b.newContext()).newPage(); const posts = [], fetches = [], lookups = [], calls = [];
+  const ctx = await b.newContext(); await ctx.addInitScript(() => { try { localStorage.setItem('wbscNoticeSeen', '1'); } catch (e) {} }); const pg = await ctx.newPage(); const posts = [], fetches = [], lookups = [], calls = [];
   pg.on('pageerror', e => console.log('PAGE ERROR', e.message));
   pg.on('request', r => { if (r.resourceType() === 'fetch' || r.resourceType() === 'xhr') fetches.push(r.url()); });
   await pg.route(/script\.google\.com\/macros\/s\/.*\/exec\?action=attempts/, r => {
