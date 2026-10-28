@@ -664,7 +664,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M12 8v5M12 16.2v.1"/></svg>
             Important
           </div>
-          <p><strong>This is not the official WBSC website.</strong> This temporary training site has been established to support WBSC Softball Umpires during the implementation of the 2026&ndash;2029 Umpire Mechanics Program, while WBSC transitions the training program to the My.WBSC Officials Training Academy.</p>
+          <p><strong>This is not the official WBSC website.</strong> This temporary training site has been established to support WBSC Softball Umpires during the implementation of the 2026-2029 Umpire Mechanics Program, while WBSC transitions the training program to the My.WBSC Officials Training Academy.</p>
           <p>All official WBSC manuals and publications accessed through this site remain hosted on the official WBSC website.</p>
         </div>
       </div>
@@ -676,7 +676,7 @@
     <div class="wrap">
       <span class="eyebrow">Director of Umpires</span>
       <h1>Results</h1>
-      <p>Who has completed the 2026&ndash;2029 program, and where each umpire stands. This page needs the results password.</p>
+      <p>Who has completed the 2026-2029 program, and where each umpire stands. This page needs the results password.</p>
     </div>
   </section>
 
@@ -755,7 +755,7 @@
     <div class="footer-grid">
       <div class="footer-col">
         <img class="footer-logo" src="images/wbsc-logo.svg" alt="WBSC logo">
-        <p class="footer-about">Training and assessments for the WBSC 2026&ndash;2029 Softball Umpire Mechanics program. A temporary training site, not the official WBSC website.</p>
+        <p class="footer-about">Training and assessments for the WBSC 2026-2029 Softball Umpire Mechanics program. A temporary training site, not the official WBSC website.</p>
       </div>
       <div class="footer-col">
         <h4>This site</h4>
@@ -776,7 +776,7 @@
       </div>
     </div>
     <div class="footer-legal">
-      <span>WBSC Softball Umpire Mechanics Program 2026&ndash;2029</span>
+      <span>WBSC Softball Umpire Mechanics Program 2026-2029</span>
       <span>Temporary training site &middot; not the official WBSC website</span>
     </div>
   </div>
@@ -1005,7 +1005,7 @@
       var m = p.modules[n];
       rows += '<tr><td>' + esc(m ? m.label : 'Module ' + pad2(n)) + '</td><td>' + esc(moduleStatusText(m)) + '</td><td>' + (m ? m.attempts : 0) + ' of ' + cfg.maxAttempts + '</td><td>' + esc(m && m.passed ? fmtDate(m.passedAt) : '') + '</td></tr>';
     }
-    $('print-sheet').innerHTML = '<h1>WBSC Umpire Mechanics Training 2026&ndash;2029</h1><div class="sub">Completion summary</div>' +
+    $('print-sheet').innerHTML = '<h1>WBSC Umpire Mechanics Training 2026-2029</h1><div class="sub">Completion summary</div>' +
       '<p><strong>' + esc(p.name) + '</strong><br>' + esc(Object.keys(p.emails).map(function(k){ return p.emails[k]; }).join(', ')) +
       (p.umpireId ? '<br>Umpire ID: ' + esc(p.umpireId) : '') + (p.association ? '<br>Association / Federation: ' + esc(p.association) : '') + '</p>' +
       '<p class="status">' + (p.completed ? 'Completed all ' + cfg.totalModules + ' modules' + (p.completedAt ? ' on ' + esc(fmtDate(p.completedAt)) : '') : p.passedCount + ' of ' + cfg.totalModules + ' modules passed (not yet complete)') + '</p>' +
