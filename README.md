@@ -23,7 +23,8 @@ Script Web App into a Google Sheet.
 - `presentations.html`: the four training presentations (modules 01-05 share one; module 06 has three parts). Each links to the matching Presentation Competency Assessment, and each Knowledge Check's Continue button lands on the right presentation. The videos and PowerPoints are on Google Drive and are not hosted here.
 - `questions.js`: the question bank (edit this to add questions; see its header). `assessment-widget.html` loads it.
 - `assessment-widget.html`: the 12 assessments. Each module has an anchor (`#module-01` to `#module-06`) that the home page links to.
-- `privacy.html`: what the portal records and how long it is kept.
+- `privacy.html`: who is responsible (Leigh Evans, Director of Umpires), what is recorded, why, who sees it, retention (to end 2031), cookies and browser storage, rights. Update it whenever what the site collects changes.
+- `notice.js`: the cookies and privacy pop-up shown once per browser on every page. The site sets no cookies, so it is an information notice with an OK button; it remembers the dismissal in one localStorage setting. If analytics or embeds are ever added, it must become a real consent choice.
 - `results.html`: the Director of Umpires' results page (password, `noindex`, linked only from the footer as "Director login"): completion tiles, per-module progress, per-umpire detail, printable completion summary, CSV downloads.
 
 ## Pass mark and attempts
@@ -88,6 +89,7 @@ Script Web App into a Google Sheet.
 - `node tests/site.test.js`: every local link, script, stylesheet and image on every page exists. Runs in CI.
 - `node tests/code-gs.test.js`: `Code.gs` against a mock of Sheets, Mail and Lock (39 checks, including login, receipts, results password, alerts and the health check). Runs in CI.
 - `node tests/widget.test.js` (needs `npm i -D playwright`): the widget in a real browser with Google's reply simulated (27 checks).
+- `node tests/notice.test.js` (needs Playwright): the pop-up on every page, no cookies, dismissal, phone width, blocked storage (9 checks).
 - `node tests/results.test.js` (needs Playwright): `results.html` with simulated replies (25 checks).
 
 The browser tests do **not** prove the real Apps Script reply reaches the widget on the live site;

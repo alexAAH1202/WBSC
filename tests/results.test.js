@@ -27,7 +27,7 @@ const CONFIG = { passMark: 85, maxAttempts: 2, totalModules: 6, completionType: 
 let n = 0; const ok = m => { console.log('  ok -', m); n++; };
 
 async function open(b, handler) {
-  const ctx = await b.newContext({ acceptDownloads: true }), pg = await ctx.newPage(), hosts = new Set(), calls = [];
+  const ctx = await b.newContext({ acceptDownloads: true }); await ctx.addInitScript(() => { try { localStorage.setItem('wbscNoticeSeen', '1'); } catch (e) {} }); const pg = await ctx.newPage(), hosts = new Set(), calls = [];
   pg.on('pageerror', e => console.log('PAGE ERROR', e.message));
   pg.on('request', r => { try { hosts.add(new URL(r.url()).host); } catch (e) {} });
   await pg.route(POST_URL, r => {
