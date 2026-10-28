@@ -268,24 +268,6 @@
   }
 
   /* ---------- Sequence ---------- */
-  .sequence-cols{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--navy-950);}
-  .seq-col{padding:32px 34px;}
-  .seq-col + .seq-col{border-left:1px solid var(--navy-950);}
-  .seq-col.elite{background:var(--navy-950);color:var(--white);}
-  .seq-col-title{font-family:var(--font-display);font-weight:900;text-transform:uppercase;letter-spacing:0.1em;font-size:0.92rem;color:var(--red-600);margin-bottom:20px;}
-  .seq-col.elite .seq-col-title{color:var(--gold-500);}
-  .seq-item{display:flex;align-items:center;gap:14px;padding:13px 10px;margin:0 -10px;border-top:1px solid var(--line);text-decoration:none;color:inherit;transition:background 0.15s ease;}
-  .seq-col.elite .seq-item{border-top:1px solid var(--line-on-navy);}
-  .seq-item:first-of-type{border-top:none;}
-  a.seq-item:hover,a.seq-item:focus-visible{background:var(--paper);}
-  .seq-col.elite a.seq-item:hover,.seq-col.elite a.seq-item:focus-visible{background:var(--navy-800);}
-  .seq-item .seq-arrow{margin-left:auto;color:var(--red-600);font-family:var(--font-display);font-weight:700;flex-shrink:0;}
-  .seq-col.elite .seq-item .seq-arrow{color:var(--gold-500);}
-  .seq-item p{font-size:0.98rem;}
-  @media (max-width:760px){
-    .sequence-cols{grid-template-columns:1fr;}
-    .seq-col + .seq-col{border-left:none;border-top:1px solid var(--navy-950);}
-  }
   .sequence-note{
     margin-top:30px;padding:24px 26px;background:var(--paper);border-left:5px solid var(--gold-500);
   }
@@ -518,7 +500,6 @@
     .af-panel{min-height:0;padding:40px 26px;}
     .pillar{padding:22px 20px;}
     .step{padding:18px 16px;}
-    .seq-col{padding:22px 22px;}
     .page-hero{padding:48px 0 40px;}
     .identity{padding:40px 0 8px;}
     .directory{padding:40px 0 16px;}
@@ -639,12 +620,12 @@
   </section>
 
   <!-- FOUR PILLARS -->
-  <section class="pillars-section" id="pillars">
+  <section class="pillars-section" id="sequence">
     <div class="wrap">
       <div class="section-head">
-        <span class="eyebrow">The Learning Pathway</span>
-        <h2>Four Pillars</h2>
-        <p class="desc">The program is divided across manuals and appendices, but it forms one deliberate progression - from foundational principles through to advanced elite field mechanics.</p>
+        <span class="eyebrow">Complete In Order</span>
+        <h2>Required Learning Sequence</h2>
+        <p class="desc">The program is divided across manuals and appendices, but it forms one deliberate progression - from foundational principles through to advanced elite field mechanics. Each step builds on the one before it. Work through them in order and do not skip ahead to the elite material without completing the foundations.</p>
       </div>
 
       <div class="pillars">
@@ -682,39 +663,13 @@
         </div>
       </div>
 
+      <div class="sequence-note">
+        <p>Particular attention must be given to Appendices 4 and 5 and their accompanying presentations.</p>
+      </div>
+
       <div class="source-note">
         <span class="source-note-tag">Source</span>
         <p>This four-pillar structure reflects <strong>WBSC Umpire Mechanics Bulletin&nbsp;#21 (2026)</strong>, which introduced the revised Softball Umpire Mechanics framework for all Regions and National Federations - restructuring foundational and elite material into the pathway this site follows.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- REQUIRED LEARNING SEQUENCE -->
-  <section id="sequence">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Complete In Order</span>
-        <h2>Required Learning Sequence</h2>
-        <p class="desc">Each module builds on the one before it. Work through the sequence in order - do not skip ahead to the elite material without completing the foundations.</p>
-      </div>
-
-      <div class="sequence-cols">
-        <div class="seq-col">
-          <div class="seq-col-title">Foundation</div>
-          <a class="seq-item" href="https://drive.google.com/file/d/114_zeKeveKtpbHoBT8kYQtFycEYgDtWY/view?usp=sharing" target="_blank" rel="noopener" aria-label="Foundations Learning Guide (PDF, opens in a new tab)"><p>Foundations Learning Guide</p><span class="seq-arrow" aria-hidden="true">&rarr;</span></a>
-          <a class="seq-item" href="https://drive.google.com/file/d/1sQ8A8xePiR2yT8il3odktgi-1qmRTewj/view?usp=sharing" target="_blank" rel="noopener" aria-label="Foundations - One-Umpire Field Mechanics (PDF, opens in a new tab)"><p>Foundations - One-Umpire Field Mechanics</p><span class="seq-arrow" aria-hidden="true">&rarr;</span></a>
-          <a class="seq-item" href="https://drive.google.com/file/d/1Voe1LAQQjz5SDlX_WMiPMOc-023LUYq3/view?usp=sharing" target="_blank" rel="noopener" aria-label="Foundations - Two-Umpire Field Mechanics (PDF, opens in a new tab)"><p>Foundations - Two-Umpire Field Mechanics</p><span class="seq-arrow" aria-hidden="true">&rarr;</span></a>
-          <a class="seq-item" href="https://drive.google.com/file/d/1hyP4NDMCsg_K84p0hHN_wyV8Y-rOVjFV/view?usp=sharing" target="_blank" rel="noopener" aria-label="Foundations - Three-Umpire Field Mechanics (PDF, opens in a new tab)"><p>Foundations - Three-Umpire Field Mechanics</p><span class="seq-arrow" aria-hidden="true">&rarr;</span></a>
-        </div>
-        <div class="seq-col elite">
-          <div class="seq-col-title">Elite</div>
-          <a class="seq-item" href="https://drive.google.com/file/d/1tiB_QGWkUN2xLHEY6_coZ4R7tt7PxpGw/view?usp=sharing" target="_blank" rel="noopener" aria-label="Appendix 4: Elite Umpire Mechanics, Positioning Philosophies (PDF, opens in a new tab)"><p>Appendix 4: Elite Umpire Mechanics, Positioning Philosophies</p><span class="seq-arrow" aria-hidden="true">&rarr;</span></a>
-          <a class="seq-item" href="https://drive.google.com/file/d/13Ycd4EJSSQcVkRb7F4bBdFjIb316duX0/view?usp=sharing" target="_blank" rel="noopener" aria-label="Appendix 5: Elite Three, Four, Five and Six-Umpire Field Mechanics (PDF, opens in a new tab)"><p>Appendix 5: Elite Three, Four, Five &amp; Six-Umpire Field Mechanics</p><span class="seq-arrow" aria-hidden="true">&rarr;</span></a>
-        </div>
-      </div>
-
-      <div class="sequence-note">
-        <p>Particular attention must be given to Appendices 4 and 5 and their accompanying presentations.</p>
       </div>
 
       <div class="federation-note">
