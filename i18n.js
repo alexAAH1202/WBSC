@@ -16,7 +16,7 @@
     { c: 'ko', n: '한국어', s: '한국어' },
     { c: 'zh', n: '中文', s: '中文' }
   ];
-  var LIVE = ['en'];            // languages switched on for everyone (reviewed by a native speaker)
+  var LIVE = ['en', 'es', 'fr'];            // languages switched on for everyone; es and fr are on for now (not yet reviewed), remove them to hide again
   var KEY = 'wbscLang', PREVIEW_KEY = 'wbscLangPreview';
 
   function qs(name) { try { return new URLSearchParams(location.search).get(name); } catch (e) { return null; } }

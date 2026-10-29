@@ -107,7 +107,7 @@ step 3 under "Deploying" is the check that does.
 The site and the quiz questions can be shown in English, Spanish, French, Japanese, Korean and Chinese, using the same
 language menu idea as the WBSC site. English is the source and the fallback: a string without a translation stays in English,
 so a gap can never break a page. Manuals, presentations, emails and the Director results page stay in English.
-**The other languages are built but switched off for the public** until a native speaker has reviewed each one.
-To switch a language on, add its code (for example `'es'`) to `LIVE` in `i18n.js` after the reviewer signs off.
+Spanish and French are switched on for now; Japanese, Korean and Chinese are built but switched off until a native speaker has reviewed them.
+To switch a language on or off, add or remove its code in `LIVE` in `i18n.js` (now `en`, `es`, `fr`; hiding them again means setting it back to `['en']`).
 Reviewers can look at any language before that with `?langs=all` on any page (adds the menu) or `?lang=es`.
 How it works, how to edit a translation, and the glossary are in [`i18n/README.md`](./i18n/README.md).

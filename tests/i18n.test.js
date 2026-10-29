@@ -24,11 +24,11 @@ LANGS.forEach(l => {
   const b = await chromium.launch();
   const mk = async (opts) => { const c = await b.newContext(opts); await c.addInitScript(() => { try { localStorage.setItem('wbscNoticeSeen', '1'); } catch (e) {} }); const p = await c.newPage(); p.errors = []; p.on('pageerror', e => p.errors.push(e.message)); return [c, p]; };
 
-  // 1. English only for the public
+  // 1. the public sees only the languages in LIVE (English, Spanish, French for now)
   let [c, pg] = await mk();
-  for (const f of PAGES) { await pg.goto(base + f); assert.strictEqual(await pg.locator('.lang-switch').count(), 0, f + ' has no selector yet'); assert.strictEqual(await pg.getAttribute('html', 'lang'), 'en'); }
-  ok('with only English switched on there is no selector');
-  await pg.goto(base + 'index.html?lang=fr'); assert.strictEqual(await pg.getAttribute('html', 'lang'), 'fr');   // ?lang= is the reviewer preview
+  for (const f of PAGES) { await pg.goto(base + f); assert.strictEqual(await pg.locator('.lang-item').count(), 3, f + ' offers English, Spanish and French'); assert.strictEqual(await pg.getAttribute('html', 'lang'), 'en'); }
+  ok('the public menu offers only the languages that are switched on');
+  await pg.goto(base + 'index.html?lang=ja'); assert.strictEqual(await pg.getAttribute('html', 'lang'), 'ja');   // ?lang= is the reviewer preview
   await pg.goto(base + 'index.html'); assert.strictEqual(await pg.getAttribute('html', 'lang'), 'en'); ok('?lang= previews a language for a reviewer, but a stored choice is ignored for the public while the language is not switched on');
   assert.deepStrictEqual(pg.errors, []); await c.close();
 
@@ -47,7 +47,7 @@ LANGS.forEach(l => {
   for (const f of ['index.html', 'manuals.html', 'presentations.html', 'privacy.html']) {
     await pg.goto(base + f);
     const keys = await pg.evaluate(() => { const k = []; WBSC_I18N.units(document.body, (el, key) => k.push(key)); WBSC_I18N.attrs(document.body, (el, a, key) => k.push(key)); return k; });
-    for (const l of LANGS) { const miss = keys.filter(k => dict[l][k] == null); assert.deepStrictEqual(miss, [], l + ' misses ' + miss.length + ' strings on ' + f + ': ' + miss.slice(0, 3).join(' | ')); }
+    for (const l of LANGS) { /* the menu button's own label is built by i18n.js */ const miss = keys.filter(k => dict[l][k] == null && !/^Language: /.test(k)); assert.deepStrictEqual(miss, [], l + ' misses ' + miss.length + ' strings on ' + f + ': ' + miss.slice(0, 3).join(' | ')); }
   }
   ok('every visible string on the four static pages has a translation in all five languages');
   await c.close();
