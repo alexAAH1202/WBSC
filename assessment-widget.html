@@ -683,6 +683,14 @@
     <div class="wrap">
       <div class="quiz-frame">
 
+        <div id="quiz-resume" class="quiz-body quiz-gate" style="display:none;">
+          <div class="watch-first" role="note">
+            <h3>Unfinished attempt</h3>
+            <p id="resume-text">You have an unfinished attempt at this assessment on this device.</p>
+          </div>
+          <button class="btn btn-primary" id="resume-go" type="button">Resume where I left off</button>
+          <button class="btn btn-outline-navy" id="resume-restart" type="button">Start again</button>
+        </div>
         <div id="quiz-gate" class="quiz-body quiz-gate" style="display:none;">
           <div class="watch-first" role="note">
             <h3>Before you begin</h3>
@@ -994,9 +1002,48 @@
     return {
       q: q.q, ref: q.ref, why: q.why,
       options: order.map(function(i){ return q.options[i]; }),
-      correct: order.indexOf(q.correct)
+      correct: order.indexOf(q.correct),
+      order: order
     };
   }
+
+  // Rebuilds a question with a stored option order (used when resuming an unfinished attempt).
+  function applyOrder(q, order){
+    return { q: q.q, ref: q.ref, why: q.why, options: order.map(function(i){ return q.options[i]; }), correct: order.indexOf(q.correct), order: order };
+  }
+
+  // RESUME: a marked attempt that is stopped part-way is kept in this browser (localStorage) so it can be
+  // continued on this device: the question reached, the score, the missed questions and the shuffled option order.
+  // It belongs to the verified email address, expires after 24 hours and is cleared when the attempt is finished.
+  var RESUME_KEY = 'wbscResume';
+  var RESUME_TTL_MS = 24 * 60 * 60 * 1000;
+  function readProgress(key){
+    try {
+      var p = JSON.parse(localStorage.getItem(RESUME_KEY) || 'null');
+      var bank = QUIZ_BANK[key];
+      if (!p || p.v !== 1 || p.key !== key || !bank || !session || p.email !== session.email) return null;
+      if (!(Date.now() - p.savedAt < RESUME_TTL_MS)) return null;
+      var n = bank.questions.length;
+      if (!(p.index >= 1 && p.index <= n) || p.qs.length !== n || p.order.length !== n) return null;
+      for (var i = 0; i < n; i++) {
+        var o = p.order[i], len = bank.questions[i].options.length;
+        if (p.qs[i] !== bank.questions[i].q.slice(0, 60) || !o || o.length !== len) return null;
+        var seen = {}; for (var j = 0; j < len; j++) { if (!(o[j] >= 0 && o[j] < len) || seen[o[j]]) return null; seen[o[j]] = 1; }
+      }
+      return p;
+    } catch (e) { return null; }
+  }
+  function saveProgress(nextIndex){
+    if (!isMarked(QUIZ_BANK[currentKey])) return;
+    try {
+      localStorage.setItem(RESUME_KEY, JSON.stringify({
+        v: 1, key: currentKey, email: session ? session.email : '', savedAt: Date.now(), index: nextIndex,
+        score: state.score, missed: state.missed, order: QUESTIONS.map(function(q){ return q.order; }),
+        qs: QUESTIONS.map(function(q){ return q.q.slice(0, 60); }), elapsedMs: Date.now() - state.startedAt
+      }));
+    } catch (e) {}
+  }
+  function clearProgress(){ try { localStorage.removeItem(RESUME_KEY); } catch (e) {} }
 
   var DEFAULT_KEY = 'm01-mkc';
   var currentKey = null;
@@ -1008,6 +1055,7 @@
     validationBanner: document.getElementById('validation-banner'),
     active: document.getElementById('quiz-active'),
     gate: document.getElementById('quiz-gate'),
+    resume: document.getElementById('quiz-resume'),
     complete: document.getElementById('quiz-complete'),
     eyebrow: document.getElementById('quiz-eyebrow'),
     moduleTitle: document.getElementById('quiz-module-title'),
@@ -1106,6 +1154,7 @@
       }
     });
     if (!isCorrect && marked) state.missed.push({ q: q.q, answer: q.options[q.correct], ref: q.ref, why: q.why });
+    saveProgress(state.index + 1);      // an answered question is never asked again if the learner comes back
 
     els.feedback.style.display = 'block';
     els.feedback.className = 'quiz-feedback ' + (isCorrect ? 'correct' : 'incorrect');
@@ -1158,6 +1207,7 @@
     }
     els.saveState.style.display = '';
     els.practiceNote.style.display = 'none';
+    clearProgress();
     showResult(passedNow, attemptNo, false);
     scoreBox.setAttribute('tabindex', '-1');
     scoreBox.focus({ preventScroll: true });
@@ -1637,6 +1687,24 @@
     els.continueBtn.setAttribute('href', bank.nextHref);
 
     els.complete.style.display = 'none';
+    els.resume.style.display = 'none';
+    var saved = isMarked(bank) ? readProgress(key) : null;
+    if (saved) {
+      // An unfinished attempt is waiting on this device: offer to continue it.
+      els.active.style.display = 'none';
+      els.gate.style.display = 'none';
+      els.resume.style.display = '';
+      document.getElementById('resume-text').textContent = 'You have an unfinished attempt at this assessment on this device: you have answered ' + (saved.index) + ' of ' + saved.qs.length + ' questions. Resume where you left off, or start again with a fresh attempt.';
+      pendingResume = saved;
+    } else {
+      pendingResume = null;
+      beginFresh(bank);
+    }
+    return true;
+  }
+
+  var pendingResume = null;
+  function beginFresh(bank){
     if (bank.watchFirst) {
       // The marked questions are based on the full presentation: ask the learner to confirm they have watched it.
       els.active.style.display = 'none';
@@ -1649,9 +1717,25 @@
       els.active.style.display = '';
       renderQuestion();
     }
-    return true;
   }
-
+  document.getElementById('resume-go').addEventListener('click', function(){
+    var saved = pendingResume, bank = QUIZ_BANK[currentKey];
+    if (!saved || !bank) return;
+    pendingResume = null;
+    QUESTIONS = bank.questions.map(function(q, i){ return applyOrder(q, saved.order[i]); });
+    state = { index: saved.index, answered: false, score: saved.score, selected: null, missed: saved.missed || [], startedAt: Date.now() - (saved.elapsedMs || 0) };
+    els.resume.style.display = 'none';
+    if (state.index >= QUESTIONS.length) { finishQuiz(); return; }
+    els.active.style.display = '';
+    renderQuestion();
+    els.question.setAttribute('tabindex', '-1');
+    els.question.focus({ preventScroll: true });
+  });
+  document.getElementById('resume-restart').addEventListener('click', function(){
+    pendingResume = null; clearProgress();
+    els.resume.style.display = 'none';
+    beginFresh(QUIZ_BANK[currentKey]);
+  });
   document.getElementById('gate-check').addEventListener('change', function(){ document.getElementById('gate-start').disabled = !this.checked; });
   document.getElementById('gate-start').addEventListener('click', function(){
     if (!document.getElementById('gate-check').checked) return;
