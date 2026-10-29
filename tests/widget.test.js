@@ -310,6 +310,51 @@ const verifyText = pg => pg.textContent('#verify-state');
   }
   ok('the optional explanation shows in practice and after a correct marked answer, never after a wrong marked answer');
 
+  // resume where you left off
+  async function answerRight(pg, n) { for (let i = 0; i < n; i++) { const q = await pg.textContent('#quiz-question'), o = await pg.$$eval('.quiz-option .opt-text', a => a.map(x => x.textContent)); await pg.click(`.quiz-option >> nth=${o.indexOf(RIGHT[q])}`); await pg.click('#quiz-submit-btn'); await pg.click('#quiz-submit-btn'); } }
+  t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false } });
+  await t.pg.click('[data-assessment="m01-pca"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
+  const Q = BANK['m01-pca'].questions;
+  await answerRight(t.pg, 2);
+  { // third question answered wrongly, then the learner leaves
+    const q = await t.pg.textContent('#quiz-question'), o = await t.pg.$$eval('.quiz-option .opt-text', a => a.map(x => x.textContent));
+    await t.pg.click(`.quiz-option >> nth=${(o.indexOf(RIGHT[q]) + 1) % o.length}`); await t.pg.click('#quiz-submit-btn');
+  }
+  await t.pg.reload(); await t.pg.waitForSelector('#quiz-resume', { state: 'visible' });
+  assert.ok(/answered 3 of 10/.test(await t.pg.textContent('#resume-text')), await t.pg.textContent('#resume-text')); assert.ok(!(await t.pg.isVisible('#quiz-question')));
+  const stored = await t.pg.evaluate(() => JSON.parse(localStorage.getItem('wbscResume')));
+  assert.strictEqual(stored.index, 3); assert.strictEqual(stored.score, 2); assert.strictEqual(stored.missed.length, 1); assert.strictEqual(stored.email, 'jo@x.com');
+  await t.pg.click('#resume-go'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
+  assert.strictEqual(await t.pg.textContent('#quiz-question'), Q[3].q, 'resumes at the fourth question');
+  assert.deepStrictEqual(await t.pg.$$eval('.quiz-option .opt-text', a => a.map(x => x.textContent)), stored.order[3].map(i => Q[3].options[i]), 'same option order as stored');
+  assert.ok(/Question 4 of 10/.test(await t.pg.textContent('#quiz-progress-label')));
+  await answerRight(t.pg, 7); await t.pg.waitForFunction(() => /recorded/.test(document.getElementById('quiz-save-state').textContent));
+  assert.strictEqual(t.posts[0].payload.score, 9); assert.strictEqual(t.posts[0].payload.totalQuestions, 10); assert.strictEqual(typeof t.posts[0].payload.elapsedSeconds, 'number');
+  assert.strictEqual(await t.pg.evaluate(() => localStorage.getItem('wbscResume')), null, 'cleared once finished');
+  ok('an unfinished marked attempt resumes at the next question with the same options, score and missed questions; finishing clears it');
+
+  t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false } });
+  await t.pg.click('[data-assessment="m01-pca"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' }); await answerRight(t.pg, 4);
+  await t.pg.reload(); await t.pg.waitForSelector('#quiz-resume', { state: 'visible' });
+  await t.pg.click('#resume-restart'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
+  assert.ok(/Question 1 of 10/.test(await t.pg.textContent('#quiz-progress-label'))); assert.strictEqual(await t.pg.evaluate(() => localStorage.getItem('wbscResume')), null);
+  ok('"Start again" discards the unfinished attempt');
+
+  t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false } });
+  await t.pg.click('[data-assessment="m01-pca"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' }); await answerRight(t.pg, 2);
+  for (const edit of [d => { d.email = 'someone-else@x.com'; }, d => { d.savedAt = Date.now() - 25 * 3600 * 1000; }, d => { d.key = 'm02-pca'; }, d => { d.qs[0] = 'a different question'; }]) {
+    const orig = await t.pg.evaluate(() => localStorage.getItem('wbscResume'));
+    await t.pg.evaluate(src => { const d = JSON.parse(localStorage.getItem('wbscResume')); (new Function('d', 'return (' + src + ')(d)'))(d); localStorage.setItem('wbscResume', JSON.stringify(d)); }, edit.toString());
+    await t.pg.reload(); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
+    assert.ok(!(await t.pg.isVisible('#quiz-resume')), 'not offered: ' + edit.toString()); assert.ok(/Question 1 of 10/.test(await t.pg.textContent('#quiz-progress-label')));
+    await t.pg.evaluate(o => localStorage.setItem('wbscResume', o), orig);
+  }
+  ok('saved progress for a different email, an old save, a different assessment or a changed question bank is not offered');
+
+  t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false } });
+  await t.pg.click('[data-assessment="m01-mkc"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' }); await answerRight(t.pg, 2);
+  assert.strictEqual(await t.pg.evaluate(() => localStorage.getItem('wbscResume')), null); ok('practice quizzes are not saved for resuming');
+
   // watch-first gate on the elite assessments
   t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false } });
   await t.pg.click('[data-assessment="m07-pca"]'); await t.pg.waitForSelector('#quiz-gate', { state: 'visible' });
