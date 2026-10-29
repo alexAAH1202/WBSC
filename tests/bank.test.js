@@ -21,6 +21,7 @@ for (const m of modules) for (const t of ['mkc', 'pca']) {
     const at = `${key} Q${i + 1}`;
     if (!q.q || !q.q.trim()) errors.push(`${at}: empty question`);
     if (!q.ref || !q.ref.trim()) errors.push(`${at}: no manual reference`);
+    if (q.why !== undefined && (typeof q.why !== 'string' || !q.why.trim())) errors.push(`${at}: why must be a non-empty string if present`);
     if (!Array.isArray(q.options) || q.options.length < 2) { errors.push(`${at}: needs 2+ options`); return; }
     if (q.options.some(o => !String(o).trim())) errors.push(`${at}: empty option`);
     if (new Set(q.options).size !== q.options.length) errors.push(`${at}: duplicate options`);

@@ -1,6 +1,8 @@
 // The question bank for assessment-widget.html. Add or edit questions here; the page itself does not need to change.
 // Each assessment is one entry: { module, moduleShort, kind, title, nextLabel, nextHref, questions: [...] }.
-// A question is { q, options: [..], correct: <index into options>, ref: 'manual section to revisit' }.
+// A question is { q, options: [..], correct: <index into options>, ref: 'manual section to revisit', why: 'optional explanation' }.
+// `why` is optional. It is shown after the answer in practice, after a correct answer in the marked assessment,
+// and in the end-of-attempts review. Leave it out and nothing extra is shown.
 // Any number of questions works: the pass mark is 85% of however many there are (the server decides).
 // kind 'Presentation Competency Assessment' is the marked, recorded one; 'Manual Knowledge Check' is unmarked practice.
 // Run `node tests/bank.test.js` after editing.

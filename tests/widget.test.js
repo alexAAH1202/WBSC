@@ -17,14 +17,15 @@ const POST_URL = 'https://script.google.com/macros/s/AKfycbxm_gObsmIO7RUn1wcKS22
 const TOKEN = 'a'.repeat(64), TOKEN2 = 'b'.repeat(64);
 const reply = m => `<!doctype html><body><script>(function(){var m=${JSON.stringify(m)};var w=window;try{while(w!==w.top){w=w.parent;try{w.postMessage(m,"*");}catch(e){}}}catch(e){}})();<\/script>`;
 const page_ = body => ({ status: 200, contentType: 'text/html', body });
-let PORT, n = 0;
+let PORT, n = 0, lastCtx = null;
 const ok = m => { console.log('  ok -', m); n++; };
 
 // opts: attempts (what the lookup returns, mutable), lookup ('fail' to simulate no answer), unverified (skip the login),
 //       sendCode ('rate' to refuse), tokens (queue of tokens to hand out on successful verification)
 async function newPage(b, opts, saveHandler) {
   opts = opts || {};
-  const ctx = await b.newContext(); await ctx.addInitScript(() => { try { localStorage.setItem('wbscNoticeSeen', '1'); } catch (e) {} }); const pg = await ctx.newPage(); const posts = [], fetches = [], lookups = [], calls = [];
+  if (lastCtx) await lastCtx.close().catch(() => {});   // one page at a time keeps the browser light
+  const ctx = lastCtx = await b.newContext(); await ctx.addInitScript(() => { try { localStorage.setItem('wbscNoticeSeen', '1'); } catch (e) {} }); const pg = await ctx.newPage(); const posts = [], fetches = [], lookups = [], calls = [];
   pg.on('pageerror', e => console.log('PAGE ERROR', e.message));
   pg.on('request', r => { if (r.resourceType() === 'fetch' || r.resourceType() === 'xhr') fetches.push(r.url()); });
   await pg.route(/script\.google\.com\/macros\/s\/.*\/exec\?action=attempts/, r => {
@@ -294,6 +295,18 @@ const verifyText = pg => pg.textContent('#verify-state');
   await t.pg.click('#verify-send-btn'); await t.pg.waitForSelector('#verify-code-row', { state: 'visible' });
   assert.strictEqual(t.calls[0].website, 'http://x'); assert.ok((await t.pg.locator('#inp-website').boundingBox()).x < -1000, 'honeypot is off screen');
   ok('bot check: the honeypot value is sent with the code request and the field is invisible');
+
+  // the optional "why" explanation
+  for (const [key, wrongFirst, expectWhy] of [['m01-mkc', true, true], ['m01-pca', true, false], ['m01-pca', false, true]]) {
+    t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false } });
+    await t.pg.evaluate(() => { ['m01-mkc', 'm01-pca'].forEach(k => QUIZ_BANK[k].questions.forEach(q => { q.why = 'WHY-' + q.q.slice(0, 12); })); });
+    await t.pg.click(`[data-assessment="${key}"]`); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
+    const q = await t.pg.textContent('#quiz-question'), o = await t.pg.$$eval('.quiz-option .opt-text', a => a.map(x => x.textContent));
+    const right = o.indexOf(RIGHT[q]); await t.pg.click(`.quiz-option >> nth=${wrongFirst ? (right + 1) % o.length : right}`); await t.pg.click('#quiz-submit-btn');
+    assert.strictEqual(await t.pg.isVisible('#quiz-feedback-why'), expectWhy, key + ' wrongFirst=' + wrongFirst);
+    if (expectWhy) assert.ok((await t.pg.textContent('#quiz-feedback-why')).startsWith('WHY-'));
+  }
+  ok('the optional explanation shows in practice and after a correct marked answer, never after a wrong marked answer');
 
   // the pass requirement follows the number of questions
   t = await newPage(b, {});
