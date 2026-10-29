@@ -20,14 +20,16 @@
     '@media (max-width:520px){.cookie-note{left:8px;right:8px;bottom:8px;max-width:none;}}' +
     '@media print{.cookie-note{display:none;}}';
   document.head.appendChild(css);
+  var T = window.WBSC_T || function(x){ return x; };
   var box = document.createElement('div');
   box.className = 'cookie-note';
   box.setAttribute('role', 'region');
-  box.setAttribute('aria-label', 'Cookies and privacy');
+  box.setAttribute('aria-label', T('Cookies and privacy'));
+  function esc(t){ return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
   box.innerHTML =
-    '<strong>Cookies and privacy</strong>' +
-    '<p>This site does not use cookies or tracking. It keeps what you type in your browser for this visit only, and it contacts Google to email you a login code and to save your marked results.</p>' +
-    '<div class="row"><button type="button">OK</button><a href="privacy.html">Read the privacy page</a></div>';
+    '<strong>' + esc(T('Cookies and privacy')) + '</strong>' +
+    '<p>' + esc(T('This site does not use cookies or tracking. It keeps what you type in your browser for this visit only, and it contacts Google to email you a login code and to save your marked results.')) + '</p>' +
+    '<div class="row"><button type="button">' + esc(T('OK')) + '</button><a href="privacy.html">' + esc(T('Read the privacy page')) + '</a></div>';
   box.querySelector('button').addEventListener('click', function(){
     try { localStorage.setItem(KEY, '1'); } catch (e) {}
     if (box.parentNode) box.parentNode.removeChild(box);

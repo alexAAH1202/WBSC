@@ -1,0 +1,355 @@
+0	Question {n} sur {total}
+1	Valider la réponse
+2	✓ Correct
+3	✕ Pas tout à fait
+4	C’est exact.
+5	C’est exact - {answer}.
+6	Ce n’est pas la bonne réponse. Relisez cette section du manuel :
+7	La bonne réponse est : {answer}.
+8	Voir les résultats
+9	Question suivante
+10	Bravo
+11	Continuez à vous entraîner
+12	Entraînement uniquement. Vous pouvez le refaire autant de fois que vous le souhaitez.
+13	Révision : les questions que vous avez manquées
+14	Bonne réponse : {answer}
+15	Ce code n’est pas correct. Il vous reste {n} essais.
+16	Vous avez utilisé le maximum de {n} tentatives pour cette évaluation. Veuillez contacter {email}.
+17	✓ Adresse e-mail vérifiée : {email}
+18	Confirmez votre adresse e-mail pour continuer.
+19	Le service n’a pas répondu. Vérifiez votre connexion et réessayez.
+20	Saisissez d’abord une adresse e-mail valide ci-dessus.
+21	Envoi d’un code à {email}…
+22	Nous avons envoyé un code à 6 chiffres à {email}. Il peut mettre une minute à arriver ; vérifiez aussi votre dossier de courrier indésirable.
+23	Nous n’avons pas pu envoyer le code. Veuillez réessayer.
+24	Saisissez le code à 6 chiffres reçu par e-mail.
+25	Vérification du code…
+26	Ce code n’a pas fonctionné. Veuillez réessayer.
+27	✓ Votre résultat a été enregistré (tentative {n} sur {max}). Un reçu sera envoyé à {email}.
+28	✓ Votre résultat a été enregistré. Un reçu sera envoyé à {email}.
+29	Vous avez réussi les {total} modules. Un récapitulatif vous sera envoyé par e-mail.
+30	La vérification de votre adresse e-mail a expiré. Vérifiez-la de nouveau dans « Vos informations », en haut de la page, puis appuyez sur « Réessayer d’enregistrer ». Votre score est conservé.
+31	Vous avez utilisé le maximum de {n} tentatives pour cette évaluation.
+32	Non enregistré
+33	Cette tentative n’a pas été comptabilisée.
+34	Votre résultat n’a pas pu être enregistré : {error}. Appuyez sur « Réessayer d’enregistrer » et prévenez l’administrateur du programme si le problème persiste.
+35	erreur inconnue
+36	Vérifiez d’abord votre adresse e-mail dans « Vos informations », puis appuyez sur « Réessayer d’enregistrer ».
+37	Enregistrement de votre résultat…
+38	Réussi
+39	Non réussi
+40	Vous avez atteint la note de passage de {pass} %.
+41	La note de passage est de {pass} %.
+42	Vous n’avez pas atteint la note de passage de {pass} %. Il vous reste 1 tentative.
+43	Vous n’avez pas atteint la note de passage de {pass} %. Il vous reste {left} tentatives.
+44	Vous n’avez pas atteint la note de passage de {pass} % et vous avez utilisé vos {max} tentatives. Veuillez contacter {email}.
+45	Le score a été calculé ci-dessus. Cette démonstration n’est pas encore reliée à la feuille de calcul des résultats, donc rien n’a été enregistré - voir Code.gs pour la connecter.
+46	Votre dernier résultat n’a pas encore été confirmé comme enregistré. Appuyez d’abord sur « Réessayer d’enregistrer » sur l’écran des résultats.
+47	Saisissez votre nom complet et votre adresse e-mail ci-dessus avant de commencer une évaluation.
+48	Confirmez d’abord votre adresse e-mail : appuyez sur « M’envoyer un code » dans Vos informations, puis saisissez le code.
+49	Vérification de vos tentatives…
+50	La vérification de votre adresse e-mail a expiré. Veuillez la vérifier de nouveau dans Vos informations.
+51	Vous avez utilisé le maximum de {n} tentatives pour cette évaluation (vous l’avez réussie). Si vous avez besoin d’aide, veuillez contacter {email}.
+52	Vous avez utilisé le maximum de {n} tentatives pour cette évaluation. Si vous avez besoin d’aide, veuillez contacter {email}.
+53	{n} bonnes réponses sur {total} pour réussir
+54	Entraînement · non enregistré · essais illimités
+55	Tentative {n} sur {max}
+56	(dernière tentative)
+57	Note de passage : {pass} %
+58	Maximum de {max} tentatives
+59	Module {n}
+60	Vous avez une tentative inachevée pour cette évaluation sur cet appareil : vous avez répondu à {n} questions sur {total}. Reprenez là où vous vous étiez arrêté ou recommencez avec une nouvelle tentative.
+61	Cookies et confidentialité
+62	Ce site n’utilise ni cookies ni outils de suivi. Il conserve ce que vous saisissez dans votre navigateur pour cette visite uniquement, et il contacte Google pour vous envoyer un code de connexion par e-mail et pour enregistrer vos résultats notés.
+63	OK
+64	Lire la page de confidentialité
+66	Langue
+67	Veuillez d’abord vérifier votre adresse e-mail.
+68	Trop de codes ont été demandés pour cette adresse. Veuillez patienter un moment et réessayer.
+69	Le service est occupé. Veuillez réessayer dans quelques minutes.
+70	Nous n’avons pas pu envoyer l’e-mail. Vérifiez l’adresse et réessayez.
+71	Ce code a expiré ou n’a pas été demandé. Veuillez en demander un nouveau.
+72	Trop de codes incorrects. Veuillez en demander un nouveau.
+73	Une erreur s’est produite. Veuillez réessayer.
+74	Adresse e-mail non valide
+75	Session non valide. Veuillez d’abord vérifier votre adresse e-mail à l’aide d’un code.
+76	Aller au contenu principal
+77	Accueil
+78	Manuels
+79	Présentations
+80	Évaluations
+81	Arbitres de softball de la WBSC
+82	Formation à la mécanique d’arbitrage
+83	Accréditation et réaccréditation 2026-2029
+84	Un système. Une philosophie.
+85	Commencer la formation
+86	<strong>Ceci n’est pas le site web officiel de la WBSC.</strong> Ce site de formation temporaire a été mis en place pour soutenir les arbitres de softball de la WBSC pendant la mise en œuvre du Programme de mécanique d’arbitrage 2026-2029, le temps que la WBSC transfère le programme de formation vers l’Académie de formation des officiels My.WBSC.
+87	Tous les manuels et publications officiels de la WBSC accessibles depuis ce site restent hébergés sur le site web officiel de la WBSC.
+88	Ce site de formation s’adresse aux arbitres de softball certifiés par la WBSC qui participent au cycle d’accréditation et de réaccréditation 2026-2029.
+89	Le programme
+90	Un système d’apprentissage cohérent
+91	Le softball international moderne va plus vite que les mécaniques conçues autrefois pour l’arbitrer. Les lignes de vue changent en cours de jeu. Les frappeurs et les coureurs produisent une vitesse qui réduit le temps dont l’arbitre dispose pour trouver le bon angle, et le placement défensif est devenu plus varié, de sorte que les jeux se développent d’une manière qui récompense l’anticipation autant que la réaction.
+92	Le Programme de mécanique d’arbitrage 2026-2029 a été révisé pour répondre à cette réalité. Chaque module de ce parcours s’articule autour d’une question que les arbitres se posent avant chaque lancer : non seulement où se placer, mais pourquoi cette position leur donne la vue qu’exige le jeu.
+93	Cette question traverse tout le système, mais c’est dans deux documents qu’elle trouve sa réponse la plus directe.
+94	L’<span class="why">Annexe 4</span> donne le pourquoi. L’<span class="how">Annexe 5</span> donne le comment.
+95	À suivre dans l’ordre
+96	Séquence d’apprentissage obligatoire
+97	La WBSC a revu et restructuré ses supports pédagogiques de mécanique d’arbitrage du softball afin d’offrir aux arbitres de toutes les régions et fédérations nationales un parcours d’apprentissage plus clair et progressif.
+98	Ce cadre repose sur Quatre piliers reliés entre eux, qui vont des principes fondamentaux de l’arbitrage et de la mécanique de terrain jusqu’aux philosophies avancées de placement de haut niveau et à la mécanique de terrain internationale.
+99	La structure révisée sépare l’apprentissage fondamental de l’apprentissage de haut niveau tout en maintenant un seul système de mécanique WBSC, appuyé sur une terminologie, des principes et des normes communs. Chaque étape s’appuie sur la précédente : suivez-les dans l’ordre.
+100	Fondamentaux
+101	Les principes d’arbitrage de base qui sous-tendent tous les niveaux d’arbitrage.
+102	<strong>Correspond à</strong>Guide d’apprentissage des fondamentaux
+103	Voir le manuel →
+104	Mécanique de terrain
+105	Systèmes à un, deux et trois arbitres bâtis sur ces fondamentaux.
+106	<strong>Correspond à</strong>Mécanique de terrain à un, deux et trois arbitres
+107	Manuel à un arbitre →
+108	Manuel à deux arbitres →
+109	Manuel à trois arbitres →
+110	Philosophies de haut niveau
+111	Le raisonnement, les philosophies de placement et les stratégies visuelles qui sous-tendent l’arbitrage de haut niveau.
+112	<strong>Correspond à</strong>l’Annexe 4
+113	Mécanique de terrain de haut niveau
+114	Schémas de déplacement avancés et configurations d’équipe jusqu’à six arbitres.
+115	<strong>Correspond à</strong>l’Annexe 5
+116	Une attention particulière doit être portée aux Annexes 4 et 5 et à leurs présentations.
+117	Orientation de la WBSC
+118	La mécanique de haut niveau s’adresse à ceux qui étudient le jeu en profondeur et ne doit être introduite que lorsque l’arbitre maîtrise solidement les notions fondamentales, et non comme point de départ.
+119	Les fédérations doivent confirmer l’orientation équivalente pour leur propre parcours d’accréditation.
+120	La WBSC utilisera l’enseignement, les philosophies et la mécanique de terrain de haut niveau pour tous les tournois de la WBSC.
+121	Le cadre
+122	À propos du cadre
+123	Les Quatre piliers soutiennent la formation, l’accréditation et le développement continu des arbitres, en fournissant une référence internationale commune aux arbitres, aux instructeurs, aux mentors et aux évaluateurs.
+124	La WBSC reconnaît que de nombreuses fédérations nationales disposent déjà de programmes de formation d’arbitres fondamentaux bien établis et complets. Le cadre révisé n’a pas pour but de remplacer ces programmes ni leurs supports pédagogiques existants. Il fournit plutôt une référence internationale commune qui complète et soutient les parcours de développement déjà en place.
+125	Les manuels sont conçus pour être étudiés de façon progressive. La mécanique de haut niveau s’appuie sur la mécanique fondamentale établie sans la remplacer, et s’adresse aux arbitres expérimentés qui comprennent bien le jeu.
+126	Ensemble, les Quatre piliers soutiennent un développement et une évaluation cohérents des arbitres, du softball communautaire jusqu’à la compétition internationale de haut niveau de la WBSC.
+127	Pour chaque module
+128	Comment suivre la formation
+129	Chaque module de la séquence suit les mêmes cinq étapes.
+130	Étape 1
+131	Lire
+132	Lisez le manuel de la WBSC prescrit.
+133	Étape 2
+134	Vérifier
+135	Essayez la Vérification des connaissances du manuel : un entraînement sans note, aussi souvent que vous le souhaitez.
+136	Étape 3
+137	Regarder
+138	Regardez la présentation de formation MP4 correspondante.
+139	Étape 4
+140	Évaluer
+141	Réalisez l’Évaluation des compétences de la présentation, qui est notée.
+142	Étape 5
+143	Progresser
+144	Passez au module d’apprentissage suivant.
+145	La note de passage de chaque Évaluation des compétences de la présentation est de <strong>85 %</strong>, et vous disposez d’un maximum de <strong>2 tentatives</strong> pour chacune. Les Vérifications des connaissances du manuel sont un entraînement sans note.
+146	Annexe 4
+147	Mécanique d’arbitrage de haut niveau
+148	Le pourquoi
+149	Philosophies de placement
+150	Principes
+151	Prise de décision
+152	Lignes de vue
+153	Stratégies visuelles
+154	Compétences cognitives
+155	Module 05 de la séquence d’apprentissage obligatoire.
+156	Annexe 5
+157	Le comment
+158	Application
+159	Mécanique de terrain
+160	Schémas de déplacement
+161	Systèmes d’équipe avancés
+162	Mécanique à trois, quatre, cinq et six arbitres
+163	Modules 06 à 08 de la séquence d’apprentissage obligatoire.
+164	Prêt à commencer ?
+165	Commencez par le Module 01, le Guide d’apprentissage des fondamentaux, et suivez la séquence à votre rythme.
+166	Lire l’Annexe 4 / 5
+167	Formation et évaluations pour le Programme de mécanique d’arbitrage de softball 2026-2029 de la WBSC. Site de formation temporaire, ce n’est pas le site web officiel de la WBSC.
+168	Ce site
+169	Confidentialité
+170	Connexion du directeur
+171	WBSC officiel
+172	wbsc.org
+173	Programme de mécanique d’arbitrage de softball de la WBSC 2026-2029
+174	Site de formation temporaire · ce n’est pas le site web officiel de la WBSC
+175	Formation à la mécanique d’arbitrage de la WBSC : accueil
+176	Logo de la WBSC
+177	Principal
+178	Menu
+179	Voir le Guide d’apprentissage des fondamentaux (PDF, s’ouvre dans un nouvel onglet)
+180	Voir le manuel de mécanique de terrain à un arbitre (PDF, s’ouvre dans un nouvel onglet)
+181	Voir le manuel de mécanique de terrain à deux arbitres (PDF, s’ouvre dans un nouvel onglet)
+182	Voir le manuel de mécanique de terrain à trois arbitres (PDF, s’ouvre dans un nouvel onglet)
+183	Voir l’Annexe 4 : Mécanique d’arbitrage de haut niveau, philosophies de placement (PDF, s’ouvre dans un nouvel onglet)
+184	Voir l’Annexe 5 : Mécanique de terrain de haut niveau à trois, quatre, cinq et six arbitres (PDF, s’ouvre dans un nouvel onglet)
+185	Site de formation temporaire pour le programme d’accréditation et de réaccréditation de mécanique d’arbitrage de softball 2026–2029 de la WBSC. Ce n’est pas le site web officiel de la WBSC.
+186	Formation à la mécanique d’arbitrage — Arbitres de softball de la WBSC
+187	<strong>Remarque :</strong> ces PDF sont les manuels officiels de la WBSC, ouverts directement depuis le lecteur de travail de la Commission des arbitres de la WBSC. Ce site de formation n’en héberge aucune copie. Consultez l’<a href="index.html#top">avis sur le site temporaire</a> sur la page d’accueil.
+188	Les six publications officielles du Programme de mécanique d’arbitrage 2026-2029, dans l’ordre où elles doivent être étudiées. Chaque module associe le manuel à sa Vérification des connaissances du manuel : lisez d’abord, puis vérifiez votre compréhension avant de poursuivre.
+189	Fondamentaux
+190	Module 01
+191	Guide d’apprentissage des fondamentaux
+192	Publication officielle de la WBSC
+193	Lire le manuel
+194	<strong>Manuel d’arbitrage de softball de la WBSC - Guide d’apprentissage des fondamentaux.</strong> Version de janvier 2026. Couvre le rôle de l’arbitre, le Code d’éthique de l’arbitre, les définitions de base, les uniformes, la préparation d’avant-match et la gestion du match.
+195	Ouvre la publication officielle de la WBSC dans un nouvel onglet.
+196	Vérification des connaissances du manuel
+197	5 questions
+198	Vérifie la compréhension du Guide d’apprentissage des fondamentaux et renforce le Code d’éthique et la terminologie de base avant de passer à la suite.
+199	Commencer la vérification des connaissances
+200	Voir la présentation →
+201	Module 02
+202	Fondamentaux - Mécanique de terrain à un arbitre
+203	<strong>Annexe 1 - Manuel d’arbitrage de la WBSC, Mécanique de terrain FP : systèmes à un arbitre, Guide d’apprentissage.</strong> Déc. 2025. Positions de départ et mécanique pour chaque combinaison de coureurs et de balles frappées dans le système à un arbitre, du cas où aucun coureur n’est sur les bases jusqu’aux bases pleines.
+204	Vérifie la compréhension des positions de départ et des responsabilités de couverture à un arbitre avant de passer à la suite.
+205	Module 03
+206	Fondamentaux - Mécanique de terrain à deux arbitres
+207	<strong>Annexe 2 - Manuel d’arbitrage de la WBSC, Mécanique de terrain : systèmes à deux arbitres, Guide d’apprentissage.</strong> Décembre 2025. Les trois principes de base du système à deux arbitres, les positions de départ de l’arbitre au marbre et de l’arbitre de base, et la mécanique pour chaque combinaison de coureurs et de balles frappées.
+208	Vérifie la compréhension des trois principes de base du système à deux arbitres et des positions de départ avant de passer à la suite.
+209	Module 04
+210	Fondamentaux - Mécanique de terrain à trois arbitres
+211	<strong>Annexe 3 - Manuel d’arbitrage de la WBSC, Mécanique de terrain : systèmes à trois arbitres, Guide d’apprentissage.</strong> Janvier 2026. Présente les Quatre éléments essentiels et les Principes de division et du champ intérieur/extérieur, avec les positions de départ de l’arbitre au marbre et des arbitres de base et la couverture du champ extérieur pour l’équipe de trois arbitres.
+212	Vérifie la compréhension des Quatre éléments essentiels et des principes de couverture à trois arbitres avant de passer au contenu de haut niveau.
+213	Haut niveau
+214	L’Annexe 4 donne le pourquoi · L’Annexe 5 donne le comment
+215	Module 05
+216	Annexe 4 : Mécanique d’arbitrage de haut niveau, philosophies de placement
+217	<strong>Annexe 4 - Manuel d’arbitrage de la WBSC, Mécanique d’arbitrage de haut niveau : philosophies de placement.</strong> Avril 2026. Concepts clés et glossaire, principes du placement dynamique, optimisation de l’angle et de la distance, erreur de parallaxe, ainsi que la discipline visuelle et l’entraînement face aux biais cognitifs qui préparent les arbitres à l’Annexe 5.
+218	Vérifie la compréhension des philosophies de placement de haut niveau et des concepts clés avant de passer à l’Annexe 5.
+219	Modules 06 à 08
+220	Annexe 5 : Mécanique de terrain de haut niveau à trois, quatre, cinq et six arbitres
+221	<strong>Annexe 5 (5a-5d) - Manuel d’arbitrage de la WBSC, Mécanique de terrain de haut niveau FP : systèmes à 3, 4, 5 et 6 arbitres, Guide d’apprentissage.</strong> Février 2026. Le Cadre des concepts clés et la Théorie des quatre éléments essentiels (FEET), puis la mécanique de haut niveau position par position pour les systèmes à trois, quatre, cinq et six arbitres.
+222	Entraînement facultatif sur la mécanique de terrain de haut niveau pour les systèmes de trois à six arbitres. Les évaluations notées sont les 5a, 5b et 5c, chacune à réaliser après avoir regardé sa présentation.
+223	Chaque Vérification des connaissances du manuel est un entraînement sans note : refaites-la aussi souvent que vous le souhaitez pour vérifier votre compréhension avant de poursuivre. La présentation de formation correspondante se trouve sur la page Présentations, et l’Évaluation des compétences de la présentation de chaque module, qui est notée, se trouve sur la page Évaluations.
+224	Manuels — Formation à la mécanique d’arbitrage
+225	<strong>Remarque :</strong> ces présentations sont ouvertes directement depuis le lecteur de travail de la Commission des arbitres de la WBSC, la même source que la page Manuels. Ce site de formation n’en héberge aucune copie. Consultez l’<a href="index.html#top">avis sur le site temporaire</a> sur la page d’accueil.
+226	Présentations de formation dans le même ordre que les Manuels. Regardez la présentation MP4 en entier, puis réalisez son évaluation.
+227	Regardez la présentation complète avant l’évaluation
+228	<strong>Annexe 4 Philosophies de haut niveau et Annexe 5 Mécanique de terrain de haut niveau à 3, 4, 5 et 6 arbitres :</strong> les questions de l’évaluation reposent sur la <strong>présentation COMPLÈTE</strong> ; veuillez donc réaliser l’évaluation après l’avoir regardée et étudiée.
+229	Fondamentaux → Philosophies de haut niveau
+230	Couvre les Modules 01-05
+231	Modules 01-05
+232	Des fondamentaux à l’Annexe 4 : philosophies de haut niveau
+233	Cette séance d’introduction unique couvre le Guide d’apprentissage des fondamentaux, une vue d’ensemble des Annexes 1-3 et les philosophies de placement de haut niveau de l’Annexe 4, en cinq parties : le processus de révision, le manuel des fondamentaux, les Annexes 1-3, la mécanique de haut niveau de l’Annexe 4, ainsi que les modifications des règles et l’intégrité. Elle est présentée par des membres du Groupe de travail sur la mécanique de la Commission des arbitres de la WBSC, dont Leigh Evans et Frankie Billingsley.
+234	Format d’apprentissage recommandé
+235	MP4
+236	Regardez la présentation en entier, puis réalisez l’évaluation.
+237	Regarder la présentation de formation
+238	Évaluation des compétences de la présentation
+239	Évaluation notée pour chaque module, appliquant cette présentation à des situations réalistes. Choisissez le module que vous venez de regarder. L’évaluation de l’Annexe 4 (Module 05) repose sur la présentation complète : regardez-la donc en entier d’abord :
+240	Haut niveau - Annexe 5
+241	Modules 06-08 · trois parties, à regarder dans l’ordre
+242	Module 06 · Annexe 5a
+243	Annexe 5a - Concepts clés
+244	~25 min
+245	Présente le Cadre des concepts clés de l’Annexe 5 : la Théorie des quatre éléments essentiels (FEET), le mouvement dynamique, l’erreur de parallaxe et l’optimisation de l’angle et de la distance. Regardez cette partie en premier : les Parties 2 et 3 s’appuient directement sur elle.
+246	Évaluation des compétences de la présentation · Annexe 5a
+247	Dix questions notées reposant sur la présentation complète ci-dessus. Réalisez-la après avoir regardé et étudié toute la présentation.
+248	Commencer l’évaluation de l’Annexe 5a
+249	Module 07 · Annexe 5b
+250	Annexe 5b - Système à trois arbitres
+251	~40 min
+252	Applique les concepts clés de l’Annexe 5 au système à trois arbitres : positions de départ, rotations et responsabilités lors des tag-ups. Présentée par Stuart Tyler, du Groupe de travail sur la mécanique de la Commission des arbitres de la WBSC. Regardez d’abord la Partie 1 (Concepts clés).
+253	Évaluation des compétences de la présentation · Annexe 5b
+254	Commencer l’évaluation de l’Annexe 5b
+255	Module 08 · Annexe 5c
+256	Annexe 5c - Systèmes à quatre, cinq et six arbitres
+257	~26 min
+258	Applique les concepts clés aux systèmes à quatre, cinq et six arbitres : positions de départ, rotations et responsabilités lors des tag-ups. Présentée par James English et Florian Lautenschläger, du Groupe de travail sur la mécanique de la Commission des arbitres de la WBSC. Regardez d’abord les Parties 1 et 2.
+259	Évaluation des compétences de la présentation · Annexe 5c
+260	Commencer l’évaluation de l’Annexe 5c
+261	Les Modules 01-05 partagent une seule présentation d’introduction. L’Annexe 5 (Modules 06 à 08) est proposée en trois parties successives : regardez les Concepts clés, puis le Système à trois arbitres, puis les Systèmes à quatre, cinq et six arbitres. Chaque partie a sa propre évaluation.
+262	Présentations — Formation à la mécanique d’arbitrage
+263	Votre dossier central pour chaque Vérification des connaissances du manuel et chaque Évaluation des compétences de la présentation. Saisissez vos informations une seule fois ci-dessous, puis commencez n’importe quelle évaluation indiquée comme disponible.
+264	<strong>Note de passage : 85 %</strong> pour chaque Évaluation des compétences de la présentation (l’évaluation notée). <strong>Vous disposez d’un maximum de 2 tentatives</strong> pour chacune, et la limite est vérifiée lorsque votre résultat est enregistré. Les Vérifications des connaissances du manuel sont un entraînement sans note : refaites-les aussi souvent que vous le souhaitez, les bonnes réponses sont affichées et rien n’est enregistré.
+265	Regardez d’abord la présentation complète
+266	<strong>Annexe 4 Philosophies de haut niveau et Annexe 5 Mécanique de terrain de haut niveau à 3, 4, 5 et 6 arbitres :</strong> les questions de l’évaluation reposent sur la <strong>présentation COMPLÈTE</strong> ; veuillez donc réaliser l’évaluation après l’avoir regardée et étudiée. Il vous sera demandé de le confirmer avant de commencer. <a href="presentations.html">Aller aux présentations</a>.
+267	Vos informations
+268	Requises une fois par visite avant de commencer une évaluation, afin que votre résultat puisse être enregistré à votre nom. Vous confirmerez votre adresse e-mail à l’aide d’un code à usage unique. Ces informations servent uniquement à votre dossier d’achèvement : elles sont transmises à l’administrateur du programme avec votre score.
+269	Site web (laissez vide)
+270	Nom complet
+271	Saisissez votre nom complet.
+272	Adresse e-mail
+273	Saisissez une adresse e-mail valide.
+274	Identifiant d’arbitre <span class="opt">(si disponible)</span>
+275	Association / Fédération <span class="opt">(facultatif)</span>
+276	M’envoyer un code
+277	Nous enverrons un code à 6 chiffres à l’adresse e-mail ci-dessus pour confirmer qu’elle est bien la vôtre.
+278	Code à 6 chiffres
+279	Vérifier
+280	Envoyer un nouveau code
+281	Utiliser une autre adresse e-mail
+282	Tentative inachevée
+283	Vous avez une tentative inachevée pour cette évaluation sur cet appareil.
+284	Reprendre là où je m’étais arrêté
+285	Recommencer
+286	Avant de commencer
+287	Les questions reposent sur la <strong>présentation COMPLÈTE</strong> de cette annexe. Veuillez réaliser l’évaluation après l’avoir regardée et étudiée. <a id="gate-link" href="presentations.html">Aller à la présentation</a>
+288	Commencer l’évaluation
+289	Module 01 · Vérification des connaissances du manuel
+290	Question 1 sur 5
+291	Évaluation terminée
+292	Réessayer d’enregistrer
+293	Réessayer
+294	Il s’agissait d’un entraînement uniquement : rien n’a été enregistré et cela ne compte pas pour votre achèvement.
+295	Suite
+296	Passez aux présentations - Des fondamentaux à l’Annexe 4
+297	Poursuivre la formation
+298	Vérifie la compréhension du Guide d’apprentissage des fondamentaux.
+299	10 questions
+300	Applique la présentation combinée Fondamentaux-Annexe 4 à des situations réalistes.
+301	Commencer l’évaluation
+302	Vérifie la compréhension des positions de départ et de la couverture à un arbitre.
+303	Applique la mécanique à un arbitre à des situations réalistes.
+304	Vérifie la compréhension des trois principes de base du système à deux arbitres.
+305	Applique la mécanique à deux arbitres à des situations réalistes.
+306	Vérifie la compréhension des Quatre éléments essentiels et de la couverture à trois arbitres.
+307	Applique la mécanique à trois arbitres à des situations réalistes.
+308	Vérifie la compréhension des philosophies de placement de haut niveau et des concepts clés.
+309	Applique les philosophies de placement de haut niveau à des situations réalistes.
+310	Module 06
+311	Annexe 5a : Concepts clés
+312	Entraînement facultatif sur l’Annexe 5 (mécanique de terrain de haut niveau à trois à six arbitres) après la lecture du manuel.
+313	Concepts clés : les Quatre éléments essentiels, l’erreur de parallaxe, l’angle et la distance, le timing et le backfilling.
+314	Module 07
+315	Annexe 5b : Système à trois arbitres
+316	Système à trois arbitres : positions de départ, pickoffs, tag-ups, lead-offs et couverture des balles hautes.
+317	Module 08
+318	Annexe 5c : Systèmes à quatre, cinq et six arbitres
+319	Systèmes à quatre, cinq et six arbitres : positions de départ, tag-ups, couverture du champ extérieur et responsabilité sur les balles fair/foul.
+320	Saisissez votre nom complet et votre adresse e-mail ci-dessus avant de commencer une vérification des connaissances.
+324	p. ex. Softball Australia
+325	Évaluations — Formation à la mécanique d’arbitrage de la WBSC
+326	Ce que ce site de formation temporaire recueille, pourquoi, qui peut le voir et combien de temps cela est conservé.
+327	Qui est responsable
+328	Ceci est un site de formation temporaire, et non le site web officiel de la WBSC. Le programme de mécanique d’arbitrage de softball est géré par la Commission des arbitres de la WBSC. La personne responsable des informations décrites sur cette page est <strong>Leigh Evans, Directeur des arbitres</strong>, que l’on peut joindre à l’adresse <a href="mailto:umpiredirector@wbscoceania.org">umpiredirector@wbscoceania.org</a>.
+329	Ce qui est recueilli
+330	Pour réaliser une <strong>Évaluation des compétences de la présentation</strong> notée, vous saisissez votre nom complet, votre adresse e-mail et, facultativement, votre identifiant d’arbitre et votre association ou fédération. Nous vérifions que vous contrôlez l’adresse e-mail en vous envoyant un code à usage unique.
+331	Lorsque vous terminez une évaluation notée, ce site enregistre votre nom, votre adresse e-mail vérifiée, votre identifiant d’arbitre et votre association (s’ils sont fournis), le module et l’évaluation, votre score et votre résultat (réussi ou non réussi), le numéro de la tentative, la date et l’heure, et la version du programme. Rien n’est enregistré tant que vous répondez encore aux questions.
+332	Les <strong>Vérifications des connaissances du manuel</strong> sont un simple entraînement. Vous n’avez aucune information à saisir pour elles et rien à leur sujet n’est enregistré.
+333	E-mails que nous envoyons
+334	Nous vous envoyons un code de connexion et, après chaque tentative notée, un reçu indiquant votre résultat et le numéro de la tentative. Le Directeur des arbitres reçoit un avis pour chaque résultat, ainsi qu’un avis lorsqu’une personne a réussi les huit modules. Ce sont des e-mails de service concernant votre dossier de formation. Nous n’envoyons ni publicité ni lettre d’information.
+335	Pourquoi nous les utilisons, et sur quel fondement
+336	Pour confirmer qui a passé chaque évaluation, appliquer la note de passage et la limite de deux tentatives, et conserver une trace attestant que vous avez accompli le programme d’accréditation et de réaccréditation 2026-2029. Le fondement est l’intérêt légitime de la WBSC et de ses fédérations membres à gérer et à enregistrer ce programme ; ces données ne sont ni utilisées à des fins publicitaires ni vendues. Vous pouvez <a href="#your-rights">vous y opposer ou poser des questions</a> à tout moment.
+337	Où vont les données et qui peut les voir
+338	Les résultats sont enregistrés sous forme de ligne dans une feuille de calcul Google gérée par l’administrateur du programme, et les e-mails sont envoyés via Gmail. Le site utilise Google Apps Script, Google Sheets et Gmail ; Google traite donc ces informations pour notre compte et peut le faire sur des serveurs situés en dehors de votre pays. Un code de connexion (10 minutes) et une session de connexion (6 heures) sont conservés temporairement dans le cache à court terme de Google Apps Script, puis expirent ; le code n’est conservé que sous forme d’empreinte à sens unique, et non en clair.
+339	L’accès est limité à l’administrateur du programme et au Directeur des arbitres. Le Directeur peut consulter les résultats sur une page protégée par mot de passe. Ce site ne publie pas les résultats et ne les partage pas avec d’autres organisations.
+340	Durée de conservation
+341	Les résultats sont conservés pendant la durée du cycle du programme 2026-2029 et pendant deux ans après sa fin, c’est-à-dire jusqu’à la fin de 2031. Ils sont ensuite supprimés, ou conservés uniquement sous forme de totaux anonymes qui n’identifient personne. Les e-mails de notification envoyés au Directeur des arbitres sont supprimés selon le même calendrier. Les e-mails présents dans votre propre boîte de réception vous appartiennent : vous pouvez les conserver ou les supprimer.
+342	Cookies et ce qui est conservé sur votre appareil
+343	Ce site ne dépose pas de cookies et n’utilise ni analyses, ni publicité, ni suivi. Les polices sont servies depuis ce site : votre navigateur ne contacte donc ni Google ni aucun autre tiers pour charger une page.
+344	Pendant que vous utilisez le site, votre navigateur conserve les informations saisies et votre session de connexion dans son stockage de session, pour cette visite uniquement ; elles sont effacées à la fermeture de l’onglet. Après avoir appuyé sur « OK » dans l’avis sur les cookies, ou choisi une langue, ce choix est mémorisé dans votre navigateur afin que l’avis ne s’affiche plus et que le site s’ouvre dans votre langue. Si vous interrompez une évaluation notée en cours de route, votre progression (la question atteinte, votre score actuel et l’ordre des options de réponse) est aussi conservée dans votre navigateur jusqu’à 24 heures pour que vous puissiez la reprendre sur le même appareil ; elle est supprimée lorsque vous terminez ou choisissez de recommencer. C’est tout ce que ce site conserve sur votre appareil. Si vous partagez un ordinateur, choisissez « Recommencer » ou effacez les données de votre navigateur.
+345	Lorsque vous demandez un code de connexion ou enregistrez un résultat, votre navigateur envoie la requête à Google. Google reçoit des informations techniques, comme votre adresse IP, et peut alors déposer ses propres cookies ; cela est régi par les conditions et la politique de confidentialité de Google. Les manuels et les présentations sont hébergés sur Google Drive et s’ouvrent dans un nouvel onglet ; Google gère ces pages selon ses propres politiques.
+346	Sécurité
+347	Les résultats ne sont enregistrés qu’une fois votre adresse e-mail confirmée, la note de passage et la limite de tentatives sont appliquées par le serveur, et la page de résultats du Directeur est protégée par un mot de passe. Aucun système n’est parfaitement sûr. Si nous avons connaissance d’une violation touchant vos informations, le Directeur des arbitres en informera les personnes concernées et les autorités compétentes lorsque la loi l’exige.
+348	Vos droits
+349	Vous pouvez demander quelles informations sont conservées à votre sujet, demander la correction ou la suppression d’un résultat, ou vous opposer à la manière dont il est utilisé. Contactez Leigh Evans, Directeur des arbitres, à l’adresse <a href="mailto:umpiredirector@wbscoceania.org">umpiredirector@wbscoceania.org</a>. Si la réponse ne vous satisfait pas, vous pouvez déposer une plainte auprès de l’autorité de protection des données de votre pays ou de votre État.
+350	Modifications
+351	Ceci est un site temporaire. Cette page peut être mise à jour à mesure que le programme évolue, et la date de la dernière modification figure ci-dessous.
+352	Dernière mise à jour : 30 octobre 2026.
+353	Confidentialité — Formation à la mécanique d’arbitrage de la WBSC
+354	Cette page est traduite de l’anglais. Les manuels et les présentations sont en anglais. En cas de différence entre la traduction et le texte anglais, le texte anglais prévaut.
+355	Important
+356	Lire le manuel officiel de la WBSC
+357	J’ai regardé et étudié la présentation complète de cette annexe.
+358	Disponible maintenant

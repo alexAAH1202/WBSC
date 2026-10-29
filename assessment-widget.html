@@ -570,6 +570,7 @@
     .quiz-section{padding:44px 0 56px;}
   }
 </style>
+<script src="i18n.js" data-quiz></script>
 </head>
 <body>
 
@@ -993,23 +994,25 @@
 
   // Answer options are shuffled for every attempt (the key is remapped), so the
   // right answer is not always in the same position. Question order is unchanged.
-  function shuffleOptions(q){
+  function shuffleOptions(q, idx){
+    var v = qview(currentKey, idx);
     var order = q.options.map(function(_, i){ return i; });
     for (var i = order.length - 1; i > 0; i--) {
       var j = Math.floor(Math.random() * (i + 1));
       var t = order[i]; order[i] = order[j]; order[j] = t;
     }
     return {
-      q: q.q, ref: q.ref, why: q.why,
-      options: order.map(function(i){ return q.options[i]; }),
+      q: v.q, ref: v.ref, why: v.why, base: q.q,
+      options: order.map(function(i){ return v.options[i]; }),
       correct: order.indexOf(q.correct),
       order: order
     };
   }
 
   // Rebuilds a question with a stored option order (used when resuming an unfinished attempt).
-  function applyOrder(q, order){
-    return { q: q.q, ref: q.ref, why: q.why, options: order.map(function(i){ return q.options[i]; }), correct: order.indexOf(q.correct), order: order };
+  function applyOrder(q, order, idx){
+    var v = qview(currentKey, idx);
+    return { q: v.q, ref: v.ref, why: v.why, base: q.q, options: order.map(function(i){ return v.options[i]; }), correct: order.indexOf(q.correct), order: order };
   }
 
   // RESUME: a marked attempt that is stopped part-way is kept in this browser (localStorage) so it can be
@@ -1039,7 +1042,7 @@
       localStorage.setItem(RESUME_KEY, JSON.stringify({
         v: 1, key: currentKey, email: session ? session.email : '', savedAt: Date.now(), index: nextIndex,
         score: state.score, missed: state.missed, order: QUESTIONS.map(function(q){ return q.order; }),
-        qs: QUESTIONS.map(function(q){ return q.q.slice(0, 60); }), elapsedMs: Date.now() - state.startedAt
+        qs: QUESTIONS.map(function(q){ return q.base.slice(0, 60); }), elapsedMs: Date.now() - state.startedAt
       }));
     } catch (e) {}
   }
@@ -1098,7 +1101,7 @@
     state.answered = false;
     state.selected = null;
     var q = QUESTIONS[state.index];
-    els.progressLabel.textContent = 'Question ' + (state.index + 1) + ' of ' + QUESTIONS.length;
+    els.progressLabel.textContent = T('Question {n} of {total}', { n: state.index + 1, total: QUESTIONS.length });
     buildDots();
     els.question.textContent = q.q;
     els.options.innerHTML = '';
@@ -1117,7 +1120,7 @@
     });
     els.feedback.style.display = 'none';
     els.submitBtn.disabled = true;
-    els.submitBtn.textContent = 'Submit Answer';
+    els.submitBtn.textContent = T('Submit Answer');
     els.submitBtn.onclick = submitAnswer;
   }
 
@@ -1158,9 +1161,9 @@
 
     els.feedback.style.display = 'block';
     els.feedback.className = 'quiz-feedback ' + (isCorrect ? 'correct' : 'incorrect');
-    els.feedbackHead.textContent = isCorrect ? '✓ Correct' : '✕ Not quite';
-    if (isCorrect) els.feedbackBody.textContent = marked ? 'That’s right.' : 'That’s right - ' + q.options[q.correct] + '.';
-    else els.feedbackBody.textContent = marked ? 'That is not the answer. Revisit this section of the manual:' : 'The correct answer is: ' + q.options[q.correct] + '.';
+    els.feedbackHead.textContent = isCorrect ? T('✓ Correct') : T('✕ Not quite');
+    if (isCorrect) els.feedbackBody.textContent = marked ? T('That’s right.') : T('That’s right - {answer}.', { answer: q.options[q.correct] });
+    else els.feedbackBody.textContent = marked ? T('That is not the answer. Revisit this section of the manual:') : T('The correct answer is: {answer}.', { answer: q.options[q.correct] });
     els.feedbackRef.textContent = (isCorrect && marked) ? '' : q.ref;
     // The optional explanation ("why") is shown in practice, and in the marked assessment only for an answer the learner got right.
     var showWhy = !!q.why && (!marked || isCorrect);
@@ -1168,7 +1171,7 @@
     els.feedbackWhy.style.display = showWhy ? '' : 'none';
 
     var isLast = state.index === QUESTIONS.length - 1;
-    els.submitBtn.textContent = isLast ? 'See Results' : 'Next Question';
+    els.submitBtn.textContent = isLast ? T('See Results') : T('Next Question');
     els.submitBtn.onclick = isLast ? finishQuiz : nextQuestion;
     els.submitBtn.disabled = false;
     buildDots();
@@ -1195,8 +1198,8 @@
     if (!isMarked(bank)) {
       // Practice: nothing is saved, no attempts are used.
       els.resultPill.className = 'result-pill ' + (passedNow ? 'pass' : 'fail');
-      els.resultPill.textContent = passedNow ? 'Well done' : 'Keep practising';
-      els.resultText.textContent = 'Practice only. You can try this as many times as you like.';
+      els.resultPill.textContent = passedNow ? T('Well done') : T('Keep practising');
+      els.resultText.textContent = T('Practice only. You can try this as many times as you like.');
       els.saveState.style.display = 'none';
       els.practiceNote.style.display = '';
       els.nextBlock.style.display = '';
@@ -1217,9 +1220,9 @@
   // Once both attempts are used without a pass, show what was missed with the right answers.
   function showReview(){
     if (!state.missed.length) return;
-    var h = '<h3>Review: the questions you missed</h3><ol>';
+    var h = '<h3>' + escHtml(T('Review: the questions you missed')) + '</h3><ol>';
     state.missed.forEach(function(m){
-      h += '<li>' + escHtml(m.q) + '<br><span class="ans">Correct answer: ' + escHtml(m.answer) + '</span><br><span class="rf">' + escHtml(m.ref) + '</span>' + (m.why ? '<br>' + escHtml(m.why) : '') + '</li>';
+      h += '<li>' + escHtml(m.q) + '<br><span class="ans">' + escHtml(T('Correct answer: {answer}', { answer: m.answer })) + '</span><br><span class="rf">' + escHtml(m.ref) + '</span>' + (m.why ? '<br>' + escHtml(m.why) : '') + '</li>';
     });
     els.review.innerHTML = h + '</ol>';
     els.review.style.display = '';
@@ -1251,6 +1254,33 @@
   var PASS_MARK = 85;
   var MAX_ATTEMPTS = 2;
   var TOTAL_MODULES = 8;   // display only; Code.gs decides completion
+
+  // Translation helpers (i18n.js). T() falls back to the English text it is given, so the page works without i18n.js.
+  var T = window.WBSC_T || function(str, vars){
+    var out = str;
+    if (vars) Object.keys(vars).forEach(function(k){ out = out.split('{' + k + '}').join(vars[k]); });
+    return out;
+  };
+  var LANG = (window.WBSC_I18N && window.WBSC_I18N.lang) || 'en';
+  // The translated version of question i of assessment `key` (falls back to the English fields).
+  function qview(key, i){
+    var base = QUIZ_BANK[key].questions[i];
+    var tr = LANG !== 'en' && window.WBSC_QDICT && WBSC_QDICT[LANG] && WBSC_QDICT[LANG][key] && WBSC_QDICT[LANG][key].questions && WBSC_QDICT[LANG][key].questions[i];
+    if (!tr || !tr.options || tr.options.length !== base.options.length) return base;
+    return { q: tr.q || base.q, options: tr.options, ref: tr.ref || base.ref, why: tr.why || base.why, correct: base.correct };
+  }
+  function assessmentMeta(key){
+    var b = QUIZ_BANK[key], tr = LANG !== 'en' && window.WBSC_QDICT && WBSC_QDICT[LANG] && WBSC_QDICT[LANG][key];
+    return { title: (tr && tr.title) || T(b.title), nextLabel: (tr && tr.nextLabel) || T(b.nextLabel) };
+  }
+  // Server messages (Code.gs sends English): translate the ones a learner can see.
+  function S(msg){
+    msg = String(msg || '');
+    var m;
+    if ((m = /^That code is not right\. (\d+) tries left\.$/.exec(msg))) return T('That code is not right. {n} tries left.', { n: m[1] });
+    if ((m = /^You have already used the maximum of (\d+) attempts for this assessment\. Please contact (.+)\.$/.exec(msg))) return T('You have already used the maximum of {n} attempts for this assessment. Please contact {email}.', { n: m[1], email: m[2] });
+    return T(msg);
+  }
   var MARKED_TYPE = 'Presentation Competency Assessment';   // the recorded one; Manual Knowledge Checks are practice
   function isMarked(bank){ return !!bank && bank.kind === MARKED_TYPE; }
   function neededFor(total){ var n = 0; while (n * 100 < PASS_MARK * total) n++; return n; }   // same rule as Code.gs
@@ -1302,13 +1332,13 @@
     var typed = document.getElementById('inp-email').value.trim().toLowerCase();
     if (isVerified()) {
       verifyEls.sendRow.style.display = 'none'; verifyEls.codeRow.style.display = 'none'; verifyEls.doneRow.style.display = '';
-      setVerifyState('ok', '\u2713 Email verified: ' + session.email);
+      setVerifyState('ok', T('\u2713 Email verified: {email}', { email: session.email }));
     } else if (codeSentTo && codeSentTo === typed) {
       verifyEls.sendRow.style.display = 'none'; verifyEls.doneRow.style.display = 'none'; verifyEls.codeRow.style.display = '';
     } else {
       verifyEls.codeRow.style.display = 'none'; verifyEls.doneRow.style.display = 'none'; verifyEls.sendRow.style.display = '';
-      if (verifyEls.state.className.indexOf('ok') !== -1) setVerifyState('', 'Confirm your email address to continue.');
-      else if (!verifyEls.state.textContent) setVerifyState('', 'Confirm your email address to continue.');
+      if (verifyEls.state.className.indexOf('ok') !== -1) setVerifyState('', T('Confirm your email address to continue.'));
+      else if (!verifyEls.state.textContent) setVerifyState('', T('Confirm your email address to continue.'));
     }
   }
 
@@ -1335,7 +1365,7 @@
       if (form.parentNode) form.parentNode.removeChild(form);
     }
     var call = { done: function(reply){ cleanup(); done(reply); }, timer: null };
-    call.timer = setTimeout(function(){ call.done({ success: false, error: 'The service did not answer. Please check your connection and try again.' }); }, AUTH_TIMEOUT_MS);
+    call.timer = setTimeout(function(){ call.done({ success: false, error: T('The service did not answer. Please check your connection and try again.') }); }, AUTH_TIMEOUT_MS);
     pendingCalls[id] = call;
     document.body.appendChild(frame);
     document.body.appendChild(form);
@@ -1346,24 +1376,24 @@
     var email = document.getElementById('inp-email').value.trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       document.getElementById('field-email').classList.add('invalid');
-      setVerifyState('bad', 'Enter a valid email address above first.');
+      setVerifyState('bad', T('Enter a valid email address above first.'));
       return;
     }
     document.getElementById('field-email').classList.remove('invalid');
     verifyEls.sendBtn.disabled = true; verifyEls.resendBtn.disabled = true;
-    setVerifyState('', 'Sending a code to ' + email + '\u2026');
+    setVerifyState('', T('Sending a code to {email}\u2026', { email: email }));
     callServer('sendCode', { email: email, website: document.getElementById('inp-website').value }, function(r){
       verifyEls.sendBtn.disabled = false;
       if (r.success) {
         codeSentTo = email.toLowerCase();
         refreshVerifyUI();
-        setVerifyState('', 'We sent a 6-digit code to ' + email + '. It can take a minute to arrive; check your spam folder too.');
+        setVerifyState('', T('We sent a 6-digit code to {email}. It can take a minute to arrive; check your spam folder too.', { email: email }));
         verifyEls.code.value = ''; verifyEls.code.focus();
         setTimeout(function(){ verifyEls.resendBtn.disabled = false; }, RESEND_WAIT_MS);
       } else {
         verifyEls.resendBtn.disabled = false;
         refreshVerifyUI();
-        setVerifyState('bad', r.error || 'We could not send the code. Please try again.');
+        setVerifyState('bad', r.error ? S(r.error) : T('We could not send the code. Please try again.'));
       }
     });
   }
@@ -1371,9 +1401,9 @@
   function checkCode(){
     var email = document.getElementById('inp-email').value.trim();
     var code = verifyEls.code.value.replace(/\s+/g, '');
-    if (!/^\d{6}$/.test(code)) { setVerifyState('bad', 'Enter the 6-digit code from the email.'); verifyEls.code.focus(); return; }
+    if (!/^\d{6}$/.test(code)) { setVerifyState('bad', T('Enter the 6-digit code from the email.')); verifyEls.code.focus(); return; }
     verifyEls.checkBtn.disabled = true;
-    setVerifyState('', 'Checking the code\u2026');
+    setVerifyState('', T('Checking the code\u2026'));
     callServer('verifyCode', { email: email, code: code }, function(r){
       verifyEls.checkBtn.disabled = false;
       if (r.success && r.token) {
@@ -1383,7 +1413,7 @@
         refreshVerifyUI();
       } else {
         if (r.code === 'expired') { codeSentTo = ''; refreshVerifyUI(); }
-        setVerifyState('bad', r.error || 'That code did not work. Please try again.');
+        setVerifyState('bad', r.error ? S(r.error) : T('That code did not work. Please try again.'));
       }
     });
   }
@@ -1393,7 +1423,7 @@
   verifyEls.checkBtn.addEventListener('click', checkCode);
   verifyEls.code.addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); checkCode(); } });
   verifyEls.changeBtn.addEventListener('click', function(){
-    clearSession(); codeSentTo = ''; setVerifyState('', 'Confirm your email address to continue.');
+    clearSession(); codeSentTo = ''; setVerifyState('', T('Confirm your email address to continue.'));
     document.getElementById('inp-email').focus();
   });
   document.getElementById('inp-email').addEventListener('input', function(){
@@ -1478,27 +1508,29 @@
     cleanupSave();
     if (m.success) {
       var max = m.maxAttempts || MAX_ATTEMPTS;
-      var n = m.attemptNumber ? ' (attempt ' + m.attemptNumber + ' of ' + max + ')' : '';
-      setSaveState('saved', '✓ Your result has been recorded' + n + '. A receipt will be emailed to ' + (session ? session.email : 'you') + '.', false);
+      var rcpt = session ? session.email : '';
+      setSaveState('saved', m.attemptNumber
+        ? T('✓ Your result has been recorded (attempt {n} of {max}). A receipt will be emailed to {email}.', { n: m.attemptNumber, max: max, email: rcpt })
+        : T('✓ Your result has been recorded. A receipt will be emailed to {email}.', { email: rcpt }), false);
       if (m.result) showResult(m.result === 'PASS', m.attemptNumber, true);   // the server's decision is final
       if (m.result !== 'PASS' && m.attemptNumber >= max) showReview();          // all attempts used: now the answers can be shown
-      if (m.completedAll) els.resultText.textContent += ' You have now passed all ' + TOTAL_MODULES + ' modules. A summary will be emailed to you.';
+      if (m.completedAll) els.resultText.textContent += ' ' + T('You have now passed all {total} modules. A summary will be emailed to you.', { total: TOTAL_MODULES });
       pendingSave = null;
     } else if (m.code === 'auth') {
       // The verification expired (or was never completed). Nothing was saved; the same
       // result can be sent again after verifying, and it is never recorded twice.
       clearSession();
-      setSaveState('failed', 'Your email verification has expired. Verify your email again in "Your Details" at the top of the page, then press "Try saving again". Your score is kept.', true);
+      setSaveState('failed', T('Your email verification has expired. Verify your email again in "Your Details" at the top of the page, then press "Try saving again". Your score is kept.'), true);
       document.querySelector('.identity-panel').scrollIntoView({behavior:'smooth', block:'center'});
     } else if (m.code === 'max_attempts') {
       // Nothing was saved. This is final, so no Retry.
-      setSaveState('failed', m.error || ('You have already used the maximum of ' + MAX_ATTEMPTS + ' attempts for this assessment.'), false);
-      els.resultPill.className = 'result-pill fail'; els.resultPill.textContent = 'Not recorded';
-      els.resultText.textContent = 'This attempt was not counted.';
+      setSaveState('failed', m.error ? S(m.error) : T('You have already used the maximum of {n} attempts for this assessment.', { n: MAX_ATTEMPTS }), false);
+      els.resultPill.className = 'result-pill fail'; els.resultPill.textContent = T('Not recorded');
+      els.resultText.textContent = T('This attempt was not counted.');
       els.nextBlock.style.display = 'none';
       pendingSave = null;
     } else {
-      setSaveState('failed', 'Your result could not be recorded: ' + (m.error || 'unknown error') + '. Press "Try saving again", and tell your program administrator if it keeps failing.', true);
+      setSaveState('failed', T('Your result could not be recorded: {error}. Press "Try saving again", and tell your program administrator if it keeps failing.', { error: m.error ? S(m.error) : T('unknown error') }), true);
       // pendingSave is kept so Retry can resend the same submission
     }
   });
@@ -1506,11 +1538,11 @@
   els.retryBtn.addEventListener('click', function(){
     if (!pendingSave) return;
     if (!isVerified()) {
-      setSaveState('failed', 'Verify your email address in "Your Details" first, then press "Try saving again".', true);
+      setSaveState('failed', T('Verify your email address in "Your Details" first, then press "Try saving again".'), true);
       document.querySelector('.identity-panel').scrollIntoView({behavior:'smooth', block:'center'});
       return;
     }
-    setSaveState('local', 'Recording your result…', false);
+    setSaveState('local', T('Recording your result…'), false);
     postToWebApp(pendingSave.payload);   // same submissionId: the server de-duplicates
   });
 
@@ -1518,13 +1550,13 @@
   // server has recorded the attempt (so the attempt number is known to count).
   function showResult(passed, attemptNumber, confirmed){
     els.resultPill.className = 'result-pill ' + (passed ? 'pass' : 'fail');
-    els.resultPill.textContent = passed ? 'Passed' : 'Not passed';
+    els.resultPill.textContent = passed ? T('Passed') : T('Not passed');
     var left = attemptNumber ? MAX_ATTEMPTS - attemptNumber : null;
     var text;
-    if (passed) text = 'You reached the pass mark of ' + PASS_MARK + '%.';
-    else if (!confirmed) text = 'The pass mark is ' + PASS_MARK + '%.';
-    else if (left > 0) text = 'You did not reach the pass mark of ' + PASS_MARK + '%. You have ' + left + ' attempt' + (left === 1 ? '' : 's') + ' left.';
-    else text = 'You did not reach the pass mark of ' + PASS_MARK + '% and have used all ' + MAX_ATTEMPTS + ' attempts. Please contact ' + CONTACT_EMAIL + '.';
+    if (passed) text = T('You reached the pass mark of {pass}%.', { pass: PASS_MARK });
+    else if (!confirmed) text = T('The pass mark is {pass}%.', { pass: PASS_MARK });
+    else if (left > 0) text = left === 1 ? T('You did not reach the pass mark of {pass}%. You have 1 attempt left.', { pass: PASS_MARK }) : T('You did not reach the pass mark of {pass}%. You have {left} attempts left.', { pass: PASS_MARK, left: left });
+    else text = T('You did not reach the pass mark of {pass}% and have used all {max} attempts. Please contact {email}.', { pass: PASS_MARK, max: MAX_ATTEMPTS, email: CONTACT_EMAIL });
     els.resultText.textContent = text;
     els.nextBlock.style.display = passed ? '' : 'none';
     els.tryAgain.style.display = (!passed && confirmed && left > 0) ? '' : 'none';
@@ -1552,13 +1584,13 @@
     };
 
     if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('REPLACE_WITH') === 0) {
-      setSaveState('local', 'Score calculated above. This demo isn’t yet connected to the results spreadsheet, so nothing was saved - see Code.gs to connect it.', false);
+      setSaveState('local', T('Score calculated above. This demo isn’t yet connected to the results spreadsheet, so nothing was saved - see Code.gs to connect it.'), false);
       return;
     }
 
     cleanupSave();
     pendingSave = { id: payload.submissionId, payload: payload, timer: null, frame: null, form: null };
-    setSaveState('local', 'Recording your result…', false);
+    setSaveState('local', T('Recording your result…'), false);
     postToWebApp(payload);
   }
 
@@ -1616,7 +1648,7 @@
   function startAssessment(key){
     if (!QUIZ_BANK[key] || starting) return;
     if (pendingSave) {
-      showBanner('Your last result has not been confirmed as recorded yet. Press "Try saving again" on the results screen first.');
+      showBanner(T('Your last result has not been confirmed as recorded yet. Press "Try saving again" on the results screen first.'));
       return;
     }
     if (!isMarked(QUIZ_BANK[key])) {   // Knowledge Checks are practice: no details, no code, no attempt limit
@@ -1627,29 +1659,30 @@
       return;
     }
     if (!validateIdentity()) {
-      showBanner('Enter your full name and email address above before starting an assessment.');
+      showBanner(T('Enter your full name and email address above before starting an assessment.'));
       document.querySelector('.identity-panel').scrollIntoView({behavior:'smooth', block:'center'});
       return;
     }
     if (!isVerified()) {
-      showBanner('Confirm your email address first: press "Email me a code" in Your Details, then enter the code.');
+      showBanner(T('Confirm your email address first: press "Email me a code" in Your Details, then enter the code.'));
       document.querySelector('.identity-panel').scrollIntoView({behavior:'smooth', block:'center'});
       return;
     }
     els.validationBanner.classList.remove('show');
     starting = true;
-    showBanner('Checking your attempts\u2026');
+    showBanner(T('Checking your attempts\u2026'));
     lookupAttempts(key, function(info){
       starting = false;
       if (info && info.authFailed) {
         clearSession();
-        showBanner('Your email verification has expired. Please verify your email again in Your Details.');
+        showBanner(T('Your email verification has expired. Please verify your email again in Your Details.'));
         document.querySelector('.identity-panel').scrollIntoView({behavior:'smooth', block:'center'});
         return;
       }
       if (info && info.remaining <= 0) {
-        showBanner('You have already used the maximum of ' + (info.max || MAX_ATTEMPTS) + ' attempts for this assessment' +
-          (info.passed ? ' (you have passed it)' : '') + '. Please contact ' + CONTACT_EMAIL + ' if you need help.');
+        showBanner(info.passed
+          ? T('You have already used the maximum of {n} attempts for this assessment (you have passed it). Please contact {email} if you need help.', { n: info.max || MAX_ATTEMPTS, email: CONTACT_EMAIL })
+          : T('You have already used the maximum of {n} attempts for this assessment. Please contact {email} if you need help.', { n: info.max || MAX_ATTEMPTS, email: CONTACT_EMAIL }));
         return;
       }
       els.validationBanner.classList.remove('show');
@@ -1666,13 +1699,13 @@
     if (!bank) return false;
     currentKey = key;
     var total = bank.questions.length;
-    var need = neededFor(total) + ' of ' + total + ' correct to pass';
+    var need = T('{n} of {total} correct to pass', { n: neededFor(total), total: total });
     attemptNo = isMarked(bank) && info ? info.attempts + 1 : null;
     els.attemptLabel.textContent = !isMarked(bank)
-      ? 'Practice \u00b7 not recorded \u00b7 unlimited tries'
+      ? T('Practice \u00b7 not recorded \u00b7 unlimited tries')
       : attemptNo
-        ? 'Attempt ' + attemptNo + ' of ' + MAX_ATTEMPTS + (attemptNo >= MAX_ATTEMPTS ? ' (last attempt)' : '') + ' \u00b7 Pass mark ' + PASS_MARK + '% (' + need + ')'
-        : 'Maximum ' + MAX_ATTEMPTS + ' attempts \u00b7 Pass mark ' + PASS_MARK + '% (' + need + ')';
+        ? T('Attempt {n} of {max}', { n: attemptNo, max: MAX_ATTEMPTS }) + (attemptNo >= MAX_ATTEMPTS ? ' ' + T('(last attempt)') : '') + ' \u00b7 ' + T('Pass mark {pass}%', { pass: PASS_MARK }) + ' (' + need + ')'
+        : T('Maximum {max} attempts', { max: MAX_ATTEMPTS }) + ' \u00b7 ' + T('Pass mark {pass}%', { pass: PASS_MARK }) + ' (' + need + ')';
     els.quizSection.style.display = '';
     els.tryAgain.style.display = 'none';
     QUESTIONS = bank.questions.map(shuffleOptions);
@@ -1681,9 +1714,10 @@
     els.practiceNote.style.display = 'none';
     els.review.style.display = 'none';
 
-    els.eyebrow.textContent = bank.moduleShort + ' \u00b7 ' + bank.kind;
-    els.moduleTitle.textContent = bank.title;
-    els.nextTitle.textContent = bank.nextLabel;
+    var meta = assessmentMeta(key);
+    els.eyebrow.textContent = T('Module {n}', { n: bank.moduleShort.replace(/^Module\s*/, '') }) + ' \u00b7 ' + T(bank.kind);
+    els.moduleTitle.textContent = meta.title;
+    els.nextTitle.textContent = meta.nextLabel;
     els.continueBtn.setAttribute('href', bank.nextHref);
 
     els.complete.style.display = 'none';
@@ -1694,7 +1728,7 @@
       els.active.style.display = 'none';
       els.gate.style.display = 'none';
       els.resume.style.display = '';
-      document.getElementById('resume-text').textContent = 'You have an unfinished attempt at this assessment on this device: you have answered ' + (saved.index) + ' of ' + saved.qs.length + ' questions. Resume where you left off, or start again with a fresh attempt.';
+      document.getElementById('resume-text').textContent = T('You have an unfinished attempt at this assessment on this device: you have answered {n} of {total} questions. Resume where you left off, or start again with a fresh attempt.', { n: saved.index, total: saved.qs.length });
       pendingResume = saved;
     } else {
       pendingResume = null;
@@ -1722,7 +1756,7 @@
     var saved = pendingResume, bank = QUIZ_BANK[currentKey];
     if (!saved || !bank) return;
     pendingResume = null;
-    QUESTIONS = bank.questions.map(function(q, i){ return applyOrder(q, saved.order[i]); });
+    QUESTIONS = bank.questions.map(function(q, i){ return applyOrder(q, saved.order[i], i); });
     state = { index: saved.index, answered: false, score: saved.score, selected: null, missed: saved.missed || [], startedAt: Date.now() - (saved.elapsedMs || 0) };
     els.resume.style.display = 'none';
     if (state.index >= QUESTIONS.length) { finishQuiz(); return; }

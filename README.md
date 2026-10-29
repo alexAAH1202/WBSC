@@ -91,6 +91,7 @@ Script Web App into a Google Sheet.
 - `node tests/widget.test.js` (needs `npm i -D playwright`): the widget in a real browser with Google's reply simulated (27 checks).
 - `node tests/notice.test.js` (needs Playwright): the pop-up on every page, no cookies, dismissal, phone width, blocked storage (9 checks).
 - `node tests/results.test.js` (needs Playwright): `results.html` with simulated replies (25 checks).
+- `node tests/i18n.test.js` (needs Playwright): the language selector, that every visible string and every quiz question has a translation in all five languages, pages open in each language at desktop and phone width, and the practice quizzes run in each language with the right answer still marked right.
 
 The browser tests do **not** prove the real Apps Script reply reaches the widget on the live site;
 step 3 under "Deploying" is the check that does.
@@ -101,3 +102,12 @@ step 3 under "Deploying" is the check that does.
 - **Presentations are MP4 only.** The PowerPoint downloads were removed (animations and sound did not play reliably, and Mac rendering was poor).
 - **Question explanations.** A question may have an optional `why` (see the header of `questions.js`).
 - **Resume.** An unfinished marked attempt is kept in the browser's localStorage (`wbscResume`, one attempt at a time) for 24 hours: question reached, score, missed questions and the shuffled option order. It is tied to the verified email, ignored if the question bank changed, and cleared on finish or "Start again". It does not follow the learner to another device. Practice quizzes are not saved.
+
+## Languages
+The site and the quiz questions can be shown in English, Spanish, French, Japanese, Korean and Chinese, using the same
+language menu idea as the WBSC site. English is the source and the fallback: a string without a translation stays in English,
+so a gap can never break a page. Manuals, presentations, emails and the Director results page stay in English.
+**The other languages are built but switched off for the public** until a native speaker has reviewed each one.
+To switch a language on, add its code (for example `'es'`) to `LIVE` in `i18n.js` after the reviewer signs off.
+Reviewers can look at any language before that with `?langs=all` on any page (adds the menu) or `?lang=es`.
+How it works, how to edit a translation, and the glossary are in [`i18n/README.md`](./i18n/README.md).

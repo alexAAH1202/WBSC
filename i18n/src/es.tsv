@@ -1,0 +1,355 @@
+0	Pregunta {n} de {total}
+1	Enviar respuesta
+2	✓ Correcto
+3	✕ No exactamente
+4	Así es.
+5	Así es - {answer}.
+6	Esa no es la respuesta. Repasa esta sección del manual:
+7	La respuesta correcta es: {answer}.
+8	Ver resultados
+9	Siguiente pregunta
+10	Bien hecho
+11	Sigue practicando
+12	Solo práctica. Puedes repetirlo cuantas veces quieras.
+13	Repaso: las preguntas que fallaste
+14	Respuesta correcta: {answer}
+15	Ese código no es correcto. Te quedan {n} intentos.
+16	Ya has utilizado el máximo de {n} intentos para esta evaluación. Ponte en contacto con {email}.
+17	✓ Correo electrónico verificado: {email}
+18	Confirma tu dirección de correo electrónico para continuar.
+19	El servicio no respondió. Comprueba tu conexión e inténtalo de nuevo.
+20	Primero introduce arriba una dirección de correo electrónico válida.
+21	Enviando un código a {email}…
+22	Hemos enviado un código de 6 dígitos a {email}. Puede tardar un minuto en llegar; revisa también la carpeta de correo no deseado.
+23	No pudimos enviar el código. Inténtalo de nuevo.
+24	Introduce el código de 6 dígitos del correo electrónico.
+25	Comprobando el código…
+26	Ese código no funcionó. Inténtalo de nuevo.
+27	✓ Tu resultado se ha registrado (intento {n} de {max}). Se enviará un recibo a {email}.
+28	✓ Tu resultado se ha registrado. Se enviará un recibo a {email}.
+29	Has aprobado los {total} módulos. Se te enviará un resumen por correo electrónico.
+30	La verificación de tu correo electrónico ha caducado. Vuelve a verificarlo en «Tus datos», en la parte superior de la página, y pulsa «Intentar guardar de nuevo». Tu puntuación se conserva.
+31	Ya has utilizado el máximo de {n} intentos para esta evaluación.
+32	No registrado
+33	Este intento no se ha contabilizado.
+34	No se pudo registrar tu resultado: {error}. Pulsa «Intentar guardar de nuevo» y avisa al administrador del programa si el problema continúa.
+35	error desconocido
+36	Primero verifica tu correo electrónico en «Tus datos» y después pulsa «Intentar guardar de nuevo».
+37	Registrando tu resultado…
+38	Aprobado
+39	No aprobado
+40	Has alcanzado la nota mínima del {pass} %.
+41	La nota mínima es del {pass} %.
+42	No has alcanzado la nota mínima del {pass} %. Te queda 1 intento.
+43	No has alcanzado la nota mínima del {pass} %. Te quedan {left} intentos.
+44	No has alcanzado la nota mínima del {pass} % y has utilizado los {max} intentos. Ponte en contacto con {email}.
+45	La puntuación se ha calculado arriba. Esta demostración todavía no está conectada a la hoja de cálculo de resultados, por lo que no se guardó nada - consulta Code.gs para conectarla.
+46	Tu último resultado aún no se ha confirmado como registrado. Pulsa primero «Intentar guardar de nuevo» en la pantalla de resultados.
+47	Introduce tu nombre completo y tu dirección de correo electrónico arriba antes de empezar una evaluación.
+48	Confirma primero tu correo electrónico: pulsa «Enviarme un código» en Tus datos y luego introduce el código.
+49	Comprobando tus intentos…
+50	La verificación de tu correo electrónico ha caducado. Vuelve a verificarlo en Tus datos.
+51	Ya has utilizado el máximo de {n} intentos para esta evaluación (ya la has aprobado). Si necesitas ayuda, ponte en contacto con {email}.
+52	Ya has utilizado el máximo de {n} intentos para esta evaluación. Si necesitas ayuda, ponte en contacto con {email}.
+53	{n} de {total} respuestas correctas para aprobar
+54	Práctica · no se registra · intentos ilimitados
+55	Intento {n} de {max}
+56	(último intento)
+57	Nota mínima {pass} %
+58	Máximo {max} intentos
+59	Módulo {n}
+60	Tienes un intento sin terminar de esta evaluación en este dispositivo: has respondido {n} de {total} preguntas. Reanuda donde lo dejaste o empieza de nuevo con un intento nuevo.
+61	Cookies y privacidad
+62	Este sitio no utiliza cookies ni rastreo. Guarda lo que escribes en tu navegador solo durante esta visita y se conecta con Google para enviarte por correo electrónico un código de acceso y para guardar tus resultados calificados.
+63	Aceptar
+64	Leer la página de privacidad
+66	Idioma
+67	Primero verifica tu dirección de correo electrónico.
+68	Se han solicitado demasiados códigos para esta dirección. Espera un rato e inténtalo de nuevo.
+69	El servicio está ocupado. Inténtalo de nuevo en unos minutos.
+70	No pudimos enviar el correo electrónico. Comprueba la dirección e inténtalo de nuevo.
+71	Ese código ha caducado o no se solicitó. Pide uno nuevo.
+72	Demasiados códigos incorrectos. Pide uno nuevo.
+73	Algo salió mal. Inténtalo de nuevo.
+74	Dirección de correo electrónico no válida
+75	Sesión no válida. Primero verifica tu dirección de correo electrónico con un código.
+76	Saltar al contenido principal
+77	Inicio
+78	Manuales
+79	Presentaciones
+80	Evaluaciones
+81	Árbitros de softbol de la WBSC
+82	Formación en mecánica arbitral
+83	Acreditación y reacreditación 2026-2029
+84	Un sistema. Una filosofía.
+85	Comenzar la formación
+86	<strong>Este no es el sitio web oficial de la WBSC.</strong> Este sitio de formación temporal se ha creado para apoyar a los árbitros de softbol de la WBSC durante la implantación del Programa de Mecánica Arbitral 2026-2029, mientras la WBSC traslada el programa de formación a la Academia de Formación de Oficiales My.WBSC.
+87	Todos los manuales y publicaciones oficiales de la WBSC a los que se accede desde este sitio siguen alojados en el sitio web oficial de la WBSC.
+88	Este sitio de formación está dirigido a los árbitros de softbol certificados por la WBSC que participan en el ciclo de acreditación y reacreditación 2026-2029.
+89	El programa
+90	Un sistema de aprendizaje conectado
+91	El softbol internacional moderno avanza más rápido de lo que lo hacían las mecánicas concebidas para arbitrarlo. Las líneas de visión cambian en plena jugada. Los bateadores y los corredores generan una velocidad que reduce el tiempo del que dispone el árbitro para encontrar el ángulo correcto, y el posicionamiento defensivo es cada vez más variado, de modo que las jugadas se desarrollan de formas que premian la anticipación tanto como la reacción.
+92	El Programa de Mecánica Arbitral 2026-2029 se revisó para responder a esa realidad. Cada módulo de este itinerario gira en torno a una pregunta que los árbitros se hacen antes de cada lanzamiento: no solo dónde colocarse, sino por qué esa posición les da la visión que exige la jugada.
+93	Esa pregunta recorre todo el sistema, pero se responde de forma más directa en dos documentos.
+94	El <span class="why">Apéndice 4</span> aporta el porqué. El <span class="how">Apéndice 5</span> aporta el cómo.
+95	Complétalo en orden
+96	Secuencia de aprendizaje obligatoria
+97	La WBSC ha revisado y reestructurado sus materiales educativos de mecánica arbitral de softbol para ofrecer a los árbitros de todas las regiones y federaciones nacionales un itinerario de aprendizaje más claro y progresivo.
+98	El marco se articula en torno a Cuatro Pilares Conectados, que avanzan desde los principios arbitrales fundamentales y la mecánica de campo hasta las filosofías avanzadas de posicionamiento de élite y la mecánica de campo internacional.
+99	La estructura revisada separa el aprendizaje fundamental del de élite y mantiene un único sistema de mecánica de la WBSC, respaldado por una terminología, unos principios y unas normas comunes. Cada paso se apoya en el anterior, así que recórrelos en orden.
+100	Fundamentos
+101	Principios arbitrales básicos que sustentan todos los niveles de arbitraje.
+102	<strong>Corresponde a</strong>Guía de Aprendizaje de Fundamentos
+103	Ver manual →
+104	Mecánica de campo
+105	Sistemas de uno, dos y tres árbitros construidos sobre esos fundamentos.
+106	<strong>Corresponde a</strong>Mecánica de campo de uno, dos y tres árbitros
+107	Manual de un árbitro →
+108	Manual de dos árbitros →
+109	Manual de tres árbitros →
+110	Filosofías de élite
+111	El razonamiento, las filosofías de posicionamiento y las estrategias visuales que sustentan el arbitraje de élite.
+112	<strong>Corresponde al</strong>Apéndice 4
+113	Mecánica de campo de élite
+114	Patrones de movimiento avanzados y configuraciones de equipo de hasta seis árbitros.
+115	<strong>Corresponde al</strong>Apéndice 5
+116	Se debe prestar especial atención a los Apéndices 4 y 5 y a sus presentaciones correspondientes.
+117	Orientación de la WBSC
+118	La mecánica de élite es para estudiosos del juego y solo debe introducirse cuando el árbitro domina con solidez el material fundamental, no como punto de partida.
+119	Las federaciones deben confirmar la orientación equivalente para su propio itinerario de acreditación.
+120	La WBSC utilizará la enseñanza, las filosofías y la mecánica de campo de élite en todos los torneos de la WBSC.
+121	El marco
+122	Acerca del marco
+123	Los Cuatro Pilares apoyan la formación, la acreditación y el desarrollo continuo de los árbitros, y ofrecen una referencia internacional común para árbitros, instructores, mentores y evaluadores.
+124	La WBSC reconoce que muchas federaciones nacionales ya cuentan con programas de formación arbitral fundamental sólidos y completos. El marco revisado no pretende sustituir esos programas ni sus materiales educativos existentes. Más bien ofrece una referencia internacional común que complementa y respalda las vías de desarrollo ya establecidas.
+125	Los manuales están pensados para estudiarse de forma progresiva. La mecánica de élite se construye sobre la mecánica fundamental ya establecida, no la sustituye, y está destinada a árbitros con experiencia y un sólido conocimiento del juego.
+126	En conjunto, los Cuatro Pilares respaldan un desarrollo y una evaluación coherentes de los árbitros, desde el softbol comunitario hasta la competición internacional de élite de la WBSC.
+127	Por módulo
+128	Cómo completar la formación
+129	Cada módulo de la secuencia sigue los mismos cinco pasos.
+130	Paso 1
+131	Leer
+132	Lee el manual de la WBSC indicado.
+133	Paso 2
+134	Comprobar
+135	Prueba la Comprobación de conocimientos del manual: práctica sin calificación, tantas veces como quieras.
+136	Paso 3
+137	Ver
+138	Mira la presentación de formación en MP4 correspondiente.
+139	Paso 4
+140	Evaluar
+141	Completa la Evaluación de competencias de la presentación, que sí se califica.
+142	Paso 5
+143	Avanzar
+144	Continúa con el siguiente módulo de aprendizaje.
+145	La nota mínima de cada Evaluación de competencias de la presentación es del <strong>85 %</strong> y dispones de un máximo de <strong>2 intentos</strong> en cada una. Las Comprobaciones de conocimientos del manual son prácticas sin calificación.
+146	Apéndice 4
+147	Mecánica arbitral de élite
+148	El porqué
+149	Filosofías de posicionamiento
+150	Principios
+151	Toma de decisiones
+152	Líneas de visión
+153	Estrategias visuales
+154	Habilidades cognitivas
+155	Módulo 05 de la secuencia de aprendizaje obligatoria.
+156	Apéndice 5
+157	El cómo
+158	Aplicación
+159	Mecánica de campo
+160	Patrones de movimiento
+161	Sistemas avanzados de equipo
+162	Mecánica de tres, cuatro, cinco y seis árbitros
+163	Módulos 06 a 08 de la secuencia de aprendizaje obligatoria.
+164	¿Listo para empezar?
+165	Empieza por el Módulo 01 de la Guía de Aprendizaje de Fundamentos y avanza por la secuencia a tu propio ritmo.
+166	Leer el Apéndice 4 / 5
+167	Formación y evaluaciones para el Programa de Mecánica Arbitral de Softbol 2026-2029 de la WBSC. Sitio de formación temporal, no es el sitio web oficial de la WBSC.
+168	Este sitio
+169	Privacidad
+170	Acceso del director
+171	WBSC oficial
+172	wbsc.org
+173	Programa de Mecánica Arbitral de Softbol de la WBSC 2026-2029
+174	Sitio de formación temporal · no es el sitio web oficial de la WBSC
+175	Formación en mecánica arbitral de la WBSC: inicio
+176	Logotipo de la WBSC
+177	Principal
+178	Menú
+179	Ver la Guía de Aprendizaje de Fundamentos (PDF, se abre en una pestaña nueva)
+180	Ver el manual de mecánica de campo de un árbitro (PDF, se abre en una pestaña nueva)
+181	Ver el manual de mecánica de campo de dos árbitros (PDF, se abre en una pestaña nueva)
+182	Ver el manual de mecánica de campo de tres árbitros (PDF, se abre en una pestaña nueva)
+183	Ver el Apéndice 4: Mecánica arbitral de élite, filosofías de posicionamiento (PDF, se abre en una pestaña nueva)
+184	Ver el Apéndice 5: Mecánica de campo de élite para tres, cuatro, cinco y seis árbitros (PDF, se abre en una pestaña nueva)
+185	Sitio de formación temporal para el programa de acreditación y reacreditación de Mecánica Arbitral de Softbol 2026–2029 de la WBSC. No es el sitio web oficial de la WBSC.
+186	Formación en mecánica arbitral — Árbitros de softbol de la WBSC
+187	<strong>Nota:</strong> estos son los PDF oficiales de los manuales de la WBSC, abiertos directamente desde la unidad de trabajo de la Comisión de Árbitros de la WBSC. Este sitio de formación no aloja copias de ellos. Consulta el <a href="index.html#top">aviso del sitio temporal</a> en la página de inicio.
+188	Las seis publicaciones oficiales del Programa de Mecánica Arbitral 2026-2029, en el orden en que deben estudiarse. Cada módulo combina el manual con su Comprobación de conocimientos del manual: primero lee y luego comprueba lo que has entendido antes de continuar.
+189	Fundamentos
+190	Módulo 01
+191	Guía de Aprendizaje de Fundamentos
+192	Publicación oficial de la WBSC
+193	Leer el manual
+194	<strong>Manual de Árbitros de Softbol de la WBSC - Guía de Aprendizaje de Fundamentos.</strong> Versión de enero de 2026. Abarca qué es ser árbitro, el Código Ético del Árbitro, las definiciones básicas, los uniformes, la preparación previa al partido y la gestión del partido.
+195	Se abre la publicación oficial de la WBSC en una pestaña nueva.
+196	Comprobación de conocimientos del manual
+197	5 preguntas
+198	Comprueba que has entendido la Guía de Aprendizaje de Fundamentos y refuerza el Código Ético y la terminología básica antes de avanzar.
+199	Empezar la comprobación de conocimientos
+200	Ver la presentación →
+201	Módulo 02
+202	Fundamentos - Mecánica de campo de un árbitro
+203	<strong>Apéndice 1 - Manual de Árbitros de la WBSC, Mecánica de campo FP: sistemas de un árbitro, Guía de Aprendizaje.</strong> Dic. de 2025. Posiciones iniciales y mecánica para cada combinación de corredores y bolas bateadas en el sistema de un árbitro, desde ningún corredor en base hasta bases llenas.
+204	Comprueba que has entendido las posiciones iniciales y las responsabilidades de cobertura con un árbitro antes de avanzar.
+205	Módulo 03
+206	Fundamentos - Mecánica de campo de dos árbitros
+207	<strong>Apéndice 2 - Manual de Árbitros de la WBSC, Mecánica de campo: sistemas de dos árbitros, Guía de Aprendizaje.</strong> Diciembre de 2025. Los tres principios básicos del sistema de dos árbitros, las posiciones iniciales del árbitro de home y del árbitro de base, y la mecánica para cada combinación de corredores y bolas bateadas.
+208	Comprueba que has entendido los tres principios básicos del sistema de dos árbitros y las posiciones iniciales antes de avanzar.
+209	Módulo 04
+210	Fundamentos - Mecánica de campo de tres árbitros
+211	<strong>Apéndice 3 - Manual de Árbitros de la WBSC, Mecánica de campo: sistemas de tres árbitros, Guía de Aprendizaje.</strong> Enero de 2026. Presenta los Cuatro Elementos Esenciales y los Principios de División e Infield/Outfield, con las posiciones iniciales del árbitro de home y de los árbitros de base y la cobertura del outfield para el equipo de tres árbitros.
+212	Comprueba que has entendido los Cuatro Elementos Esenciales y los principios de cobertura con tres árbitros antes de pasar al material de élite.
+213	Élite
+214	El Apéndice 4 aporta el porqué · El Apéndice 5 aporta el cómo
+215	Módulo 05
+216	Apéndice 4: Mecánica arbitral de élite, filosofías de posicionamiento
+217	<strong>Apéndice 4 - Manual de Árbitros de la WBSC, Mecánica arbitral de élite: filosofías de posicionamiento.</strong> Abril de 2026. Conceptos clave y glosario, los principios del posicionamiento dinámico, la optimización del ángulo y la distancia, el error de paralaje, y la disciplina visual y el entrenamiento contra los sesgos cognitivos que preparan a los árbitros para el Apéndice 5.
+218	Comprueba que has entendido las filosofías de posicionamiento de élite y los conceptos clave antes de pasar al Apéndice 5.
+219	Módulos 06 a 08
+220	Apéndice 5: Mecánica de campo de élite para tres, cuatro, cinco y seis árbitros
+221	<strong>Apéndice 5 (5a-5d) - Manual de Árbitros de la WBSC, Mecánica de campo de élite FP: sistemas de 3, 4, 5 y 6 árbitros, Guía de Aprendizaje.</strong> Febrero de 2026. El Marco de Conceptos Clave y la Teoría de los Cuatro Elementos Esenciales (FEET), y después la mecánica de élite posición por posición para los sistemas de tres, cuatro, cinco y seis árbitros.
+222	Práctica opcional sobre la mecánica de campo de élite en los sistemas de tres a seis árbitros. Las evaluaciones calificadas son la 5a, la 5b y la 5c, y cada una se realiza después de ver su presentación.
+223	Cada Comprobación de conocimientos del manual es práctica sin calificación: repítela cuantas veces quieras para comprobar lo que has entendido antes de continuar. La presentación de formación correspondiente está en la página de Presentaciones, y la Evaluación de competencias de la presentación de cada módulo, que sí se califica, está en la página de Evaluaciones.
+224	Manuales — Formación en mecánica arbitral
+225	<strong>Nota:</strong> estas presentaciones se abren directamente desde la unidad de trabajo de la Comisión de Árbitros de la WBSC, la misma fuente que la página de Manuales. Este sitio de formación no aloja copias de ellas. Consulta el <a href="index.html#top">aviso del sitio temporal</a> en la página de inicio.
+226	Presentaciones de formación en el mismo orden que los Manuales. Mira la presentación en MP4 completa y después realiza su evaluación.
+227	Mira la presentación completa antes de la evaluación
+228	<strong>Apéndice 4 Filosofías de élite y Apéndice 5 Mecánica de campo de élite para 3, 4, 5 y 6 árbitros:</strong> las preguntas de la evaluación se basan en la <strong>presentación COMPLETA</strong>, así que realiza la evaluación después de haberla visto y estudiado.
+229	Fundamentos → Filosofías de élite
+230	Abarca los Módulos 01-05
+231	Módulos 01-05
+232	De los Fundamentos al Apéndice 4: Filosofías de élite
+233	Esta única sesión introductoria abarca la Guía de Aprendizaje de Fundamentos, una visión general de los Apéndices 1-3 y las filosofías de posicionamiento de élite del Apéndice 4, en cinco partes: el proceso de revisión, el manual de Fundamentos, los Apéndices 1-3, la mecánica de élite del Apéndice 4, y los cambios de reglas e integridad. La presentan miembros del Grupo de Trabajo de Mecánica de la Comisión de Árbitros de la WBSC, entre ellos Leigh Evans y Frankie Billingsley.
+234	Formato de aprendizaje recomendado
+235	MP4
+236	Mira la presentación completa y después realiza la evaluación.
+237	Ver la presentación de formación
+238	Evaluación de competencias de la presentación
+239	Evaluación calificada de cada módulo, que aplica esta presentación a situaciones realistas. Elige el módulo que acabas de ver. La evaluación del Apéndice 4 (Módulo 05) se basa en la presentación completa, así que mírala entera primero:
+240	Élite - Apéndice 5
+241	Módulos 06-08 · tres partes, para ver en orden
+242	Módulo 06 · Apéndice 5a
+243	Apéndice 5a - Conceptos clave
+244	~25 min
+245	Presenta el Marco de Conceptos Clave del Apéndice 5: la Teoría de los Cuatro Elementos Esenciales (FEET), el movimiento dinámico, el error de paralaje y la optimización del ángulo y la distancia. Mira esta parte primero: las Partes 2 y 3 se apoyan directamente en ella.
+246	Evaluación de competencias de la presentación · Apéndice 5a
+247	Diez preguntas calificadas basadas en la presentación completa de arriba. Realízala después de haber visto y estudiado la presentación entera.
+248	Empezar la evaluación del Apéndice 5a
+249	Módulo 07 · Apéndice 5b
+250	Apéndice 5b - Sistema de tres árbitros
+251	~40 min
+252	Aplica los conceptos clave del Apéndice 5 al sistema de tres árbitros: posiciones iniciales, rotaciones y responsabilidades en los tag-ups. La presenta Stuart Tyler, del Grupo de Trabajo de Mecánica de la Comisión de Árbitros de la WBSC. Mira primero la Parte 1 (Conceptos clave).
+253	Evaluación de competencias de la presentación · Apéndice 5b
+254	Empezar la evaluación del Apéndice 5b
+255	Módulo 08 · Apéndice 5c
+256	Apéndice 5c - Sistemas de cuatro, cinco y seis árbitros
+257	~26 min
+258	Aplica los conceptos clave a los sistemas de cuatro, cinco y seis árbitros: posiciones iniciales, rotaciones y responsabilidades en los tag-ups. La presentan James English y Florian Lautenschläger, del Grupo de Trabajo de Mecánica de la Comisión de Árbitros de la WBSC. Mira primero las Partes 1 y 2.
+259	Evaluación de competencias de la presentación · Apéndice 5c
+260	Empezar la evaluación del Apéndice 5c
+261	Los Módulos 01-05 comparten una única presentación introductoria. El Apéndice 5 (Módulos 06 a 08) se imparte en tres partes consecutivas: mira los Conceptos clave, después el Sistema de tres árbitros y por último los Sistemas de cuatro, cinco y seis árbitros. Cada parte tiene su propia evaluación.
+262	Presentaciones — Formación en mecánica arbitral
+263	Tu registro central de cada Comprobación de conocimientos del manual y de cada Evaluación de competencias de la presentación. Introduce tus datos una sola vez abajo y después empieza cualquier evaluación marcada como disponible.
+264	<strong>Nota mínima: 85 %</strong> en cada Evaluación de competencias de la presentación (la evaluación calificada). <strong>Dispones de un máximo de 2 intentos</strong> en cada una, y el límite se comprueba cuando se guarda tu resultado. Las Comprobaciones de conocimientos del manual son prácticas sin calificación: repítelas cuantas veces quieras, se muestran las respuestas correctas y no se registra nada.
+265	Mira primero la presentación completa
+266	<strong>Apéndice 4 Filosofías de élite y Apéndice 5 Mecánica de campo de élite para 3, 4, 5 y 6 árbitros:</strong> las preguntas de la evaluación se basan en la <strong>presentación COMPLETA</strong>, así que realiza la evaluación después de haberla visto y estudiado. Se te pedirá que lo confirmes antes de empezar. <a href="presentations.html">Ir a las presentaciones</a>.
+267	Tus datos
+268	Se necesitan una vez por visita antes de empezar una evaluación, para poder registrar tu resultado a tu nombre. Confirmarás tu dirección de correo electrónico con un código de un solo uso. Esta información solo se utiliza para tu registro de finalización: se envía al administrador del programa junto con tu puntuación.
+269	Sitio web (déjalo vacío)
+270	Nombre completo
+271	Introduce tu nombre completo.
+272	Dirección de correo electrónico
+273	Introduce una dirección de correo electrónico válida.
+274	ID de árbitro <span class="opt">(si lo tienes)</span>
+275	Asociación / Federación <span class="opt">(opcional)</span>
+276	Enviarme un código
+277	Enviaremos un código de 6 dígitos a la dirección de correo electrónico de arriba para confirmar que es tuya.
+278	Código de 6 dígitos
+279	Verificar
+280	Enviar un código nuevo
+281	Usar otra dirección de correo electrónico
+282	Intento sin terminar
+283	Tienes un intento sin terminar de esta evaluación en este dispositivo.
+284	Reanudar donde lo dejé
+285	Empezar de nuevo
+286	Antes de empezar
+287	Las preguntas se basan en la <strong>presentación COMPLETA</strong> de este apéndice. Realiza la evaluación después de haberla visto y estudiado. <a id="gate-link" href="presentations.html">Ir a la presentación</a>
+288	Comenzar la evaluación
+289	Módulo 01 · Comprobación de conocimientos del manual
+290	Pregunta 1 de 5
+291	Evaluación completada
+292	Intentar guardar de nuevo
+293	Intentar de nuevo
+294	Esto fue solo práctica: no se registró nada y no cuenta para tu finalización.
+295	Siguiente
+296	Continúa con las presentaciones - De los Fundamentos al Apéndice 4
+297	Continuar la formación
+298	Comprueba que has entendido la Guía de Aprendizaje de Fundamentos.
+299	10 preguntas
+300	Aplica la presentación combinada de Fundamentos y Apéndice 4 a situaciones realistas.
+301	Empezar la evaluación
+302	Comprueba que has entendido las posiciones iniciales y la cobertura con un árbitro.
+303	Aplica la mecánica de un árbitro a situaciones realistas.
+304	Comprueba que has entendido los tres principios básicos del sistema de dos árbitros.
+305	Aplica la mecánica de dos árbitros a situaciones realistas.
+306	Comprueba que has entendido los Cuatro Elementos Esenciales y la cobertura con tres árbitros.
+307	Aplica la mecánica de tres árbitros a situaciones realistas.
+308	Comprueba que has entendido las filosofías de posicionamiento de élite y los conceptos clave.
+309	Aplica las filosofías de posicionamiento de élite a situaciones realistas.
+310	Módulo 06
+311	Apéndice 5a: Conceptos clave
+312	Práctica opcional sobre el Apéndice 5 (mecánica de campo de élite para tres a seis árbitros) después de leer el manual.
+313	Conceptos clave: los Cuatro Elementos Esenciales, el error de paralaje, el ángulo y la distancia, el tiempo de decisión y el backfilling.
+314	Módulo 07
+315	Apéndice 5b: Sistema de tres árbitros
+316	Sistema de tres árbitros: posiciones iniciales, pickoffs, tag-ups, lead-offs y cobertura de bolas al aire.
+317	Módulo 08
+318	Apéndice 5c: Sistemas de cuatro, cinco y seis árbitros
+319	Sistemas de cuatro, cinco y seis árbitros: posiciones iniciales, tag-ups, cobertura del outfield y responsabilidad en bolas fair/foul.
+320	Introduce tu nombre completo y tu dirección de correo electrónico arriba antes de empezar una comprobación de conocimientos.
+324	p. ej., Softball Australia
+325	Evaluaciones — Formación en mecánica arbitral de la WBSC
+326	Qué recoge este sitio de formación temporal, para qué, quién puede verlo y cuánto tiempo se conserva.
+327	Quién es responsable
+328	Este es un sitio de formación temporal, no el sitio web oficial de la WBSC. El programa de Mecánica Arbitral de Softbol lo gestiona la Comisión de Árbitros de la WBSC. La persona responsable de la información descrita en esta página es <strong>Leigh Evans, Director de Árbitros</strong>, a quien se puede contactar en <a href="mailto:umpiredirector@wbscoceania.org">umpiredirector@wbscoceania.org</a>.
+329	Qué se recoge
+330	Para realizar una <strong>Evaluación de competencias de la presentación</strong> calificada, introduces tu nombre completo, tu dirección de correo electrónico y, opcionalmente, tu ID de árbitro y tu asociación o federación. Confirmamos que controlas la dirección de correo electrónico enviándote un código de un solo uso.
+331	Cuando terminas una evaluación calificada, este sitio registra tu nombre, tu dirección de correo electrónico verificada, tu ID de árbitro y tu asociación (si los indicaste), el módulo y la evaluación, tu puntuación y el resultado de aprobado o no aprobado, el número de intento, la fecha y la hora, y la versión del programa. No se registra nada mientras sigues respondiendo preguntas.
+332	Las <strong>Comprobaciones de conocimientos del manual</strong> son solo práctica. No introduces ningún dato para ellas y no se registra nada sobre ellas.
+333	Correos electrónicos que enviamos
+334	Te enviamos un código de acceso y, después de cada intento calificado, un recibo con tu resultado y el número de intento. El Director de Árbitros recibe un aviso de cada resultado y otro cuando alguien ha aprobado los ocho módulos. Son correos de servicio sobre tu registro de formación. No enviamos publicidad ni boletines.
+335	Para qué lo usamos y en qué nos basamos
+336	Para confirmar quién realizó cada evaluación, aplicar la nota mínima y el límite de dos intentos, y conservar el registro de que completaste el programa de acreditación y reacreditación 2026-2029. La base es el interés legítimo de la WBSC y de sus federaciones miembro en gestionar y registrar ese programa; no se utiliza para publicidad ni se vende. Puedes <a href="#your-rights">oponerte o hacer preguntas</a> en cualquier momento.
+337	Adónde va y quién puede verlo
+338	Los resultados se guardan como una fila en una hoja de cálculo de Google gestionada por el administrador del programa, y los correos electrónicos se envían mediante Gmail. El sitio utiliza Google Apps Script, Hojas de cálculo de Google y Gmail, por lo que Google trata esta información por nuestra cuenta y puede hacerlo en servidores situados fuera de tu país. Un código de acceso (10 minutos) y una sesión de acceso (6 horas) se conservan temporalmente en la caché de corta duración de Google Apps Script y después caducan; el código solo se guarda como un hash unidireccional, no como texto sin cifrar.
+339	El acceso está limitado al administrador del programa y al Director de Árbitros. El Director puede ver los resultados en una página protegida con contraseña. Este sitio no publica los resultados ni los comparte con otras organizaciones.
+340	Cuánto tiempo se conserva
+341	Los resultados se conservan durante el ciclo del programa 2026-2029 y durante dos años después de que termine, es decir, hasta finales de 2031. Después se eliminan o se conservan únicamente como totales anónimos que no identifican a nadie. Los correos de notificación enviados al Director de Árbitros se eliminan con el mismo calendario. Los correos de tu propia bandeja de entrada son tuyos: puedes conservarlos o eliminarlos.
+342	Cookies y qué se guarda en tu dispositivo
+343	Este sitio no establece cookies y no utiliza analítica, publicidad ni rastreo. Las fuentes tipográficas se sirven desde este sitio, por lo que tu navegador no se conecta con Google ni con ningún otro tercero para cargar una página.
+344	Mientras usas el sitio, tu navegador guarda los datos que escribiste y tu sesión de acceso en el almacenamiento de sesión solo durante esa visita; se borra al cerrar la pestaña. Después de pulsar «Aceptar» en el aviso de cookies, o de elegir un idioma, esa elección se recuerda en tu navegador para que el aviso no vuelva a mostrarse y el sitio se abra en tu idioma. Si interrumpes una evaluación calificada a medias, tu progreso (la pregunta a la que llegaste, tu puntuación hasta ese momento y el orden de las opciones de respuesta) también se guarda en tu navegador hasta 24 horas para que puedas reanudarla en el mismo dispositivo; se elimina cuando la terminas o eliges empezar de nuevo. Eso es todo lo que este sitio guarda en tu dispositivo. Si compartes el ordenador, elige «Empezar de nuevo» o borra los datos de tu navegador.
+345	Cuando solicitas un código de acceso o guardas un resultado, tu navegador envía la solicitud a Google. Google recibe información técnica, como tu dirección IP, y puede establecer sus propias cookies al hacerlo; esto se rige por las condiciones y la política de privacidad de Google. Los manuales y las presentaciones están en Google Drive y se abren en una pestaña nueva; Google gestiona esas páginas conforme a sus propias políticas.
+346	Seguridad
+347	Los resultados solo se registran después de confirmar tu dirección de correo electrónico, la nota mínima y el límite de intentos se aplican en el servidor, y la página de resultados del Director requiere una contraseña. Ningún sistema es totalmente seguro. Si tenemos conocimiento de una brecha que afecte a tu información, el Director de Árbitros informará a las personas afectadas y a las autoridades competentes cuando la ley lo exija.
+348	Tus derechos
+349	Puedes preguntar qué información se conserva sobre ti, solicitar que se corrija o se elimine un resultado, u oponerte a cómo se utiliza. Ponte en contacto con Leigh Evans, Director de Árbitros, en <a href="mailto:umpiredirector@wbscoceania.org">umpiredirector@wbscoceania.org</a>. Si la respuesta no te satisface, puedes presentar una reclamación ante la autoridad de protección de datos de tu país o estado.
+350	Cambios
+351	Este es un sitio temporal. Esta página puede actualizarse a medida que cambie el programa, y la fecha de la última modificación se muestra a continuación.
+352	Última actualización: 30 de octubre de 2026.
+353	Privacidad — Formación en mecánica arbitral de la WBSC
+354	Esta página está traducida del inglés. Los manuales y las presentaciones están en inglés. Si la traducción y el texto en inglés difieren, prevalece el texto en inglés.
+355	Importante
+356	Leer el manual oficial de la WBSC
+357	He visto y estudiado la presentación completa de este apéndice.
+358	Disponible ahora
