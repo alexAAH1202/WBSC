@@ -4,6 +4,7 @@
 // `why` is optional. It is shown after the answer in practice, after a correct answer in the marked assessment,
 // and in the end-of-attempts review. Leave it out and nothing extra is shown.
 // Any number of questions works: the pass mark is 85% of however many there are (the server decides).
+// watchFirst: "presentations.html#..." makes the page ask the learner to confirm they have watched that presentation before the questions start.
 // kind 'Presentation Competency Assessment' is the marked, recorded one; 'Manual Knowledge Check' is unmarked practice.
 // Run `node tests/bank.test.js` after editing.
 
@@ -510,6 +511,7 @@ var QUIZ_BANK = {
       title: "Appendix 4: Elite Positioning Philosophies",
       nextLabel: "Continue to Module 06 - Appendix 5: Elite Field Mechanics",
       nextHref: "manuals.html#module-06",
+      watchFirst: "presentations.html#pres-01-05",
       questions: [
   { q: "During a bang-bang tag play at third base, the umpire clearly sees the fielder's glove make contact with the runner's leg but does not clearly track whether the runner's hand had already reached the base. The umpire calls the runner out based on the glove contact alone. Which principle from Appendix 4 best explains the risk in this decision-making process?", options: ["Anticipatory signalling, because the umpire prepared the signal before the play began", "Affirmation bias, because fixating on the tag action can cause the brain to prematurely confirm an out and override the actual relationship between the ball, runner, and base", "Parallax error, because the umpire was positioned too far from the play", "A breach of primary responsibilities, because the umpire failed to rotate to the correct base"], correct: 1, ref: "Appendix 4, Section 9 - Visual Discipline and Cognitive Bias in Umpire Judgment, \"Affirmation Bias: Focusing Only on the Tag.\"" },
   { q: "A sharp line drive travels near the third-base bag. The Plate Umpire, positioned behind the catcher, is the only umpire with a view of the play. Based on Appendix 4's explanation of parallax error, why is this positioning a concern, and what does correct mechanics require?", options: ["It is not a concern, because the Plate Umpire's slot position is aligned with every part of the field", "Parallax may make the ball appear fair or foul incorrectly from behind the plate; mechanics require an umpire to be on the foul line to accurately judge the call", "It is only a concern for home run judgments, not for line drives near a base", "The Plate Umpire should call the play from memory of the pitch location rather than the batted ball"], correct: 1, ref: "Appendix 4, Section 8 - Parallax Error in Softball Umpiring, \"Fair/Foul on Line Drives.\"" },
@@ -589,122 +591,395 @@ var QUIZ_BANK = {
 ]
     },
     'm06-pca': {
-      module: "Module 06 \u2014 Appendix 5: Elite Three, Four, Five and Six-Umpire Field Mechanics",
+      module: "Module 06 \u2014 Appendix 5a: Key Concepts",
       moduleShort: "Module 06",
       kind: "Presentation Competency Assessment",
-      title: "Appendix 5: Elite Field Mechanics",
-      nextLabel: "You've completed all six required modules - view your full assessment record",
-      nextHref: "#top",
+      title: "Appendix 5a: Key Concepts",
+      nextLabel: "Continue to Presentation - Appendix 5b: Three-Umpire System",
+      nextHref: "presentations.html#pres-5b",
+      watchFirst: "presentations.html#pres-5a",
       questions: [
   {
-    q: "Three-Umpire System: U1 is at 1B and U3 is at 3B, no runners on base. A ground ball gets through the infield to the outfield. Per Appendix 5b, what is U3's responsibility?",
+    q: "Per Appendix 5a, which four things make up the Four Essential Elements (FEET) that the umpire must see together on every play?",
     options: [
-      "Rotate inside for any call at 2B",
-      "Move down the foul line and be prepared for an outfield-to-1B force-out play",
-      "Rotate directly to the POP area for a possible call at home plate",
-      "Stay in the Second Base Diagonal Angle position anticipating a pickoff throw back"
+      "The ball, the pitcher, the catcher and the base",
+      "The runner, the fielder, the coach and the scoreboard",
+      "The ball, the defensive player, the offensive players, and the base or the area of the play",
+      "The ball, the fielder, the dugout and the foul line"
     ],
-    correct: 0,
-    ref: "Appendix 5b, Ground Ball to Outfield - U1 at 1B; U3 at 3B (No runners on base or runner on 3B only)."
+    correct: 2,
+    ref: "Appendix 5a, Key Concepts - Four Essential Element Theory (FEET).",
+    why: "The elements must be observed together, especially control of the ball and tag attempts, because the correct call depends on seeing how they come together."
   },
   {
-    q: "Three-Umpire System, runner on 1B only (U1 at 1B, U3 at 2B). A ground ball is hit into the outfield. According to Appendix 5b, what does U1 do?",
+    q: "According to Appendix 5a, when does parallax error most commonly occur?",
     options: [
-      "Use foul territory to move toward home plate, and once the Batter-Runner touches 1B, rotate to the HP POP area and push PU to 3B",
-      "Remain at 1B to cover a potential pickoff throw back",
-      "Move inside the diamond to take control of any call at 2B",
-      "Button hook inside to cover 1B and 2B"
+      "When the umpire becomes straight-lined with the runner, fielder, ball and base or tag point",
+      "When the umpire is too far from the base to hear the play",
+      "When the umpire moves with active feet during the play",
+      "When the umpire stands on the leading edge of the base"
     ],
     correct: 0,
-    ref: "Appendix 5b, Ground Ball to Outfield - U1 at 1B; U3 at 2B (Runner on 1B)."
+    ref: "Appendix 5a, Key Concepts - Parallax Error.",
+    why: "Straight-lining reduces depth perception and can distort the sequence of events. Umpires reduce parallax by adjusting position to keep angle and separation between the elements."
   },
   {
-    q: "Three-Umpire System, U1 at 1B and U3 at 3B, no runners on base. U1 goes out on a fly ball to right field. Per Appendix 5b, who takes responsibility for calls at 1B and 2B once the Batter-Runner passes 1B?",
+    q: "An umpire wants to remove parallax error on a fair/foul call. What does Appendix 5a say they should do?",
     options: [
-      "PU",
-      "U3",
-      "U1, immediately after returning from the outfield",
-      "No umpire - the base is left uncovered until the next rotation"
+      "Stand as far back as possible to see the whole field",
+      "Rely on the base umpire to make the call",
+      "Wait for the ball to stop before deciding",
+      "Position themselves on the plane of the call, such as on the fair/foul line"
+    ],
+    correct: 3,
+    ref: "Appendix 5a, Key Concepts - Parallax Error.",
+    why: "Moving onto the plane that forms the call turns the plane into a line in the umpire's view, so the position of the ball relative to it can be judged directly."
+  },
+  {
+    q: "With no runners on base, approximately how far from the base should a base umpire at 1B or 3B start, according to Appendix 5a?",
+    options: [
+      "3.5 m (12 ft)",
+      "5.5 m (18 ft)",
+      "4.5 m (15 ft)",
+      "7 m (23 ft)"
     ],
     correct: 1,
-    ref: "Appendix 5b, Outfield Fly-Ball Coverage Movements - U1 at 1B; U3 at 3B; U1 Goes Out (no runners on)."
+    ref: "Appendix 5a, Key Concepts - Optimising Angle and Distance.",
+    why: "With no runners the start is 5.5 m (18 ft) at 1B and 3B, and 4.5 m (15 ft) at 2B. It closes to about 3.5 m (12 ft) with a runner at the umpire's own base."
   },
   {
-    q: "Three-Umpire System, runner on 3B, U1 goes out on a fly ball to right field. Per Appendix 5b, what does PU do while U3 covers the infield?",
+    q: "On a play, what distance from the base does Appendix 5a give for a force play and for a tag play?",
     options: [
-      "Rotate to the holding position, observe the play as it develops, and move to 3B or HP as needed",
-      "Trail the Batter-Runner one third of the way to 1B",
-      "Remain fixed at POP for the entire play without moving",
-      "Immediately rotate to 3B regardless of how the play develops"
+      "About 3 m (10 ft) for a force play and 5 m (16 ft) for a tag play",
+      "About 5 m (16 ft) for both",
+      "About 5 m (16 ft) for a force play and 3 m (10 ft) for a tag play",
+      "About 3 m (10 ft) for both"
+    ],
+    correct: 2,
+    ref: "Appendix 5a, Key Concepts - Optimising Angle and Distance.",
+    why: "On a tag play the umpire must be close enough to adjust left or right and reach the leading edge while keeping every element in front."
+  },
+  {
+    q: "When angle and distance cannot both be perfect, which takes priority according to Appendix 5a?",
+    options: [
+      "Angle",
+      "Distance",
+      "Whichever is closer to the base",
+      "Neither; the umpire should stand still"
     ],
     correct: 0,
-    ref: "Appendix 5b, Outfield Fly-Ball Coverage Movements - U1 at 1B; U3 at 3B; U1 Goes Out; Runner on 3B."
+    ref: "Appendix 5a, Key Concepts - Optimising Angle and Distance.",
+    why: "Being closer can still help the umpire make controlled movements to a better angle, and parallax error increases with both distance and angle."
   },
   {
-    q: "Four-Umpire System, no runners on base. U2 goes out on a fly ball to centre field. Per Appendix 5c, what does U3 do?",
+    q: "Why does Appendix 5a say an umpire must never position directly over a base when making a call?",
     options: [
-      "Rotate inside for any call at 2B",
-      "Move down the foul line to prepare for a call at 3B",
-      "Stay in foul territory at 3B in case of a tag play",
-      "Button hook inside to cover 1B and 2B"
+      "It is unsafe because of runners sliding",
+      "The umpire's eyes are vertically aligned with the base, so the ball, tag and leading edge collapse into a straight-lined view with no depth perception",
+      "It prevents the umpire from using the verbal call",
+      "It blocks the view of the dugout"
+    ],
+    correct: 1,
+    ref: "Appendix 5a, Key Concepts - Starting Position, Observation Position and Calling Position.",
+    why: "At elite speeds the difference between a tag on the leading edge and past it may be a few centimetres. A calling position just short of the leading edge keeps the elements visually separated."
+  },
+  {
+    q: "According to the Inside/Outside Theory in Appendix 5a, where should base umpires who have not gone out be when the ball is in the outfield?",
+    options: [
+      "Outside the diamond",
+      "Behind home plate",
+      "On the foul line",
+      "Inside the diamond"
+    ],
+    correct: 3,
+    ref: "Appendix 5a, Advanced Base Umpire Movements - Inside/Outside Theory.",
+    why: "When the ball is in the outfield base umpires come inside; when it is in the infield they are outside the diamond. If any umpire goes out, all the others must come inside to cover bases and backfill."
+  },
+  {
+    q: "What triggers a backfill situation according to Appendix 5a?",
+    options: [
+      "PU communicating that they are staying at HP for the play",
+      "The base umpire deciding to go out on a fly ball",
+      "A coach requesting a conference",
+      "The ball being returned to the pitcher"
     ],
     correct: 0,
-    ref: "Appendix 5c, Outfield Fly-Ball Coverage Movements - Fly-ball Centre field - U2 goes out."
+    ref: "Appendix 5a, Advanced Base Umpire Movements - Backfilling.",
+    why: "After PU communicates that they are staying at HP, the base umpires adjust: the umpire who has not gone out covers 3B and U1 rotates inside to cover 1B and 2B if possible."
   },
   {
-    q: "Four-Umpire System. U1 goes out on a fly ball to right field. Per Appendix 5c, which umpire is responsible for any call at 1B and 2B?",
+    q: "On a force play where the runner reaches the base and then the fielder receives the throw, an umpire who rushes the call is most likely to make what error, per Appendix 5a?",
     options: [
-      "U2, by button hooking inside",
-      "U3, by rotating inside from 3B",
-      "PU, by trailing the Batter-Runner",
-      "U1 continues to cover 1B by verbal call from the outfield"
+      "Call the runner safe",
+      "Call interference",
+      "Call the runner out, because they are still processing the throw being caught",
+      "Fail to see the base"
+    ],
+    correct: 2,
+    ref: "Appendix 5a, Advanced Base Umpire Movements - Errors Due to Timing and Focus.",
+    why: "A slight pause on a close play gives the brain time to process all the inputs in the right order, instead of basing the call on the last thing seen."
+  }
+]
+    },
+    'm07-pca': {
+      module: "Module 07 \u2014 Appendix 5b: Three-Umpire System",
+      moduleShort: "Module 07",
+      kind: "Presentation Competency Assessment",
+      title: "Appendix 5b: Three-Umpire System",
+      nextLabel: "Continue to Presentation - Appendix 5c: Four, Five and Six-Umpire Systems",
+      nextHref: "presentations.html#pres-5c",
+      watchFirst: "presentations.html#pres-5b",
+      questions: [
+  {
+    q: "In the Three-Umpire System (Appendix 5b), where does U1 stand between innings?",
+    options: [
+      "One third of the way from HP to 3B",
+      "Two thirds of the way from HP to 3B",
+      "Halfway from HP to 1B, off the fair/foul line",
+      "Behind the batter's boxes at the point of the plate"
+    ],
+    correct: 2,
+    ref: "Appendix 5b, Pre-Game Plate Meeting and Between Innings Positions.",
+    why: "Between innings PU stands one third of the way from HP to 3B, U1 halfway from HP to 1B and U3 two thirds of the way from HP to 3B, all off the lines."
+  },
+  {
+    q: "In the Three-Umpire System, where does U1 start with a runner on 1B only?",
+    options: [
+      "About 3.5 m (12 ft) behind 1B in foul territory",
+      "About 5.5 m (18 ft) behind 1B",
+      "About 3.5 m (12 ft) back, two thirds of the way from 1B to 2B",
+      "On the 3B side of 2B"
     ],
     correct: 0,
-    ref: "Appendix 5c, Outfield Fly-Ball Coverage Movements - Fly-ball down 1B line (right field) - U1 goes out."
+    ref: "Appendix 5b, U1 Starting Position.",
+    why: "With no runners or a runner only on 3B the start is about 5.5 m (18 ft) behind 1B; with a runner on 1B it is closer so the umpire can stay in foul territory with a clear view."
   },
   {
-    q: "Four-Umpire System. A ground ball is hit to left field and no base umpire goes out. Per Appendix 5c, what should U2 do?",
+    q: "Why does Appendix 5b place U3 about 3.5 m (12 ft) behind 3B, up to 2 m (6 ft) off the line, when there is a runner on 3B?",
     options: [
-      "Stay out for an acute angle on the throw from left field for any call at 2B",
-      "Button hook inside immediately for any call at 2B",
-      "Move to the POP area to assist the Plate Umpire",
-      "Rotate to 3B to cover a potential tag play"
+      "To stay clear of the on-deck batter",
+      "To allow the third base coach to move freely",
+      "To be ready to rotate to first base",
+      "To keep an unobstructed view of the pitcher, runner, batter and home plate and not be affected by the runner leading off on the release of the pitch"
     ],
-    correct: 0,
-    ref: "Appendix 5c, Ground Ball to Outfield - U2, Hit to LF."
+    correct: 3,
+    ref: "Appendix 5b, U3 Starting Position - Runner on 3B.",
+    why: "The starting position is chosen so the umpire can watch the whole pitch and the runner's lead without the runner blocking the view."
   },
   {
-    q: "In the Four-Umpire System's outfield fly-ball coverage areas, which umpire goes out for a fly ball to centre field?",
+    q: "On a pickoff (throw back) at 1B, how far may U1 move, per Appendix 5b?",
+    options: [
+      "As far as needed, including into the infield grass",
+      "About 3 m (10 ft) from the base in foul territory, but not beyond a 45-degree line through 1B",
+      "Directly to the leading edge of 1B",
+      "They must stay at the starting position"
+    ],
+    correct: 1,
+    ref: "Appendix 5b, Pickoff Plays - U1 Pickoff at 1B.",
+    why: "If U1 reads that the play will be at the leading edge, they may step inside to fair territory, always keeping the Four Essential Elements in front."
+  },
+  {
+    q: "In the Three-Umpire System, when one base umpire goes out on a fly ball, who takes responsibility for the tag up at 3B?",
+    options: [
+      "The base umpire who remains on the infield",
+      "The umpire who went out",
+      "PU",
+      "Nobody; the runner is not watched"
+    ],
+    correct: 2,
+    ref: "Appendix 5b, Tag Ups.",
+    why: "The base umpire who remains on the infield takes the tag ups at 1B and 2B, and PU takes the tag up at 3B."
+  },
+  {
+    q: "In the Three-Umpire System, who is responsible for the lead-off call for a runner at 2B?",
     options: [
       "U1",
-      "U2",
       "U3",
-      "PU"
+      "PU",
+      "The umpire nearest the runner"
+    ],
+    correct: 0,
+    ref: "Appendix 5b, Leadoffs.",
+    why: "U1 is responsible for the lead-off calls for runners at 1B and 2B, and U3 for a runner at 3B."
+  },
+  {
+    q: "U1 is at 1B and U3 is at 3B with no runners on base. A fly ball is hit to the centre fielder (F8, in the normal position) and moves toward right field. Who is responsible for the call?",
+    options: [
+      "U3",
+      "U1",
+      "PU",
+      "U1 and U3 share it equally"
     ],
     correct: 1,
-    ref: "Appendix 5c, Outfield Fly-Ball Coverage Area."
+    ref: "Appendix 5b, Outfield Fly-Ball Coverage Area - U1 at 1B; U3 at 3B.",
+    why: "U1 takes F8 fly balls moving toward RF and foul; U3 takes F8 fly balls moving toward LF and foul."
   },
   {
-    q: "In a Five-Umpire System, a fly ball is hit to the outfield. Per Appendix 5d, which umpires go out to judge the play, and what do the three infield umpires do?",
+    q: "U1 is at 1B, U3 is at 2B and there is a runner on 1B. Who takes a fly ball to the left fielder (F7)?",
     options: [
-      "ULF and URF run into fair territory to judge the play; the three infield umpires remain on the infield and rotate as per the Three-Umpire System",
-      "The nearer base umpire always goes out, exactly as in the Three-Umpire System",
-      "All five umpires converge toward the ball to triangulate the call",
-      "PU goes out while the four base umpires cover the bases"
+      "U3",
+      "U1",
+      "ULF",
+      "PU"
     ],
-    correct: 0,
-    ref: "Appendix 5d, Five Umpire System - Infield Rotations / Fly-ball Coverage."
+    correct: 3,
+    ref: "Appendix 5b, Outfield Fly-Ball Coverage Area - U1 at 1B; U3 at 2B, runner on 1B.",
+    why: "PU takes fly balls to F7 and foul, U1 takes the right field area and foul, and U3 takes F8 and F7 moving toward CF. U1 taking F9 keeps U1 out of the runner's base path and lets U3 get inside."
   },
   {
-    q: "In both the Five and Six-Umpire Systems, per Appendix 5d, how is fair/foul responsibility divided?",
+    q: "When either U1 or U3 goes out on a fly ball in the Three-Umpire System, what must the remaining base umpire do?",
     options: [
-      "The Plate Umpire takes all fair/foul balls up to the starting position of U1 or U3; ULF and URF take all other fair/foul calls",
-      "ULF and URF have sole responsibility for every fair/foul call on the field",
-      "Fair/foul responsibility goes entirely to whichever infield umpire is nearest the batter",
-      "The Plate Umpire has no fair/foul responsibility in these systems"
+      "Move inside the diamond, cover all calls at 1B or 2B, and rotate to 3B ahead of the batter-runner",
+      "Stay at their base",
+      "Run to home plate",
+      "Go out to the outfield as well"
     ],
     correct: 0,
-    ref: "Appendix 5d, Fair/Foul Responsibility."
+    ref: "Appendix 5b, Outfield Fly-Ball Coverage Area.",
+    why: "If the ball is caught and the remaining umpire can take the last runner to 3B and communicate with PU, they should, which keeps PU at home for important plays."
+  },
+  {
+    q: "U1 is at 1B and U3 is at 3B with no runners on base and a ground ball is hit in the infield. What is PU's job, per Appendix 5b?",
+    options: [
+      "Stay behind the plate",
+      "Run to 3B immediately",
+      "Trail the batter-runner about one third of the way to 1B (further if required), watch for interference, and make the fair/foul call",
+      "Go out toward the outfield"
+    ],
+    correct: 2,
+    ref: "Appendix 5b, Live Ball Play from Infield - U1 at 1B; U3 at 3B, no runners.",
+    why: "PU trails the batter-runner for a potential tag, interference by the batter-runner or to assist at 1B, and rotates to 3B if the batter-runner reaches 1B and advances toward 2B."
+  }
+]
+    },
+    'm08-pca': {
+      module: "Module 08 \u2014 Appendix 5c: Four, Five and Six-Umpire Systems",
+      moduleShort: "Module 08",
+      kind: "Presentation Competency Assessment",
+      title: "Appendix 5c: Four, Five and Six-Umpire Systems",
+      nextLabel: "You've completed all eight required modules - view your full assessment record",
+      nextHref: "#top",
+      watchFirst: "presentations.html#pres-5c",
+      questions: [
+  {
+    q: "In the Four-Umpire System (Appendix 5c), where does U2 stand between innings?",
+    options: [
+      "One third of the way from HP to 1B",
+      "Behind 2B",
+      "Two thirds of the way from HP to 1B",
+      "Next to PU"
+    ],
+    correct: 2,
+    ref: "Appendix 5c, Pre-Game Plate Meeting and Between Innings Positions.",
+    why: "Between innings PU stands one third of the way from HP to 3B, U1 one third of the way from HP to 1B, U2 two thirds of the way from HP to 1B and U3 two thirds of the way from HP to 3B."
+  },
+  {
+    q: "In the Four-Umpire System, approximately how far behind 2B does U2 start when there is a runner on any base?",
+    options: [
+      "About 3.5 m (12 ft)",
+      "About 4.5 m (15 ft)",
+      "About 5.5 m (18 ft)",
+      "About 2 m (6 ft)"
+    ],
+    correct: 0,
+    ref: "Appendix 5c, Starting Positions - U2.",
+    why: "Without a runner the Second Base Diagonal Angle starting position is about 4.5 m (15 ft) back; with a runner on any base it is about 3.5 m (12 ft)."
+  },
+  {
+    q: "In the Four-Umpire System, who goes out on a fly ball to centre field?",
+    options: [
+      "U1",
+      "PU",
+      "U3",
+      "U2"
+    ],
+    correct: 3,
+    ref: "Appendix 5c, Outfield Fly-Ball Coverage Area.",
+    why: "U1 goes out for fly balls to right field and F8 running to right; U3 for left field and F8 running to left. U1 or U3 should be given the first option by U2."
+  },
+  {
+    q: "In the Four-Umpire System, U1 goes out on a fly ball. Who takes the tag up at 1B?",
+    options: [
+      "U2",
+      "PU",
+      "U3",
+      "Nobody"
+    ],
+    correct: 1,
+    ref: "Appendix 5c, Tag-ups - When U1 goes out on a fly ball.",
+    why: "PU takes the tag up at 1B because PU has the Four Essential Elements in front of them at all times. U2 takes 2B and U3 takes 3B."
+  },
+  {
+    q: "In the Four-Umpire System, U2 goes out on a fly ball. Who takes the tag up at 2B?",
+    options: [
+      "U1",
+      "PU",
+      "U3",
+      "U2, from the outfield"
+    ],
+    correct: 2,
+    ref: "Appendix 5c, Tag-ups - When U2 goes out on a fly ball.",
+    why: "U1 keeps 1B, U3 takes 2B including the tag up, and PU takes the tag up at 3B."
+  },
+  {
+    q: "Which statement about U1 in the Four-Umpire System is correct, according to the Rotation Memory Map?",
+    options: [
+      "U1 uses 1B foul territory or goes out, and never needs to button hook",
+      "U1 always button hooks inside",
+      "U1 stays at 1B for the whole play",
+      "U1 covers 3B on every fly ball"
+    ],
+    correct: 0,
+    ref: "Appendix 5c, Four-Umpire System Rotation Memory Map - U1.",
+    why: "U1 also communicates with PU when coming to HP and pushes PU up to 3B, and clears away from HP when PU indicates a back-fill situation."
+  },
+  {
+    q: "Four-Umpire System. A ground ball is hit to left field and no base umpire goes out. What should U2 do?",
+    options: [
+      "Button hook inside immediately for any call at 2B",
+      "Stay out for an acute angle on the throw from left field for any call at 2B",
+      "Move to the POP area to assist PU",
+      "Rotate to 3B"
+    ],
+    correct: 1,
+    ref: "Appendix 5c, Ground Ball to Outfield - U2, Hit to LF.",
+    why: "On a hit to RF or CF U2 button hooks inside for any call at 2B; on a hit to LF the acute angle on the throw is better from outside."
+  },
+  {
+    q: "In the Five and Six-Umpire Systems (Appendix 5d), where do ULF and URF take their preliminary starting position?",
+    options: [
+      "Behind the outfield fence",
+      "On the foul line level with 2B",
+      "Next to PU behind home plate",
+      "In front of the outfielder, halfway between the outfielder and the base umpire, up to one metre off the line in fair territory"
+    ],
+    correct: 3,
+    ref: "Appendix 5d, Starting Positions - Base and Outfield Umpires.",
+    why: "If LF or RF is fielding in close, the outfield umpire should always be in front of the outfielder to accurately judge trapped balls."
+  },
+  {
+    q: "How is fair/foul responsibility divided in the Five and Six-Umpire Systems, per Appendix 5d?",
+    options: [
+      "PU takes all fair/foul balls up to the starting position of U1 or U3, and ULF and URF take all other calls",
+      "ULF and URF take all fair/foul calls",
+      "The nearest base umpire takes every call",
+      "PU takes none"
+    ],
+    correct: 0,
+    ref: "Appendix 5d, Fair/Foul Responsibility.",
+    why: "When tracking a ball near the foul pole, the outfield umpire stays well back on the foul line to have the right depth to judge the flight over the pole or fence."
+  },
+  {
+    q: "On a fly ball to the outfield in the Five and Six-Umpire Systems, how do the outfield umpires decide who takes the call?",
+    options: [
+      "The umpire further from the ball always takes it",
+      "PU decides from the plate",
+      "Both run into fair territory parallel to the flight of the ball until they have an angle, then the one taking the call indicates with a hand on the chest and/or verbalises",
+      "The call is made by the base umpire"
+    ],
+    correct: 2,
+    ref: "Appendix 5d, Fly-ball Coverage.",
+    why: "ULF and URF are responsible for all calls beyond the base umpire and behind the infielders: fair/foul, catch/no catch and the status of a ball leaving the field of play."
   }
 ]
     }

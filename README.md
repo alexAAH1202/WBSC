@@ -22,7 +22,7 @@ Script Web App into a Google Sheet.
 - `manuals.html`: the six official manuals (Read), each linked to its Manual Knowledge Check and its presentation. The PDFs are on Google Drive and are not hosted here.
 - `presentations.html`: the four training presentations (modules 01-05 share one; module 06 has three parts). Each links to the matching Presentation Competency Assessment, and each Knowledge Check's Continue button lands on the right presentation. The videos and PowerPoints are on Google Drive and are not hosted here.
 - `questions.js`: the question bank (edit this to add questions; see its header). `assessment-widget.html` loads it.
-- `assessment-widget.html`: the 12 assessments. Each module has an anchor (`#module-01` to `#module-06`) that the home page links to.
+- `assessment-widget.html`: the 14 assessments (6 Knowledge Checks, 8 Presentation Competency Assessments). Each module has an anchor (`#module-01` to `#module-06`) that the home page links to.
 - `privacy.html`: who is responsible (Leigh Evans, Director of Umpires), what is recorded, why, who sees it, retention (to end 2031), cookies and browser storage, rights. Update it whenever what the site collects changes.
 - `notice.js`: the cookies and privacy pop-up shown once per browser on every page. The site sets no cookies, so it is an information notice with an OK button; it remembers the dismissal in one localStorage setting. If analytics or embeds are ever added, it must become a real consent choice.
 - `results.html`: the Director of Umpires' results page (password, `noindex`, linked only from the footer as "Director login"): completion tiles, per-module progress, per-umpire detail, printable completion summary, CSV downloads.
@@ -85,7 +85,7 @@ Script Web App into a Google Sheet.
 - Name, email, ID and association are remembered for the visit (this tab only) so a refresh does not mean retyping them.
 
 ## Tests
-- `node tests/bank.test.js`: 12 assessments in `questions.js`, at least 5 questions per Knowledge Check and 10 per Competency Assessment (more is fine, up to 100), answer keys in range, no duplicate options or questions. Runs in CI.
+- `node tests/bank.test.js`: 14 assessments in `questions.js` (Appendix 5 is split into Modules 06, 07 and 08 for Appendix 5a, 5b and 5c, 10 questions each), at least 5 questions per Knowledge Check and 10 per Competency Assessment (more is fine, up to 100), answer keys in range, no duplicate options or questions. Runs in CI.
 - `node tests/site.test.js`: every local link, script, stylesheet and image on every page exists. Runs in CI.
 - `node tests/code-gs.test.js`: `Code.gs` against a mock of Sheets, Mail and Lock (39 checks, including login, receipts, results password, alerts and the health check). Runs in CI.
 - `node tests/widget.test.js` (needs `npm i -D playwright`): the widget in a real browser with Google's reply simulated (27 checks).
@@ -94,3 +94,9 @@ Script Web App into a Google Sheet.
 
 The browser tests do **not** prove the real Apps Script reply reaches the widget on the live site;
 step 3 under "Deploying" is the check that does.
+
+## Modules, watch-first and presentations
+- **Eight required modules.** 01-04 Foundations, 05 Appendix 4, 06 Appendix 5a (Key Concepts), 07 Appendix 5b (Three-Umpire System), 08 Appendix 5c (Four, Five and Six-Umpire Systems). Completion means a PASS on the Presentation Competency Assessment for all eight (`TOTAL_MODULES` in `Code.gs`; `TOTAL_MODULES` in the widget is display only).
+- **Watch first.** The Appendix 4, 5a, 5b and 5c assessments set `watchFirst` in `questions.js`; the page asks the learner to confirm they watched the full presentation before the questions appear. This is a confirmation, not proof: Google Drive does not tell us whether a video was watched.
+- **Presentations are MP4 only.** The PowerPoint downloads were removed (animations and sound did not play reliably, and Mac rendering was poor).
+- **Question explanations.** A question may have an optional `why` (see the header of `questions.js`).

@@ -6,15 +6,18 @@ const BANK = vm.runInNewContext(fs.readFileSync(path.join(__dirname, '..', 'ques
 if (!/<script src="questions\.js"><\/script>/.test(html)) { console.error('assessment-widget.html does not load questions.js'); process.exit(1); }
 
 const errors = [], warnings = [];
-const modules = ['m01', 'm02', 'm03', 'm04', 'm05', 'm06'];
+const modules = ['m01', 'm02', 'm03', 'm04', 'm05', 'm06', 'm07', 'm08'];
+const hasPractice = m => !['m07', 'm08'].includes(m);   // Appendix 5b and 5c have no separate Knowledge Check (Appendix 5 has one, in m06)
 const minimum = { mkc: 5, pca: 10 };   // more is fine: the pass mark is 85% of however many there are
 const kinds = { mkc: 'Manual Knowledge Check', pca: 'Presentation Competency Assessment' };
-for (const m of modules) for (const t of ['mkc', 'pca']) {
+for (const m of modules) for (const t of hasPractice(m) ? ['mkc', 'pca'] : ['pca']) {
   const key = `${m}-${t}`, bank = BANK[key];
   if (!bank) { errors.push(`${key}: missing assessment`); continue; }
   for (const f of ['module', 'moduleShort', 'kind', 'title', 'nextLabel', 'nextHref']) if (!bank[f]) errors.push(`${key}: ${f} is empty`);
   if (bank.questions.length < minimum[t]) errors.push(`${key}: ${bank.questions.length} questions, at least ${minimum[t]} needed`);
   if (bank.questions.length > 100) errors.push(`${key}: more than 100 questions (Code.gs MAX_QUESTIONS)`);
+  if (['m05', 'm06', 'm07', 'm08'].includes(m) && t === 'pca' && !/^presentations\.html#pres-/.test(bank.watchFirst || '')) errors.push(`${key}: watchFirst must link to its presentation`);
+  if (!new RegExp('^Module 0' + m.slice(2) + ' ').test(bank.module.replace(/\\u2014/g, '-'))) errors.push(`${key}: module name does not start with its number`);
   if (bank.kind !== kinds[t]) errors.push(`${key}: kind is "${bank.kind}", expected "${kinds[t]}"`);
   if (/claude\.ai/.test(bank.nextHref)) warnings.push(`${key}: "Continue" links to a private claude.ai page`);
   bank.questions.forEach((q, i) => {

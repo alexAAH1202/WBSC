@@ -7,7 +7,7 @@
  *   - Email login: a learner must prove they control their email address with a
  *     one-time code before a result can be saved or their attempts looked up.
  *   - Emails the Director of Umpires about every result, and the learner a receipt.
- *     When a learner passes the sixth module the Director also gets a completion
+ *     When a learner passes the last module the Director also gets a completion
  *     summary and the learner's receipt includes one.
  *   - Serves the Director's results page (password protected) its data.
  *   - Alerts the owner when something fails, and sends a daily health check.
@@ -48,7 +48,7 @@ var MAX_ATTEMPTS = 2;
 
 // A learner has completed the program when they have PASSED this assessment
 // for every one of these modules.
-var TOTAL_MODULES = 6;
+var TOTAL_MODULES = 8;   // Modules 01-08: the four Foundations modules, Appendix 4 (05) and Appendix 5a, 5b, 5c (06, 07, 08)
 var COMPLETION_TYPE = 'Presentation Competency Assessment';
 
 // Require a verified email (one-time code) to save a result or look up attempts.
@@ -631,7 +631,7 @@ function sendReceipt_(c, attemptNumber, summary) {
   MailApp.sendEmail(c.email, 'Your WBSC Umpire Mechanics Training receipt: ' + c.module + ' - ' + c.result, body);
 }
 
-// To the Director, once, when a learner passes the last of the six modules.
+// To the Director, once, when a learner passes the last required module.
 function sendCompletionNotice_(c, summary) {
   var body =
     c.name + ' has passed all ' + TOTAL_MODULES + ' modules of the WBSC Umpire Mechanics Training.\n\n' +

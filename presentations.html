@@ -569,14 +569,16 @@
   }
 
   /* ---------- Presentations page additions ---------- */
-  .pptx-note{
-    display:flex;gap:16px;background:var(--paper);border-left:5px solid var(--gold-500);
+  .watch-first{
+    display:flex;gap:16px;background:#fdf2f1;border:2px solid var(--red-600);border-left-width:8px;
     padding:22px 26px;margin:0 0 54px;
   }
-  .pptx-note svg{width:22px;height:22px;flex-shrink:0;color:var(--navy-950);margin-top:2px;}
-  .pptx-note h3{font-size:0.95rem;text-transform:uppercase;color:var(--navy-950);margin-bottom:8px;}
-  .pptx-note p{font-size:0.92rem;color:var(--ink-soft);max-width:78ch;}
-  .pptx-note p + p{margin-top:8px;}
+  .watch-first svg{width:26px;height:26px;flex-shrink:0;color:var(--red-600);margin-top:2px;}
+  .watch-first h3{font-size:1rem;text-transform:uppercase;color:var(--red-600);margin-bottom:8px;}
+  .pca-box{margin:-12px 0 40px;padding:20px 28px;background:var(--paper);border:1px solid var(--line);}
+  .pca-kicker{margin:0 0 12px;font-family:var(--font-display);font-weight:900;text-transform:uppercase;font-size:0.82rem;letter-spacing:.04em;color:var(--navy-950);}
+  .pca-text{margin:0 0 14px;font-size:0.9rem;color:var(--ink-soft);max-width:70ch;}
+  .watch-first p{font-size:0.98rem;color:var(--navy-950);max-width:78ch;}
 
   .presentations{padding:0 0 70px;}
   .presentations .federation-note{margin:0 0 34px;}
@@ -593,7 +595,7 @@
     font-size:0.72rem;border:1px solid var(--line-on-navy);color:#c9d3e6;padding:4px 10px;white-space:nowrap;
   }
 
-  .pres-body{display:grid;grid-template-columns:1.3fr 1fr;}
+  .pres-body{display:grid;grid-template-columns:1fr;}
   .pres-panel{padding:30px 28px;}
   .pres-panel + .pres-panel{border-left:1px solid var(--line);}
   .format-kicker{
@@ -601,7 +603,6 @@
     font-size:0.75rem;margin-bottom:10px;display:block;
   }
   .primary-panel .format-kicker{color:var(--red-600);}
-  .secondary-panel .format-kicker{color:var(--ink-soft);}
   .format-title{font-family:var(--font-display);font-weight:900;text-transform:uppercase;font-size:1.1rem;color:var(--navy-950);margin-bottom:10px;display:flex;align-items:center;gap:10px;}
   .format-desc{font-size:0.94rem;color:var(--ink-soft);margin-bottom:20px;max-width:52ch;}
   .format-tag{
@@ -610,9 +611,6 @@
   }
   .primary-panel .format-tag{border-color:var(--red-600);color:var(--red-600);}
   .play-icon{width:16px;height:16px;flex-shrink:0;}
-  .secondary-panel{background:#faf9f6;}
-  .secondary-panel .btn-outline-navy{border-color:var(--line);color:var(--ink-soft);}
-  .secondary-panel .btn-outline-navy:hover{border-color:var(--navy-950);color:var(--navy-950);background:transparent;}
   .format-note{margin-top:12px;font-size:0.78rem;color:var(--ink-soft);}
 
   @media (max-width:760px){
@@ -669,19 +667,18 @@
     <div class="wrap">
       <span class="eyebrow">WBSC Softball Umpires</span>
       <h1>Presentations</h1>
-      <p>Training presentations in the same sequence as the Manuals. For individual study, watch the MP4 - it's the recommended format. The PowerPoint is provided as a secondary, trainer/reference version.</p>
+      <p>Training presentations in the same sequence as the Manuals. Watch the MP4 presentation in full, then complete its assessment.</p>
     </div>
   </section>
 
   <section class="presentations">
     <div class="wrap">
 
-      <div class="pptx-note">
+      <div class="watch-first" role="note">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M12 8v5M12 16.2v.1"/></svg>
         <div>
-          <h3>PowerPoint Note</h3>
-          <p>The PowerPoint file is provided primarily for WBSC trainers, instructors and users who require access to the original presentation. Because of animations, embedded media and presentation formatting, the PowerPoint version may not provide the best experience for individual study.</p>
-          <p>Umpires completing the reaccreditation program should normally use the MP4 presentation.</p>
+          <h3>Watch the full presentation before the assessment</h3>
+          <p><strong>Appendix 4 Elite Philosophies &amp; Appendix 5 Elite 3, 4, 5 &amp; 6 Field Mechanics:</strong> the assessment questions are based on the <strong>FULL presentation</strong>, so please complete the assessment after you have watched and studied it.</p>
         </div>
       </div>
 
@@ -706,23 +703,15 @@
               Watch Training Presentation
             </p>
             <span class="format-tag">MP4</span>
-            <p class="format-desc">Recommended for individual study while completing the reaccreditation program.</p>
+            <p class="format-desc">Watch the whole presentation, then complete the assessment.</p>
             <a class="btn btn-primary" href="https://drive.google.com/file/d/1E7w5eVX3b_UaqyNANPuzkkf5LvYV2TNA/view?usp=sharing" target="_blank" rel="noopener">Watch Training Presentation</a>
-          </div>
-          <div class="pres-panel secondary-panel">
-            <span class="format-kicker">Trainer / Reference Version</span>
-            <p class="format-title">Download PowerPoint</p>
-            <span class="format-tag">PPTX</span>
-            <p class="format-desc">Original presentation file for trainers and instructors.</p>
-            <a class="btn btn-outline-navy" href="https://drive.google.com/file/d/1Bs-PVG0Wp7uDUz5A2KnjjDVB9mwbcEC5/view?usp=sharing" target="_blank" rel="noopener">Download PowerPoint Presentation</a>
-            <p class="format-note">See PowerPoint Note above.</p>
           </div>
         </div>
       </article>
 
       <div style="margin:-12px 0 40px;padding:20px 28px;background:var(--paper);border:1px solid var(--line);">
         <p style="margin:0 0 12px;font-family:var(--font-display);font-weight:900;text-transform:uppercase;font-size:0.82rem;letter-spacing:.04em;color:var(--navy-950);">Presentation Competency Assessment</p>
-        <p style="margin:0 0 14px;font-size:0.85rem;color:var(--ink-soft);max-width:70ch;">Marked assessment for each module, applying this presentation to realistic scenarios. Choose the module you just watched:</p>
+        <p style="margin:0 0 14px;font-size:0.85rem;color:var(--ink-soft);max-width:70ch;">Marked assessment for each module, applying this presentation to realistic scenarios. Choose the module you just watched. The Appendix 4 assessment (Module 05) is based on the full presentation, so watch it all first:</p>
         <div style="display:flex;flex-wrap:wrap;gap:10px;">
           <a class="btn btn-outline-navy" href="assessment-widget.html#assessment-m01-pca">Module 01</a>
           <a class="btn btn-outline-navy" href="assessment-widget.html#assessment-m02-pca">Module 02</a>
@@ -744,13 +733,13 @@
       <div class="tier-divider elite">
         <span class="tier-label">Elite - Appendix 5</span>
         <span class="tier-rule" aria-hidden="true"></span>
-        <span class="tier-note">Module 06 &middot; three parts, watch in order</span>
+        <span class="tier-note">Modules 06-08 &middot; three parts, watch in order</span>
       </div>
 
       <!-- APPENDIX 5A &MDASH; KEY CONCEPTS -->
       <article class="pres-block" id="pres-5a">
         <div class="pres-head">
-          <span class="pres-eyebrow">Module 06 &middot; Part 1</span>
+          <span class="pres-eyebrow">Module 06 &middot; Appendix 5a</span>
           <h2>Appendix 5a - Key Concepts</h2>
           <span class="pres-duration">~25 min</span>
         </div>
@@ -763,24 +752,22 @@
               Watch Training Presentation
             </p>
             <span class="format-tag">MP4</span>
-            <p class="format-desc">Recommended for individual study while completing the reaccreditation program.</p>
+            <p class="format-desc">Watch the whole presentation, then complete the assessment.</p>
             <a class="btn btn-primary" href="https://drive.google.com/file/d/1-Ua1gJZxiBE7cqkZRPDzFxGXBPuo95_T/view?usp=sharing" target="_blank" rel="noopener">Watch Training Presentation</a>
-          </div>
-          <div class="pres-panel secondary-panel">
-            <span class="format-kicker">Trainer / Reference Version</span>
-            <p class="format-title">Download PowerPoint</p>
-            <span class="format-tag">PPTX</span>
-            <p class="format-desc">Original presentation file for trainers and instructors.</p>
-            <a class="btn btn-outline-navy" href="https://drive.google.com/file/d/18_IeQO2wrNhmSLbbevJVi3E2qPr2QmNy/view?usp=sharing" target="_blank" rel="noopener">Download PowerPoint Presentation</a>
-            <p class="format-note">See PowerPoint Note above.</p>
           </div>
         </div>
       </article>
 
+      <div class="pca-box">
+        <p class="pca-kicker">Presentation Competency Assessment &middot; Appendix 5a</p>
+        <p class="pca-text">Ten marked questions based on the full presentation above. Complete it after you have watched and studied the whole presentation.</p>
+        <a class="btn btn-primary" href="assessment-widget.html#assessment-m06-pca">Start the Appendix 5a assessment</a>
+      </div>
+
       <!-- APPENDIX 5B &MDASH; THREE-UMPIRE SYSTEM -->
       <article class="pres-block" id="pres-5b">
         <div class="pres-head">
-          <span class="pres-eyebrow">Module 06 &middot; Part 2</span>
+          <span class="pres-eyebrow">Module 07 &middot; Appendix 5b</span>
           <h2>Appendix 5b - Three-Umpire System</h2>
           <span class="pres-duration">~40 min</span>
         </div>
@@ -793,24 +780,22 @@
               Watch Training Presentation
             </p>
             <span class="format-tag">MP4</span>
-            <p class="format-desc">Recommended for individual study while completing the reaccreditation program.</p>
-            <a class="btn btn-primary" href="https://drive.google.com/file/d/1VURZ3jx3ggoOY-3W0WnV1up7xM6Mm4NU/view?usp=sharing" target="_blank" rel="noopener">Watch Training Presentation</a>
-          </div>
-          <div class="pres-panel secondary-panel">
-            <span class="format-kicker">Trainer / Reference Version</span>
-            <p class="format-title">Download PowerPoint</p>
-            <span class="format-tag">PPTX</span>
-            <p class="format-desc">Original presentation file for trainers and instructors.</p>
-            <a class="btn btn-outline-navy" href="https://drive.google.com/file/d/1ZK-mlMDqX7xn1hl4rNfDHaE7ayqrLCkO/view?usp=sharing" target="_blank" rel="noopener">Download PowerPoint Presentation</a>
-            <p class="format-note">See PowerPoint Note above.</p>
+            <p class="format-desc">Watch the whole presentation, then complete the assessment.</p>
+            <a class="btn btn-primary" href="https://drive.google.com/file/d/1qypoDdrD7Hi10obuU7RqaaX964db7XG0/view?usp=sharing" target="_blank" rel="noopener">Watch Training Presentation</a>
           </div>
         </div>
       </article>
 
+      <div class="pca-box">
+        <p class="pca-kicker">Presentation Competency Assessment &middot; Appendix 5b</p>
+        <p class="pca-text">Ten marked questions based on the full presentation above. Complete it after you have watched and studied the whole presentation.</p>
+        <a class="btn btn-primary" href="assessment-widget.html#assessment-m07-pca">Start the Appendix 5b assessment</a>
+      </div>
+
       <!-- APPENDIX 5C &MDASH; FOUR, FIVE &AMP; SIX-UMPIRE SYSTEMS -->
       <article class="pres-block" id="pres-5c">
         <div class="pres-head">
-          <span class="pres-eyebrow">Module 06 &middot; Part 3</span>
+          <span class="pres-eyebrow">Module 08 &middot; Appendix 5c</span>
           <h2>Appendix 5c - Four, Five &amp; Six-Umpire Systems</h2>
           <span class="pres-duration">~26 min</span>
         </div>
@@ -823,28 +808,21 @@
               Watch Training Presentation
             </p>
             <span class="format-tag">MP4</span>
-            <p class="format-desc">Recommended for individual study while completing the reaccreditation program.</p>
-            <a class="btn btn-primary" href="https://drive.google.com/file/d/1NrRby_j92GtpAH-apTgCDAewV82luzn0/view?usp=sharing" target="_blank" rel="noopener">Watch Training Presentation</a>
-          </div>
-          <div class="pres-panel secondary-panel">
-            <span class="format-kicker">Trainer / Reference Version</span>
-            <p class="format-title">Download PowerPoint</p>
-            <span class="format-tag">PPTX</span>
-            <p class="format-desc">Original presentation file for trainers and instructors.</p>
-            <a class="btn btn-outline-navy" href="https://drive.google.com/file/d/1CPnD4Avx5x6XyZQeQC9fvqyiDrfKhNYd/view?usp=sharing" target="_blank" rel="noopener">Download PowerPoint Presentation</a>
-            <p class="format-note">See PowerPoint Note above.</p>
+            <p class="format-desc">Watch the whole presentation, then complete the assessment.</p>
+            <a class="btn btn-primary" href="https://drive.google.com/file/d/1LCVspilfdXGI7Y7qdKPnoYIiRiYpkcDM/view?usp=sharing" target="_blank" rel="noopener">Watch Training Presentation</a>
           </div>
         </div>
       </article>
 
-      <div style="margin:-12px 0 40px;padding:20px 28px;background:var(--paper);border:1px solid var(--line);">
-        <p style="margin:0 0 12px;font-family:var(--font-display);font-weight:900;text-transform:uppercase;font-size:0.82rem;letter-spacing:.04em;color:var(--navy-950);">Presentation Competency Assessment</p>
-        <p style="margin:0 0 14px;font-size:0.85rem;color:var(--ink-soft);max-width:70ch;">One marked assessment covers all three parts of Appendix 5, once you've watched them in order.</p>
-        <a class="btn btn-primary" href="assessment-widget.html#assessment-m06-pca">Start Presentation Competency Assessment</a>
+      <div class="pca-box">
+        <p class="pca-kicker">Presentation Competency Assessment &middot; Appendix 5c</p>
+        <p class="pca-text">Ten marked questions based on the full presentation above. Complete it after you have watched and studied the whole presentation.</p>
+        <a class="btn btn-primary" href="assessment-widget.html#assessment-m08-pca">Start the Appendix 5c assessment</a>
       </div>
 
+
       <div class="sequence-note" style="margin-top:10px;">
-        <p>Modules 01-05 share a single introductory presentation. Module 06 (Appendix 5) is delivered as three sequential parts - watch Key Concepts, then the Three-Umpire System, then the Four, Five &amp; Six-Umpire Systems. Each module's Presentation Competency Assessment (10 questions) is linked directly below its presentation, and all are also listed on the Assessments page.</p>
+        <p>Modules 01-05 share a single introductory presentation. Appendix 5 (Modules 06 to 08) is delivered as three sequential parts - watch Key Concepts, then the Three-Umpire System, then the Four, Five &amp; Six-Umpire Systems. Each part has its own assessment.</p>
         <p class="sig"><span class="why">Appendix 4</span> provides the why. <span class="how">Appendix 5</span> provides the how.</p>
       </div>
 

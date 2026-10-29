@@ -69,7 +69,9 @@ async function verifyEmail(pg, code = '123456') {
 }
 // answers every question; `wrong` = how many to get wrong (from the start)
 async function runQuiz(pg, key = 'm01-pca', wrong = 0) {
-  await pg.click(`[data-assessment="${key}"]`); await pg.waitForSelector('#quiz-question', { state: 'visible' });
+  await pg.click(`[data-assessment="${key}"]`);
+  if (BANK[key].watchFirst) { await pg.waitForSelector('#quiz-gate', { state: 'visible' }); await pg.check('#gate-check'); await pg.click('#gate-start'); }
+  await pg.waitForSelector('#quiz-question', { state: 'visible' });
   const count = BANK[key].questions.length;
   for (let i = 0; i < count; i++) {
     const q = await pg.textContent('#quiz-question'); const opts = await pg.$$eval('.quiz-option .opt-text', a => a.map(x => x.textContent));
@@ -193,9 +195,9 @@ const verifyText = pg => pg.textContent('#verify-state');
   ok("the server's pass/fail overrides the browser's");
 
   t = await newPage(b, {}, (r, p) => r.fulfill(page_(reply({ wbscSave: true, success: true, submissionId: p.submissionId, attemptNumber: 1, maxAttempts: 2, result: 'PASS', completedAll: true }))));
-  await runQuiz(t.pg, 'm06-pca'); await t.pg.waitForFunction(() => /recorded/.test(document.getElementById('quiz-save-state').textContent));
-  assert.ok(/passed all 6 modules/.test(await t.pg.textContent('#quiz-result-text')));
-  ok('passing the sixth module tells the learner the program is complete');
+  await runQuiz(t.pg, 'm08-pca'); await t.pg.waitForFunction(() => /recorded/.test(document.getElementById('quiz-save-state').textContent));
+  assert.ok(/passed all 8 modules/.test(await t.pg.textContent('#quiz-result-text')));
+  ok('passing the last module (08) tells the learner the program is complete');
 
   // ====================================================================  expired session during a save
   t = await newPage(b, { tokens: [TOKEN, TOKEN2] }, (r, p, i) => r.fulfill(page_(reply(i === 1
@@ -307,6 +309,21 @@ const verifyText = pg => pg.textContent('#verify-state');
     if (expectWhy) assert.ok((await t.pg.textContent('#quiz-feedback-why')).startsWith('WHY-'));
   }
   ok('the optional explanation shows in practice and after a correct marked answer, never after a wrong marked answer');
+
+  // watch-first gate on the elite assessments
+  t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false } });
+  await t.pg.click('[data-assessment="m07-pca"]'); await t.pg.waitForSelector('#quiz-gate', { state: 'visible' });
+  assert.ok(!(await t.pg.isVisible('#quiz-question')), 'no questions before the confirmation');
+  assert.ok(await t.pg.isDisabled('#gate-start'), 'Begin is disabled until the box is ticked');
+  assert.ok(/FULL presentation/.test(await t.pg.textContent('#quiz-gate')));
+  assert.strictEqual(await t.pg.getAttribute('#gate-link', 'href'), 'presentations.html#pres-5b');
+  await t.pg.check('#gate-check'); assert.ok(!(await t.pg.isDisabled('#gate-start'))); await t.pg.click('#gate-start');
+  await t.pg.waitForSelector('#quiz-question', { state: 'visible' }); assert.ok(!(await t.pg.isVisible('#quiz-gate')));
+  ok('Appendix 4, 5a, 5b and 5c assessments ask the learner to confirm they watched the full presentation before the questions appear');
+  t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false } });
+  await t.pg.click('[data-assessment="m01-pca"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' }); assert.ok(!(await t.pg.isVisible('#quiz-gate')));
+  await t.pg.click('[data-assessment="m05-mkc"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' }); assert.ok(!(await t.pg.isVisible('#quiz-gate')));
+  ok('no confirmation is asked for the Foundations assessments or for practice quizzes');
 
   // the pass requirement follows the number of questions
   t = await newPage(b, {});
