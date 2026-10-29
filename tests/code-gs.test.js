@@ -207,31 +207,31 @@ ok("a failed Director email alerts the owner and is recorded; the learner still 
 // =====================================================================  completion summary
 ok('passing the sixth module: completion notice to the Director once, summary in the receipt, completedAll in the reply', () => {
   const e = makeEnv(); const t = login(e);
-  for (let i = 1; i <= 5; i++) { const m = save(e, t, { module: mod(i) }); assert.strictEqual(m.completedAll, false, 'module ' + i); }
+  for (let i = 1; i <= 7; i++) { const m = save(e, t, { module: mod(i) }); assert.strictEqual(m.completedAll, false, 'module ' + i); }
   assert.strictEqual(e.mails.filter(m => /PROGRAM COMPLETED/.test(m.subject)).length, 0);
   const before = e.mails.length;
-  const m6 = save(e, t, { module: mod(6) });
+  const m6 = save(e, t, { module: mod(8) });
   assert.strictEqual(m6.completedAll, true);
   const sent = e.mails.slice(before);
   const done = sent.filter(m => /PROGRAM COMPLETED: Jo Ump/.test(m.subject));
   assert.strictEqual(done.length, 1); assert.strictEqual(done[0].to, 'umpiredirector@wbscoceania.org');
-  for (let i = 1; i <= 6; i++) assert.ok(done[0].body.includes(`Module 0${i}: PASSED (90%, 1 attempt used)`), 'summary line ' + i);
-  const rec = sent.find(m => m.to === 'jo@x.com'); assert.ok(/passed all 6 modules/.test(rec.body));
-  const b2 = e.mails.length; save(e, t, { module: mod(6), score: 10 });
+  for (let i = 1; i <= 8; i++) assert.ok(done[0].body.includes(`Module 0${i}: PASSED (90%, 1 attempt used)`), 'summary line ' + i);
+  const rec = sent.find(m => m.to === 'jo@x.com'); assert.ok(/passed all 8 modules/.test(rec.body));
+  const b2 = e.mails.length; save(e, t, { module: mod(8), score: 10 });
   assert.strictEqual(e.mails.slice(b2).filter(m => /PROGRAM COMPLETED/.test(m.subject)).length, 0, 'not repeated');
 });
 ok('only the marked assessment counts: a different person does not complete the program', () => {
   const e = makeEnv(); const t = login(e), t2 = login(e, 'other@x.com');
-  for (let i = 1; i <= 5; i++) save(e, t, { module: mod(i) });
-    save(e, t2, { module: mod(6), umpireId: '999' });
+  for (let i = 1; i <= 7; i++) save(e, t, { module: mod(i) });
+    save(e, t2, { module: mod(8), umpireId: '999' });
   assert.strictEqual(e.mails.filter(m => /PROGRAM COMPLETED/.test(m.subject)).length, 0);
-  const m = save(e, t, { module: mod(6) }); assert.strictEqual(m.completedAll, true);
+  const m = save(e, t, { module: mod(8) }); assert.strictEqual(m.completedAll, true);
 });
 ok('a failed attempt in the last module does not complete the program; a later pass does', () => {
   const e = makeEnv(); const t = login(e);
-  for (let i = 1; i <= 5; i++) save(e, t, { module: mod(i) });
-  assert.strictEqual(save(e, t, { module: mod(6), score: 8 }).completedAll, false);
-  assert.strictEqual(save(e, t, { module: mod(6), score: 9 }).completedAll, true);
+  for (let i = 1; i <= 7; i++) save(e, t, { module: mod(i) });
+  assert.strictEqual(save(e, t, { module: mod(8), score: 8 }).completedAll, false);
+  assert.strictEqual(save(e, t, { module: mod(8), score: 9 }).completedAll, true);
   assert.strictEqual(e.mails.filter(m => /PROGRAM COMPLETED/.test(m.subject)).length, 1);
 });
 
@@ -339,7 +339,7 @@ ok('results: not configured, wrong password, then the data for the right one (no
   assert.deepStrictEqual(r.cols.slice(0, 4), ['timestamp', 'name', 'email', 'umpireId']);
   const row = Object.fromEntries(r.cols.map((c, i) => [c, r.rows[0][i]]));
   assert.strictEqual(row.email, 'jo@x.com'); assert.strictEqual(row.result, 'NOT PASSED'); assert.strictEqual(row.attempt, 1); assert.strictEqual(row.percent, 80);
-  assert.deepStrictEqual(r.config, { passMark: 85, maxAttempts: 2, totalModules: 6, completionType: 'Presentation Competency Assessment' });
+  assert.deepStrictEqual(r.config, { passMark: 85, maxAttempts: 2, totalModules: 8, completionType: 'Presentation Competency Assessment' });
   assert.ok(!JSON.stringify(r).includes('correct horse'));
 });
 ok('results: 10 wrong passwords lock the page for 15 minutes (even for the right password) and alert the owner', () => {

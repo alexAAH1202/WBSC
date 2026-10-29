@@ -531,6 +531,12 @@
   .quiz-result p{margin-top:10px;font-size:0.95rem;color:var(--ink-soft);}
   #quiz-try-again{margin:6px 0 4px;}
   #quiz-retry-save{margin-bottom:6px;}
+  .watch-first{background:#fdf2f1;border:2px solid var(--red-600);border-left-width:8px;padding:18px 22px;margin:18px 0 0;}
+  .watch-first h3{font-size:1rem;text-transform:uppercase;color:var(--red-600);margin:0 0 6px;}
+  .watch-first p{font-size:0.95rem;margin:0;color:var(--navy-950);}
+  .quiz-gate{padding:8px 0;}
+  .quiz-gate label{display:flex;gap:10px;align-items:flex-start;margin:14px 0;font-weight:700;cursor:pointer;}
+  .quiz-gate input{margin-top:4px;width:18px;height:18px;flex-shrink:0;}
   .quiz-review{border-top:1px solid var(--line);margin-top:22px;padding-top:18px;text-align:left;}
   .quiz-feedback .why{margin:8px 0 0;font-size:0.92rem;}
   .quiz-review h3{margin:0 0 10px;font-size:1.05rem;}
@@ -622,6 +628,10 @@
         <strong>You have a maximum of 2 attempts</strong> at each one, and the limit is checked when your result is saved.
         The Manual Knowledge Checks are unmarked practice: try them as often as you like, the correct answers are shown, and nothing is recorded.
       </div>
+      <div class="watch-first" role="note">
+        <h3>Watch the full presentation first</h3>
+        <p><strong>Appendix 4 Elite Philosophies &amp; Appendix 5 Elite 3, 4, 5 &amp; 6 Field Mechanics:</strong> the assessment questions are based on the <strong>FULL presentation</strong>, so please complete the assessment after you have watched and studied it. You will be asked to confirm this before you start. <a href="presentations.html">Go to the presentations</a>.</p>
+      </div>
       <div class="identity-panel">
         <h2>Your Details</h2>
         <p class="desc">Required once per visit before starting an assessment, so your result can be recorded against you. You will confirm your email address with a one-time code. This information is only used for your completion record - it's sent to the program administrator together with your score.</p>
@@ -673,6 +683,14 @@
     <div class="wrap">
       <div class="quiz-frame">
 
+        <div id="quiz-gate" class="quiz-body quiz-gate" style="display:none;">
+          <div class="watch-first" role="note">
+            <h3>Before you begin</h3>
+            <p>The questions are based on the <strong>FULL presentation</strong> for this appendix. Please complete the assessment after you have watched and studied it. <a id="gate-link" href="presentations.html">Go to the presentation</a></p>
+          </div>
+          <label for="gate-check"><input type="checkbox" id="gate-check"> I have watched and studied the full presentation for this appendix.</label>
+          <button class="btn btn-primary" id="gate-start" type="button" disabled>Begin assessment</button>
+        </div>
         <div id="quiz-active">
           <div class="quiz-top">
             <span class="eyebrow" id="quiz-eyebrow">Module 01 &middot; Manual Knowledge Check</span>
@@ -859,25 +877,60 @@
       <article class="assess-block" id="module-06">
         <div class="assess-head">
           <span class="assess-eyebrow">Module 06</span>
-          <h2>Appendix 5: Elite Three, Four, Five &amp; Six-Umpire Field Mechanics</h2>
+          <h2>Appendix 5a: Key Concepts</h2>
         </div>
         <div class="assess-body">
           <div class="assess-card mkc">
             <span class="assess-kind">Manual Knowledge Check</span>
             <span class="assess-qcount">5 Questions</span>
-            <p class="assess-desc">Confirms comprehension of the elite field mechanics across the three- to six-umpire systems.</p>
+            <p class="assess-desc">Optional practice on Appendix 5 (three- to six-umpire elite field mechanics) after reading the manual.</p>
             <a class="btn btn-primary assess-start-link" href="#assessment-m06-mkc" data-assessment="m06-mkc">Start Knowledge Check</a>
             <div class="assess-status live"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="6"/></svg>Available now</div>
           </div>
           <div class="assess-card pca">
             <span class="assess-kind">Presentation Competency Assessment</span>
             <span class="assess-qcount">10 Questions</span>
-            <p class="assess-desc">Applies elite field mechanics to realistic scenarios across crew sizes.</p>
+            <p class="assess-desc">Key Concepts: the Four Essential Elements, parallax error, angle and distance, timing and backfilling.</p>
             <a class="btn btn-outline-navy assess-start-link" href="#assessment-m06-pca" data-assessment="m06-pca">Start Assessment</a>
             <div class="assess-status live"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="6"/></svg>Available now</div>
           </div>
         </div>
       </article>
+
+      <!-- MODULE 07 -->
+      <article class="assess-block" id="module-07">
+        <div class="assess-head">
+          <span class="assess-eyebrow">Module 07</span>
+          <h2>Appendix 5b: Three-Umpire System</h2>
+        </div>
+        <div class="assess-body">
+          <div class="assess-card pca">
+            <span class="assess-kind">Presentation Competency Assessment</span>
+            <span class="assess-qcount">10 Questions</span>
+            <p class="assess-desc">Three-Umpire System: starting positions, pickoffs, tag ups, lead-offs and fly-ball coverage.</p>
+            <a class="btn btn-outline-navy assess-start-link" href="#assessment-m07-pca" data-assessment="m07-pca">Start Assessment</a>
+            <div class="assess-status live"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="6"/></svg>Available now</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- MODULE 08 -->
+      <article class="assess-block" id="module-08">
+        <div class="assess-head">
+          <span class="assess-eyebrow">Module 08</span>
+          <h2>Appendix 5c: Four, Five &amp; Six-Umpire Systems</h2>
+        </div>
+        <div class="assess-body">
+          <div class="assess-card pca">
+            <span class="assess-kind">Presentation Competency Assessment</span>
+            <span class="assess-qcount">10 Questions</span>
+            <p class="assess-desc">Four, Five and Six-Umpire Systems: starting positions, tag ups, outfield coverage and fair/foul responsibility.</p>
+            <a class="btn btn-outline-navy assess-start-link" href="#assessment-m08-pca" data-assessment="m08-pca">Start Assessment</a>
+            <div class="assess-status live"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="6"/></svg>Available now</div>
+          </div>
+        </div>
+      </article>
+
       <div class="validation-banner" id="validation-banner">Enter your full name and email address above before starting a Knowledge Check.</div>
     </div>
   </section>
@@ -954,6 +1007,7 @@
   var els = {
     validationBanner: document.getElementById('validation-banner'),
     active: document.getElementById('quiz-active'),
+    gate: document.getElementById('quiz-gate'),
     complete: document.getElementById('quiz-complete'),
     eyebrow: document.getElementById('quiz-eyebrow'),
     moduleTitle: document.getElementById('quiz-module-title'),
@@ -1146,6 +1200,7 @@
   // values only drive what is displayed, so keep them equal to Code.gs.
   var PASS_MARK = 85;
   var MAX_ATTEMPTS = 2;
+  var TOTAL_MODULES = 8;   // display only; Code.gs decides completion
   var MARKED_TYPE = 'Presentation Competency Assessment';   // the recorded one; Manual Knowledge Checks are practice
   function isMarked(bank){ return !!bank && bank.kind === MARKED_TYPE; }
   function neededFor(total){ var n = 0; while (n * 100 < PASS_MARK * total) n++; return n; }   // same rule as Code.gs
@@ -1377,7 +1432,7 @@
       setSaveState('saved', '✓ Your result has been recorded' + n + '. A receipt will be emailed to ' + (session ? session.email : 'you') + '.', false);
       if (m.result) showResult(m.result === 'PASS', m.attemptNumber, true);   // the server's decision is final
       if (m.result !== 'PASS' && m.attemptNumber >= max) showReview();          // all attempts used: now the answers can be shown
-      if (m.completedAll) els.resultText.textContent += ' You have now passed all 6 modules. A summary will be emailed to you.';
+      if (m.completedAll) els.resultText.textContent += ' You have now passed all ' + TOTAL_MODULES + ' modules. A summary will be emailed to you.';
       pendingSave = null;
     } else if (m.code === 'auth') {
       // The verification expired (or was never completed). Nothing was saved; the same
@@ -1581,11 +1636,32 @@
     els.nextTitle.textContent = bank.nextLabel;
     els.continueBtn.setAttribute('href', bank.nextHref);
 
-    els.active.style.display = '';
     els.complete.style.display = 'none';
-    renderQuestion();
+    if (bank.watchFirst) {
+      // The marked questions are based on the full presentation: ask the learner to confirm they have watched it.
+      els.active.style.display = 'none';
+      els.gate.style.display = '';
+      document.getElementById('gate-check').checked = false;
+      document.getElementById('gate-start').disabled = true;
+      document.getElementById('gate-link').setAttribute('href', bank.watchFirst);
+    } else {
+      els.gate.style.display = 'none';
+      els.active.style.display = '';
+      renderQuestion();
+    }
     return true;
   }
+
+  document.getElementById('gate-check').addEventListener('change', function(){ document.getElementById('gate-start').disabled = !this.checked; });
+  document.getElementById('gate-start').addEventListener('click', function(){
+    if (!document.getElementById('gate-check').checked) return;
+    els.gate.style.display = 'none';
+    els.active.style.display = '';
+    state.startedAt = Date.now();      // the timing check starts when the questions do
+    renderQuestion();
+    els.question.setAttribute('tabindex', '-1');
+    els.question.focus({ preventScroll: true });
+  });
 
   function scrollToQuiz(){
     window.setTimeout(function(){

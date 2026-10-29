@@ -788,7 +788,7 @@
   var PW_KEY = 'wbscResultsPw';
 
   var $ = function(id){ return document.getElementById(id); };
-  var state = { people: [], rows: [], config: { passMark: 85, maxAttempts: 2, totalModules: 6, completionType: 'Presentation Competency Assessment' },
+  var state = { people: [], rows: [], config: { passMark: 85, maxAttempts: 2, totalModules: 8, completionType: 'Presentation Competency Assessment' },
                 filter: 'all', q: '', open: null, tab: 'umpires', generated: null, truncated: false };
 
   function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]; }); }
