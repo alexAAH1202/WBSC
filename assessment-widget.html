@@ -532,6 +532,7 @@
   #quiz-try-again{margin:6px 0 4px;}
   #quiz-retry-save{margin-bottom:6px;}
   .quiz-review{border-top:1px solid var(--line);margin-top:22px;padding-top:18px;text-align:left;}
+  .quiz-feedback .why{margin:8px 0 0;font-size:0.92rem;}
   .quiz-review h3{margin:0 0 10px;font-size:1.05rem;}
   .quiz-review li{margin:0 0 12px;font-size:0.92rem;}
   .quiz-review .ans{color:#2f7a3d;font-weight:700;}
@@ -688,6 +689,7 @@
             <div class="quiz-feedback" id="quiz-feedback" style="display:none;" aria-live="polite">
               <div class="quiz-feedback-head" id="quiz-feedback-head"></div>
               <p id="quiz-feedback-body"></p>
+              <p class="why" id="quiz-feedback-why" style="display:none;"></p>
               <p class="ref" id="quiz-feedback-ref"></p>
             </div>
             <div class="quiz-actions">
@@ -937,7 +939,7 @@
       var t = order[i]; order[i] = order[j]; order[j] = t;
     }
     return {
-      q: q.q, ref: q.ref,
+      q: q.q, ref: q.ref, why: q.why,
       options: order.map(function(i){ return q.options[i]; }),
       correct: order.indexOf(q.correct)
     };
@@ -963,6 +965,7 @@
     feedbackHead: document.getElementById('quiz-feedback-head'),
     feedbackBody: document.getElementById('quiz-feedback-body'),
     feedbackRef: document.getElementById('quiz-feedback-ref'),
+    feedbackWhy: document.getElementById('quiz-feedback-why'),
     submitBtn: document.getElementById('quiz-submit-btn'),
     scoreFrac: document.getElementById('quiz-score-frac'),
     scorePct: document.getElementById('quiz-score-pct'),
@@ -1048,7 +1051,7 @@
         el.querySelector('.opt-mark').textContent = '✕';
       }
     });
-    if (!isCorrect && marked) state.missed.push({ q: q.q, answer: q.options[q.correct], ref: q.ref });
+    if (!isCorrect && marked) state.missed.push({ q: q.q, answer: q.options[q.correct], ref: q.ref, why: q.why });
 
     els.feedback.style.display = 'block';
     els.feedback.className = 'quiz-feedback ' + (isCorrect ? 'correct' : 'incorrect');
@@ -1056,6 +1059,10 @@
     if (isCorrect) els.feedbackBody.textContent = marked ? 'That’s right.' : 'That’s right - ' + q.options[q.correct] + '.';
     else els.feedbackBody.textContent = marked ? 'That is not the answer. Revisit this section of the manual:' : 'The correct answer is: ' + q.options[q.correct] + '.';
     els.feedbackRef.textContent = (isCorrect && marked) ? '' : q.ref;
+    // The optional explanation ("why") is shown in practice, and in the marked assessment only for an answer the learner got right.
+    var showWhy = !!q.why && (!marked || isCorrect);
+    els.feedbackWhy.textContent = showWhy ? q.why : '';
+    els.feedbackWhy.style.display = showWhy ? '' : 'none';
 
     var isLast = state.index === QUESTIONS.length - 1;
     els.submitBtn.textContent = isLast ? 'See Results' : 'Next Question';
@@ -1108,7 +1115,7 @@
     if (!state.missed.length) return;
     var h = '<h3>Review: the questions you missed</h3><ol>';
     state.missed.forEach(function(m){
-      h += '<li>' + escHtml(m.q) + '<br><span class="ans">Correct answer: ' + escHtml(m.answer) + '</span><br><span class="rf">' + escHtml(m.ref) + '</span></li>';
+      h += '<li>' + escHtml(m.q) + '<br><span class="ans">Correct answer: ' + escHtml(m.answer) + '</span><br><span class="rf">' + escHtml(m.ref) + '</span>' + (m.why ? '<br>' + escHtml(m.why) : '') + '</li>';
     });
     els.review.innerHTML = h + '</ol>';
     els.review.style.display = '';
