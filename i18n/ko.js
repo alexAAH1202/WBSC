@@ -359,5 +359,14 @@ WBSC_DICT["ko"] = { t: {
  "The server could not save the result": "서버가 결과를 저장하지 못했습니다",
  "Invalid submission: the assessment was completed too quickly to be a real attempt": "유효하지 않은 제출입니다. 평가가 너무 빨리 완료되어 실제 응시로 인정할 수 없습니다",
  "The Four Pillars - About the Framework": "네 개의 기둥 - 체계 소개",
- "The Four Pillars of Softball Umpiring: Foundations, Field Mechanics, Elite Philosophies and Elite Field Mechanics, each shown with a photograph of an umpire at work.": "소프트볼 심판의 네 개의 기둥: 기초, 필드 메커닉스, 엘리트 철학, 엘리트 필드 메커닉스. 각각 심판이 활동하는 사진과 함께 표시됩니다."
+ "The Four Pillars of Softball Umpiring: Foundations, Field Mechanics, Elite Philosophies and Elite Field Mechanics, each shown with a photograph of an umpire at work.": "소프트볼 심판의 네 개의 기둥: 기초, 필드 메커닉스, 엘리트 철학, 엘리트 필드 메커닉스. 각각 심판이 활동하는 사진과 함께 표시됩니다.",
+ "Counts toward your record. Pass mark {pass}%, maximum {max} attempts.": "기록에 반영됩니다. 합격 기준 {pass}%, 최대 {max}회 응시할 수 있습니다.",
+ "Marked assessment - your result is recorded": "채점되는 평가: 결과가 기록됩니다",
+ "Practice quiz - not marked, not recorded": "연습 퀴즈: 채점되지 않고 기록되지 않습니다",
+ "Practice": "연습",
+ "Not marked and not recorded. Try it as often as you like.": "채점되지 않고 기록되지 않습니다. 원하는 만큼 여러 번 풀 수 있습니다.",
+ "Start Practice Quiz": "연습 퀴즈 시작",
+ "Marked assessment": "채점되는 평가",
+ "Counts toward your record. Pass mark 85%, maximum 2 attempts.": "기록에 반영됩니다. 합격 기준 85%, 최대 2회 응시할 수 있습니다.",
+ "Start Marked Assessment": "채점되는 평가 시작"
 } };

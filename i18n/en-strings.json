@@ -321,15 +321,19 @@
    "Continue Training",
    "Foundation",
    "Module 01",
+   "Practice",
    "Manual Knowledge Check",
    "5 Questions",
    "Confirms comprehension of the Foundations Learning Guide.",
-   "Start Knowledge Check",
+   "Not marked and not recorded. Try it as often as you like.",
+   "Start Practice Quiz",
    "Available now",
+   "Marked assessment",
    "Presentation Competency Assessment",
    "10 Questions",
    "Applies the combined Foundations-Appendix 4 presentation to realistic scenarios.",
-   "Start Assessment",
+   "Counts toward your record. Pass mark 85%, maximum 2 attempts.",
+   "Start Marked Assessment",
    "Module 02",
    "Foundations - One-Umpire Field Mechanics",
    "Confirms comprehension of one-umpire starting positions and coverage.",
@@ -457,6 +461,7 @@
   "Correct answer: {answer}",
   "That code is not right. {n} tries left.",
   "You have already used the maximum of {n} attempts for this assessment. Please contact {email}.",
+  "Counts toward your record. Pass mark {pass}%, maximum {max} attempts.",
   "✓ Email verified: {email}",
   "Confirm your email address to continue.",
   "The service did not answer. Please check your connection and try again.",
@@ -494,6 +499,8 @@
   "You have already used the maximum of {n} attempts for this assessment (you have passed it). Please contact {email} if you need help.",
   "You have already used the maximum of {n} attempts for this assessment. Please contact {email} if you need help.",
   "{n} of {total} correct to pass",
+  "Marked assessment - your result is recorded",
+  "Practice quiz - not marked, not recorded",
   "Practice · not recorded · unlimited tries",
   "Attempt {n} of {max}",
   "(last attempt)",
@@ -521,7 +528,8 @@
   "This page is translated from English. The manuals and presentations are in English. If the translation and the English text differ, the English text applies."
  ],
  "stale": [
-  "About the Framework"
+  "About the Framework",
+  "Start Assessment"
  ],
  "all": [
   "Question {n} of {total}",
@@ -886,6 +894,15 @@
   "The server could not save the result",
   "Invalid submission: the assessment was completed too quickly to be a real attempt",
   "The Four Pillars - About the Framework",
-  "The Four Pillars of Softball Umpiring: Foundations, Field Mechanics, Elite Philosophies and Elite Field Mechanics, each shown with a photograph of an umpire at work."
+  "The Four Pillars of Softball Umpiring: Foundations, Field Mechanics, Elite Philosophies and Elite Field Mechanics, each shown with a photograph of an umpire at work.",
+  "Counts toward your record. Pass mark {pass}%, maximum {max} attempts.",
+  "Marked assessment - your result is recorded",
+  "Practice quiz - not marked, not recorded",
+  "Practice",
+  "Not marked and not recorded. Try it as often as you like.",
+  "Start Practice Quiz",
+  "Marked assessment",
+  "Counts toward your record. Pass mark 85%, maximum 2 attempts.",
+  "Start Marked Assessment"
  ]
 }

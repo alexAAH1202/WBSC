@@ -359,5 +359,14 @@ WBSC_DICT["fr"] = { t: {
  "The server could not save the result": "Le serveur n’a pas pu enregistrer le résultat",
  "Invalid submission: the assessment was completed too quickly to be a real attempt": "Envoi non valide : l’évaluation a été terminée trop rapidement pour être une vraie tentative",
  "The Four Pillars - About the Framework": "Les quatre piliers - À propos du cadre",
- "The Four Pillars of Softball Umpiring: Foundations, Field Mechanics, Elite Philosophies and Elite Field Mechanics, each shown with a photograph of an umpire at work.": "Les quatre piliers de l’arbitrage de softball : Fondements, Mécanique de terrain, Philosophies de haut niveau et Mécanique de terrain de haut niveau, chacun illustré par une photographie d’un arbitre en action."
+ "The Four Pillars of Softball Umpiring: Foundations, Field Mechanics, Elite Philosophies and Elite Field Mechanics, each shown with a photograph of an umpire at work.": "Les quatre piliers de l’arbitrage de softball : Fondements, Mécanique de terrain, Philosophies de haut niveau et Mécanique de terrain de haut niveau, chacun illustré par une photographie d’un arbitre en action.",
+ "Counts toward your record. Pass mark {pass}%, maximum {max} attempts.": "Compte dans votre dossier. Note de passage : {pass} %, {max} tentatives au maximum.",
+ "Marked assessment - your result is recorded": "Évaluation notée : votre résultat est enregistré",
+ "Practice quiz - not marked, not recorded": "Quiz d’entraînement : non noté, non enregistré",
+ "Practice": "Entraînement",
+ "Not marked and not recorded. Try it as often as you like.": "Non noté et non enregistré. Refaites-le autant de fois que vous le souhaitez.",
+ "Start Practice Quiz": "Commencer le quiz d’entraînement",
+ "Marked assessment": "Évaluation notée",
+ "Counts toward your record. Pass mark 85%, maximum 2 attempts.": "Compte dans votre dossier. Note de passage : 85 %, 2 tentatives au maximum.",
+ "Start Marked Assessment": "Commencer l’évaluation notée"
 } };
