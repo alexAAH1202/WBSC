@@ -358,5 +358,6 @@ WBSC_DICT["es"] = { t: {
  "Available now": "Disponible ahora",
  "The server could not save the result": "El servidor no pudo guardar el resultado",
  "Invalid submission: the assessment was completed too quickly to be a real attempt": "Envío no válido: la evaluación se completó demasiado rápido para ser un intento real",
- "The Four Pillars - About the Framework": "Los Cuatro Pilares - Acerca del marco"
+ "The Four Pillars - About the Framework": "Los Cuatro Pilares - Acerca del marco",
+ "The Four Pillars of Softball Umpiring: Foundations, Field Mechanics, Elite Philosophies and Elite Field Mechanics, each shown with a photograph of an umpire at work.": "Los Cuatro Pilares del arbitraje de softbol: Fundamentos, Mecánica de campo, Filosofías de élite y Mecánica de campo de élite, cada uno ilustrado con una fotografía de un árbitro en acción."
 } };

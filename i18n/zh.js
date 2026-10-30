@@ -358,5 +358,6 @@ WBSC_DICT["zh"] = { t: {
  "Available now": "现已可用",
  "The server could not save the result": "服务器无法保存结果",
  "Invalid submission: the assessment was completed too quickly to be a real attempt": "提交无效：评估完成得太快，不可能是真实的尝试",
- "The Four Pillars - About the Framework": "四大支柱 - 关于框架"
+ "The Four Pillars - About the Framework": "四大支柱 - 关于框架",
+ "The Four Pillars of Softball Umpiring: Foundations, Field Mechanics, Elite Philosophies and Elite Field Mechanics, each shown with a photograph of an umpire at work.": "垒球裁判的四大支柱：基础、场上机制、精英理念和精英场上机制，每一项都配有裁判员工作中的照片。"
 } };
