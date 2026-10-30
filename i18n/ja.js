@@ -358,5 +358,6 @@ WBSC_DICT["ja"] = { t: {
  "Available now": "現在利用可能",
  "The server could not save the result": "サーバーが結果を保存できませんでした",
  "Invalid submission: the assessment was completed too quickly to be a real attempt": "無効な送信です: 評価の完了が早すぎるため、実際の受験とは認められません",
- "The Four Pillars - About the Framework": "4つの柱 - この枠組みについて"
+ "The Four Pillars - About the Framework": "4つの柱 - この枠組みについて",
+ "The Four Pillars of Softball Umpiring: Foundations, Field Mechanics, Elite Philosophies and Elite Field Mechanics, each shown with a photograph of an umpire at work.": "ソフトボール審判の4つの柱: 基礎、フィールドメカニクス、エリート向け哲学、エリート向けフィールドメカニクス。それぞれ審判員の活動中の写真が添えられています。"
 } };
