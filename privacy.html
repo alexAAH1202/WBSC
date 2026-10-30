@@ -538,6 +538,17 @@
     .directory{padding:40px 0 16px;}
     .quiz-section{padding:44px 0 56px;}
   }
+  /* ---------- Gold-edged boxes run the full width of the screen on wide screens ---------- */
+  /* The box is stretched to the screen edges; its padding keeps the text lined up with the page content. */
+  @media (min-width:1000px){
+    main{overflow-x:clip;}
+    .sequence-note,.federation-note,.source-note,.rules-note{
+      margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
+      padding-left:max(24px,calc(50vw - 50% + 24px));padding-right:max(24px,calc(50vw - 50% + 24px));
+    }
+    .notice{position:relative;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);padding-left:calc(50vw - 50%);padding-right:calc(50vw - 50%);}
+    .notice-bar{position:absolute;left:0;top:36px;bottom:36px;}
+  }
 </style>
 <script src="i18n.js"></script>
 </head>
