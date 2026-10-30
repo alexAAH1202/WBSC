@@ -447,7 +447,21 @@
   .assess-card{padding:22px 24px;}
   .assess-card + .assess-card{border-left:1px solid var(--line);}
   .assess-kind{font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;font-size:0.72rem;color:var(--red-600);display:block;margin-bottom:6px;}
-  .assess-card.pca .assess-kind{color:var(--navy-950);}
+  .assess-card.pca .assess-kind,.assess-card.mkc .assess-kind{color:var(--navy-950);}
+  /* Practice quizzes and marked assessments must not be mistaken for each other. */
+  .mode-badge{display:inline-block;font-family:var(--font-display);font-weight:900;text-transform:uppercase;letter-spacing:0.08em;font-size:0.72rem;padding:4px 10px;margin-bottom:10px;}
+  .mode-badge.practice{background:#e9eef6;color:#2a3f66;border:1px dashed #7d8fb0;}
+  .mode-badge.marked{background:var(--red-600);color:var(--white);border:1px solid var(--red-600);}
+  .mode-note{font-size:0.82rem;margin:0 0 14px;}
+  .mode-note.practice{color:var(--ink-soft);}
+  .mode-note.marked{color:var(--navy-950);font-weight:700;}
+  .assess-card.pca{border-left:5px solid var(--red-600);background:#fdf6f5;}
+  .assess-card.mkc{background:#f6f8fc;}
+  .quiz-mode{display:inline-block;font-family:var(--font-display);font-weight:900;text-transform:uppercase;letter-spacing:0.08em;font-size:0.8rem;padding:6px 12px;margin-bottom:12px;}
+  .quiz-mode.practice{background:#e9eef6;color:#2a3f66;border:1px dashed #7d8fb0;}
+  .quiz-mode.marked{background:var(--red-600);color:var(--white);}
+  .quiz-top:has(.quiz-mode.marked){border-bottom:6px solid var(--red-600);}
+  .quiz-top:has(.quiz-mode.practice){border-bottom:6px dashed #7d8fb0;}
   .assess-qcount{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-display);font-weight:700;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.05em;border:1px solid var(--line);padding:3px 8px;margin-bottom:10px;color:var(--ink-soft);}
   .assess-desc{font-size:0.85rem;color:var(--ink-soft);margin-bottom:16px;min-height:2.6em;}
   .assess-status{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-display);font-size:0.66rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--ink-soft);margin-top:12px;}
@@ -715,6 +729,7 @@
         </div>
         <div id="quiz-active">
           <div class="quiz-top">
+            <span class="quiz-mode" id="quiz-mode"></span>
             <span class="eyebrow" id="quiz-eyebrow">Module 01 &middot; Manual Knowledge Check</span>
             <h2 id="quiz-module-title">Foundations Learning Guide</h2>
             <p class="quiz-attempt" id="quiz-attempt-label"></p>
@@ -777,17 +792,21 @@
         </div>
         <div class="assess-body">
           <div class="assess-card mkc">
+            <span class="mode-badge practice">Practice</span>
             <span class="assess-kind">Manual Knowledge Check</span>
             <span class="assess-qcount">5 Questions</span>
             <p class="assess-desc">Confirms comprehension of the Foundations Learning Guide.</p>
-            <a class="btn btn-primary assess-start-link" href="#assessment-m01-mkc" data-assessment="m01-mkc" id="start-quiz-btn">Start Knowledge Check</a>
+            <p class="mode-note practice">Not marked and not recorded. Try it as often as you like.</p>
+            <a class="btn btn-outline-navy assess-start-link" href="#assessment-m01-mkc" data-assessment="m01-mkc" id="start-quiz-btn">Start Practice Quiz</a>
             <div class="assess-status live"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="6"/></svg>Available now</div>
           </div>
           <div class="assess-card pca">
+            <span class="mode-badge marked">Marked assessment</span>
             <span class="assess-kind">Presentation Competency Assessment</span>
             <span class="assess-qcount">10 Questions</span>
             <p class="assess-desc">Applies the combined Foundations-Appendix 4 presentation to realistic scenarios.</p>
-            <a class="btn btn-outline-navy assess-start-link" href="#assessment-m01-pca" data-assessment="m01-pca">Start Assessment</a>
+            <p class="mode-note marked" data-marked-note></p>
+            <a class="btn btn-primary assess-start-link" href="#assessment-m01-pca" data-assessment="m01-pca">Start Marked Assessment</a>
             <div class="assess-status live"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="6"/></svg>Available now</div>
           </div>
         </div>
@@ -801,17 +820,21 @@
         </div>
         <div class="assess-body">
           <div class="assess-card mkc">
+            <span class="mode-badge practice">Practice</span>
             <span class="assess-kind">Manual Knowledge Check</span>
             <span class="assess-qcount">5 Questions</span>
             <p class="assess-desc">Confirms comprehension of one-umpire starting positions and coverage.</p>
-            <a class="btn btn-primary assess-start-link" href="#assessment-m02-mkc" data-assessment="m02-mkc">Start Knowledge Check</a>
+            <p class="mode-note practice">Not marked and not recorded. Try it as often as you like.</p>
+            <a class="btn btn-outline-navy assess-start-link" href="#assessment-m02-mkc" data-assessment="m02-mkc">Start Practice Quiz</a>
             <div class="assess-status live"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="6"/></svg>Available now</div>
           </div>
           <div class="assess-card pca">
+            <span class="mode-badge marked">Marked assessment</span>
             <span class="assess-kind">Presentation Competency Assessment</span>
             <span class="assess-qcount">10 Questions</span>
             <p class="assess-desc">Applies one-umpire mechanics to realistic scenarios.</p>
-            <a class="btn btn-outline-navy assess-start-link" href="#assessment-m02-pca" data-assessment="m02-pca">Start Assessment</a>
+            <p class="mode-note marked" data-marked-note></p>
+            <a class="btn btn-primary assess-start-link" href="#assessment-m02-pca" data-assessment="m02-pca">Start Marked Assessment</a>
             <div class="assess-status live"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="6"/></svg>Available now</div>
           </div>
         </div>
@@ -825,17 +848,21 @@
         </div>
         <div class="assess-body">
           <div class="assess-card mkc">
+            <span class="mode-badge practice">Practice</span>
             <span class="assess-kind">Manual Knowledge Check</span>
             <span class="assess-qcount">5 Questions</span>
             <p class="assess-desc">Confirms comprehension of the two-umpire system's three basic principles.</p>
-            <a class="btn btn-primary assess-start-link" href="#assessment-m03-mkc" data-assessment="m03-mkc">Start Knowledge Check</a>
+            <p class="mode-note practice">Not marked and not recorded. Try it as often as you like.</p>
+            <a class="btn btn-outline-navy assess-start-link" href="#assessment-m03-mkc" data-assessment="m03-mkc">Start Practice Quiz</a>
             <div class="assess-status live"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="6"/></svg>Available now</div>
           </div>
           <div class="assess-card pca">
+            <span class="mode-badge marked">Marked assessment</span>
             <span class="assess-kind">Presentation Competency Assessment</span>
             <span class="assess-qcount">10 Questions</span>
             <p class="assess-desc">Applies two-umpire mechanics to realistic scenarios.</p>
-            <a class="btn btn-outline-navy assess-start-link" href="#assessment-m03-pca" data-assessment="m03-pca">Start Assessment</a>
+            <p class="mode-note marked" data-marked-note></p>
+            <a class="btn btn-primary assess-start-link" href="#assessment-m03-pca" data-assessment="m03-pca">Start Marked Assessment</a>
             <div class="assess-status live"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="6"/></svg>Available now</div>
           </div>
         </div>
@@ -849,17 +876,21 @@
         </div>
         <div class="assess-body">
           <div class="assess-card mkc">
+            <span class="mode-badge practice">Practice</span>
             <span class="assess-kind">Manual Knowledge Check</span>
             <span class="assess-qcount">5 Questions</span>
             <p class="assess-desc">Confirms comprehension of the Four Essential Elements and three-umpire coverage.</p>
-            <a class="btn btn-primary assess-start-link" href="#assessment-m04-mkc" data-assessment="m04-mkc">Start Knowledge Check</a>
+            <p class="mode-note practice">Not marked and not recorded. Try it as often as you like.</p>
+            <a class="btn btn-outline-navy assess-start-link" href="#assessment-m04-mkc" data-assessment="m04-mkc">Start Practice Quiz</a>
             <div class="assess-status live"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="6"/></svg>Available now</div>
           </div>
           <div class="assess-card pca">
+            <span class="mode-badge marked">Marked assessment</span>
             <span class="assess-kind">Presentation Competency Assessment</span>
             <span class="assess-qcount">10 Questions</span>
             <p class="assess-desc">Applies three-umpire mechanics to realistic scenarios.</p>
-            <a class="btn btn-outline-navy assess-start-link" href="#assessment-m04-pca" data-assessment="m04-pca">Start Assessment</a>
+            <p class="mode-note marked" data-marked-note></p>
+            <a class="btn btn-primary assess-start-link" href="#assessment-m04-pca" data-assessment="m04-pca">Start Marked Assessment</a>
             <div class="assess-status live"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="6"/></svg>Available now</div>
           </div>
         </div>
@@ -879,17 +910,21 @@
         </div>
         <div class="assess-body">
           <div class="assess-card mkc">
+            <span class="mode-badge practice">Practice</span>
             <span class="assess-kind">Manual Knowledge Check</span>
             <span class="assess-qcount">5 Questions</span>
             <p class="assess-desc">Confirms comprehension of the elite positioning philosophies and key concepts.</p>
-            <a class="btn btn-primary assess-start-link" href="#assessment-m05-mkc" data-assessment="m05-mkc">Start Knowledge Check</a>
+            <p class="mode-note practice">Not marked and not recorded. Try it as often as you like.</p>
+            <a class="btn btn-outline-navy assess-start-link" href="#assessment-m05-mkc" data-assessment="m05-mkc">Start Practice Quiz</a>
             <div class="assess-status live"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="6"/></svg>Available now</div>
           </div>
           <div class="assess-card pca">
+            <span class="mode-badge marked">Marked assessment</span>
             <span class="assess-kind">Presentation Competency Assessment</span>
             <span class="assess-qcount">10 Questions</span>
             <p class="assess-desc">Applies elite positioning philosophies to realistic scenarios.</p>
-            <a class="btn btn-outline-navy assess-start-link" href="#assessment-m05-pca" data-assessment="m05-pca">Start Assessment</a>
+            <p class="mode-note marked" data-marked-note></p>
+            <a class="btn btn-primary assess-start-link" href="#assessment-m05-pca" data-assessment="m05-pca">Start Marked Assessment</a>
             <div class="assess-status live"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="6"/></svg>Available now</div>
           </div>
         </div>
@@ -903,17 +938,21 @@
         </div>
         <div class="assess-body">
           <div class="assess-card mkc">
+            <span class="mode-badge practice">Practice</span>
             <span class="assess-kind">Manual Knowledge Check</span>
             <span class="assess-qcount">5 Questions</span>
             <p class="assess-desc">Optional practice on Appendix 5 (three- to six-umpire elite field mechanics) after reading the manual.</p>
-            <a class="btn btn-primary assess-start-link" href="#assessment-m06-mkc" data-assessment="m06-mkc">Start Knowledge Check</a>
+            <p class="mode-note practice">Not marked and not recorded. Try it as often as you like.</p>
+            <a class="btn btn-outline-navy assess-start-link" href="#assessment-m06-mkc" data-assessment="m06-mkc">Start Practice Quiz</a>
             <div class="assess-status live"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="6"/></svg>Available now</div>
           </div>
           <div class="assess-card pca">
+            <span class="mode-badge marked">Marked assessment</span>
             <span class="assess-kind">Presentation Competency Assessment</span>
             <span class="assess-qcount">10 Questions</span>
             <p class="assess-desc">Key Concepts: the Four Essential Elements, parallax error, angle and distance, timing and backfilling.</p>
-            <a class="btn btn-outline-navy assess-start-link" href="#assessment-m06-pca" data-assessment="m06-pca">Start Assessment</a>
+            <p class="mode-note marked" data-marked-note></p>
+            <a class="btn btn-primary assess-start-link" href="#assessment-m06-pca" data-assessment="m06-pca">Start Marked Assessment</a>
             <div class="assess-status live"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="6"/></svg>Available now</div>
           </div>
         </div>
@@ -927,10 +966,12 @@
         </div>
         <div class="assess-body">
           <div class="assess-card pca">
+            <span class="mode-badge marked">Marked assessment</span>
             <span class="assess-kind">Presentation Competency Assessment</span>
             <span class="assess-qcount">10 Questions</span>
             <p class="assess-desc">Three-Umpire System: starting positions, pickoffs, tag ups, lead-offs and fly-ball coverage.</p>
-            <a class="btn btn-outline-navy assess-start-link" href="#assessment-m07-pca" data-assessment="m07-pca">Start Assessment</a>
+            <p class="mode-note marked" data-marked-note></p>
+            <a class="btn btn-primary assess-start-link" href="#assessment-m07-pca" data-assessment="m07-pca">Start Marked Assessment</a>
             <div class="assess-status live"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="6"/></svg>Available now</div>
           </div>
         </div>
@@ -944,10 +985,12 @@
         </div>
         <div class="assess-body">
           <div class="assess-card pca">
+            <span class="mode-badge marked">Marked assessment</span>
             <span class="assess-kind">Presentation Competency Assessment</span>
             <span class="assess-qcount">10 Questions</span>
             <p class="assess-desc">Four, Five and Six-Umpire Systems: starting positions, tag ups, outfield coverage and fair/foul responsibility.</p>
-            <a class="btn btn-outline-navy assess-start-link" href="#assessment-m08-pca" data-assessment="m08-pca">Start Assessment</a>
+            <p class="mode-note marked" data-marked-note></p>
+            <a class="btn btn-primary assess-start-link" href="#assessment-m08-pca" data-assessment="m08-pca">Start Marked Assessment</a>
             <div class="assess-status live"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="6"/></svg>Available now</div>
           </div>
         </div>
@@ -1096,6 +1139,7 @@
     practiceNote: document.getElementById('quiz-practice-note'),
     review: document.getElementById('quiz-review'),
     attemptLabel: document.getElementById('quiz-attempt-label'),
+    mode: document.getElementById('quiz-mode'),
     quizSection: document.getElementById('quiz'),
     nextTitle: document.getElementById('quiz-next-title'),
     continueBtn: document.getElementById('quiz-continue-btn')
@@ -1312,6 +1356,9 @@
   var MARKED_TYPE = 'Presentation Competency Assessment';   // the recorded one; Manual Knowledge Checks are practice
   function isMarked(bank){ return !!bank && bank.kind === MARKED_TYPE; }
   function neededFor(total){ var n = 0; while (n * 100 < PASS_MARK * total) n++; return n; }   // same rule as Code.gs
+  Array.prototype.forEach.call(document.querySelectorAll('[data-marked-note]'), function(el){
+    el.textContent = T('Counts toward your record. Pass mark {pass}%, maximum {max} attempts.', { pass: PASS_MARK, max: MAX_ATTEMPTS });
+  });
   var CONTACT_EMAIL = 'umpiredirector@wbscoceania.org';
   var LOOKUP_TIMEOUT_MS = 8000;
 
@@ -1730,6 +1777,8 @@
     var total = bank.questions.length;
     var need = T('{n} of {total} correct to pass', { n: neededFor(total), total: total });
     attemptNo = isMarked(bank) && info ? info.attempts + 1 : null;
+    els.mode.className = 'quiz-mode ' + (isMarked(bank) ? 'marked' : 'practice');
+    els.mode.textContent = isMarked(bank) ? T('Marked assessment - your result is recorded') : T('Practice quiz - not marked, not recorded');
     els.attemptLabel.textContent = !isMarked(bank)
       ? T('Practice \u00b7 not recorded \u00b7 unlimited tries')
       : attemptNo

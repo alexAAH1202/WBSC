@@ -359,5 +359,14 @@ WBSC_DICT["zh"] = { t: {
  "The server could not save the result": "服务器无法保存结果",
  "Invalid submission: the assessment was completed too quickly to be a real attempt": "提交无效：评估完成得太快，不可能是真实的尝试",
  "The Four Pillars - About the Framework": "四大支柱 - 关于框架",
- "The Four Pillars of Softball Umpiring: Foundations, Field Mechanics, Elite Philosophies and Elite Field Mechanics, each shown with a photograph of an umpire at work.": "垒球裁判的四大支柱：基础、场上机制、精英理念和精英场上机制，每一项都配有裁判员工作中的照片。"
+ "The Four Pillars of Softball Umpiring: Foundations, Field Mechanics, Elite Philosophies and Elite Field Mechanics, each shown with a photograph of an umpire at work.": "垒球裁判的四大支柱：基础、场上机制、精英理念和精英场上机制，每一项都配有裁判员工作中的照片。",
+ "Counts toward your record. Pass mark {pass}%, maximum {max} attempts.": "计入您的记录。及格线 {pass}%，最多可尝试 {max} 次。",
+ "Marked assessment - your result is recorded": "计分评估：您的结果将被记录",
+ "Practice quiz - not marked, not recorded": "练习测验：不计分、不记录",
+ "Practice": "练习",
+ "Not marked and not recorded. Try it as often as you like.": "不计分、不记录。可随意重复做多次。",
+ "Start Practice Quiz": "开始练习测验",
+ "Marked assessment": "计分评估",
+ "Counts toward your record. Pass mark 85%, maximum 2 attempts.": "计入您的记录。及格线 85%，最多可尝试 2 次。",
+ "Start Marked Assessment": "开始计分评估"
 } };

@@ -359,5 +359,14 @@ WBSC_DICT["ja"] = { t: {
  "The server could not save the result": "サーバーが結果を保存できませんでした",
  "Invalid submission: the assessment was completed too quickly to be a real attempt": "無効な送信です: 評価の完了が早すぎるため、実際の受験とは認められません",
  "The Four Pillars - About the Framework": "4つの柱 - この枠組みについて",
- "The Four Pillars of Softball Umpiring: Foundations, Field Mechanics, Elite Philosophies and Elite Field Mechanics, each shown with a photograph of an umpire at work.": "ソフトボール審判の4つの柱: 基礎、フィールドメカニクス、エリート向け哲学、エリート向けフィールドメカニクス。それぞれ審判員の活動中の写真が添えられています。"
+ "The Four Pillars of Softball Umpiring: Foundations, Field Mechanics, Elite Philosophies and Elite Field Mechanics, each shown with a photograph of an umpire at work.": "ソフトボール審判の4つの柱: 基礎、フィールドメカニクス、エリート向け哲学、エリート向けフィールドメカニクス。それぞれ審判員の活動中の写真が添えられています。",
+ "Counts toward your record. Pass mark {pass}%, maximum {max} attempts.": "記録に反映されます。合格基準 {pass}%、最大 {max} 回まで受験できます。",
+ "Marked assessment - your result is recorded": "採点される評価: 結果が記録されます",
+ "Practice quiz - not marked, not recorded": "練習クイズ: 採点・記録されません",
+ "Practice": "練習",
+ "Not marked and not recorded. Try it as often as you like.": "採点も記録もされません。何度でも挑戦できます。",
+ "Start Practice Quiz": "練習クイズを始める",
+ "Marked assessment": "採点される評価",
+ "Counts toward your record. Pass mark 85%, maximum 2 attempts.": "記録に反映されます。合格基準 85%、最大 2 回まで受験できます。",
+ "Start Marked Assessment": "採点される評価を始める"
 } };

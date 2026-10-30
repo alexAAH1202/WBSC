@@ -123,7 +123,7 @@ const verifyText = pg => pg.textContent('#verify-state');
   t = await newPage(b, {});
   await t.pg.evaluate(() => history.replaceState(null, '', location.pathname)); await t.pg.reload();
   assert.ok(/Email verified: jo@x\.com/.test(await verifyText(t.pg)), 'still verified after a reload');
-  await t.pg.click('[data-assessment="m01-pca"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
+  await t.pg.click('[data-assessment="m01-pca"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' }); assert.ok(/Marked assessment - your result is recorded/.test(await t.pg.textContent('#quiz-mode')), 'a marked banner is shown');
   ok('the verified session survives a reload (this tab only)');
 
   // the lookup and the save carry the session, never rely on the typed address
@@ -239,7 +239,7 @@ const verifyText = pg => pg.textContent('#verify-state');
   t = await newPage(b, { unverified: true });
   await t.pg.fill('#inp-name', ''); await t.pg.fill('#inp-email', '');
   await t.pg.click('[data-assessment="m01-mkc"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
-  assert.ok(/Practice/.test(await t.pg.textContent('#quiz-attempt-label'))); assert.strictEqual(t.lookups.length, 0); assert.strictEqual(t.calls.length, 0);
+  assert.ok(/Practice/.test(await t.pg.textContent('#quiz-attempt-label'))); assert.ok(/Practice quiz - not marked, not recorded/.test(await t.pg.textContent('#quiz-mode')) && await t.pg.evaluate(() => document.getElementById('quiz-mode').classList.contains('practice')), 'a practice banner is shown'); assert.strictEqual(t.lookups.length, 0); assert.strictEqual(t.calls.length, 0);
   {
     const q = await t.pg.textContent('#quiz-question'); const opts = await t.pg.$$eval('.quiz-option .opt-text', a => a.map(x => x.textContent));
     const right = opts.indexOf(RIGHT[q]), wrongI = (right + 1) % opts.length;

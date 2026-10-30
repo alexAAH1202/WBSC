@@ -359,5 +359,14 @@ WBSC_DICT["es"] = { t: {
  "The server could not save the result": "El servidor no pudo guardar el resultado",
  "Invalid submission: the assessment was completed too quickly to be a real attempt": "Envío no válido: la evaluación se completó demasiado rápido para ser un intento real",
  "The Four Pillars - About the Framework": "Los Cuatro Pilares - Acerca del marco",
- "The Four Pillars of Softball Umpiring: Foundations, Field Mechanics, Elite Philosophies and Elite Field Mechanics, each shown with a photograph of an umpire at work.": "Los Cuatro Pilares del arbitraje de softbol: Fundamentos, Mecánica de campo, Filosofías de élite y Mecánica de campo de élite, cada uno ilustrado con una fotografía de un árbitro en acción."
+ "The Four Pillars of Softball Umpiring: Foundations, Field Mechanics, Elite Philosophies and Elite Field Mechanics, each shown with a photograph of an umpire at work.": "Los Cuatro Pilares del arbitraje de softbol: Fundamentos, Mecánica de campo, Filosofías de élite y Mecánica de campo de élite, cada uno ilustrado con una fotografía de un árbitro en acción.",
+ "Counts toward your record. Pass mark {pass}%, maximum {max} attempts.": "Cuenta para tu registro. Nota mínima para aprobar: {pass} %, máximo {max} intentos.",
+ "Marked assessment - your result is recorded": "Evaluación calificada: tu resultado se registra",
+ "Practice quiz - not marked, not recorded": "Cuestionario de práctica: sin calificación y sin registro",
+ "Practice": "Práctica",
+ "Not marked and not recorded. Try it as often as you like.": "Sin calificación y sin registro. Hazlo tantas veces como quieras.",
+ "Start Practice Quiz": "Empezar el cuestionario de práctica",
+ "Marked assessment": "Evaluación calificada",
+ "Counts toward your record. Pass mark 85%, maximum 2 attempts.": "Cuenta para tu registro. Nota mínima para aprobar: 85 %, máximo 2 intentos.",
+ "Start Marked Assessment": "Empezar la evaluación calificada"
 } };
