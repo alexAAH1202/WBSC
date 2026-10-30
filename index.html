@@ -520,11 +520,6 @@
     display:flex;gap:16px;margin-top:20px;padding:18px 24px;
     background:var(--paper);border-left:3px solid var(--gold-500);
   }
-  /* On wide screens the WBSC Guidance band runs the full width of the screen, not just the content column. */
-  @media (min-width:1000px){
-    .pillars-section{overflow-x:clip;}
-    .federation-note{margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);padding-left:max(24px,calc(50vw - 50% + 24px));padding-right:max(24px,calc(50vw - 50% + 24px));}
-  }
   .federation-note-tag{
     flex-shrink:0;font-family:var(--font-display);font-weight:700;text-transform:uppercase;
     letter-spacing:0.06em;font-size:0.76rem;color:var(--navy-950);
@@ -536,6 +531,17 @@
   @media (max-width:760px){
     .federation-note{flex-direction:column;gap:6px;}
     .federation-note-tag{max-width:none;}
+  }
+  /* ---------- Gold-edged boxes run the full width of the screen on wide screens ---------- */
+  /* The box is stretched to the screen edges; its padding keeps the text lined up with the page content. */
+  @media (min-width:1000px){
+    main{overflow-x:clip;}
+    .sequence-note,.federation-note,.source-note,.rules-note{
+      margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
+      padding-left:max(24px,calc(50vw - 50% + 24px));padding-right:max(24px,calc(50vw - 50% + 24px));
+    }
+    .notice{position:relative;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);padding-left:calc(50vw - 50%);padding-right:calc(50vw - 50%);}
+    .notice-bar{position:absolute;left:0;top:36px;bottom:36px;}
   }
 </style>
 <script src="i18n.js"></script>
