@@ -517,8 +517,13 @@
 
   /* ---------- Federation guidance note ---------- */
   .federation-note{
-    display:flex;gap:16px;margin-top:20px;padding:18px 22px;
+    display:flex;gap:16px;margin-top:20px;padding:18px 24px;
     background:var(--paper);border-left:3px solid var(--gold-500);
+  }
+  /* On wide screens the WBSC Guidance band runs the full width of the screen, not just the content column. */
+  @media (min-width:1000px){
+    .pillars-section{overflow-x:clip;}
+    .federation-note{margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);padding-left:max(24px,calc(50vw - 50% + 24px));padding-right:max(24px,calc(50vw - 50% + 24px));}
   }
   .federation-note-tag{
     flex-shrink:0;font-family:var(--font-display);font-weight:700;text-transform:uppercase;
