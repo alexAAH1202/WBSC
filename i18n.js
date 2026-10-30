@@ -16,7 +16,7 @@
     { c: 'ko', n: '한국어', s: '한국어' },
     { c: 'zh', n: '中文', s: '中文' }
   ];
-  var LIVE = ['en', 'es', 'fr'];            // languages switched on for everyone; es and fr are on for now (not yet reviewed), remove them to hide again
+  var LIVE = ['en', 'es'];            // languages switched on for everyone; es is on for now (not yet reviewed). Others stay hidden until reviewed
   var KEY = 'wbscLang', PREVIEW_KEY = 'wbscLangPreview';
 
   function qs(name) { try { return new URLSearchParams(location.search).get(name); } catch (e) { return null; } }
@@ -158,7 +158,7 @@
     var cur = known(lang);
     var box = document.createElement('div'); box.className = 'lang-switch'; box.setAttribute('translate', 'no');
     var btn = document.createElement('button');
-    btn.type = 'button'; btn.className = 'lang-btn'; btn.setAttribute('aria-haspopup', 'true'); btn.setAttribute('aria-expanded', 'false');
+    btn.type = 'button'; btn.className = 'lang-btn'; btn.setAttribute('aria-expanded', 'false');   // a disclosure button: the list below it is ordinary buttons
     btn.setAttribute('aria-label', T('Language') + ': ' + cur.n);
     btn.innerHTML = GLOBE + '<span>' + cur.s + '</span>';
     var menu = document.createElement('ul'); menu.className = 'lang-menu'; menu.hidden = true;
@@ -173,6 +173,16 @@
     btn.addEventListener('click', function (e) { e.stopPropagation(); var open = menu.hidden; menu.hidden = !open; btn.setAttribute('aria-expanded', String(open)); });
     document.addEventListener('click', function (e) { if (!box.contains(e.target)) close(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !menu.hidden) { close(); btn.focus(); } });
+    // Arrow keys, Home and End move through the languages (Tab works too).
+    var items = menu.querySelectorAll('.lang-item');
+    function step(from, d) { var i = Array.prototype.indexOf.call(items, from); items[d === 0 ? 0 : d === 9 ? items.length - 1 : (i + d + items.length) % items.length].focus(); }
+    btn.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); menu.hidden = false; btn.setAttribute('aria-expanded', 'true'); (menu.querySelector('[aria-current]') || items[0]).focus(); }
+    });
+    menu.addEventListener('keydown', function (e) {
+      var d = e.key === 'ArrowDown' ? 1 : e.key === 'ArrowUp' ? -1 : e.key === 'Home' ? 0 : e.key === 'End' ? 9 : null;
+      if (d !== null && document.activeElement.classList.contains('lang-item')) { e.preventDefault(); step(document.activeElement, d); }
+    });
     box.appendChild(btn); box.appendChild(menu);
     var toggle = row.querySelector('.nav-toggle');
     var nav = row.querySelector('nav');

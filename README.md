@@ -91,6 +91,7 @@ Script Web App into a Google Sheet.
 - `node tests/widget.test.js` (needs `npm i -D playwright`): the widget in a real browser with Google's reply simulated (27 checks).
 - `node tests/notice.test.js` (needs Playwright): the pop-up on every page, no cookies, dismissal, phone width, blocked storage (9 checks).
 - `node tests/results.test.js` (needs Playwright): `results.html` with simulated replies (25 checks).
+- `node tests/a11y.test.js` (needs Playwright): heading order, landmarks, skip link, alt text and labels on every page, 320px reflow, the language menu and quiz answers by keyboard.
 - `node tests/i18n.test.js` (needs Playwright): the language selector, that every visible string and every quiz question has a translation in all five languages, pages open in each language at desktop and phone width, and the practice quizzes run in each language with the right answer still marked right.
 
 The browser tests do **not** prove the real Apps Script reply reaches the widget on the live site;
@@ -107,7 +108,10 @@ step 3 under "Deploying" is the check that does.
 The site and the quiz questions can be shown in English, Spanish, French, Japanese, Korean and Chinese, using the same
 language menu idea as the WBSC site. English is the source and the fallback: a string without a translation stays in English,
 so a gap can never break a page. Manuals, presentations, emails and the Director results page stay in English.
-Spanish and French are switched on for now; Japanese, Korean and Chinese are built but switched off until a native speaker has reviewed them.
-To switch a language on or off, add or remove its code in `LIVE` in `i18n.js` (now `en`, `es`, `fr`; hiding them again means setting it back to `['en']`).
+Spanish is switched on for now; French, Japanese, Korean and Chinese are built but switched off until a native speaker has reviewed them.
+To switch a language on or off, add or remove its code in `LIVE` in `i18n.js` (now `en`, `es`; hiding Spanish again means setting it back to `['en']`).
 Reviewers can look at any language before that with `?langs=all` on any page (adds the menu) or `?lang=es`.
 How it works, how to edit a translation, and the glossary are in [`i18n/README.md`](./i18n/README.md).
+
+## Emails in the learner's language
+The login code email and the receipt are sent in the language the learner was using (the site sends `lang`; `EMAIL_TEXT` in `Code.gs` holds the wording for English, Spanish, French, Japanese, Korean and Chinese, with English as the fallback). Emails to the Director and the owner stay English. The pass/fail decision never depends on language. **Changing this needs the Apps Script redeployed as a new version of the existing deployment.**

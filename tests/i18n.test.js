@@ -24,9 +24,9 @@ LANGS.forEach(l => {
   const b = await chromium.launch();
   const mk = async (opts) => { const c = await b.newContext(opts); await c.addInitScript(() => { try { localStorage.setItem('wbscNoticeSeen', '1'); } catch (e) {} }); const p = await c.newPage(); p.errors = []; p.on('pageerror', e => p.errors.push(e.message)); return [c, p]; };
 
-  // 1. the public sees only the languages in LIVE (English, Spanish, French for now)
+  // 1. the public sees only the languages in LIVE (English and Spanish for now)
   let [c, pg] = await mk();
-  for (const f of PAGES) { await pg.goto(base + f); assert.strictEqual(await pg.locator('.lang-item').count(), 3, f + ' offers English, Spanish and French'); assert.strictEqual(await pg.getAttribute('html', 'lang'), 'en'); }
+  for (const f of PAGES) { await pg.goto(base + f); assert.strictEqual(await pg.locator('.lang-item').count(), 2, f + ' offers English and Spanish'); assert.strictEqual(await pg.getAttribute('html', 'lang'), 'en'); }
   ok('the public menu offers only the languages that are switched on');
   await pg.goto(base + 'index.html?lang=ja'); assert.strictEqual(await pg.getAttribute('html', 'lang'), 'ja');   // ?lang= is the reviewer preview
   await pg.goto(base + 'index.html'); assert.strictEqual(await pg.getAttribute('html', 'lang'), 'en'); ok('?lang= previews a language for a reviewer, but a stored choice is ignored for the public while the language is not switched on');

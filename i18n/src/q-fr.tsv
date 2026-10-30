@@ -2,18 +2,18 @@ m01-mkc.title	Guide d’apprentissage des fondamentaux
 m01-mkc.nextLabel	Passez aux présentations - Des fondamentaux à l’Annexe 4
 m01-mkc.0.q	Dans l’acronyme de l’arbitre du Guide d’apprentissage des fondamentaux (« So, you want to be an umpire… »), que signifie la lettre M ?
 m01-mkc.0.o0	Motivated (motivé) - rester enthousiaste à chaque match
-m01-mkc.0.o1	Mobile (mobile) - garder du dynamisme et être bien placé
+m01-mkc.0.o1	Methodical (méthodique) - suivre la même routine à chaque match
 m01-mkc.0.o2	Managed (dirigé) - accepter les remarques des entraîneurs sans les remettre en question
-m01-mkc.0.o3	Methodical (méthodique) - suivre la même routine à chaque match
+m01-mkc.0.o3	Mobile (mobile) - garder du dynamisme et être bien placé
 m01-mkc.1.q	Le Module 1 décrit plusieurs rôles que tient un arbitre compétent. Lequel des suivants en fait partie ?
 m01-mkc.1.o0	Statisticien - tenir le compte des lancers des deux équipes
 m01-mkc.1.o1	Entraîneur - conseiller les joueurs sur la façon de jouer leur poste
 m01-mkc.1.o2	Communicateur - parler et écouter efficacement avec ses partenaires, les joueurs et les entraîneurs
 m01-mkc.1.o3	Responsable des relations avec les sponsors - gérer les accords de parrainage
 m01-mkc.2.q	Selon le Code d’éthique de l’arbitre de la WBSC, combien de temps avant l’heure prévue du match l’arbitre doit-il honorer son affectation et se présenter sur le site ?
-m01-mkc.2.o0	30 minutes
+m01-mkc.2.o0	60 minutes
 m01-mkc.2.o1	45 minutes
-m01-mkc.2.o2	60 minutes
+m01-mkc.2.o2	30 minutes
 m01-mkc.2.o3	90 minutes
 m01-mkc.3.q	Le Code d’éthique précise que les arbitres doivent être équitables et impartiaux dans leurs décisions. Que dit-il précisément que cela signifie ?
 m01-mkc.3.o0	Donner le bénéfice du doute à l’équipe locale
@@ -34,28 +34,28 @@ m01-pca.0.o2	L’entraîneur-chef est automatiquement expulsé pour avoir dépas
 m01-pca.0.o3	La conférence n’est simplement pas comptabilisée parce qu’il s’agit de la quatrième du match.
 m01-pca.1.q	Après le match, un arbitre de base qui a manqué un jeu serré au deuxième but souhaite en discuter avec l’équipe d’arbitres. Selon l’approche du guide pour les débriefings de l’équipe, comment faut-il procéder ?
 m01-pca.1.o0	Éviter d’aborder le jeu pour ne pas embarrasser l’arbitre qui s’est trompé.
-m01-pca.1.o1	Discuter du jeu honnêtement et avec respect lors du débriefing, se concentrer sur l’apprentissage plutôt que sur le blâme, et demander la permission avant de remettre en question la décision d’un autre arbitre.
+m01-pca.1.o1	Signaler directement l’appel manqué à l’UIC sans en discuter d’abord avec l’équipe d’arbitres.
 m01-pca.1.o2	Confronter immédiatement l’arbitre au sujet de l’erreur sur le terrain avant de partir.
-m01-pca.1.o3	Signaler directement l’appel manqué à l’UIC sans en discuter d’abord avec l’équipe d’arbitres.
+m01-pca.1.o3	Discuter du jeu honnêtement et avec respect lors du débriefing, se concentrer sur l’apprentissage plutôt que sur le blâme, et demander la permission avant de remettre en question la décision d’un autre arbitre.
 m01-pca.2.q	Pendant un match, on entend le tonnerre, mais aucun éclair n’a été vu. Selon le protocole de sécurité en cas d’orage du guide, que doit faire l’arbitre ?
 m01-pca.2.o0	Poursuivre le jeu, car seule l’observation d’un éclair, et non le tonnerre seul, impose une suspension.
-m01-pca.2.o1	Attendre et surveiller quelques minutes de plus avant de décider.
-m01-pca.2.o2	Annoncer immédiatement « Time », suspendre le jeu et ordonner à tous les joueurs de quitter le terrain.
+m01-pca.2.o1	Annoncer immédiatement « Time », suspendre le jeu et ordonner à tous les joueurs de quitter le terrain.
+m01-pca.2.o2	Attendre et surveiller quelques minutes de plus avant de décider.
 m01-pca.2.o3	Poursuivre le jeu, mais éloigner du terrain tout l’équipement métallique.
 m01-pca.3.q	Un frappeur se tient très à l’intérieur du carré du frappeur, collé au marbre, et est atteint par un lancer qui se trouvait en fait dans la zone des prises. Selon le guide, quelle est la décision correcte ?
 m01-pca.3.o0	Le frappeur obtient la première base, puisque tout frappeur atteint par un lancer va à la première base.
-m01-pca.3.o1	Le frappeur n’obtient pas la première base, car on ne peut pas accorder une base à un frappeur atteint par un lancer qui se trouvait dans la zone des prises.
-m01-pca.3.o2	L’arbitre doit demander au frappeur s’il a tenté d’éviter le lancer avant de rendre une décision.
+m01-pca.3.o1	L’arbitre doit demander au frappeur s’il a tenté d’éviter le lancer avant de rendre une décision.
+m01-pca.3.o2	Le frappeur n’obtient pas la première base, car on ne peut pas accorder une base à un frappeur atteint par un lancer qui se trouvait dans la zone des prises.
 m01-pca.3.o3	Le lancer est déclaré balk et tous les coureurs avancent d’une base.
 m01-pca.4.q	Sur un jeu forcé au deuxième but, l’arbitre de base se retrouve debout directement au-dessus du coussin lorsque le lancer et le coureur arrivent. Selon les principes de placement du guide, quel est le problème et d’où l’arbitre aurait-il dû travailler ?
 m01-pca.4.o0	Il n’y a pas de problème : directement au-dessus de la base, on a la vue la plus claire d’un jeu forcé.
-m01-pca.4.o1	Directement au-dessus de la base, la balle, le joueur de champ, le coureur et le bord d’attaque (leading edge) peuvent sembler alignés, ce qui rend le timing difficile à juger ; l’arbitre doit travailler juste en deçà du bord d’attaque, selon un léger angle.
+m01-pca.4.o1	L’arbitre aurait dû appliquer la Théorie intérieur-extérieur, car l’autre ne s’applique qu’aux balles hautes.
 m01-pca.4.o2	L’arbitre aurait dû partir vers le champ extérieur au lieu de rester dans le champ intérieur.
-m01-pca.4.o3	L’arbitre aurait dû appliquer la Théorie intérieur-extérieur, car l’autre ne s’applique qu’aux balles hautes.
+m01-pca.4.o3	Directement au-dessus de la base, la balle, le joueur de champ, le coureur et le bord d’attaque (leading edge) peuvent sembler alignés, ce qui rend le timing difficile à juger ; l’arbitre doit travailler juste en deçà du bord d’attaque, selon un léger angle.
 m01-pca.5.q	Une balle est frappée avec force dans l’allée du champ extérieur. Selon la Théorie intérieur-extérieur, où l’arbitre de base doit-il se déplacer pour garder les Quatre éléments essentiels devant lui ?
 m01-pca.5.o0	Rester à l’extérieur du losange, au-delà des lignes de base.
-m01-pca.5.o1	Se déplacer à l’intérieur du losange, entre les lignes de base.
-m01-pca.5.o2	Se déplacer directement vers le marbre, quel que soit l’endroit où se trouve la balle.
+m01-pca.5.o1	Se déplacer directement vers le marbre, quel que soit l’endroit où se trouve la balle.
+m01-pca.5.o2	Se déplacer à l’intérieur du losange, entre les lignes de base.
 m01-pca.5.o3	Rester dans la zone d’attente jusqu’à ce que la balle soit jouée.
 m01-pca.6.q	Un arbitre de base est sorti dans le champ extérieur pour trancher sur une balle haute. Pendant que le relais revient et qu’un jeu se développe au deuxième but, déjà couvert par un autre arbitre, que doit faire l’arbitre qui est sorti ?
 m01-pca.6.o0	Revenir vers le champ intérieur pour aider à couvrir le jeu au deuxième but.
@@ -63,9 +63,9 @@ m01-pca.6.o1	Rester dehors et laisser tous les jeux se terminer, car revenir pou
 m01-pca.6.o2	Retourner immédiatement à sa position de départ, quels que soient les autres jeux.
 m01-pca.6.o3	Demander un temps mort pour réinitialiser les positions des arbitres.
 m01-pca.7.q	Un entraîneur-chef a déjà reçu un avertissement pour avoir contesté une décision de swing arrêté, mais continue de contester les balles et les prises et lance une insulte personnelle à l’arbitre. Selon le guide, quelle est la réponse appropriée ?
-m01-pca.7.o0	Donner un deuxième avertissement avant toute autre mesure.
+m01-pca.7.o0	Expulser l’entraîneur en suivant la procédure d’expulsion : attendre l’arrêt du jeu, être ferme et utiliser le signal d’expulsion.
 m01-pca.7.o1	Ignorer les commentaires et poursuivre le match pour éviter l’escalade.
-m01-pca.7.o2	Expulser l’entraîneur en suivant la procédure d’expulsion : attendre l’arrêt du jeu, être ferme et utiliser le signal d’expulsion.
+m01-pca.7.o2	Donner un deuxième avertissement avant toute autre mesure.
 m01-pca.7.o3	Déclarer immédiatement la partie perdue par forfait.
 m01-pca.8.q	Un entraîneur veut protester que les arbitres ont mal appliqué une règle de substitution lors de la demi-manche précédente, mais il ne le soulève qu’après qu’un lancer a déjà été effectué dans la demi-manche suivante. Selon le guide, cette protestation est-elle valide ?
 m01-pca.8.o0	Oui : la mauvaise application d’une règle est toujours un motif de protestation valide, quel que soit le moment.
@@ -73,9 +73,9 @@ m01-pca.8.o1	Non : même si la mauvaise application d’une règle est un objet 
 m01-pca.8.o2	Oui, mais seulement si l’entraîneur la dépose par écrit dans les 48 heures.
 m01-pca.8.o3	Non : les différends relatifs aux règles de substitution ne peuvent jamais faire l’objet d’une protestation, en aucun cas.
 m01-pca.9.q	Avec un coureur au premier but et un retrait, le frappeur élance et rate une troisième prise que le receveur ne capte pas proprement. Selon le guide, que doit faire l’arbitre au marbre ?
-m01-pca.9.o0	Ne rien dire, car on s’attend à ce que le frappeur sache que le lancer n’a pas été capté.
+m01-pca.9.o0	Annoncer clairement « Strike three... Out ! », car le frappeur est automatiquement retiré par la règle dans cette situation, et renforcer la décision si le frappeur se dirige vers le premier but.
 m01-pca.9.o1	Signaler immédiatement « sauf » (safe), puisque la balle n’a pas été captée.
-m01-pca.9.o2	Annoncer clairement « Strike three... Out ! », car le frappeur est automatiquement retiré par la règle dans cette situation, et renforcer la décision si le frappeur se dirige vers le premier but.
+m01-pca.9.o2	Ne rien dire, car on s’attend à ce que le frappeur sache que le lancer n’a pas été capté.
 m01-pca.9.o3	Attendre que l’équipe défensive fasse appel avant de rendre une décision.
 m02-mkc.title	Fondamentaux - Mécanique de terrain à un arbitre
 m02-mkc.nextLabel	Passez aux présentations - Des fondamentaux à l’Annexe 4
@@ -91,19 +91,19 @@ m02-mkc.1.o2	Annoncer immédiatement « Time » pour réinitialiser la défensiv
 m02-mkc.1.o3	Se rendre directement au premier but, quel que soit l’endroit où la balle est frappée
 m02-mkc.2.q	Selon la section Conventions, comment l’arbitre au marbre est-il désigné dans l’ensemble de ce manuel ?
 m02-mkc.2.o0	« Umpire-in-Chief » ou « UIC »
-m02-mkc.2.o1	« Plate » ou « PU »
+m02-mkc.2.o1	« Home » ou « HU »
 m02-mkc.2.o2	« Base Umpire » ou « BU »
-m02-mkc.2.o3	« Home » ou « HU »
+m02-mkc.2.o3	« Plate » ou « PU »
 m02-mkc.3.q	Selon les indications sur la position de départ de l’arbitre au marbre, combien de lancers d’échauffement sont permis à chaque lanceur à la première manche et avec chaque nouveau lanceur ?
 m02-mkc.3.o0	Trois
-m02-mkc.3.o1	Cinq
-m02-mkc.3.o2	Sept
+m02-mkc.3.o1	Sept
+m02-mkc.3.o2	Cinq
 m02-mkc.3.o3	Dix
 m02-mkc.4.q	Sur chaque balle frappée, de quel côté le manuel indique-t-il à l’arbitre au marbre de sortir de derrière le receveur ?
 m02-mkc.4.o0	Le côté droit, sauf si le frappeur est gaucher
 m02-mkc.4.o1	Le côté le plus proche de l’endroit où la balle a été frappée
-m02-mkc.4.o2	Le côté gauche, même avec un frappeur gaucher
-m02-mkc.4.o3	Directement par le milieu, entre le receveur et le frappeur
+m02-mkc.4.o2	Directement par le milieu, entre le receveur et le frappeur
+m02-mkc.4.o3	Le côté gauche, même avec un frappeur gaucher
 m02-pca.title	Fondamentaux - Mécanique de terrain à un arbitre
 m02-pca.nextLabel	Passez au Module 03 - Mécanique de terrain à deux arbitres
 m02-pca.0.q	Il n’y a aucun coureur sur les bases et le frappeur frappe un roulant de routine vers l’arrêt-court. Selon la mécanique « Aucun coureur sur les bases », où l’arbitre au marbre doit-il se déplacer pour avoir la meilleure vue du jeu ?
@@ -112,34 +112,34 @@ m02-pca.0.o1	Avec détermination, en avant du marbre, vers la zone du lanceur
 m02-pca.0.o2	Directement le long de la ligne du premier but, en suivant le frappeur-coureur
 m02-pca.0.o3	Rester derrière le receveur et rendre la décision depuis le marbre
 m02-pca.1.q	Il y a un coureur au troisième but seulement, et le frappeur frappe un roulant vers le joueur de troisième but. Selon la mécanique « Coureur au troisième but », quel déplacement l’arbitre au marbre doit-il faire ?
-m02-pca.1.o0	Se déplacer en avant du marbre vers la zone du lanceur, comme lorsqu’il n’y a aucun coureur sur les bases
-m02-pca.1.o1	Se déplacer dans le territoire des balles fausses, vers le troisième but
+m02-pca.1.o0	Se déplacer dans le territoire des balles fausses, vers le troisième but
+m02-pca.1.o1	Se déplacer en avant du marbre vers la zone du lanceur, comme lorsqu’il n’y a aucun coureur sur les bases
 m02-pca.1.o2	Rester immobile derrière le receveur
 m02-pca.1.o3	Courir directement au premier but
 m02-pca.2.q	Les bases sont remplies et le frappeur frappe une balle haute vers le champ droit court. Conformément à la mécanique « Bases remplies » (qui suit le même schéma que Coureur au troisième but), où l’arbitre doit-il se déplacer ?
 m02-pca.2.o0	En avant du marbre, vers la zone du lanceur
-m02-pca.2.o1	Dans le territoire des balles fausses, vers le troisième but
+m02-pca.2.o1	Vers la ligne des balles fausses du champ droit
 m02-pca.2.o2	Directement derrière le deuxième but
-m02-pca.2.o3	Vers la ligne des balles fausses du champ droit
+m02-pca.2.o3	Dans le territoire des balles fausses, vers le troisième but
 m02-pca.3.q	L’arbitre au marbre s’est placé pour un jeu possible au premier but sur un roulant. Quelle séquence le manuel prescrit-il pour rendre la décision ?
 m02-pca.3.o0	Annoncer immédiatement en voyant le relais, puis confirmer avec un signal
-m02-pca.3.o1	Arrêtez... Attendez... Annoncez et signalez
-m02-pca.3.o2	Signaler d’abord, puis annoncer verbalement
+m02-pca.3.o1	Signaler d’abord, puis annoncer verbalement
+m02-pca.3.o2	Arrêtez... Attendez... Annoncez et signalez
 m02-pca.3.o3	Continuer à se déplacer tout en annonçant pour garder l’angle sur le jeu
 m02-pca.4.q	Une balle haute est frappée vers le champ extérieur sans coureur sur les bases. Avant de se déplacer vers la base où le jeu aura lieu, que doit juger l’arbitre ?
 m02-pca.4.o0	Seulement si la balle est bonne ou fausse (fair/foul)
-m02-pca.4.o1	Attrapé ou non attrapé
+m02-pca.4.o1	La distance de l’avance du coureur
 m02-pca.4.o2	Si le joueur de champ est gaucher ou droitier
-m02-pca.4.o3	La distance de l’avance du coureur
+m02-pca.4.o3	Attrapé ou non attrapé
 m02-pca.5.q	La balle est revenue dans le champ intérieur après un jeu au champ extérieur, et tout jeu a cessé. Selon le manuel, que doit faire l’arbitre au marbre ?
-m02-pca.5.o0	Continuer à suivre activement le jeu au cas où un coureur tenterait d’avancer de nouveau
-m02-pca.5.o1	Il peut annoncer et signaler « Time »
+m02-pca.5.o0	Il peut annoncer et signaler « Time »
+m02-pca.5.o1	Continuer à suivre activement le jeu au cas où un coureur tenterait d’avancer de nouveau
 m02-pca.5.o2	Retourner immédiatement vers la zone des abris
 m02-pca.5.o3	Convoquer automatiquement une conférence avec les entraîneurs
 m02-pca.6.q	Avec des coureurs aux premier et deuxième buts, une balle haute est frappée vers le champ gauche et peut ou non être captée. Conformément à la consigne du Système à un arbitre de donner la priorité dans le placement, quel coureur doit le plus influencer le placement de l’arbitre ?
 m02-pca.6.o0	Le frappeur-coureur qui se dirige vers le premier but
-m02-pca.6.o1	Le coureur au deuxième but (le coureur de tête)
-m02-pca.6.o2	Le coureur au premier but
+m02-pca.6.o1	Le coureur au premier but
+m02-pca.6.o2	Le coureur au deuxième but (le coureur de tête)
 m02-pca.6.o3	Le coureur qui est physiquement le plus proche de la position actuelle de l’arbitre
 m02-pca.7.q	Un roulant est frappé avec un coureur au premier but. Le relais au premier but pour le frappeur-coureur semble être un jeu de routine sans contestation, mais le coureur du premier but peut tenter d’avancer sur le relais. Que dit le manuel que l’arbitre doit faire ?
 m02-pca.7.o0	Rester fixé sur le jeu au premier but jusqu’à ce qu’il soit entièrement terminé
@@ -147,8 +147,8 @@ m02-pca.7.o1	Se déplacer vers l’endroit où le prochain jeu pourrait avoir li
 m02-pca.7.o2	Annoncer immédiatement « Time » dès que le relais vers le premier but est lâché
 m02-pca.7.o3	Se rendre au champ extérieur pour se préparer au frappeur suivant
 m02-pca.8.q	Un roulant est frappé avec force le long de la ligne du troisième but avec un coureur au troisième but. En plus de se déplacer dans le territoire des balles fausses vers le troisième but, quelle responsabilité supplémentaire le manuel confie-t-il à l’arbitre dans cette situation ?
-m02-pca.8.o0	Signaler immédiatement « retiré » avant la fin du jeu
-m02-pca.8.o1	Rester près de la ligne pour trancher bonne/fausse (fair/foul)
+m02-pca.8.o0	Rester près de la ligne pour trancher bonne/fausse (fair/foul)
+m02-pca.8.o1	Signaler immédiatement « retiré » avant la fin du jeu
 m02-pca.8.o2	Déclarer le coureur retiré pour avoir couru en dehors de la ligne de base
 m02-pca.8.o3	Demander l’aide de l’instructeur du troisième but
 m02-pca.9.q	Lorsqu’il se déplace avec détermination pour se mettre en position pour un jeu qui se développe, quel principe de placement l’arbitre doit-il respecter, selon la vue d’ensemble du Système à un arbitre ?
@@ -160,17 +160,17 @@ m03-mkc.title	Fondamentaux - Mécanique de terrain à deux arbitres
 m03-mkc.nextLabel	Passez aux présentations - Des fondamentaux à l’Annexe 4
 m03-mkc.0.q	Selon le manuel du Système à deux arbitres, lequel des éléments suivants ne fait PAS partie des « Quatre éléments essentiels » que l’arbitre doit garder sans obstruction dans son champ de vision ?
 m03-mkc.0.o0	La balle
-m03-mkc.0.o1	Les joueurs défensifs
+m03-mkc.0.o1	Le tableau d’affichage
 m03-mkc.0.o2	Les joueurs offensifs
-m03-mkc.0.o3	Le tableau d’affichage
+m03-mkc.0.o3	Les joueurs défensifs
 m03-mkc.1.q	Selon le Principe de division du Système à deux arbitres, quel arbitre est responsable des décisions au marbre et au troisième but dans des circonstances normales ?
-m03-mkc.1.o0	L’arbitre au marbre
+m03-mkc.1.o0	Les deux arbitres conjointement
 m03-mkc.1.o1	L’arbitre de base
 m03-mkc.1.o2	Celui des deux qui arrive en premier
-m03-mkc.1.o3	Les deux arbitres conjointement
+m03-mkc.1.o3	L’arbitre au marbre
 m03-mkc.2.q	Selon le Principe champ intérieur/champ extérieur, où l’arbitre de base se déplace-t-il lorsque la balle est frappée vers le champ extérieur ?
-m03-mkc.2.o0	Plus loin dans le champ extérieur, vers la balle
-m03-mkc.2.o1	Dans le champ intérieur
+m03-mkc.2.o0	Dans le champ intérieur
+m03-mkc.2.o1	Plus loin dans le champ extérieur, vers la balle
 m03-mkc.2.o2	À une position sur la ligne des balles fausses
 m03-mkc.2.o3	Derrière le marbre
 m03-mkc.3.q	Quelle est la raison d’être du Principe du coureur de tête dans le Système à deux arbitres ?
@@ -180,20 +180,20 @@ m03-mkc.3.o2	L’arbitre de base se place avec le coureur de tête parce que le 
 m03-mkc.3.o3	L’arbitre au marbre délègue la couverture du coureur de tête pour éviter la fatigue
 m03-mkc.4.q	Sans coureur sur les bases, quelle est la position de départ de l’arbitre de base selon le manuel ?
 m03-mkc.4.o0	4 à 5 mètres (15 pieds) derrière la ligne de base, en territoire bon
-m03-mkc.4.o1	5,5 mètres (18 pieds) derrière le premier but en territoire des balles fausses, à 150 mm (6 pouces) de la ligne
+m03-mkc.4.o1	Directement derrière la plaque du lanceur, face au marbre
 m03-mkc.4.o2	3,5 mètres (10 à 12 pieds) derrière le premier but, sur la ligne des balles fausses
-m03-mkc.4.o3	Directement derrière la plaque du lanceur, face au marbre
+m03-mkc.4.o3	5,5 mètres (18 pieds) derrière le premier but en territoire des balles fausses, à 150 mm (6 pouces) de la ligne
 m03-pca.title	Fondamentaux - Mécanique de terrain à deux arbitres
 m03-pca.nextLabel	Passez au Module 04 - Mécanique de terrain à trois arbitres
 m03-pca.0.q	Sans coureur sur les bases, le frappeur frappe un roulant de routine vers l’arrêt-court, qui lance au premier but. Quel arbitre est responsable de la décision au premier but ?
 m03-pca.0.o0	L’arbitre au marbre, parce qu’il s’agit d’un jeu forcé
-m03-pca.0.o1	L’arbitre de base, qui rend toutes les décisions sur le premier relais lors des jeux aux buts
-m03-pca.0.o2	Celui des deux qui est physiquement le plus proche du coussin
+m03-pca.0.o1	Celui des deux qui est physiquement le plus proche du coussin
+m03-pca.0.o2	L’arbitre de base, qui rend toutes les décisions sur le premier relais lors des jeux aux buts
 m03-pca.0.o3	L’arbitre au marbre, parce que la balle a été frappée en territoire bon
 m03-pca.1.q	Avec un coureur au premier but, le frappeur frappe un roulant qui devient un double jeu possible. Selon le manuel, que doit faire l’arbitre de base ?
-m03-pca.1.o0	Se déplacer immédiatement au troisième but pour couvrir l’avance de R1
+m03-pca.1.o0	Anticiper le double jeu, se déplacer rapidement vers le but où aura lieu le premier jeu et rendre toutes les décisions sur le premier relais
 m03-pca.1.o1	Rester en position d’attente au premier but jusqu’à la fin du relais
-m03-pca.1.o2	Anticiper le double jeu, se déplacer rapidement vers le but où aura lieu le premier jeu et rendre toutes les décisions sur le premier relais
+m03-pca.1.o2	Se déplacer immédiatement au troisième but pour couvrir l’avance de R1
 m03-pca.1.o3	Confier la couverture du premier but à l’arbitre au marbre
 m03-pca.2.q	Avec un coureur au premier but, le frappeur frappe une balle haute vers le champ extérieur qui est captée. Quel arbitre est responsable de la décision sur le retour au but (tag-up) au premier but ?
 m03-pca.2.o0	L’arbitre au marbre
@@ -202,13 +202,13 @@ m03-pca.2.o2	Les deux arbitres conjointement
 m03-pca.2.o3	Aucun : on ne juge pas les tag-ups sur les balles hautes captées
 m03-pca.3.q	Avec des coureurs aux premier et deuxième buts, R2 tente de voler le troisième but sur le lancer. Selon les exceptions au Principe de division, quel arbitre a la décision au troisième but ?
 m03-pca.3.o0	L’arbitre au marbre, selon la règle générale du Principe de division pour le troisième but
-m03-pca.3.o1	L’arbitre de base
+m03-pca.3.o1	L’arbitre placé le plus près du marbre
 m03-pca.3.o2	Celui des deux qui a l’angle le plus dégagé à ce moment-là
-m03-pca.3.o3	L’arbitre placé le plus près du marbre
+m03-pca.3.o3	L’arbitre de base
 m03-pca.4.q	Avec des coureurs aux deuxième et troisième buts, le frappeur frappe une longue balle haute vers le champ extérieur. Selon le manuel, quel coureur l’arbitre de base accompagne-t-il jusqu’au troisième but sur ce jeu ?
-m03-pca.4.o0	R3, le coureur qui était à l’origine au troisième but
+m03-pca.4.o0	R2, le coureur qui était à l’origine au deuxième but
 m03-pca.4.o1	Le frappeur-coureur
-m03-pca.4.o2	R2, le coureur qui était à l’origine au deuxième but
+m03-pca.4.o2	R3, le coureur qui était à l’origine au troisième but
 m03-pca.4.o3	Aucun : l’arbitre au marbre accompagne tous les coureurs au troisième but sur les coups au champ extérieur
 m03-pca.5.q	Les bases sont remplies et le frappeur frappe un roulant vers un joueur de champ intérieur. Selon la note du manuel pour cette situation, comment un jeu à n’importe quel but doit-il être traité ?
 m03-pca.5.o0	Comme un jeu de touche (tag) qui oblige l’arbitre à se placer à 3,5 mètres
@@ -223,18 +223,18 @@ m03-pca.6.o3	L’arbitre au marbre, parce que l’arbitre de base ne couvre que 
 m03-pca.7.q	Avec un coureur au deuxième but seulement, et avant le lancer, où l’arbitre de base doit-il se placer ?
 m03-pca.7.o0	5,5 mètres (18 pieds) derrière le premier but, en territoire des balles fausses
 m03-pca.7.o1	Derrière et en retrait du joueur de deuxième but, incliné vers le premier but
-m03-pca.7.o2	Dans le gazon du champ extérieur, derrière le deuxième but
-m03-pca.7.o3	Derrière et en retrait de l’arrêt-court, incliné vers le coureur du deuxième but, avec vue sur le lanceur, le coureur et la zone du marbre
+m03-pca.7.o2	Derrière et en retrait de l’arrêt-court, incliné vers le coureur du deuxième but, avec vue sur le lanceur, le coureur et la zone du marbre
+m03-pca.7.o3	Dans le gazon du champ extérieur, derrière le deuxième but
 m03-pca.8.q	L’arbitre de base est placé pour un jeu possible au premier but et il devient clair que le relais exigera une touche (tag) plutôt qu’un jeu forcé. Selon le manuel, quel ajustement l’arbitre de base doit-il faire ?
-m03-pca.8.o0	Rester à 5,5 mètres (18 pieds), puisque cette distance s’applique à toutes les décisions
-m03-pca.8.o1	Se rapprocher à environ 3,5 mètres (10 à 12 pieds) pour voir et rendre la décision
+m03-pca.8.o0	Se rapprocher à environ 3,5 mètres (10 à 12 pieds) pour voir et rendre la décision
+m03-pca.8.o1	Rester à 5,5 mètres (18 pieds), puisque cette distance s’applique à toutes les décisions
 m03-pca.8.o2	Se placer à 4 à 5 mètres (15 pieds) derrière la ligne de base
 m03-pca.8.o3	Reculer davantage en territoire des balles fausses pour obtenir un angle plus large
 m03-pca.9.q	Avec des coureurs aux premier et troisième buts, un roulant est frappé vers le champ intérieur. La défense fait le premier jeu (un jeu forcé au deuxième but), puis lance au marbre pour tenter de retirer le coureur du troisième but. Quel arbitre est responsable de la décision sur ce second jeu, subséquent, au marbre ?
 m03-pca.9.o0	L’arbitre de base, puisqu’il rend toutes les décisions, y compris sur les relais suivants
-m03-pca.9.o1	L’arbitre au marbre, qui est responsable des jeux subséquents au troisième but ou au marbre après le premier jeu du champ intérieur
+m03-pca.9.o1	Les deux arbitres doivent la rendre simultanément
 m03-pca.9.o2	Celui des deux qui est placé en territoire bon
-m03-pca.9.o3	Les deux arbitres doivent la rendre simultanément
+m03-pca.9.o3	L’arbitre au marbre, qui est responsable des jeux subséquents au troisième but ou au marbre après le premier jeu du champ intérieur
 m04-mkc.title	Fondamentaux - Mécanique de terrain à trois arbitres
 m04-mkc.nextLabel	Passez aux présentations - Des fondamentaux à l’Annexe 4
 m04-mkc.0.q	Selon les « Quatre éléments essentiels » du manuel du Système à trois arbitres, quels sont les quatre éléments que l’arbitre doit garder sans obstruction dans son champ de vision pour avoir le jeu devant lui ?
@@ -249,25 +249,25 @@ m04-mkc.1.o2	Celui qui est le plus près du troisième but
 m04-mkc.1.o3	Les deux arbitres conjointement
 m04-mkc.2.q	Que signifie « dégager le receveur » (clearing the catcher) pour l’arbitre au marbre, selon le manuel du Système à trois arbitres ?
 m04-mkc.2.o0	Courir jusqu’au grillage de fond pour vérifier s’il y a obstruction
-m04-mkc.2.o1	Faire un petit pas vers la gauche de l’arbitre au marbre pour sortir de derrière le receveur
-m04-mkc.2.o2	Faire signe au receveur de se lever avant chaque lancer
+m04-mkc.2.o1	Faire signe au receveur de se lever avant chaque lancer
+m04-mkc.2.o2	Faire un petit pas vers la gauche de l’arbitre au marbre pour sortir de derrière le receveur
 m04-mkc.2.o3	Se placer directement derrière le receveur pour avoir le meilleur angle
 m04-mkc.3.q	Dans la position d’attente de l’arbitre de base décrite dans ce manuel, quand l’arbitre doit-il adopter la position « prêt » en déverrouillant légèrement les genoux et en reportant le poids sur l’avant des pieds ?
 m04-mkc.3.o0	Dès que le lanceur prend la position d’arrêt (set)
-m04-mkc.3.o1	Lorsque le lanceur amorce son lancer
+m04-mkc.3.o1	Pendant la réunion d’avant-match
 m04-mkc.3.o2	Seulement après que la balle est mise en jeu
-m04-mkc.3.o3	Pendant la réunion d’avant-match
+m04-mkc.3.o3	Lorsque le lanceur amorce son lancer
 m04-mkc.4.q	Selon le Principe champ intérieur/champ extérieur du Système à trois arbitres, que doit faire un arbitre de base qui NE sort PAS sur une balle haute une fois que la balle est dans le champ extérieur ?
-m04-mkc.4.o0	Se déplacer à l’intérieur du losange
+m04-mkc.4.o0	Se déplacer au-delà de la ligne de base pour appuyer le jeu
 m04-mkc.4.o1	Rester en position d’attente à son but d’origine
-m04-mkc.4.o2	Se déplacer au-delà de la ligne de base pour appuyer le jeu
+m04-mkc.4.o2	Se déplacer à l’intérieur du losange
 m04-mkc.4.o3	Suivre la balle vers la clôture du champ extérieur
 m04-pca.title	Fondamentaux - Mécanique de terrain à trois arbitres
 m04-pca.nextLabel	Passez au Module 05 - Annexe 4 : Philosophies de placement de haut niveau
 m04-pca.0.q	Sans coureur sur les bases, un roulant est frappé vers le champ intérieur, créant un jeu forcé possible au premier but. Si le frappeur-coureur est déclaré sauf au premier but et continue vers le deuxième but, quel arbitre a effectué la rotation pour rendre cette décision, selon le manuel du Système à trois arbitres ?
-m04-pca.0.o0	U3, qui effectue la rotation vers le deuxième but, aligné avec l’arbitre au marbre
+m04-pca.0.o0	L’arbitre au marbre, qui suit le coureur vers le deuxième but
 m04-pca.0.o1	U1, qui reste au premier but pour couvrir aussi le deuxième
-m04-pca.0.o2	L’arbitre au marbre, qui suit le coureur vers le deuxième but
+m04-pca.0.o2	U3, qui effectue la rotation vers le deuxième but, aligné avec l’arbitre au marbre
 m04-pca.0.o3	U3 reste au troisième but et n’effectue pas de rotation
 m04-pca.1.q	Sans coureur sur les bases, U1 sort sur une balle haute vers le champ extérieur. Si la balle n’est pas captée, quel arbitre est responsable d’accompagner le frappeur-coureur au deuxième but puis jusqu’au troisième but ?
 m04-pca.1.o0	L’arbitre au marbre
@@ -282,11 +282,11 @@ m04-pca.2.o3	Sort vers le champ extérieur pour appuyer le relais
 m04-pca.3.q	Avec un coureur au deuxième but seulement, un roulant est frappé vers le champ intérieur. Quel arbitre est responsable des décisions aux premier et deuxième buts dans cette situation ?
 m04-pca.3.o0	U3
 m04-pca.3.o1	L’arbitre au marbre
-m04-pca.3.o2	U1
-m04-pca.3.o3	U1 et U3 se partagent les décisions
+m04-pca.3.o2	U1 et U3 se partagent les décisions
+m04-pca.3.o3	U1
 m04-pca.4.q	Avec un coureur au troisième but seulement, un roulant est frappé vers le champ intérieur. Si U3 ne peut pas libérer R1 au troisième but (R1 ne se dirige pas vers le marbre), quel arbitre peut devoir accompagner le frappeur-coureur au deuxième but et rendre la décision ?
-m04-pca.4.o0	U3, après avoir libéré le troisième but
-m04-pca.4.o1	U1
+m04-pca.4.o0	U1
+m04-pca.4.o1	U3, après avoir libéré le troisième but
 m04-pca.4.o2	L’arbitre au marbre, qui remonte la ligne du premier but
 m04-pca.4.o3	Aucun arbitre : le jeu est une balle morte
 m04-pca.5.q	Avec un coureur au troisième but, U1 sort sur une balle haute. Quel arbitre se déplace vers la zone d’attente entre le marbre et le troisième but pour surveiller le tag-up de R1, tout en se préparant à une décision possible au marbre ?
@@ -295,51 +295,51 @@ m04-pca.5.o1	L’arbitre au marbre
 m04-pca.5.o2	U1, avant de partir vers le champ extérieur
 m04-pca.5.o3	Aucun arbitre ne surveille le tag-up dans cette situation
 m04-pca.6.q	Avec des coureurs aux premier et deuxième buts, un roulant est frappé vers le champ intérieur et présente un double jeu possible. Que fait U3 en prévision de l’avance du coureur de tête (R1) depuis le deuxième but ?
-m04-pca.6.o0	Se déplace d’environ un pas en territoire bon en prévision d’un jeu sur R1
+m04-pca.6.o0	Reste en territoire des balles fausses derrière le troisième but
 m04-pca.6.o1	Effectue immédiatement la rotation jusqu’au troisième but
-m04-pca.6.o2	Reste en territoire des balles fausses derrière le troisième but
+m04-pca.6.o2	Se déplace d’environ un pas en territoire bon en prévision d’un jeu sur R1
 m04-pca.6.o3	Sort vers le champ extérieur pour appuyer un éventuel mauvais relais
 m04-pca.7.q	Avec des coureurs aux deuxième et troisième buts, un roulant est frappé vers le champ intérieur. Si R1 (le coureur du troisième but) avance vers le marbre, que fait U3, selon le manuel ?
 m04-pca.7.o0	Reste au troisième but quelle que soit l’avance de R1
-m04-pca.7.o1	Se déplace d’environ un pas en territoire bon en prévision d’un jeu sur R2 qui progresse depuis le deuxième but
+m04-pca.7.o1	Suit R1 vers le marbre
 m04-pca.7.o2	Effectue immédiatement la rotation vers le premier but
-m04-pca.7.o3	Suit R1 vers le marbre
+m04-pca.7.o3	Se déplace d’environ un pas en territoire bon en prévision d’un jeu sur R2 qui progresse depuis le deuxième but
 m04-pca.8.q	Avec un coureur au premier but, la balle traverse le champ intérieur vers le champ extérieur et aucun arbitre ne sort. Pendant que R1 progresse vers le deuxième but, vers où l’arbitre au marbre effectue-t-il la rotation en prévision d’une décision possible ?
-m04-pca.8.o0	Le troisième but
-m04-pca.8.o1	Le premier but
+m04-pca.8.o0	Le premier but
+m04-pca.8.o1	Le troisième but
 m04-pca.8.o2	L’arbitre au marbre reste au marbre
 m04-pca.8.o3	Le deuxième but, aux côtés de U3
 m04-pca.9.q	Avec un coureur au deuxième but, la balle est frappée à travers le champ intérieur vers le champ droit. Selon la note du manuel, s’il existe une possibilité de jeu au troisième but sur le relais de retour, que doit faire U3 ?
-m04-pca.9.o0	Effectuer la rotation à l’intérieur du losange
+m04-pca.9.o0	Se libérer pour couvrir le marbre
 m04-pca.9.o1	Ressortir au-delà de la ligne de base en territoire bon
 m04-pca.9.o2	Rester sur la ligne des balles fausses à la hauteur du but
-m04-pca.9.o3	Se libérer pour couvrir le marbre
+m04-pca.9.o3	Effectuer la rotation à l’intérieur du losange
 m05-mkc.title	Annexe 4 : Philosophies de placement de haut niveau
 m05-mkc.nextLabel	Passez aux présentations - Des fondamentaux à l’Annexe 4
 m05-mkc.0.q	Selon les Concepts clés et le Glossaire de l’Annexe 4, quels sont les « Quatre éléments essentiels » que l’arbitre doit observer ensemble pour rendre une décision exacte ?
 m05-mkc.0.o0	La position de l’arbitre, la vitesse du coureur, le bruit de la foule et le tableau d’affichage
-m05-mkc.0.o1	La balle, le joueur défensif, le ou les joueurs offensifs, et la base ou la zone du jeu
-m05-mkc.0.o2	Le lanceur, le receveur, le frappeur et le marbre
+m05-mkc.0.o1	Le lanceur, le receveur, le frappeur et le marbre
+m05-mkc.0.o2	La balle, le joueur défensif, le ou les joueurs offensifs, et la base ou la zone du jeu
 m05-mkc.0.o3	La position de départ, la position de décision, le point focal et le bord d’attaque
 m05-mkc.1.q	Dans les Concepts clés et le Glossaire de l’Annexe 4, comment l’« erreur de parallaxe » est-elle définie ?
-m05-mkc.1.o0	Une infraction qui se produit lorsque le pied d’appui du lanceur atterrit en dehors de la zone de lancer
-m05-mkc.1.o1	Une distorsion visuelle qui se produit lorsque l’arbitre observe un jeu sous un mauvais angle, ce qui empêche de séparer clairement les éléments du jeu et leur timing
+m05-mkc.1.o0	Une distorsion visuelle qui se produit lorsque l’arbitre observe un jeu sous un mauvais angle, ce qui empêche de séparer clairement les éléments du jeu et leur timing
+m05-mkc.1.o1	Une infraction qui se produit lorsque le pied d’appui du lanceur atterrit en dehors de la zone de lancer
 m05-mkc.1.o2	Le délai entre le moment où l’arbitre voit un jeu et celui où il signale une décision
 m05-mkc.1.o3	Une erreur de mécanique causée par un départ trop éloigné du but
 m05-mkc.2.q	Où se trouve généralement la position du Point du marbre (POP) ?
 m05-mkc.2.o0	Directement sur la ligne des balles fausses, à la hauteur du premier but
-m05-mkc.2.o1	À l’intérieur du losange, à mi-chemin entre le marbre et la plaque du lanceur
-m05-mkc.2.o2	À environ 3 à 4 mètres (10 à 12 pieds) directement derrière le marbre, aligné avec l’axe central du marbre
+m05-mkc.2.o1	À environ 3 à 4 mètres (10 à 12 pieds) directement derrière le marbre, aligné avec l’axe central du marbre
+m05-mkc.2.o2	À l’intérieur du losange, à mi-chemin entre le marbre et la plaque du lanceur
 m05-mkc.2.o3	À l’angle diagonal du deuxième but, à 3 à 4 mètres derrière le deuxième but
 m05-mkc.3.q	Quelle séquence disciplinée l’Annexe 4 présente-t-elle comme la technique que les arbitres utilisent pour éviter l’anticipation et le biais cognitif avant de rendre et de communiquer une décision ?
 m05-mkc.3.o0	Voir - Bouger - Réagir - Annoncer
-m05-mkc.3.o1	Arrêter - Voir - Décider - Signaler
+m05-mkc.3.o1	Se placer - Suivre - Juger - Signaler
 m05-mkc.3.o2	Observer - Attendre - Confirmer - Annoncer
-m05-mkc.3.o3	Se placer - Suivre - Juger - Signaler
+m05-mkc.3.o3	Arrêter - Voir - Décider - Signaler
 m05-mkc.4.q	Comment l’Annexe 4 décrit-elle sa relation avec l’Annexe 5 ?
 m05-mkc.4.o0	L’Annexe 4 remplace l’Annexe 5 pour les arbitres en dessous du niveau élite
-m05-mkc.4.o1	L’Annexe 4 donne le pourquoi ; l’Annexe 5 donnera le comment
-m05-mkc.4.o2	L’Annexe 4 et l’Annexe 5 couvrent un contenu identique sous des formats différents
+m05-mkc.4.o1	L’Annexe 4 et l’Annexe 5 couvrent un contenu identique sous des formats différents
+m05-mkc.4.o2	L’Annexe 4 donne le pourquoi ; l’Annexe 5 donnera le comment
 m05-mkc.4.o3	L’Annexe 4 s’adresse uniquement aux formateurs, tandis que l’Annexe 5 s’adresse uniquement aux arbitres
 m05-pca.title	Annexe 4 : Philosophies de placement de haut niveau
 m05-pca.nextLabel	Passez au Module 06 - Annexe 5 : Mécanique de terrain de haut niveau
@@ -350,17 +350,17 @@ m05-pca.0.o2	L’erreur de parallaxe, car l’arbitre était placé trop loin du
 m05-pca.0.o3	Un manquement aux responsabilités premières, car l’arbitre n’a pas fait la rotation vers le bon but
 m05-pca.1.q	Une flèche rapide passe près du coussin du troisième but. L’arbitre au marbre, placé derrière le receveur, est le seul arbitre à avoir une vue du jeu. D’après l’explication de l’erreur de parallaxe de l’Annexe 4, pourquoi ce placement est-il préoccupant, et qu’exige la mécanique correcte ?
 m05-pca.1.o0	Ce n’est pas préoccupant, car la position en retrait de l’arbitre au marbre est alignée avec toutes les parties du terrain
-m05-pca.1.o1	La parallaxe peut faire paraître la balle bonne ou fausse à tort depuis l’arrière du marbre ; la mécanique exige qu’un arbitre se trouve sur la ligne des balles fausses pour juger la décision avec exactitude
+m05-pca.1.o1	L’arbitre au marbre devrait rendre la décision en se fiant au souvenir de l’emplacement du lancer plutôt qu’à la balle frappée
 m05-pca.1.o2	Cela ne préoccupe que pour les décisions sur les coups de circuit, pas pour les flèches près d’un but
-m05-pca.1.o3	L’arbitre au marbre devrait rendre la décision en se fiant au souvenir de l’emplacement du lancer plutôt qu’à la balle frappée
+m05-pca.1.o3	La parallaxe peut faire paraître la balle bonne ou fausse à tort depuis l’arrière du marbre ; la mécanique exige qu’un arbitre se trouve sur la ligne des balles fausses pour juger la décision avec exactitude
 m05-pca.2.q	Un coureur qui tente d’éviter une touche balayée au deuxième but glisse vers le coin arrière du coussin, loin de la position de l’arbitre sur l’angle diagonal du deuxième but. Que prescrit l’Annexe 4 à l’arbitre dans cette situation ?
 m05-pca.2.o0	Rester fixe sur l’angle diagonal du deuxième but quelle que soit l’évolution du jeu, puisqu’il s’agit de la référence de départ désignée
-m05-pca.2.o1	Ajuster sa position le long de la diagonale ou la quitter au besoin, puisque la priorité est toujours de conserver une vue dégagée des éléments clés
-m05-pca.2.o2	Se déplacer immédiatement vers la position du Point du marbre pour obtenir un meilleur angle
+m05-pca.2.o1	Se déplacer immédiatement vers la position du Point du marbre pour obtenir un meilleur angle
+m05-pca.2.o2	Ajuster sa position le long de la diagonale ou la quitter au besoin, puisque la priorité est toujours de conserver une vue dégagée des éléments clés
 m05-pca.2.o3	Demander un temps mort et se replacer seulement après la fin du jeu
 m05-pca.3.q	Lors d’un jeu de touche possible, un coureur court directement vers l’arbitre, l’obligeant à se déplacer brusquement pour éviter une collision. Que dit l’Annexe 4 de ce que cette situation indique ?
-m05-pca.3.o0	Le coureur a commis une obstruction et doit être retiré automatiquement
-m05-pca.3.o1	L’arbitre était mal placé ou n’a pas attendu que le jeu se développe correctement
+m05-pca.3.o0	L’arbitre était mal placé ou n’a pas attendu que le jeu se développe correctement
+m05-pca.3.o1	Le coureur a commis une obstruction et doit être retiré automatiquement
 m05-pca.3.o2	L’arbitre a bien anticipé le jeu et devrait tenir bon la prochaine fois
 m05-pca.3.o3	C’est une partie normale et inévitable de la mécanique de haut niveau qui ne demande aucun ajustement
 m05-pca.4.q	Pendant un match, l’arbitre placé près du deuxième but voit clairement et sans équivoque que le pied d’appui du lanceur a atterri complètement en dehors de la zone de lancer, alors que l’angle de l’arbitre au marbre ne lui permet pas de bien voir l’infraction. Selon l’Annexe 4, que doit faire l’arbitre près du deuxième but ?
@@ -369,23 +369,23 @@ m05-pca.4.o1	Attendre la manche suivante pour soulever la question en privé ave
 m05-pca.4.o2	S’il en est certain, déclarer le lancer illégal, puisque la mécanique de la WBSC permet à l’arbitre près du deuxième but de surveiller le pied d’appui lorsqu’il est complètement en dehors de la zone de lancer
 m05-pca.4.o3	Faire discrètement signe à l’arbitre au marbre, mais ne jamais annoncer l’infraction directement
 m05-pca.5.q	Un arbitre commence à former mentalement son signal de « retrait » pendant que le joueur de champ termine encore sa tentative de touche, avant que le jeu soit entièrement terminé. Selon l’Annexe 4, quelle est la conséquence probable de cette habitude ?
-m05-pca.5.o0	Cela n’a aucun effet sur la précision, car les arbitres expérimentés peuvent faire plusieurs choses à la fois
-m05-pca.5.o1	Cela perturbe le timing et encourage les décisions précipitées, car le cerveau cesse de traiter les derniers éléments de l’action
+m05-pca.5.o0	Cela perturbe le timing et encourage les décisions précipitées, car le cerveau cesse de traiter les derniers éléments de l’action
+m05-pca.5.o1	Cela n’a aucun effet sur la précision, car les arbitres expérimentés peuvent faire plusieurs choses à la fois
 m05-pca.5.o2	Cela améliore le temps de réaction et c’est une technique recommandée pour les jeux très serrés
 m05-pca.5.o3	Cela n’affecte que les décisions sur les balles et les prises, pas les jeux de touche
 m05-pca.6.q	Dans un système à quatre arbitres, une balle haute est frappée dans l’allée où les zones de couverture de U1 et de U2 se chevauchent, et U1 converge aussi vers la balle. Selon l’Annexe 4, quel arbitre doit sortir en premier ?
 m05-pca.6.o0	U2 doit sortir en premier parce que U2 a la position de départ la plus centrale
 m05-pca.6.o1	Les deux arbitres doivent sortir simultanément pour couvrir doublement le jeu
-m05-pca.6.o2	U1 doit avoir la première occasion de sortir, puisque U2 doit laisser à U1 ou à U3 la première occasion et ne sortir que si aucun des deux ne le fait
-m05-pca.6.o3	Aucun arbitre ne doit sortir ; l’arbitre au marbre doit couvrir toutes les balles hautes convergentes
+m05-pca.6.o2	Aucun arbitre ne doit sortir ; l’arbitre au marbre doit couvrir toutes les balles hautes convergentes
+m05-pca.6.o3	U1 doit avoir la première occasion de sortir, puisque U2 doit laisser à U1 ou à U3 la première occasion et ne sortir que si aucun des deux ne le fait
 m05-pca.7.q	L’angle initial d’un arbitre sur un jeu de touche qui se développe est mauvais, mais l’arbitre se déplace délibérément vers un meilleur angle à l’arrivée du relais. Quelle technique décrite dans l’Annexe 4 cela reflète-t-il, et quel est son but ?
 m05-pca.7.o0	Les pieds actifs, utilisés uniquement pour garder l’équilibre en restant immobile
 m05-pca.7.o1	La technique de l’instantané mental, dans laquelle l’arbitre prend une « photographie mentale » depuis l’angle initial, puis une seconde depuis l’angle amélioré, et les combine en une image 3D plus claire du jeu
 m05-pca.7.o2	La correction de parallaxe, qui supprime le besoin de changer de position
 m05-pca.7.o3	Le principe du bord d’attaque, qui exige que l’arbitre reste en tout temps à 90 degrés de la trajectoire du coureur
 m05-pca.8.q	Un arbitre de base dans un système à 3 ou 4 arbitres doit décider s’il sort sur une balle haute. Une position possible est plus proche du jeu mais offre une ligne de vue compromise ; une autre est plus éloignée mais offre un angle dégagé et sans obstruction. Quel choix reflète le principe énoncé dans l’Annexe 4 pour les décisions de couverture du champ extérieur ?
-m05-pca.8.o0	La position la plus proche, car la proximité produit toujours le jugement le plus précis
-m05-pca.8.o1	La position la plus éloignée avec l’angle dégagé, car en tout cas les angles ont priorité sur la distance
+m05-pca.8.o0	La position la plus éloignée avec l’angle dégagé, car en tout cas les angles ont priorité sur la distance
+m05-pca.8.o1	La position la plus proche, car la proximité produit toujours le jugement le plus précis
 m05-pca.8.o2	Aucune des deux ; l’arbitre devrait demander une révision vidéo
 m05-pca.8.o3	La position la plus proche, car la distance a priorité sur l’angle dans la couverture du champ extérieur
 m05-pca.9.q	Un arbitre en formation considère sa position de départ théorique au deuxième but comme la position depuis laquelle chaque décision doit être rendue, même lorsqu’un relais et une touche attirent le jeu vers le bord d’attaque. Quel principe clé de l’Annexe 4 cette approche ne reflète-t-elle pas ?
@@ -396,30 +396,30 @@ m05-pca.9.o3	L’erreur de parallaxe, car l’arbitre était aligné avec le mau
 m06-mkc.title	Annexe 5 : Mécanique de terrain de haut niveau
 m06-mkc.nextLabel	Passez aux présentations - Annexe 5, Partie A : Concepts clés
 m06-mkc.0.q	Dans la Théorie des quatre éléments essentiels (FEET) de l’Annexe 5a, quels sont les quatre éléments que les arbitres doivent observer ensemble pour rendre la bonne décision ?
-m06-mkc.0.o0	La balle, le joueur défensif, les joueurs offensifs, et la base ou la zone du jeu
-m06-mkc.0.o1	Le lanceur, le receveur, le frappeur et l’arbitre de base
+m06-mkc.0.o0	Le lanceur, le receveur, le frappeur et l’arbitre de base
+m06-mkc.0.o1	La balle, le joueur défensif, les joueurs offensifs, et la base ou la zone du jeu
 m06-mkc.0.o2	La zone des prises, l’avance du coureur, la touche et le gant du joueur de champ
 m06-mkc.0.o3	La position de départ, la position d’observation, la position de décision et la base
 m06-mkc.1.q	Selon l’Annexe 5a, la position du Point du marbre (POP) se situe à peu près à quelle distance derrière le marbre ?
 m06-mkc.1.o0	1 à 2 mètres (3 à 6 pieds)
-m06-mkc.1.o1	2 à 4 mètres (6 à 12 pieds)
+m06-mkc.1.o1	6 à 12 mètres (20 à 40 pieds)
 m06-mkc.1.o2	3 à 5 mètres (9 à 15 pieds)
-m06-mkc.1.o3	6 à 12 mètres (20 à 40 pieds)
+m06-mkc.1.o3	2 à 4 mètres (6 à 12 pieds)
 m06-mkc.2.q	Selon l’Annexe 5a, à quoi renvoie le « backfilling » ?
-m06-mkc.2.o0	À un arbitre qui effectue une contre-rotation pour couvrir une position non occupée par un autre arbitre tenu de couvrir un jeu ailleurs
+m06-mkc.2.o0	À un arbitre qui dégage le receveur pour obtenir une vue dégagée du terrain
 m06-mkc.2.o1	À un arbitre qui se déplace vers le bord d’attaque d’un but pour juger un jeu de touche
-m06-mkc.2.o2	À un arbitre qui dégage le receveur pour obtenir une vue dégagée du terrain
+m06-mkc.2.o2	À un arbitre qui effectue une contre-rotation pour couvrir une position non occupée par un autre arbitre tenu de couvrir un jeu ailleurs
 m06-mkc.2.o3	À un arbitre qui retourne à sa position entre les manches après la fin d’un jeu
 m06-mkc.3.q	Quel but l’Annexe 5a donne-t-elle aux systèmes à cinq et six arbitres ?
-m06-mkc.3.o0	Remplacer l’arbitre au marbre par deux arbitres supplémentaires au champ extérieur
-m06-mkc.3.o1	Permettre à deux arbitres dédiés au champ extérieur de couvrir les responsabilités sur les balles hautes afin que les autres arbitres puissent rester dans le champ intérieur et couvrir les buts en tout temps
+m06-mkc.3.o0	Permettre à deux arbitres dédiés au champ extérieur de couvrir les responsabilités sur les balles hautes afin que les autres arbitres puissent rester dans le champ intérieur et couvrir les buts en tout temps
+m06-mkc.3.o1	Remplacer l’arbitre au marbre par deux arbitres supplémentaires au champ extérieur
 m06-mkc.3.o2	Éliminer tout besoin de rotation entre les buts
 m06-mkc.3.o3	Permettre à tous les arbitres d’officier exclusivement depuis le territoire des balles fausses
 m06-mkc.4.q	L’Annexe 5 est divisée en quatre sous-sections (5a-5d). Quelle sous-section couvre la mécanique du Système à trois arbitres ?
 m06-mkc.4.o0	Annexe 5a
-m06-mkc.4.o1	Annexe 5b
+m06-mkc.4.o1	Annexe 5d
 m06-mkc.4.o2	Annexe 5c
-m06-mkc.4.o3	Annexe 5d
+m06-mkc.4.o3	Annexe 5b
 m06-pca.title	Annexe 5a : Concepts clés
 m06-pca.nextLabel	Passez à la présentation - Annexe 5b : Système à trois arbitres
 m06-pca.0.q	Selon l’Annexe 5a, quelles quatre choses constituent les Quatre éléments essentiels (FEET) que l’arbitre doit voir ensemble sur chaque jeu ?
@@ -429,8 +429,8 @@ m06-pca.0.o2	La balle, le joueur défensif, les joueurs offensifs, et la base ou
 m06-pca.0.o3	La balle, le joueur de champ, l’abri des joueurs et la ligne des balles fausses
 m06-pca.0.why	Les éléments doivent être observés ensemble, surtout le contrôle de la balle et les tentatives de touche, car la bonne décision dépend de la façon dont ils se rejoignent.
 m06-pca.1.q	Selon l’Annexe 5a, quand l’erreur de parallaxe se produit-elle le plus souvent ?
-m06-pca.1.o0	Quand l’arbitre se retrouve aligné en ligne droite avec le coureur, le joueur de champ, la balle et le but ou le point de touche
-m06-pca.1.o1	Quand l’arbitre est trop loin du but pour entendre le jeu
+m06-pca.1.o0	Quand l’arbitre est trop loin du but pour entendre le jeu
+m06-pca.1.o1	Quand l’arbitre se retrouve aligné en ligne droite avec le coureur, le joueur de champ, la balle et le but ou le point de touche
 m06-pca.1.o2	Quand l’arbitre se déplace avec des pieds actifs pendant le jeu
 m06-pca.1.o3	Quand l’arbitre se tient sur le bord d’attaque du but
 m06-pca.1.why	L’alignement en ligne droite réduit la perception de la profondeur et peut déformer la séquence des événements. Les arbitres réduisent la parallaxe en ajustant leur position pour garder l’angle et la séparation entre les éléments.
@@ -441,15 +441,15 @@ m06-pca.2.o2	Attendre que la balle s’arrête avant de décider
 m06-pca.2.o3	Se placer dans le plan de la décision, par exemple sur la ligne bonne/fausse
 m06-pca.2.why	Se placer dans le plan qui forme la décision transforme ce plan en une ligne dans la vue de l’arbitre, de sorte qu’on peut juger directement la position de la balle par rapport à lui.
 m06-pca.3.q	Sans coureur sur les bases, à quelle distance approximative du but un arbitre de base au premier ou au troisième but doit-il partir, selon l’Annexe 5a ?
-m06-pca.3.o0	3,5 m (12 pi)
-m06-pca.3.o1	5,5 m (18 pi)
+m06-pca.3.o0	5,5 m (18 pi)
+m06-pca.3.o1	3,5 m (12 pi)
 m06-pca.3.o2	4,5 m (15 pi)
 m06-pca.3.o3	7 m (23 pi)
 m06-pca.3.why	Sans coureur, le départ se fait à 5,5 m (18 pi) au premier et au troisième but, et à 4,5 m (15 pi) au deuxième but. La distance se réduit à environ 3,5 m (12 pi) lorsqu’un coureur se trouve au but de l’arbitre.
 m06-pca.4.q	Sur un jeu, quelle distance du but l’Annexe 5a donne-t-elle pour un jeu forcé et pour un jeu de touche ?
 m06-pca.4.o0	Environ 3 m (10 pi) pour un jeu forcé et 5 m (16 pi) pour un jeu de touche
-m06-pca.4.o1	Environ 5 m (16 pi) pour les deux
-m06-pca.4.o2	Environ 5 m (16 pi) pour un jeu forcé et 3 m (10 pi) pour un jeu de touche
+m06-pca.4.o1	Environ 5 m (16 pi) pour un jeu forcé et 3 m (10 pi) pour un jeu de touche
+m06-pca.4.o2	Environ 5 m (16 pi) pour les deux
 m06-pca.4.o3	Environ 3 m (10 pi) pour les deux
 m06-pca.4.why	Sur un jeu de touche, l’arbitre doit être assez proche pour s’ajuster à gauche ou à droite et atteindre le bord d’attaque tout en gardant tous les éléments devant lui.
 m06-pca.5.q	Quand l’angle et la distance ne peuvent pas être tous deux parfaits, lequel a priorité selon l’Annexe 5a ?
@@ -460,15 +460,15 @@ m06-pca.5.o3	Aucun ; l’arbitre doit rester immobile
 m06-pca.5.why	Être plus près peut tout de même aider l’arbitre à faire des déplacements contrôlés vers un meilleur angle, et l’erreur de parallaxe augmente avec la distance comme avec l’angle.
 m06-pca.6.q	Pourquoi l’Annexe 5a dit-elle qu’un arbitre ne doit jamais se placer directement au-dessus d’un but pour rendre une décision ?
 m06-pca.6.o0	C’est dangereux à cause des coureurs qui glissent
-m06-pca.6.o1	Les yeux de l’arbitre sont alignés verticalement sur le but ; la balle, la touche et le bord d’attaque s’écrasent alors en une vue rectiligne, sans perception de la profondeur
+m06-pca.6.o1	Cela masque la vue de l’abri des joueurs
 m06-pca.6.o2	Cela l’empêche d’utiliser le signal verbal
-m06-pca.6.o3	Cela masque la vue de l’abri des joueurs
+m06-pca.6.o3	Les yeux de l’arbitre sont alignés verticalement sur le but ; la balle, la touche et le bord d’attaque s’écrasent alors en une vue rectiligne, sans perception de la profondeur
 m06-pca.6.why	À vitesse de haut niveau, la différence entre une touche sur le bord d’attaque et une touche au-delà peut être de quelques centimètres. Une position de décision juste avant le bord d’attaque garde les éléments visuellement séparés.
 m06-pca.7.q	Selon la théorie intérieur/extérieur de l’Annexe 5a, où doivent se trouver les arbitres de but qui ne sont pas sortis lorsque la balle est dans le champ extérieur ?
 m06-pca.7.o0	À l’extérieur du losange
 m06-pca.7.o1	Derrière le marbre
-m06-pca.7.o2	Sur la ligne des balles fausses
-m06-pca.7.o3	À l’intérieur du losange
+m06-pca.7.o2	À l’intérieur du losange
+m06-pca.7.o3	Sur la ligne des balles fausses
 m06-pca.7.why	Lorsque la balle est dans le champ extérieur, les arbitres de but rentrent à l’intérieur ; lorsqu’elle est dans le champ intérieur, ils sont à l’extérieur du losange. Si un arbitre sort, tous les autres doivent rentrer à l’intérieur pour couvrir les buts et combler les postes.
 m06-pca.8.q	Selon l’Annexe 5a, qu’est-ce qui déclenche une situation de backfill ?
 m06-pca.8.o0	Le PU indique qu’il reste au marbre pour le jeu
@@ -478,22 +478,22 @@ m06-pca.8.o3	La balle qui est renvoyée au lanceur
 m06-pca.8.why	Après que le PU a indiqué qu’il reste au marbre, les arbitres de but s’ajustent : l’arbitre qui n’est pas sorti couvre le 3B et U1 passe à l’intérieur pour couvrir le 1B et le 2B si possible.
 m06-pca.9.q	Sur un jeu forcé où le coureur atteint le but puis le joueur de champ reçoit le relais, quelle erreur un arbitre qui précipite sa décision risque-t-il le plus de commettre, selon l’Annexe 5a ?
 m06-pca.9.o0	Déclarer le coureur sauf
-m06-pca.9.o1	Déclarer une interférence
-m06-pca.9.o2	Déclarer le coureur retiré, parce qu’il est encore en train de traiter la réception du relais
+m06-pca.9.o1	Déclarer le coureur retiré, parce qu’il est encore en train de traiter la réception du relais
+m06-pca.9.o2	Déclarer une interférence
 m06-pca.9.o3	Ne pas voir le but
 m06-pca.9.why	Une courte pause sur un jeu serré donne au cerveau le temps de traiter toutes les informations dans le bon ordre, au lieu de fonder la décision sur la dernière chose vue.
 m07-pca.title	Annexe 5b : Système à trois arbitres
 m07-pca.nextLabel	Passez à la présentation - Annexe 5c : Systèmes à quatre, cinq et six arbitres
 m07-pca.0.q	Dans le système à trois arbitres (Annexe 5b), où se place U1 entre les manches ?
-m07-pca.0.o0	À un tiers de la distance entre le marbre et le 3B
+m07-pca.0.o0	À mi-chemin entre le marbre et le 1B, en dehors de la ligne des balles justes/fausses
 m07-pca.0.o1	Aux deux tiers de la distance entre le marbre et le 3B
-m07-pca.0.o2	À mi-chemin entre le marbre et le 1B, en dehors de la ligne des balles justes/fausses
+m07-pca.0.o2	À un tiers de la distance entre le marbre et le 3B
 m07-pca.0.o3	Derrière les boîtes des frappeurs, à la pointe du marbre
 m07-pca.0.why	Entre les manches, le PU se place à un tiers de la distance entre le marbre et le 3B, U1 à mi-chemin entre le marbre et le 1B, et U3 aux deux tiers de la distance entre le marbre et le 3B, tous en dehors des lignes.
 m07-pca.1.q	Dans le système à trois arbitres, où U1 se place-t-il au départ avec un coureur au 1B seulement ?
-m07-pca.1.o0	À environ 3,5 m (12 pi) derrière le 1B en territoire des balles fausses
+m07-pca.1.o0	À environ 3,5 m (12 pi) en retrait, aux deux tiers de la distance entre le 1B et le 2B
 m07-pca.1.o1	À environ 5,5 m (18 pi) derrière le 1B
-m07-pca.1.o2	À environ 3,5 m (12 pi) en retrait, aux deux tiers de la distance entre le 1B et le 2B
+m07-pca.1.o2	À environ 3,5 m (12 pi) derrière le 1B en territoire des balles fausses
 m07-pca.1.o3	Du côté du 3B par rapport au 2B
 m07-pca.1.why	Sans coureur ou avec un coureur seulement au 3B, la position de départ est à environ 5,5 m (18 pi) derrière le 1B ; avec un coureur au 1B, elle est plus rapprochée afin que l’arbitre puisse rester en territoire des balles fausses avec une vue dégagée.
 m07-pca.2.q	Pourquoi l’Annexe 5b place-t-elle U3 à environ 3,5 m (12 pi) derrière le 3B, jusqu’à 2 m (6 pi) en dehors de la ligne, lorsqu’il y a un coureur au 3B ?
@@ -511,8 +511,8 @@ m07-pca.3.why	Si U1 comprend que le jeu aura lieu au bord d’attaque, il peut a
 m07-pca.4.q	Dans le système à trois arbitres, lorsqu’un arbitre de but sort sur une balle haute, qui est responsable du retour au but (tag-up) au 3B ?
 m07-pca.4.o0	L’arbitre de but qui reste dans le champ intérieur
 m07-pca.4.o1	L’arbitre qui est sorti
-m07-pca.4.o2	Le PU
-m07-pca.4.o3	Personne ; le coureur n’est pas surveillé
+m07-pca.4.o2	Personne ; le coureur n’est pas surveillé
+m07-pca.4.o3	Le PU
 m07-pca.4.why	L’arbitre de but qui reste dans le champ intérieur prend les tag-ups au 1B et au 2B, et le PU prend le tag-up au 3B.
 m07-pca.5.q	Dans le système à trois arbitres, qui est responsable de la décision sur le départ prématuré d’un coureur au 2B ?
 m07-pca.5.o0	U1
@@ -529,28 +529,28 @@ m07-pca.6.why	U1 prend les balles hautes vers F8 qui se dirigent vers le champ d
 m07-pca.7.q	U1 est au 1B, U3 est au 2B et il y a un coureur au 1B. Qui prend une balle haute vers le voltigeur de gauche (F7) ?
 m07-pca.7.o0	U3
 m07-pca.7.o1	U1
-m07-pca.7.o2	ULF
-m07-pca.7.o3	Le PU
+m07-pca.7.o2	Le PU
+m07-pca.7.o3	ULF
 m07-pca.7.why	Le PU prend les balles hautes vers F7 et la zone des balles fausses, U1 prend la zone du champ droit et la zone des balles fausses, et U3 prend F8 et F7 en se déplaçant vers le CF. Que U1 prenne F9 garde U1 hors de la trajectoire du coureur et permet à U3 de se placer à l’intérieur.
 m07-pca.8.q	Lorsque U1 ou U3 sort sur une balle haute dans le système à trois arbitres, que doit faire l’arbitre de but restant ?
-m07-pca.8.o0	Se déplacer à l’intérieur du losange, couvrir toutes les décisions au 1B ou au 2B, et effectuer la rotation vers le 3B avant le frappeur-coureur
-m07-pca.8.o1	Rester à son but
+m07-pca.8.o0	Rester à son but
+m07-pca.8.o1	Se déplacer à l’intérieur du losange, couvrir toutes les décisions au 1B ou au 2B, et effectuer la rotation vers le 3B avant le frappeur-coureur
 m07-pca.8.o2	Courir au marbre
 m07-pca.8.o3	Sortir lui aussi dans le champ extérieur
 m07-pca.8.why	Si la balle est captée et que l’arbitre restant peut suivre le dernier coureur jusqu’au 3B et communiquer avec le PU, il doit le faire, ce qui garde le PU au marbre pour les jeux importants.
 m07-pca.9.q	U1 est au 1B et U3 est au 3B, sans coureur sur les buts, et une roulante est frappée dans le champ intérieur. Quel est le rôle du PU, selon l’Annexe 5b ?
 m07-pca.9.o0	Rester derrière le marbre
 m07-pca.9.o1	Courir immédiatement au 3B
-m07-pca.9.o2	Suivre le frappeur-coureur sur environ un tiers de la distance vers le 1B (plus loin si nécessaire), surveiller l’interférence et rendre la décision balle juste/balle fausse
-m07-pca.9.o3	Sortir vers le champ extérieur
+m07-pca.9.o2	Sortir vers le champ extérieur
+m07-pca.9.o3	Suivre le frappeur-coureur sur environ un tiers de la distance vers le 1B (plus loin si nécessaire), surveiller l’interférence et rendre la décision balle juste/balle fausse
 m07-pca.9.why	Le PU suit le frappeur-coureur pour une éventuelle touche, une interférence du frappeur-coureur ou pour assister au 1B, et effectue la rotation vers le 3B si le frappeur-coureur atteint le 1B et progresse vers le 2B.
 m08-pca.title	Annexe 5c : Systèmes à quatre, cinq et six arbitres
 m08-pca.nextLabel	Vous avez terminé les huit modules obligatoires - consultez votre dossier d’évaluation complet
 m08-pca.0.q	Dans le système à quatre arbitres (Annexe 5c), où se place U2 entre les manches ?
 m08-pca.0.o0	À un tiers de la distance entre le marbre et le 1B
 m08-pca.0.o1	Derrière le 2B
-m08-pca.0.o2	Aux deux tiers de la distance entre le marbre et le 1B
-m08-pca.0.o3	À côté du PU
+m08-pca.0.o2	À côté du PU
+m08-pca.0.o3	Aux deux tiers de la distance entre le marbre et le 1B
 m08-pca.0.why	Entre les manches, le PU se place à un tiers de la distance entre le marbre et le 3B, U1 à un tiers de la distance entre le marbre et le 1B, U2 aux deux tiers de la distance entre le marbre et le 1B, et U3 aux deux tiers de la distance entre le marbre et le 3B.
 m08-pca.1.q	Dans le système à quatre arbitres, à quelle distance approximative derrière le 2B U2 se place-t-il au départ lorsqu’il y a un coureur sur n’importe quel but ?
 m08-pca.1.o0	Environ 3,5 m (12 pi)
@@ -561,8 +561,8 @@ m08-pca.1.why	Sans coureur, la position de départ sur l’angle diagonal du deu
 m08-pca.2.q	Dans le système à quatre arbitres, qui sort sur une balle haute vers le champ centre ?
 m08-pca.2.o0	U1
 m08-pca.2.o1	Le PU
-m08-pca.2.o2	U3
-m08-pca.2.o3	U2
+m08-pca.2.o2	U2
+m08-pca.2.o3	U3
 m08-pca.2.why	U1 sort sur les balles hautes vers le champ droit et sur F8 qui court vers la droite ; U3 sur celles vers le champ gauche et sur F8 qui court vers la gauche. U2 doit donner la première option à U1 ou à U3.
 m08-pca.3.q	Dans le système à quatre arbitres, U1 sort sur une balle haute. Qui prend le tag-up au 1B ?
 m08-pca.3.o0	U2
@@ -577,14 +577,14 @@ m08-pca.4.o2	U3
 m08-pca.4.o3	U2, depuis le champ extérieur
 m08-pca.4.why	U1 garde le 1B, U3 prend le 2B, y compris le tag-up, et le PU prend le tag-up au 3B.
 m08-pca.5.q	Quelle affirmation sur U1 dans le système à quatre arbitres est exacte, selon la carte mémoire des rotations ?
-m08-pca.5.o0	U1 utilise le territoire des balles fausses au 1B ou sort, et n’a jamais besoin d’effectuer un button hook
-m08-pca.5.o1	U1 effectue toujours un button hook vers l’intérieur
+m08-pca.5.o0	U1 effectue toujours un button hook vers l’intérieur
+m08-pca.5.o1	U1 utilise le territoire des balles fausses au 1B ou sort, et n’a jamais besoin d’effectuer un button hook
 m08-pca.5.o2	U1 reste au 1B pendant tout le jeu
 m08-pca.5.o3	U1 couvre le 3B sur chaque balle haute
 m08-pca.5.why	U1 communique aussi avec le PU lorsqu’il vient au marbre et pousse le PU vers le 3B, et se dégage du marbre lorsque le PU indique une situation de backfill.
 m08-pca.6.q	Système à quatre arbitres. Une roulante est frappée vers le champ gauche et aucun arbitre de but ne sort. Que doit faire U2 ?
-m08-pca.6.o0	Effectuer immédiatement un button hook vers l’intérieur pour toute décision au 2B
-m08-pca.6.o1	Rester à l’extérieur pour avoir un angle aigu sur le relais du champ gauche pour toute décision au 2B
+m08-pca.6.o0	Rester à l’extérieur pour avoir un angle aigu sur le relais du champ gauche pour toute décision au 2B
+m08-pca.6.o1	Effectuer immédiatement un button hook vers l’intérieur pour toute décision au 2B
 m08-pca.6.o2	Se déplacer vers la zone POP pour assister le PU
 m08-pca.6.o3	Effectuer la rotation vers le 3B
 m08-pca.6.why	Sur un coup vers le CD ou le CF, U2 effectue un button hook vers l’intérieur pour toute décision au 2B ; sur un coup vers le CG, l’angle aigu sur le relais est meilleur depuis l’extérieur.
@@ -603,6 +603,6 @@ m08-pca.8.why	Lorsqu’il suit une balle près du poteau des balles fausses, l�
 m08-pca.9.q	Sur une balle haute vers le champ extérieur dans les systèmes à cinq et six arbitres, comment les arbitres du champ extérieur décident-ils qui prend la décision ?
 m08-pca.9.o0	L’arbitre le plus éloigné de la balle la prend toujours
 m08-pca.9.o1	Le PU décide depuis le marbre
-m08-pca.9.o2	Les deux courent en territoire des balles justes, parallèlement à la trajectoire de la balle, jusqu’à obtenir un angle ; celui qui prend la décision l’indique d’une main sur la poitrine et/ou verbalement
-m08-pca.9.o3	La décision est rendue par l’arbitre de but
+m08-pca.9.o2	La décision est rendue par l’arbitre de but
+m08-pca.9.o3	Les deux courent en territoire des balles justes, parallèlement à la trajectoire de la balle, jusqu’à obtenir un angle ; celui qui prend la décision l’indique d’une main sur la poitrine et/ou verbalement
 m08-pca.9.why	ULF et URF sont responsables de toutes les décisions au-delà de l’arbitre de but et derrière les joueurs d’avant-champ : balle juste/fausse, balle captée/non captée et statut d’une balle qui quitte le terrain de jeu.

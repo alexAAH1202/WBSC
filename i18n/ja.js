@@ -355,5 +355,8 @@ WBSC_DICT["ja"] = { t: {
  "Important": "重要",
  "Read Official WBSC Manual": "WBSC 公式マニュアルを読む",
  "I have watched and studied the full presentation for this appendix.": "この付録のプレゼンテーション全体を見て学習しました。",
- "Available now": "現在利用可能"
+ "Available now": "現在利用可能",
+ "The server could not save the result": "サーバーが結果を保存できませんでした",
+ "Invalid submission: the assessment was completed too quickly to be a real attempt": "無効な送信です: 評価の完了が早すぎるため、実際の受験とは認められません",
+ "The Four Pillars - About the Framework": "4つの柱 - この枠組みについて"
 } };

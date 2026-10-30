@@ -40,7 +40,7 @@ async function newPage(b, opts, saveHandler) {
     const params = new URLSearchParams(r.request().postData() || '');
     const action = params.get('action');
     if (action) {                                   // login calls
-      const id = params.get('id'); calls.push({ action, email: params.get('email'), code: params.get('code'), website: params.get('website') });
+      const id = params.get('id'); calls.push({ action, email: params.get('email'), code: params.get('code'), website: params.get('website'), lang: params.get('lang') });
       if (action === 'sendCode') {
         return r.fulfill(page_(reply(opts.sendCode === 'rate'
           ? { wbscAuth: true, id, action, success: false, code: 'rate', error: 'Too many codes have been requested for this address. Please wait a while and try again.' }
@@ -109,7 +109,7 @@ const verifyText = pg => pg.textContent('#verify-state');
   await t.pg.waitForFunction(() => /Email verified/.test(document.getElementById('verify-state').textContent));
   assert.ok(/Email verified: jo@x\.com/.test(await verifyText(t.pg)), 'shows the lower-cased verified address');
   assert.deepStrictEqual(t.calls.map(c => c.action), ['sendCode', 'verifyCode', 'verifyCode']);
-  assert.strictEqual(t.calls[0].email, 'Jo@X.com');
+  assert.strictEqual(t.calls[0].email, 'Jo@X.com'); assert.strictEqual(t.calls[0].lang, 'en', 'the login request carries the page language');
   ok('a wrong code is refused with the reason; the right code verifies and the address is shown');
 
   // changing the address un-verifies; a verified session survives a reload
@@ -131,7 +131,7 @@ const verifyText = pg => pg.textContent('#verify-state');
   await t.pg.fill('#inp-email', 'jo@x.com');
   await runQuiz(t.pg); await t.pg.waitForFunction(() => /recorded/.test(document.getElementById('quiz-save-state').textContent));
   assert.strictEqual(t.lookups[0].token, TOKEN); assert.ok(!('email' in t.lookups[0]), 'the lookup sends the session, not an email');
-  assert.strictEqual(t.posts[0].payload.token, TOKEN); assert.strictEqual(t.posts[0].payload.participantEmail, 'jo@x.com');
+  assert.strictEqual(t.posts[0].payload.token, TOKEN); assert.strictEqual(t.posts[0].payload.participantEmail, 'jo@x.com'); assert.strictEqual(t.posts[0].payload.lang, 'en', 'the saved result carries the page language (for the receipt email)');
   txt = await saveText(t.pg); assert.ok(/recorded \(attempt 1 of 2\)\. A receipt will be emailed to jo@x\.com\./.test(txt), txt);
   ok('lookup and save send the session token; the verified address is what is recorded; the receipt is announced');
 
