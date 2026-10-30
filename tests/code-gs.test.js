@@ -174,7 +174,7 @@ ok('a result emails the Director and a receipt to the learner; statuses recorded
   const [dir, rec] = sent;
   assert.strictEqual(dir.to, 'umpiredirector@wbscoceania.org'); assert.ok(/NOT PASSED: Jo Ump/.test(dir.subject));
   assert.strictEqual(rec.to, 'jo@x.com'); assert.ok(/receipt/i.test(rec.subject) && /NOT PASSED/.test(rec.subject));
-  for (const need of ['Hello Jo Ump', 'Score: 8 / 10 (80%)', 'Result: NOT PASSED (pass mark 85%)', 'Attempt: 1 of 2', '1 attempt left', 'not an official WBSC certificate', 'Module 02: not passed yet (best 80%, 1 of 2 attempts used)', 'Module 01: not attempted yet']) {
+  for (const need of ['Hello Jo Ump', 'Score: 8 / 10 (80%)', 'Result: NOT PASSED (pass mark 85%)', 'Attempt: 1 of 2', 'Attempts left for this assessment: 1', 'not an official WBSC certificate', 'Module 02: not passed yet (best 80%, attempts used: 1 of 2)', 'Module 01: not attempted yet']) {
     assert.ok(rec.body.includes(need), 'receipt contains: ' + need);
   }
   assert.ok(/Reference: [A-Z0-9-]{8}\n/.test(rec.body));
@@ -215,7 +215,7 @@ ok('passing the sixth module: completion notice to the Director once, summary in
   const sent = e.mails.slice(before);
   const done = sent.filter(m => /PROGRAM COMPLETED: Jo Ump/.test(m.subject));
   assert.strictEqual(done.length, 1); assert.strictEqual(done[0].to, 'umpiredirector@wbscoceania.org');
-  for (let i = 1; i <= 8; i++) assert.ok(done[0].body.includes(`Module 0${i}: PASSED (90%, 1 attempt used)`), 'summary line ' + i);
+  for (let i = 1; i <= 8; i++) assert.ok(done[0].body.includes(`Module 0${i}: PASSED (90%, attempts used: 1)`), 'summary line ' + i);
   const rec = sent.find(m => m.to === 'jo@x.com'); assert.ok(/passed all 8 modules/.test(rec.body));
   const b2 = e.mails.length; save(e, t, { module: mod(8), score: 10 });
   assert.strictEqual(e.mails.slice(b2).filter(m => /PROGRAM COMPLETED/.test(m.subject)).length, 0, 'not repeated');
@@ -403,6 +403,39 @@ ok('no secret or address ends up in the cache key names', () => {
   const e = makeEnv(); e.props.set('RESULTS_PASSWORD', 'S3cret-pw'); const t = login(e, 'priv@x.com'); save(e, t, {});
   act(e, 'results', { password: 'S3cret-pw' });
   const keys = [...e.cache.keys()].join('|'); assert.ok(!/priv@x\.com|S3cret/.test(keys), keys);
+});
+
+// =====================================================================  learner emails in the learner's language
+ok('the login code email and the receipt come in the learner\'s language; the Director\'s email stays English; unknown language = English', () => {
+  for (const lg of ['es', 'fr', 'ja', 'ko', 'zh']) {
+    const e = makeEnv();
+    assert.strictEqual(act(e, 'sendCode', { email: 'jo@x.com', lang: lg }).success, true);
+    const mail = lastMailTo(e, 'jo@x.com');
+    assert.ok(/\d{6}/.test(mail.subject) && /\d{6}/.test(mail.body) && !/Your verification code|verification code is/.test(mail.body), lg + ' code email is translated');
+    assert.ok(mail.body.includes('10') && !/\{\w+\}/.test(mail.subject + mail.body), lg + ' values filled in, no leftover {placeholders}');
+    const code = (mail.body.match(/\d{6}/) || [])[0];
+    const v = act(e, 'verifyCode', { email: 'jo@x.com', code }); assert.strictEqual(v.success, true, lg);
+    const before = e.mails.length;
+    const m = save(e, v.token, { score: 8, module: 'Module 02 — Foundations: One-Umpire', lang: lg }); assert.strictEqual(m.result, 'NOT PASSED', 'the server result is the same in every language');
+    const [dir, rec] = e.mails.slice(before);
+    assert.ok(/NOT PASSED: Jo Ump/.test(dir.subject) && /Participant: Jo Ump/.test(dir.body), 'the Director email stays English');
+    assert.ok(!/NOT PASSED|Hello|Result:/.test(rec.subject + rec.body), lg + ' receipt is translated');
+    assert.ok(rec.body.includes('Jo Ump') && rec.body.includes('8 / 10 (80%)') && /85\s?%/.test(rec.body), lg + ' receipt has name, score and pass mark');
+    assert.ok(!/\{\w+\}/.test(rec.subject + rec.body), lg + ' no leftover placeholders');
+    assert.strictEqual((rec.body.match(/\b0[1-8]\b|０[1-8]/g) || []).length >= 8, true, lg + ' lists all 8 modules');
+  }
+  const e = makeEnv(); act(e, 'sendCode', { email: 'jo@x.com', lang: 'xx; drop' });
+  assert.ok(/Your WBSC training verification code/.test(lastMailTo(e, 'jo@x.com').subject), 'unknown language falls back to English');
+  const t = login(e); const before = e.mails.length; save(e, t, { score: 9 });
+  assert.ok(/Hello Jo Ump/.test(e.mails.slice(before)[1].body), 'no language sent = English');
+});
+ok('every language has every email phrase, and the same {placeholders} as English', () => {
+  const T = vm.runInContext('EMAIL_TEXT', makeEnv().ctx);
+  const ph = s => (String(s).match(/\{\w+\}/g) || []).sort().join();
+  for (const lg of Object.keys(T)) for (const k of Object.keys(T.en)) {
+    assert.ok(T[lg][k] != null, lg + ' is missing ' + k);
+    assert.strictEqual(ph(T[lg][k]), ph(T.en[k]), lg + '.' + k + ' placeholders');
+  }
 });
 
 console.log(n + ' Code.gs checks passed');

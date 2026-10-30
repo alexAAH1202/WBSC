@@ -21,6 +21,12 @@
    "The 2026-2029 Umpire Mechanics Program was revised to meet that reality. Every module in this pathway is built around one question umpires ask before every pitch - not only where to be, but why that position gives them the view the play requires.",
    "That question runs through the whole system, but it is answered most directly in two documents.",
    "<span class=\"why\">Appendix 4</span> provides the why. <span class=\"how\">Appendix 5</span> provides the how.",
+   "The Framework",
+   "The Four Pillars - About the Framework",
+   "The Four Pillars support umpire education, accreditation and ongoing development, providing a common international reference for umpires, instructors, mentors and evaluators.",
+   "WBSC recognises that many National Federations already have well-established and comprehensive foundational umpire training programs. The revised framework is not intended to replace these programs or their existing educational materials. Rather, it provides a common international reference that complements and supports established development pathways.",
+   "The manuals are designed to be studied progressively. Elite mechanics build upon, rather than replace, established foundational mechanics, and are intended for experienced umpires with a strong understanding of the game.",
+   "Together, the Four Pillars support consistent umpire development and evaluation, from community softball through to elite WBSC international competition.",
    "Complete In Order",
    "Required Learning Sequence",
    "WBSC has reviewed and restructured its Softball Umpire Mechanics educational materials to provide a clearer, progressive learning pathway for umpires across all Regions and National Federations.",
@@ -47,12 +53,6 @@
    "Elite mechanics are for students of the game and should only be introduced once an umpire has a strong command of the foundational material, not as a starting point.",
    "Federations should confirm the equivalent guidance for their own accreditation pathway.",
    "WBSC will use the Elite Teaching, Philosophies and Field Mechanics for all WBSC tournaments.",
-   "The Framework",
-   "About the Framework",
-   "The Four Pillars support umpire education, accreditation and ongoing development, providing a common international reference for umpires, instructors, mentors and evaluators.",
-   "WBSC recognises that many National Federations already have well-established and comprehensive foundational umpire training programs. The revised framework is not intended to replace these programs or their existing educational materials. Rather, it provides a common international reference that complements and supports established development pathways.",
-   "The manuals are designed to be studied progressively. Elite mechanics build upon, rather than replace, established foundational mechanics, and are intended for experienced umpires with a strong understanding of the game.",
-   "Together, the Four Pillars support consistent umpire development and evaluation, from community softball through to elite WBSC international competition.",
    "Per Module",
    "How to Complete the Training",
    "Every module in the sequence follows the same five steps.",
@@ -515,9 +515,13 @@
   "Something went wrong. Please try again.",
   "Invalid email address",
   "Invalid session. Please verify your email address with a code first.",
+  "The server could not save the result",
+  "Invalid submission: the assessment was completed too quickly to be a real attempt",
   "This page is translated from English. The manuals and presentations are in English. If the translation and the English text differ, the English text applies."
  ],
- "stale": [],
+ "stale": [
+  "About the Framework"
+ ],
  "all": [
   "Question {n} of {total}",
   "Submit Answer",
@@ -877,6 +881,9 @@
   "Important",
   "Read Official WBSC Manual",
   "I have watched and studied the full presentation for this appendix.",
-  "Available now"
+  "Available now",
+  "The server could not save the result",
+  "Invalid submission: the assessment was completed too quickly to be a real attempt",
+  "The Four Pillars - About the Framework"
  ]
 }

@@ -355,5 +355,8 @@ WBSC_DICT["zh"] = { t: {
  "Important": "重要",
  "Read Official WBSC Manual": "阅读 WBSC 官方手册",
  "I have watched and studied the full presentation for this appendix.": "我已观看并学习了本附录的完整演示文稿。",
- "Available now": "现已可用"
+ "Available now": "现已可用",
+ "The server could not save the result": "服务器无法保存结果",
+ "Invalid submission: the assessment was completed too quickly to be a real attempt": "提交无效：评估完成得太快，不可能是真实的尝试",
+ "The Four Pillars - About the Framework": "四大支柱 - 关于框架"
 } };

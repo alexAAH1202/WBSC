@@ -355,5 +355,8 @@ WBSC_DICT["es"] = { t: {
  "Important": "Importante",
  "Read Official WBSC Manual": "Leer el manual oficial de la WBSC",
  "I have watched and studied the full presentation for this appendix.": "He visto y estudiado la presentación completa de este apéndice.",
- "Available now": "Disponible ahora"
+ "Available now": "Disponible ahora",
+ "The server could not save the result": "El servidor no pudo guardar el resultado",
+ "Invalid submission: the assessment was completed too quickly to be a real attempt": "Envío no válido: la evaluación se completó demasiado rápido para ser un intento real",
+ "The Four Pillars - About the Framework": "Los Cuatro Pilares - Acerca del marco"
 } };

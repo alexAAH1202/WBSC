@@ -187,7 +187,7 @@
   .section-head{max-width:760px;margin-bottom:44px;}
   .section-head .eyebrow{color:var(--red-600);margin-bottom:10px;display:block;}
   .section-head h2{font-size:clamp(1.7rem,3.2vw,2.4rem);}
-  .section-head .desc{font-size:1.05rem;color:var(--ink-soft);margin-top:14px;max-width:62ch;}
+  .section-head .desc{font-size:1.05rem;color:var(--ink-soft);margin-top:14px;max-width:70ch;}
   .on-navy .section-head .eyebrow{color:var(--gold-500);}
   .on-navy .section-head h2{color:var(--white);}
   .on-navy .section-head .desc{color:#c9d3e6;}
@@ -206,14 +206,14 @@
     font-size:0.95rem;color:var(--navy-950);
   }
   .notice-head svg{width:20px;height:20px;flex-shrink:0;color:var(--navy-950);}
-  .notice p{color:var(--ink-soft);max-width:78ch;}
+  .notice p{color:var(--ink-soft);}
   .notice p + p{margin-top:12px;}
   .notice strong{color:var(--navy-950);}
 
   /* ---------- Intro ---------- */
   .intro{padding:80px 0;}
   .intro-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:56px;align-items:start;}
-  .intro-copy p{font-size:1.08rem;color:var(--ink-soft);max-width:62ch;}
+  .intro-copy p{font-size:1.08rem;color:var(--ink-soft);max-width:70ch;}
   .intro-copy p + p{margin-top:16px;}
   .intro-signature{
     margin-top:26px;padding:22px 24px;border:2px solid var(--navy-950);
@@ -250,7 +250,7 @@
   .pillar:last-child{border-right:none;}
   .pillar.elite{background:var(--navy-950);color:var(--white);}
   .pillar-top{display:flex;align-items:center;justify-content:space-between;}
-  .pillar-num{font-family:var(--font-display);font-weight:900;font-size:2.1rem;color:var(--line);}
+  .pillar-num{font-family:var(--font-display);font-weight:900;font-size:2.1rem;color:#7a7358;}
   .pillar.elite .pillar-num{color:var(--gold-500);}
   .pillar-connector{color:var(--red-600);font-family:var(--font-display);font-weight:900;font-size:1.3rem;}
   .pillar.elite .pillar-connector{color:var(--gold-500);}
@@ -303,7 +303,7 @@
   .sequence-note{
     margin-top:30px;padding:24px 26px;background:var(--paper);border-left:5px solid var(--gold-500);
   }
-  .sequence-note p{color:var(--ink-soft);max-width:78ch;}
+  .sequence-note p{color:var(--ink-soft);max-width:70ch;}
   .sequence-note .sig{margin-top:12px;font-family:var(--font-display);font-weight:700;text-transform:uppercase;font-size:0.92rem;color:var(--navy-950);}
   .sequence-note .sig .why{color:var(--red-600);}
   .sequence-note .sig .how{color:var(--gold-500);background:var(--navy-950);padding:1px 5px;}
@@ -376,7 +376,7 @@
   footer{background:var(--navy-950);color:#c9d3e6;padding:60px 0 28px;}
   .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.3fr;gap:40px;padding-bottom:40px;border-bottom:1px solid var(--line-on-navy);}
   .footer-about{margin-top:14px;font-size:0.92rem;max-width:34ch;color:#9fb0cc;}
-  .footer-col h4{font-family:var(--font-display);font-weight:700;color:var(--white);text-transform:uppercase;letter-spacing:0.08em;font-size:0.85rem;margin-bottom:16px;}
+  .footer-col h2{font-family:var(--font-display);font-weight:700;color:var(--white);text-transform:uppercase;letter-spacing:0.08em;font-size:0.85rem;margin-bottom:16px;}
   .footer-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;}
   .footer-col a{font-size:0.92rem;color:#c9d3e6;text-decoration:none;}
   .footer-col a:hover{color:var(--gold-500);}
@@ -406,7 +406,7 @@
   .page-hero{background:var(--navy-950);color:var(--white);padding:64px 0 52px;}
   .page-hero .eyebrow{color:var(--gold-500);margin-bottom:14px;display:block;}
   .page-hero h1{color:var(--white);font-size:clamp(2rem,4.4vw,3rem);margin-bottom:16px;}
-  .page-hero p{color:#c9d3e6;max-width:68ch;font-size:1.05rem;}
+  .page-hero p{color:#c9d3e6;max-width:70ch;font-size:1.05rem;}
 
   /* Identity panel */
   .identity{padding:54px 0 10px;}
@@ -431,7 +431,7 @@
   .directory{padding:54px 0 20px;}
   .tier-divider{display:flex;align-items:center;gap:18px;margin:8px 0 34px;flex-wrap:wrap;}
   .tier-divider .tier-label{font-family:var(--font-display);font-weight:900;text-transform:uppercase;letter-spacing:0.12em;font-size:0.82rem;color:var(--red-600);white-space:nowrap;}
-  .tier-divider.elite .tier-label{color:var(--gold-500);}
+  .tier-divider.elite .tier-label{color:#8a6a12;}
   .tier-divider .tier-rule{height:1px;background:var(--line);flex:1;min-width:24px;}
   .tier-divider .tier-note{font-size:0.85rem;color:var(--ink-soft);white-space:nowrap;}
   @media (max-width:560px){
@@ -472,6 +472,7 @@
   .quiz-dot.current{background:var(--gold-500);border-color:var(--gold-500);}
   .quiz-body{padding:26px 30px 32px;}
   .quiz-question{font-family:var(--font-display);font-weight:700;font-size:1.15rem;color:var(--navy-950);margin-bottom:22px;line-height:1.35;}
+  .quiz-question:focus{outline:none;}   /* focus is moved here for screen readers; it is not a control */
   .quiz-options{display:flex;flex-direction:column;gap:12px;margin-bottom:24px;}
   .quiz-option{
     display:flex;align-items:center;gap:14px;text-align:left;
@@ -532,8 +533,9 @@
   #quiz-try-again{margin:6px 0 4px;}
   #quiz-retry-save{margin-bottom:6px;}
   .watch-first{background:#fdf2f1;border:2px solid var(--red-600);border-left-width:8px;padding:18px 22px;margin:18px 0 0;}
-  .watch-first h3{font-size:1rem;text-transform:uppercase;color:var(--red-600);margin:0 0 6px;}
+  .watch-first .watch-first-title{font-family:var(--font-display);font-weight:900;letter-spacing:0.01em;font-size:1rem;text-transform:uppercase;color:var(--red-600);margin:0 0 6px;}
   .watch-first p{font-size:0.95rem;margin:0;color:var(--navy-950);}
+  .watch-first p.watch-first-title{margin:0 0 6px;font-size:1rem;color:var(--red-600);}
   .quiz-gate{padding:8px 0;}
   .quiz-gate label{display:flex;gap:10px;align-items:flex-start;margin:14px 0;font-weight:700;cursor:pointer;}
   .quiz-gate input{margin-top:4px;width:18px;height:18px;flex-shrink:0;}
@@ -630,7 +632,7 @@
         The Manual Knowledge Checks are unmarked practice: try them as often as you like, the correct answers are shown, and nothing is recorded.
       </div>
       <div class="watch-first" role="note">
-        <h3>Watch the full presentation first</h3>
+        <p class="watch-first-title">Watch the full presentation first</p>
         <p><strong>Appendix 4 Elite Philosophies &amp; Appendix 5 Elite 3, 4, 5 &amp; 6 Field Mechanics:</strong> the assessment questions are based on the <strong>FULL presentation</strong>, so please complete the assessment after you have watched and studied it. You will be asked to confirm this before you start. <a href="presentations.html">Go to the presentations</a>.</p>
       </div>
       <div class="identity-panel">
@@ -686,7 +688,7 @@
 
         <div id="quiz-resume" class="quiz-body quiz-gate" style="display:none;">
           <div class="watch-first" role="note">
-            <h3>Unfinished attempt</h3>
+            <p class="watch-first-title">Unfinished attempt</p>
             <p id="resume-text">You have an unfinished attempt at this assessment on this device.</p>
           </div>
           <button class="btn btn-primary" id="resume-go" type="button">Resume where I left off</button>
@@ -694,7 +696,7 @@
         </div>
         <div id="quiz-gate" class="quiz-body quiz-gate" style="display:none;">
           <div class="watch-first" role="note">
-            <h3>Before you begin</h3>
+            <p class="watch-first-title">Before you begin</p>
             <p>The questions are based on the <strong>FULL presentation</strong> for this appendix. Please complete the assessment after you have watched and studied it. <a id="gate-link" href="presentations.html">Go to the presentation</a></p>
           </div>
           <label for="gate-check"><input type="checkbox" id="gate-check"> I have watched and studied the full presentation for this appendix.</label>
@@ -955,7 +957,7 @@
         <p class="footer-about">Training and assessments for the WBSC 2026-2029 Softball Umpire Mechanics program. A temporary training site, not the official WBSC website.</p>
       </div>
       <div class="footer-col">
-        <h4>This site</h4>
+        <h2>This site</h2>
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="manuals.html">Manuals</a></li>
@@ -966,7 +968,7 @@
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Official WBSC</h4>
+        <h2>Official WBSC</h2>
         <ul>
           <li><a href="https://www.wbsc.org" target="_blank" rel="noopener">wbsc.org</a></li>
         </ul>
@@ -1090,6 +1092,7 @@
 
   function buildDots(){
     els.dots.innerHTML = '';
+    els.dots.setAttribute('aria-hidden', 'true');   // the progress label already says where you are
     QUESTIONS.forEach(function(_, i){
       var d = document.createElement('span');
       d.className = 'quiz-dot' + (i < state.index ? ' done' : (i === state.index ? ' current' : ''));
@@ -1104,6 +1107,7 @@
     els.progressLabel.textContent = T('Question {n} of {total}', { n: state.index + 1, total: QUESTIONS.length });
     buildDots();
     els.question.textContent = q.q;
+    if (state.index > 0) { els.question.tabIndex = -1; els.question.focus({ preventScroll: false }); }   // a new question: announce it and keep the keyboard place
     els.options.innerHTML = '';
     els.options.setAttribute('role', 'radiogroup');
     els.options.setAttribute('aria-labelledby', 'quiz-question');
@@ -1115,7 +1119,19 @@
       btn.setAttribute('aria-checked', 'false');
       btn.innerHTML = '<span class="opt-letter">' + String.fromCharCode(65 + i) + '</span><span class="opt-text"></span><span class="opt-mark"></span>';
       btn.querySelector('.opt-text').textContent = optText;
+      btn.tabIndex = i === 0 ? 0 : -1;   // one tab stop for the group; arrow keys move between the answers
       btn.addEventListener('click', function(){ selectOption(i, btn); });
+      btn.addEventListener('keydown', function(e){
+        var k = e.key, n = q.options.length, to = null;
+        if (k === 'ArrowDown' || k === 'ArrowRight') to = (i + 1) % n;
+        else if (k === 'ArrowUp' || k === 'ArrowLeft') to = (i + n - 1) % n;
+        else if (k === 'Home') to = 0;
+        else if (k === 'End') to = n - 1;
+        if (to === null || state.answered) return;
+        e.preventDefault();
+        els.options.children[to].focus();
+        selectOption(to, els.options.children[to]);
+      });
       els.options.appendChild(btn);
     });
     els.feedback.style.display = 'none';
@@ -1127,7 +1143,8 @@
   function selectOption(i, btn){
     if (state.answered) return;
     state.selected = i;
-    Array.prototype.forEach.call(els.options.children, function(el){ el.classList.remove('selected'); el.setAttribute('aria-checked', 'false'); });
+    Array.prototype.forEach.call(els.options.children, function(el){ el.classList.remove('selected'); el.setAttribute('aria-checked', 'false'); el.tabIndex = -1; });
+    btn.tabIndex = 0;
     btn.classList.add('selected');
     btn.setAttribute('aria-checked', 'true');
     els.submitBtn.disabled = false;
@@ -1382,7 +1399,7 @@
     document.getElementById('field-email').classList.remove('invalid');
     verifyEls.sendBtn.disabled = true; verifyEls.resendBtn.disabled = true;
     setVerifyState('', T('Sending a code to {email}\u2026', { email: email }));
-    callServer('sendCode', { email: email, website: document.getElementById('inp-website').value }, function(r){
+    callServer('sendCode', { email: email, lang: LANG, website: document.getElementById('inp-website').value }, function(r){
       verifyEls.sendBtn.disabled = false;
       if (r.success) {
         codeSentTo = email.toLowerCase();
@@ -1578,6 +1595,7 @@
       percentage: pct,
       elapsedSeconds: Math.round((Date.now() - state.startedAt) / 1000),
       website: document.getElementById('inp-website').value,
+      lang: LANG,   // the language of the receipt email
       completionStatus: 'Complete',
       completionDateTime: new Date().toISOString(),
       programVersion: 'WBSC Umpire Mechanics Program 2026–2029'

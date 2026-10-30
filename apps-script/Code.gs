@@ -122,6 +122,167 @@ function doPost(e) {
   return handleSave_(e);
 }
 
+// ------------------------------------------------------------------ learner emails in the learner's language
+
+// The two emails a learner receives (the login code and the receipt) are sent in the language the site was
+// showing when they asked. English is the source and the fallback: a missing key or an unknown language gives
+// English. Emails to the Director and the owner are always English. {x} marks a value filled in at send time.
+// Keep these in step with i18n/README.md (glossary). Native-speaker reviewers should check them with the site text.
+var EMAIL_LANGS = ['en', 'es', 'fr', 'ja', 'ko', 'zh'];
+var EMAIL_TEXT = {
+  en: {
+    codeSubject: 'Your WBSC training verification code: {code}',
+    codeBody: 'Your verification code is {code}\n\n' +
+      'Enter it on the WBSC Umpire Mechanics Training site to confirm this email address. It expires in {min} minutes and can be used once.\n\n' +
+      'If you did not ask for this code, ignore this email: nothing happens unless the code is entered.\n\n' +
+      'This is a temporary training site and is not the official WBSC website.',
+    receiptSubject: 'Your WBSC Umpire Mechanics Training receipt: {module} - {result}',
+    hello: 'Hello {name},',
+    intro: 'This is your receipt from the WBSC Umpire Mechanics Training site.',
+    lModule: 'Module', lAssessment: 'Assessment', lScore: 'Score', lResult: 'Result', lAttempt: 'Attempt', lDate: 'Date and time', lRef: 'Reference',
+    resultLine: '{result} (pass mark {mark}%)',
+    attemptLine: '{n} of {max}',
+    PASS: 'PASS', FAIL: 'NOT PASSED',
+    nextPass: 'You have passed this assessment.',
+    nextLeft: 'You did not reach the pass mark. Attempts left for this assessment: {n}. Revisit the manual and presentation before trying again.',
+    nextNone: 'You did not reach the pass mark and have used all {max} attempts. Please contact {email}.',
+    complete: 'You have now passed all {n} modules. Congratulations!',
+    progress: 'Your progress so far:',
+    modNone: 'Module {nn}: not attempted yet',
+    modPass: 'Module {nn}: PASSED ({best}%, attempts used: {a})',
+    modFail: 'Module {nn}: not passed yet (best {best}%, attempts used: {a} of {max})',
+    footer: 'This is an automated receipt from a temporary training site. It is not an official WBSC certificate and the site is not the official WBSC website. Questions: {email}.'
+  },
+  es: {
+    codeSubject: 'Tu código de verificación de la formación WBSC: {code}',
+    codeBody: 'Tu código de verificación es {code}\n\n' +
+      'Introdúcelo en el sitio de formación en mecánica arbitral de la WBSC para confirmar esta dirección de correo electrónico. Caduca en {min} minutos y solo se puede usar una vez.\n\n' +
+      'Si no has solicitado este código, ignora este mensaje: no ocurre nada a menos que se introduzca el código.\n\n' +
+      'Este es un sitio de formación temporal, no el sitio web oficial de la WBSC.',
+    receiptSubject: 'Tu comprobante de la formación en mecánica arbitral de la WBSC: {module} - {result}',
+    hello: 'Hola, {name}:',
+    intro: 'Este es tu comprobante del sitio de formación en mecánica arbitral de la WBSC.',
+    lModule: 'Módulo', lAssessment: 'Evaluación', lScore: 'Puntuación', lResult: 'Resultado', lAttempt: 'Intento', lDate: 'Fecha y hora', lRef: 'Referencia',
+    resultLine: '{result} (nota mínima para aprobar: {mark}%)',
+    attemptLine: '{n} de {max}',
+    PASS: 'APROBADO', FAIL: 'NO APROBADO',
+    nextPass: 'Has aprobado esta evaluación.',
+    nextLeft: 'No has alcanzado la nota mínima para aprobar. Intentos restantes en esta evaluación: {n}. Repasa el manual y la presentación antes de volver a intentarlo.',
+    nextNone: 'No has alcanzado la nota mínima para aprobar y has usado los {max} intentos. Ponte en contacto con {email}.',
+    complete: 'Has aprobado ya los {n} módulos. ¡Enhorabuena!',
+    progress: 'Tu progreso hasta ahora:',
+    modNone: 'Módulo {nn}: aún sin intentar',
+    modPass: 'Módulo {nn}: APROBADO ({best}%, intentos usados: {a})',
+    modFail: 'Módulo {nn}: aún no aprobado (mejor resultado {best}%, intentos usados: {a} de {max})',
+    footer: 'Este es un comprobante automático de un sitio de formación temporal. No es un certificado oficial de la WBSC y el sitio no es el sitio web oficial de la WBSC. Consultas: {email}.'
+  },
+  fr: {
+    codeSubject: 'Votre code de vérification pour la formation WBSC : {code}',
+    codeBody: 'Votre code de vérification est {code}\n\n' +
+      'Saisissez-le sur le site de formation à la mécanique d’arbitrage de la WBSC pour confirmer cette adresse e-mail. Il expire dans {min} minutes et ne peut être utilisé qu’une seule fois.\n\n' +
+      'Si vous n’avez pas demandé ce code, ignorez ce message : il ne se passe rien tant que le code n’est pas saisi.\n\n' +
+      'Ceci est un site de formation temporaire, et non le site web officiel de la WBSC.',
+    receiptSubject: 'Votre reçu de la formation à la mécanique d’arbitrage de la WBSC : {module} - {result}',
+    hello: 'Bonjour {name},',
+    intro: 'Voici votre reçu du site de formation à la mécanique d’arbitrage de la WBSC.',
+    lModule: 'Module', lAssessment: 'Évaluation', lScore: 'Score', lResult: 'Résultat', lAttempt: 'Tentative', lDate: 'Date et heure', lRef: 'Référence',
+    resultLine: '{result} (note de passage : {mark} %)',
+    attemptLine: '{n} sur {max}',
+    PASS: 'RÉUSSI', FAIL: 'NON RÉUSSI',
+    nextPass: 'Vous avez réussi cette évaluation.',
+    nextLeft: 'Vous n’avez pas atteint la note de passage. Tentatives restantes pour cette évaluation : {n}. Relisez le manuel et la présentation avant de réessayer.',
+    nextNone: 'Vous n’avez pas atteint la note de passage et avez utilisé les {max} tentatives. Veuillez contacter {email}.',
+    complete: 'Vous avez maintenant réussi les {n} modules. Félicitations !',
+    progress: 'Votre progression jusqu’ici :',
+    modNone: 'Module {nn} : pas encore tenté',
+    modPass: 'Module {nn} : RÉUSSI ({best} %, tentatives utilisées : {a})',
+    modFail: 'Module {nn} : pas encore réussi (meilleur résultat {best} %, tentatives utilisées : {a} sur {max})',
+    footer: 'Ceci est un reçu automatique d’un site de formation temporaire. Ce n’est pas un certificat officiel de la WBSC et le site n’est pas le site web officiel de la WBSC. Questions : {email}.'
+  },
+  ja: {
+    codeSubject: 'WBSC 研修の確認コード: {code}',
+    codeBody: '確認コードは {code} です。\n\n' +
+      'このメールアドレスを確認するため、WBSC 審判メカニクス研修サイトに入力してください。コードの有効期限は {min} 分で、1回のみ使用できます。\n\n' +
+      'このコードを請求していない場合は、このメールを無視してください。コードが入力されない限り、何も起こりません。\n\n' +
+      'これは臨時の研修サイトであり、WBSC の公式ウェブサイトではありません。',
+    receiptSubject: 'WBSC 審判メカニクス研修の受領書: {module} - {result}',
+    hello: '{name} 様',
+    intro: 'WBSC 審判メカニクス研修サイトからの受領書です。',
+    lModule: 'モジュール', lAssessment: '評価', lScore: 'スコア', lResult: '結果', lAttempt: '受験回数', lDate: '日時', lRef: '参照番号',
+    resultLine: '{result}（合格基準 {mark}%）',
+    attemptLine: '{max} 回中 {n} 回目',
+    PASS: '合格', FAIL: '不合格',
+    nextPass: 'この評価に合格しました。',
+    nextLeft: '合格基準に達しませんでした。この評価の残り受験回数: {n}。マニュアルとプレゼンテーションを見直してから、もう一度受験してください。',
+    nextNone: '合格基準に達せず、{max} 回の受験をすべて使い切りました。{email} までご連絡ください。',
+    complete: '{n} 個のモジュールすべてに合格しました。おめでとうございます！',
+    progress: 'これまでの進捗:',
+    modNone: 'モジュール {nn}: まだ受験していません',
+    modPass: 'モジュール {nn}: 合格（{best}%、使用した受験回数: {a}）',
+    modFail: 'モジュール {nn}: まだ合格していません（最高 {best}%、使用した受験回数: {a} / {max}）',
+    footer: 'これは臨時の研修サイトからの自動送信の受領書です。WBSC の公式な修了証ではなく、このサイトは WBSC の公式ウェブサイトではありません。お問い合わせ: {email}'
+  },
+  ko: {
+    codeSubject: 'WBSC 교육 인증 코드: {code}',
+    codeBody: '인증 코드는 {code} 입니다.\n\n' +
+      '이 이메일 주소를 확인하려면 WBSC 심판 메커닉스 교육 사이트에 입력하세요. 코드는 {min}분 후에 만료되며 한 번만 사용할 수 있습니다.\n\n' +
+      '이 코드를 요청하지 않으셨다면 이 이메일을 무시하세요. 코드를 입력하지 않으면 아무 일도 일어나지 않습니다.\n\n' +
+      '이곳은 임시 교육 사이트이며 WBSC 공식 웹사이트가 아닙니다.',
+    receiptSubject: 'WBSC 심판 메커닉스 교육 확인서: {module} - {result}',
+    hello: '{name} 님, 안녕하세요.',
+    intro: 'WBSC 심판 메커닉스 교육 사이트에서 보내는 확인서입니다.',
+    lModule: '모듈', lAssessment: '평가', lScore: '점수', lResult: '결과', lAttempt: '응시', lDate: '날짜 및 시간', lRef: '참조 번호',
+    resultLine: '{result} (합격 기준 {mark}%)',
+    attemptLine: '{max}회 중 {n}회',
+    PASS: '합격', FAIL: '불합격',
+    nextPass: '이 평가에 합격하셨습니다.',
+    nextLeft: '합격 기준에 도달하지 못했습니다. 이 평가의 남은 응시 횟수: {n}. 다시 응시하기 전에 매뉴얼과 프레젠테이션을 복습하세요.',
+    nextNone: '합격 기준에 도달하지 못했고 {max}회의 응시 기회를 모두 사용했습니다. {email}(으)로 문의해 주세요.',
+    complete: '{n}개 모듈을 모두 통과하셨습니다. 축하합니다!',
+    progress: '지금까지의 진행 상황:',
+    modNone: '모듈 {nn}: 아직 응시하지 않음',
+    modPass: '모듈 {nn}: 합격 ({best}%, 사용한 응시 횟수: {a})',
+    modFail: '모듈 {nn}: 아직 합격하지 못함 (최고 {best}%, 사용한 응시 횟수: {a}/{max})',
+    footer: '이 확인서는 임시 교육 사이트에서 자동으로 발송되었습니다. WBSC 공식 수료증이 아니며, 이 사이트는 WBSC 공식 웹사이트가 아닙니다. 문의: {email}'
+  },
+  zh: {
+    codeSubject: 'WBSC 培训验证码：{code}',
+    codeBody: '您的验证码是 {code}\n\n' +
+      '请在 WBSC 裁判员机制培训网站输入该验证码，以确认此电子邮件地址。验证码将在 {min} 分钟后失效，且只能使用一次。\n\n' +
+      '如果您没有请求此验证码，请忽略本邮件：不输入验证码，不会发生任何事情。\n\n' +
+      '这是一个临时培训网站，不是 WBSC 官方网站。',
+    receiptSubject: 'WBSC 裁判员机制培训回执：{module} - {result}',
+    hello: '{name}，您好：',
+    intro: '这是来自 WBSC 裁判员机制培训网站的回执。',
+    lModule: '模块', lAssessment: '评估', lScore: '得分', lResult: '结果', lAttempt: '第几次尝试', lDate: '日期和时间', lRef: '参考编号',
+    resultLine: '{result}（及格线 {mark}%）',
+    attemptLine: '共 {max} 次，第 {n} 次',
+    PASS: '通过', FAIL: '未通过',
+    nextPass: '您已通过本次评估。',
+    nextLeft: '您未达到及格线。本评估剩余尝试次数：{n}。请先复习手册和演示文稿，再重新尝试。',
+    nextNone: '您未达到及格线，且已用完全部 {max} 次尝试机会。请联系 {email}。',
+    complete: '您已通过全部 {n} 个模块。恭喜！',
+    progress: '您目前的进度：',
+    modNone: '模块 {nn}：尚未尝试',
+    modPass: '模块 {nn}：通过（{best}%，已用尝试次数：{a}）',
+    modFail: '模块 {nn}：尚未通过（最高 {best}%，已用尝试次数：{a}/{max}）',
+    footer: '这是来自临时培训网站的自动回执。它不是 WBSC 官方证书，本网站也不是 WBSC 官方网站。如有疑问：{email}'
+  }
+};
+
+// The language the learner was using (the site sends it); anything unknown is English.
+function lang_(v) {
+  var l = String(v || '').toLowerCase().slice(0, 5);
+  return EMAIL_LANGS.indexOf(l) >= 0 ? l : 'en';
+}
+
+// One email phrase in a language, with {values} filled in. Falls back to English for a missing key.
+function et_(lang, key, vars) {
+  var t = (EMAIL_TEXT[lang] && EMAIL_TEXT[lang][key] != null) ? EMAIL_TEXT[lang][key] : EMAIL_TEXT.en[key];
+  for (var k in (vars || {})) t = t.split('{' + k + '}').join(String(vars[k]));
+  return t;
+}
+
 // ------------------------------------------------------------------ replies
 
 // A tiny page returned into the caller's hidden iframe. It tells every ancestor
@@ -226,12 +387,9 @@ function handleSendCode_(p) {
     }
     var code = newCode_();
     cachePutJson_('code:' + sha_(email), { h: sha_(code + ':' + email), tries: 0 }, CODE_TTL_S);
-    MailApp.sendEmail(email, 'Your WBSC training verification code: ' + code,
-      'Your verification code is ' + code + '\n\n' +
-      'Enter it on the WBSC Umpire Mechanics Training site to confirm this email address. ' +
-      'It expires in ' + Math.round(CODE_TTL_S / 60) + ' minutes and can be used once.\n\n' +
-      'If you did not ask for this code, ignore this email: nothing happens unless the code is entered.\n\n' +
-      'This is a temporary training site and is not the official WBSC website.');
+    var lg = lang_(p.lang);
+    MailApp.sendEmail(email, et_(lg, 'codeSubject', { code: code }),
+      et_(lg, 'codeBody', { code: code, min: Math.round(CODE_TTL_S / 60) }));
     msg.success = true;
     msg.expiresIn = CODE_TTL_S;
   } catch (err) {
@@ -470,6 +628,7 @@ function validate_(data) {
   c.result = c.passed ? 'PASS' : 'NOT PASSED';
   c.completionStatus = text_(data.completionStatus) || 'Complete';
   c.programVersion = text_(data.programVersion) || '2026-2029';
+  c.lang = lang_(data.lang);   // only used to choose the language of the learner's receipt
   return c;
 }
 
@@ -573,14 +732,14 @@ function completionSummary_(sheet, c) {
   return { modules: modules, passedCount: passedCount };
 }
 
-function summaryLines_(summary) {
+function summaryLines_(summary, lg) {
   var lines = [];
+  lg = lg || 'en';
   for (var n = 1; n <= TOTAL_MODULES; n++) {
-    var m = summary.modules[n];
-    var label = 'Module ' + ('0' + n).slice(-2) + ': ';
-    if (!m) lines.push(label + 'not attempted yet');
-    else if (m.passed) lines.push(label + 'PASSED (' + m.best + '%, ' + m.attempts + ' attempt' + (m.attempts === 1 ? '' : 's') + ' used)');
-    else lines.push(label + 'not passed yet (best ' + m.best + '%, ' + m.attempts + ' of ' + MAX_ATTEMPTS + ' attempts used)');
+    var m = summary.modules[n], nn = ('0' + n).slice(-2);
+    if (!m) lines.push(et_(lg, 'modNone', { nn: nn }));
+    else if (m.passed) lines.push(et_(lg, 'modPass', { nn: nn, best: m.best, a: m.attempts }));
+    else lines.push(et_(lg, 'modFail', { nn: nn, best: m.best, a: m.attempts, max: MAX_ATTEMPTS }));
   }
   return lines.join('\n');
 }
@@ -605,30 +764,30 @@ function sendAdminNotification_(c, attemptNumber) {
   MailApp.sendEmail(DIRECTOR_EMAIL, subject, body);
 }
 
-// The learner's receipt for one marked attempt.
+// The learner's receipt for one marked attempt, in the language the learner was using.
 function sendReceipt_(c, attemptNumber, summary) {
-  var left = MAX_ATTEMPTS - attemptNumber;
+  var lg = lang_(c.lang), left = MAX_ATTEMPTS - attemptNumber;
+  var result = et_(lg, c.passed ? 'PASS' : 'FAIL');
   var next;
-  if (c.passed) next = 'You have passed this assessment.';
-  else if (left > 0) next = 'You did not reach the pass mark. You have ' + left + ' attempt' + (left === 1 ? '' : 's') + ' left for this assessment. Revisit the manual and presentation before trying again.';
-  else next = 'You did not reach the pass mark and have used all ' + MAX_ATTEMPTS + ' attempts. Please contact ' + CONTACT_EMAIL + '.';
+  if (c.passed) next = et_(lg, 'nextPass');
+  else if (left > 0) next = et_(lg, 'nextLeft', { n: left });
+  else next = et_(lg, 'nextNone', { max: MAX_ATTEMPTS, email: CONTACT_EMAIL });
   var complete = summary.passedCount >= TOTAL_MODULES;
   var body =
-    'Hello ' + c.name + ',\n\n' +
-    'This is your receipt from the WBSC Umpire Mechanics Training site.\n\n' +
-    'Module: ' + c.module + '\n' +
-    'Assessment: ' + c.assessmentType + '\n' +
-    'Score: ' + c.score + ' / ' + c.total + ' (' + c.percentage + '%)\n' +
-    'Result: ' + c.result + ' (pass mark ' + PASS_MARK + '%)\n' +
-    'Attempt: ' + attemptNumber + ' of ' + MAX_ATTEMPTS + '\n' +
-    'Date and time: ' + new Date().toString() + '\n' +
-    'Reference: ' + c.submissionId.slice(0, 8).toUpperCase() + '\n\n' +
+    et_(lg, 'hello', { name: c.name }) + '\n\n' +
+    et_(lg, 'intro') + '\n\n' +
+    et_(lg, 'lModule') + ': ' + c.module + '\n' +
+    et_(lg, 'lAssessment') + ': ' + c.assessmentType + '\n' +
+    et_(lg, 'lScore') + ': ' + c.score + ' / ' + c.total + ' (' + c.percentage + '%)\n' +
+    et_(lg, 'lResult') + ': ' + et_(lg, 'resultLine', { result: result, mark: PASS_MARK }) + '\n' +
+    et_(lg, 'lAttempt') + ': ' + et_(lg, 'attemptLine', { n: attemptNumber, max: MAX_ATTEMPTS }) + '\n' +
+    et_(lg, 'lDate') + ': ' + new Date().toString() + '\n' +
+    et_(lg, 'lRef') + ': ' + c.submissionId.slice(0, 8).toUpperCase() + '\n\n' +
     next + '\n\n' +
-    (complete ? 'You have now passed all ' + TOTAL_MODULES + ' modules. Congratulations!\n\n' : '') +
-    'Your progress so far:\n' + summaryLines_(summary) + '\n\n' +
-    'This is an automated receipt from a temporary training site. It is not an official WBSC certificate and the site is not the official WBSC website. ' +
-    'Questions: ' + CONTACT_EMAIL + '.';
-  MailApp.sendEmail(c.email, 'Your WBSC Umpire Mechanics Training receipt: ' + c.module + ' - ' + c.result, body);
+    (complete ? et_(lg, 'complete', { n: TOTAL_MODULES }) + '\n\n' : '') +
+    et_(lg, 'progress') + '\n' + summaryLines_(summary, lg) + '\n\n' +
+    et_(lg, 'footer', { email: CONTACT_EMAIL });
+  MailApp.sendEmail(c.email, et_(lg, 'receiptSubject', { module: c.module, result: result }), body);
 }
 
 // To the Director, once, when a learner passes the last required module.

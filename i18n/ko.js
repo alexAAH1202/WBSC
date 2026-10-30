@@ -355,5 +355,8 @@ WBSC_DICT["ko"] = { t: {
  "Important": "중요",
  "Read Official WBSC Manual": "WBSC 공식 매뉴얼 읽기",
  "I have watched and studied the full presentation for this appendix.": "이 부록의 프레젠테이션 전체를 시청하고 학습했습니다.",
- "Available now": "지금 이용 가능"
+ "Available now": "지금 이용 가능",
+ "The server could not save the result": "서버가 결과를 저장하지 못했습니다",
+ "Invalid submission: the assessment was completed too quickly to be a real attempt": "유효하지 않은 제출입니다. 평가가 너무 빨리 완료되어 실제 응시로 인정할 수 없습니다",
+ "The Four Pillars - About the Framework": "네 개의 기둥 - 체계 소개"
 } };
