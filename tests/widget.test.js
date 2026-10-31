@@ -25,7 +25,7 @@ const ok = m => { console.log('  ok -', m); n++; };
 async function newPage(b, opts, saveHandler) {
   opts = opts || {};
   if (lastCtx) await lastCtx.close().catch(() => {});   // one page at a time keeps the browser light
-  const ctx = lastCtx = await b.newContext(); await ctx.addInitScript(() => { try { localStorage.setItem('wbscNoticeSeen', '1'); } catch (e) {} }); const pg = await ctx.newPage(); const posts = [], fetches = [], lookups = [], calls = [];
+  const ctx = lastCtx = await b.newContext(); await ctx.addInitScript(() => { try { localStorage.setItem('wbscNoticeSeen', '1'); } catch (e) {} }); const pg = await ctx.newPage(); const posts = [], progressCalls = [], fetches = [], lookups = [], calls = [];
   pg.on('pageerror', e => console.log('PAGE ERROR', e.message));
   pg.on('request', r => { if (r.resourceType() === 'fetch' || r.resourceType() === 'xhr') fetches.push(r.url()); });
   await pg.route(/script\.google\.com\/macros\/s\/.*\/exec\?action=attempts/, r => {
@@ -46,6 +46,10 @@ async function newPage(b, opts, saveHandler) {
           ? { wbscAuth: true, id, action, success: false, code: 'rate', error: 'Too many codes have been requested for this address. Please wait a while and try again.' }
           : { wbscAuth: true, id, action, success: true, expiresIn: 600 })));
       }
+      if (action === 'saveProgress' || action === 'clearProgress') {
+        progressCalls.push({ action, key: params.get('key'), token: params.get('token'), data: params.get('data') });
+        return r.fulfill(page_(reply({ wbscAuth: true, id, action, success: true })));
+      }
       if (action === 'verifyCode') {
         if (params.get('code') !== '123456') return r.fulfill(page_(reply({ wbscAuth: true, id, action, success: false, code: 'wrong', error: 'That code is not right. 4 tries left.' })));
         const tok = (opts.tokens && opts.tokens.length) ? opts.tokens.shift() : TOKEN;
@@ -57,22 +61,22 @@ async function newPage(b, opts, saveHandler) {
     await (saveHandler || (() => r.fulfill(page_(reply({ wbscSave: true, success: true, submissionId: payload.submissionId, attemptNumber: 1, maxAttempts: 2, result: payload.percentage >= 85 ? 'PASS' : 'NOT PASSED' })))))(r, payload, posts.length);
   });
   await pg.clock.install();
-  await pg.goto('http://localhost:' + PORT + '/assessment-widget.html');
+  await pg.goto('http://localhost:' + PORT + '/assessment-widget.html' + (opts.query || ''));
   await pg.fill('#inp-name', 'Jo Ump'); await pg.fill('#inp-email', 'Jo@X.com');
   if (!opts.unverified) await verifyEmail(pg);
-  return { pg, posts, fetches, lookups, calls };
+  return { pg, posts, fetches, lookups, calls, progressCalls };
 }
 async function verifyEmail(pg, code = '123456') {
   await pg.click('#verify-send-btn'); await pg.waitForSelector('#verify-code-row', { state: 'visible' });
   await pg.fill('#inp-code', code); await pg.click('#verify-check-btn');
-  await pg.waitForFunction(() => /Email verified|not right/.test(document.getElementById('verify-state').textContent));
+  await pg.waitForFunction(() => /Email verified|not right/.test(document.getElementById('verify-state').textContent) || document.getElementById('verify-state').className.indexOf('ok') !== -1);   // the second test is for translated pages
 }
 // answers every question; `wrong` = how many to get wrong (from the start)
 async function runQuiz(pg, key = 'm01-pca', wrong = 0) {
   await pg.click(`[data-assessment="${key}"]`);
   if (BANK[key].watchFirst) { await pg.waitForSelector('#quiz-gate', { state: 'visible' }); await pg.check('#gate-check'); await pg.click('#gate-start'); }
   await pg.waitForSelector('#quiz-question', { state: 'visible' });
-  const count = BANK[key].questions.length;
+  const count = BANK[key].draw || BANK[key].questions.length;
   for (let i = 0; i < count; i++) {
     const q = await pg.textContent('#quiz-question'); const opts = await pg.$$eval('.quiz-option .opt-text', a => a.map(x => x.textContent));
     const right = opts.indexOf(RIGHT[q]); assert.ok(right >= 0, 'known question'); const pick = i < wrong ? (right + 1) % opts.length : right;
@@ -325,8 +329,8 @@ const verifyText = pg => pg.textContent('#verify-state');
   const stored = await t.pg.evaluate(() => JSON.parse(localStorage.getItem('wbscResume')));
   assert.strictEqual(stored.index, 3); assert.strictEqual(stored.score, 2); assert.strictEqual(stored.missed.length, 1); assert.strictEqual(stored.email, 'jo@x.com');
   await t.pg.click('#resume-go'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
-  assert.strictEqual(await t.pg.textContent('#quiz-question'), Q[3].q, 'resumes at the fourth question');
-  assert.deepStrictEqual(await t.pg.$$eval('.quiz-option .opt-text', a => a.map(x => x.textContent)), stored.order[3].map(i => Q[3].options[i]), 'same option order as stored');
+  const Q3 = Q[stored.qi[3]]; assert.strictEqual(await t.pg.textContent('#quiz-question'), Q3.q, 'resumes at the fourth question');
+  assert.deepStrictEqual(await t.pg.$$eval('.quiz-option .opt-text', a => a.map(x => x.textContent)), stored.order[3].map(i => Q3.options[i]), 'same option order as stored');
   assert.ok(/Question 4 of 10/.test(await t.pg.textContent('#quiz-progress-label')));
   await answerRight(t.pg, 7); await t.pg.waitForFunction(() => /recorded/.test(document.getElementById('quiz-save-state').textContent));
   assert.strictEqual(t.posts[0].payload.score, 9); assert.strictEqual(t.posts[0].payload.totalQuestions, 10); assert.strictEqual(typeof t.posts[0].payload.elapsedSeconds, 'number');
@@ -372,7 +376,7 @@ const verifyText = pg => pg.textContent('#verify-state');
 
   // the pass requirement follows the number of questions
   t = await newPage(b, {});
-  await t.pg.evaluate(() => { var q = QUIZ_BANK['m01-pca']; for (var i = 0; i < 10; i++) q.questions.push(q.questions[i]); return null; });
+  await t.pg.evaluate(() => { var q = QUIZ_BANK['m01-pca']; for (var i = 0; i < 10; i++) q.questions.push(q.questions[i]); q.draw = 20; return null; });
   await t.pg.click('[data-assessment="m01-pca"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
   assert.ok(/\(17 of 20 correct to pass\)/.test(await t.pg.textContent('#quiz-attempt-label')), await t.pg.textContent('#quiz-attempt-label'));
   ok('with 20 questions the page says 17 of 20 are needed');
@@ -396,6 +400,81 @@ const verifyText = pg => pg.textContent('#verify-state');
     const warn = () => pg.evaluate(() => { const e = new Event('beforeunload', { cancelable: true }); window.dispatchEvent(e); return e.defaultPrevented; });
     assert.strictEqual(await warn(), false); await pg.click('.quiz-option >> nth=0'); await pg.click('#quiz-submit-btn'); await pg.click('#quiz-submit-btn'); assert.strictEqual(await warn(), true);
     ok('options shuffle (right answer in ' + seen.size + ' positions) and still score; ARIA radios; details kept; leave warning only mid-quiz');
+  }
+
+  // ====================================================================  question pool and progress on the server
+  {
+    const POOL = 'm06-pca', DRAW = BANK[POOL].draw, ALL = BANK[POOL].questions.map(q => q.q);
+    assert.strictEqual(DRAW, 10); assert.strictEqual(ALL.length, 20);
+    const startPool = async t => { await t.pg.click(`[data-assessment="${POOL}"]`); await t.pg.waitForSelector('#quiz-gate', { state: 'visible' }); await t.pg.check('#gate-check'); await t.pg.click('#gate-start'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' }); };
+    // answers right, returns the question texts in the order asked
+    const answerPool = async (t, upTo = DRAW) => {
+      const seen = [];
+      for (let i = 0; i < upTo; i++) {
+        const q = await t.pg.textContent('#quiz-question'); seen.push(q); const opts = await t.pg.$$eval('.quiz-option .opt-text', a => a.map(x => x.textContent));
+        await t.pg.click(`.quiz-option >> nth=${opts.indexOf(RIGHT[q])}`); await t.pg.click('#quiz-submit-btn'); await t.pg.click('#quiz-submit-btn');
+      }
+      return seen;
+    };
+    let t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false } });
+    await startPool(t); assert.ok(/Question 1 of 10/.test(await t.pg.textContent('#quiz-progress-label')));
+    const first = await answerPool(t); await until(t);
+    assert.strictEqual(first.length, 10); assert.strictEqual(new Set(first).size, 10); assert.ok(first.every(q => ALL.includes(q)), 'drawn from the pool');
+    assert.strictEqual(t.posts[0].payload.totalQuestions, 10); assert.strictEqual(t.posts[0].payload.score, 10); assert.strictEqual(t.posts[0].payload.assessmentKey, POOL);
+    assert.ok(first.every((q, i, a) => i === 0 || ALL.indexOf(q) > ALL.indexOf(a[i - 1])), 'asked in the order of the pool');
+    ok('a pooled assessment asks 10 of its 20 questions, each once, and reports 10 questions to the server with its key');
+    await t.pg.waitForFunction(() => /recorded/.test(document.getElementById('quiz-save-state').textContent));
+    await t.pg.click('#quiz-try-again').catch(() => {});   // only shown when the attempt did not pass; otherwise start again from the list
+    await t.pg.evaluate(() => history.replaceState(null, '', location.pathname)); await t.pg.reload();
+    await startPool(t); const second = await answerPool(t);
+    assert.deepStrictEqual(second.filter(q => first.includes(q)), [], 'the second attempt asks the ten questions the first did not');
+    ok('a second attempt prefers questions the learner has not seen: no overlap with the first attempt');
+
+    // progress is saved to the server after each answer and offered on another device
+    t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false } });
+    await startPool(t); const part = await answerPool(t, 4);
+    assert.strictEqual(t.progressCalls.filter(c => c.action === 'saveProgress').length, 4); const last = t.progressCalls[3];
+    assert.strictEqual(last.key, POOL); assert.strictEqual(last.token, TOKEN);
+    const saved = JSON.parse(last.data); assert.strictEqual(saved.index, 4); assert.strictEqual(saved.score, 4); assert.strictEqual(saved.qi.length, 10); assert.strictEqual(saved.v, 2);
+    assert.ok(!/@/.test(last.data), 'no email address in the saved progress');
+    ok('each answer saves progress to the server against the session (4 saves after 4 answers), without the email address');
+    const nextQ = ALL[saved.qi[4]];
+    const dev = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false, progress: Object.assign(saved, { savedAt: Date.now() }) } });
+    await dev.pg.click(`[data-assessment="${POOL}"]`); await dev.pg.waitForSelector('#quiz-resume', { state: 'visible' });
+    assert.ok(/answered 4 of 10/.test(await dev.pg.textContent('#resume-text')));
+    await dev.pg.click('#resume-go'); await dev.pg.waitForSelector('#quiz-question', { state: 'visible' });
+    assert.ok(/Question 5 of 10/.test(await dev.pg.textContent('#quiz-progress-label'))); assert.strictEqual(await dev.pg.textContent('#quiz-question'), nextQ);
+    const rest = await answerPool(dev, 6); await until(dev);
+    assert.deepStrictEqual(rest.concat([]).every(q => ALL.includes(q)), true); assert.strictEqual(dev.posts[0].payload.totalQuestions, 10); assert.strictEqual(dev.posts[0].payload.score, 10, 'the score carried over from the other device');
+    ok('on another device the saved attempt is offered, resumes at the next question with the same draw, and finishes with the carried-over score');
+
+    // saved progress for another assessment / too old / questions changed is ignored
+    for (const edit of [d => { d.savedAt = Date.now() - 25 * 3600 * 1000; }, d => { d.qs[0] = 'something else'; }, d => { d.qi[1] = d.qi[0]; }, d => { d.v = 1; }]) {
+      const bad = JSON.parse(JSON.stringify(saved)); edit(bad); if (!bad.savedAt || bad.savedAt === saved.savedAt) bad.savedAt = bad.savedAt || Date.now();
+      const x = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false, progress: bad } });
+      await x.pg.click(`[data-assessment="${POOL}"]`); await x.pg.waitForSelector('#quiz-gate', { state: 'visible' }); assert.ok(!(await x.pg.isVisible('#quiz-resume')), 'not offered: ' + edit.toString());
+    }
+    ok('server progress that is too old, for different questions, malformed or an old format is not offered');
+
+    // practice quizzes never touch the server progress
+    t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false } });
+    await t.pg.click('[data-assessment="m06-mkc"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' }); await t.pg.click('.quiz-option >> nth=0'); await t.pg.click('#quiz-submit-btn');
+    assert.strictEqual(t.progressCalls.length, 0); ok('practice quizzes save no progress');
+
+    // Start again clears the server copy
+    t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false, progress: Object.assign(JSON.parse(JSON.stringify(saved)), { savedAt: Date.now() }) } });
+    await t.pg.click(`[data-assessment="${POOL}"]`); await t.pg.waitForSelector('#quiz-resume', { state: 'visible' }); await t.pg.click('#resume-restart');
+    for (let i = 0; i < 60 && !t.progressCalls.some(c => c.action === 'clearProgress'); i++) await new Promise(r => setTimeout(r, 50));   // the call is sent in the background
+    assert.ok(t.progressCalls.some(c => c.action === 'clearProgress' && c.key === POOL && c.token === TOKEN)); ok('"Start again" also clears the saved attempt on the server');
+
+    // a language with no translated extras draws only the translated questions
+    const fr = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false }, query: '?langs=all&lang=fr' });
+    await fr.pg.click(`[data-assessment="${POOL}"]`); await fr.pg.waitForSelector('#quiz-gate', { state: 'visible' }); await fr.pg.check('#gate-check'); await fr.pg.click('#gate-start'); await fr.pg.waitForSelector('#quiz-question', { state: 'visible' });
+    const frCtx = {}; frCtx.window = frCtx; vm.runInNewContext(fs.readFileSync(path.join(root, 'i18n', 'q-fr.js'), 'utf8'), frCtx); const frCore = frCtx.WBSC_QDICT.fr['m06-pca'].questions.map(q => q.q);
+    const asked = [];
+    for (let i = 0; i < 10; i++) { asked.push(await fr.pg.textContent('#quiz-question')); await fr.pg.click('.quiz-option >> nth=0'); await fr.pg.click('#quiz-submit-btn'); await fr.pg.click('#quiz-submit-btn'); }
+    assert.strictEqual(frCore.length, 10); assert.deepStrictEqual([...asked].sort(), [...frCore].sort(), 'French asks exactly its ten translated questions');
+    ok('in a language with only the core questions translated (French) the draw uses exactly those ten, all in French');
   }
 
   await b.close(); server.close(); console.log(n + ' widget checks passed');

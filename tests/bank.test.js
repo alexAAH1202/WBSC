@@ -14,8 +14,13 @@ for (const m of modules) for (const t of hasPractice(m) ? ['mkc', 'pca'] : ['pca
   const key = `${m}-${t}`, bank = BANK[key];
   if (!bank) { errors.push(`${key}: missing assessment`); continue; }
   for (const f of ['module', 'moduleShort', 'kind', 'title', 'nextLabel', 'nextHref']) if (!bank[f]) errors.push(`${key}: ${f} is empty`);
-  if (bank.questions.length < minimum[t]) errors.push(`${key}: ${bank.questions.length} questions, at least ${minimum[t]} needed`);
-  if (bank.questions.length > 100) errors.push(`${key}: more than 100 questions (Code.gs MAX_QUESTIONS)`);
+  // A pool: `draw` questions are asked each attempt, chosen from all of `questions` (see assessment-widget.html).
+  if (bank.draw !== undefined && (!Number.isInteger(bank.draw) || bank.draw < minimum[t] || bank.draw > bank.questions.length)) errors.push(`${key}: draw must be a whole number from ${minimum[t]} up to the number of questions`);
+  if (bank.draw !== undefined && t === 'mkc') errors.push(`${key}: practice quizzes do not use a draw`);
+  const asked = bank.draw || bank.questions.length;
+  if (asked < minimum[t]) errors.push(`${key}: ${asked} questions asked, at least ${minimum[t]} needed`);
+  if (asked > 100) errors.push(`${key}: more than 100 questions asked (Code.gs MAX_QUESTIONS)`);
+  if (bank.questions.length > 200) errors.push(`${key}: more than 200 questions in the pool`);
   if (['m05', 'm06', 'm07', 'm08'].includes(m) && t === 'pca' && !/^presentations\.html#pres-/.test(bank.watchFirst || '')) errors.push(`${key}: watchFirst must link to its presentation`);
   if (!new RegExp('^Module 0' + m.slice(2) + ' ').test(bank.module.replace(/\\u2014/g, '-'))) errors.push(`${key}: module name does not start with its number`);
   if (bank.kind !== kinds[t]) errors.push(`${key}: kind is "${bank.kind}", expected "${kinds[t]}"`);

@@ -28,7 +28,7 @@
   function esc(t){ return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
   box.innerHTML =
     '<strong>' + esc(T('Cookies and privacy')) + '</strong>' +
-    '<p>' + esc(T('This site does not use cookies or tracking. It keeps what you type in your browser for this visit only, and it contacts Google to email you a login code and to save your marked results.')) + '</p>' +
+    '<p>' + esc(T('This site does not use cookies or tracking. It keeps what you type in your browser for this visit only. It contacts Google to email you a login code, to save your marked results and, if you stop a marked assessment part-way, to save your progress so you can resume on any device.')) + '</p>' +
     '<div class="row"><button type="button">' + esc(T('OK')) + '</button><a href="privacy.html">' + esc(T('Read the privacy page')) + '</a></div>';
   box.querySelector('button').addEventListener('click', function(){
     try { localStorage.setItem(KEY, '1'); } catch (e) {}

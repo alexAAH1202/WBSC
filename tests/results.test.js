@@ -104,6 +104,30 @@ let PORT;
     await o.pg.fill('#pw', 'x'); await o.pg.click('#login-btn'); await o.pg.waitForFunction(() => /Too many/.test(document.getElementById('login-msg').textContent)); ok('lockout message shown');
     await o.pg.evaluate(() => window.postMessage({ wbscResults: true, id: 'x', success: true, cols: [], rows: [] }, '*'));
     await o.pg.waitForTimeout(200); assert(await o.pg.isVisible('#login-view')); ok('spoofed same-origin message ignored');
+    // association filter, "went quiet", by-association table
+    const withAssoc = (r, a) => { const c = r.slice(); c[4] = a; return c; };
+    const ROWS2 = [
+      ...MODS.map((m, i) => withAssoc(row(10 - i, 'Alice Done', 'alice@x.com', 'A1', m, PCA, 90, 1, 'PASS'), 'Australia')),
+      withAssoc(row(3, 'Bob Stuck', 'bob@x.com', 'B1', MODS[0], PCA, 60, 1, 'NOT PASSED'), 'New Zealand'),
+      withAssoc(row(2, 'Bob Stuck', 'bob@x.com', 'B1', MODS[0], PCA, 70, 2, 'NOT PASSED'), 'New Zealand'),
+      withAssoc(row(30, 'Dan Quiet', 'dan@x.com', 'D1', MODS[0], PCA, 90, 1, 'PASS'), 'New Zealand'),
+      withAssoc(row(5, 'Eve Active', 'eve@x.com', 'E1', MODS[0], PCA, 90, 1, 'PASS'), 'Australia'),
+      withAssoc(row(1, 'Fay Nowhere', 'fay@x.com', 'F1', MODS[0], PCA, 90, 1, 'PASS'), '')
+    ];
+    const q = await open(b, p => p.get('password') === 'right' ? { success: true, cols: COLS, rows: ROWS2, config: CONFIG } : { success: false, code: 'wrong', error: 'no' });
+    await q.pg.fill('#pw', 'right'); await q.pg.click('#login-btn'); await q.pg.waitForSelector('#dash-view', { state: 'visible' });
+    const assoc = await q.pg.$$eval('#assoc-table tbody tr', a => a.map(r => [...r.children].map(c => c.textContent).join('|')));
+    assert.deepStrictEqual(assoc, ['(none given)|1|0|1|0|0', 'Australia|2|1|1|0|0', 'New Zealand|2|0|1|1|1'], assoc.join(' ; ')); ok('by-association table counts completed, in progress, need attention and went quiet');
+    const tiles2 = await q.pg.$$eval('#tiles .tile', a => a.map(t => t.querySelector('.k').textContent + '=' + t.querySelector('.v').textContent));
+    assert.ok(tiles2.includes('Went quiet=1'), tiles2.join(',')); ok('a "Went quiet" tile counts people with no activity for 14 days');
+    await q.pg.click('.chip[data-f=quiet]'); assert.strictEqual(await q.pg.locator('#people-table .prow').count(), 1); assert(/Dan Quiet/.test(await q.pg.textContent('#people-table'))); assert(/Went quiet/.test(await q.pg.textContent('#people-table'))); ok('the "Went quiet" filter lists only Dan, with a Went quiet badge');
+    await q.pg.click('.chip[data-f=all]');
+    await q.pg.selectOption('#assoc-filter', 'Australia'); assert.strictEqual(await q.pg.locator('#people-table .prow').count(), 2); assert.strictEqual(await q.pg.textContent('#shown'), '2 of 5 shown'); ok('the association filter narrows the list');
+    await q.pg.click('.chip[data-f=progress]'); assert.strictEqual(await q.pg.locator('#people-table .prow').count(), 1); assert(/Eve Active/.test(await q.pg.textContent('#people-table'))); ok('the association filter combines with the status filter and the search');
+    await q.pg.click('.chip[data-f=all]'); await q.pg.selectOption('#assoc-filter', '(none given)'); assert.strictEqual(await q.pg.locator('#people-table .prow').count(), 1); ok('umpires with no association can be filtered too');
+    await q.pg.selectOption('#assoc-filter', ''); assert.strictEqual(await q.pg.locator('#people-table .prow').count(), 5);
+    const [dl2] = await Promise.all([q.pg.waitForEvent('download'), q.pg.click('#csv-summary-btn')]); const csv2 = fs.readFileSync(await dl2.path(), 'utf8');
+    assert(/"Needs attention","Went quiet","Last activity"/.test(csv2) && /"Dan Quiet".*"No","Yes"/.test(csv2)); ok('the summary CSV has a Went quiet column');
     const bad = [...o.hosts].filter(h => !/^localhost:|^script\.google\.com$/.test(h)); assert.deepStrictEqual(bad, []); ok('no requests to other hosts');
   } finally { await b.close(); server.close(); }
   console.log(n + ' checks passed');

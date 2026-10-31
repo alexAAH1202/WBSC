@@ -602,6 +602,8 @@
   .chips{display:flex;gap:8px;flex-wrap:wrap;}
   .chip{border:1.5px solid var(--navy-950);background:var(--white);color:var(--navy-950);font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;font-size:0.74rem;padding:8px 14px;}
   .chip[aria-pressed="true"]{background:var(--navy-950);color:var(--white);}
+  .assoc-label select{border:1.5px solid var(--line);padding:9px 10px;font-family:var(--font-body);font-size:0.9rem;background:var(--white);max-width:260px;}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
   .count{font-size:0.82rem;color:var(--ink-soft);margin-left:auto;}
   .tabs{display:flex;gap:0;margin-bottom:0;border-bottom:2px solid var(--navy-950);}
   .tab{background:var(--white);border:1px solid var(--line);border-bottom:none;font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;font-size:0.8rem;padding:11px 20px;color:var(--ink-soft);}
@@ -726,6 +728,11 @@
         <div class="tiles" id="tiles" aria-label="Summary"></div>
 
         <div class="panel">
+          <h3>By association / federation</h3>
+          <div class="inner tablewrap"><table class="grid" id="assoc-table"></table></div>
+        </div>
+
+        <div class="panel">
           <h3>Progress by module</h3>
           <div class="inner tablewrap"><table class="grid" id="module-table"></table></div>
         </div>
@@ -743,7 +750,11 @@
                 <button class="chip" type="button" data-f="completed" aria-pressed="false">Completed</button>
                 <button class="chip" type="button" data-f="progress" aria-pressed="false">In progress</button>
                 <button class="chip" type="button" data-f="attention" aria-pressed="false">Needs attention</button>
+                <button class="chip" type="button" data-f="quiet" aria-pressed="false">Went quiet</button>
               </div>
+              <label class="assoc-label" for="assoc-filter"><span class="sr-only">Association / Federation</span>
+                <select id="assoc-filter" aria-label="Filter by association or federation"><option value="">All associations / federations</option></select>
+              </label>
               <span class="count" id="shown"></span>
             </div>
             <div class="tablewrap"><table class="grid" id="people-table"></table></div>
@@ -799,8 +810,9 @@
   var PW_KEY = 'wbscResultsPw';
 
   var $ = function(id){ return document.getElementById(id); };
+  var STALLED_DAYS = 14;   // keep equal to STALLED_DAYS in Code.gs (the weekly summary email)
   var state = { people: [], rows: [], config: { passMark: 85, maxAttempts: 2, totalModules: 8, completionType: 'Presentation Competency Assessment' },
-                filter: 'all', q: '', open: null, tab: 'umpires', generated: null, truncated: false };
+                filter: 'all', assoc: '', q: '', open: null, tab: 'umpires', generated: null, truncated: false };
 
   function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]; }); }
   function trusted(o){ return /^https:\/\/([a-z0-9-]+\.)*(googleusercontent\.com|google\.com)$/.test(o || ''); }
@@ -876,6 +888,7 @@
       });
       p.completed = p.passedCount >= cfg.totalModules;
       if (p.completed) p.completedAt = Object.keys(p.modules).map(function(k){ return p.modules[k].passedAt; }).filter(Boolean).sort(function(a, b){ return b - a; })[0] || null;
+      p.quiet = !p.completed && !p.attention && !!p.last && Date.now() - p.last.getTime() >= STALLED_DAYS * 864e5;   // started, then nothing for two weeks
       p.status = p.completed ? 'completed' : (p.attention ? 'attention' : 'progress');
       return p;
     });
@@ -900,6 +913,7 @@
       ['Completed all ' + cfg.totalModules, completed, P.length ? Math.round(completed / P.length * 100) + '% of umpires' : '', 'good'],
       ['In progress', P.length - completed, 'not yet completed', ''],
       ['Need attention', attention, 'used every attempt on a module', attention ? 'warn' : ''],
+      ['Went quiet', P.filter(function(p){ return p.quiet; }).length, 'no activity for ' + STALLED_DAYS + '+ days', ''],
       ['Marked attempts', marked.length, marked.length ? Math.round(passes / marked.length * 100) + '% passed' : 'none yet', ''],
       ['Last 7 days', week, 'results of any kind', '']
     ];
@@ -919,12 +933,32 @@
     $('module-table').innerHTML = '<caption class="msg" style="text-align:left;margin:0 0 8px;caption-side:top;">Marked assessment only. &ldquo;Out of attempts&rdquo; = used every attempt without passing.</caption><thead><tr><th scope="col">Module</th><th scope="col" class="num">Umpires attempted</th><th scope="col" class="num">Passed</th><th scope="col" class="num">Out of attempts</th><th scope="col" class="num">Pass rate</th></tr></thead><tbody>' + rows + '</tbody>';
   }
 
+  var NO_ASSOC = '(none given)';
+  function renderAssociations(){
+    var by = {};
+    state.people.forEach(function(p){
+      var a = p.association || NO_ASSOC, o = by[a] || (by[a] = { umpires: 0, completed: 0, progress: 0, attention: 0, quiet: 0 });
+      o.umpires++;
+      if (p.completed) o.completed++; else if (p.attention) o.attention++; else o.progress++;
+      if (p.quiet) o.quiet++;
+    });
+    var names = Object.keys(by).sort(function(a, b){ return a.toLowerCase() < b.toLowerCase() ? -1 : 1; });
+    var sel = $('assoc-filter'), cur = state.assoc;
+    sel.innerHTML = '<option value="">All associations / federations</option>' + names.map(function(n){ return '<option value="' + esc(n) + '">' + esc(n) + ' (' + by[n].umpires + ')</option>'; }).join('');
+    if (names.indexOf(cur) < 0) { cur = ''; state.assoc = ''; }
+    sel.value = cur;
+    $('assoc-table').innerHTML = '<thead><tr><th scope="col">Association / Federation</th><th scope="col" class="num">Umpires</th><th scope="col" class="num">Completed</th><th scope="col" class="num">In progress</th><th scope="col" class="num">Need attention</th><th scope="col" class="num">Of those in progress, went quiet</th></tr></thead><tbody>' +
+      (names.length ? names.map(function(n){ var o = by[n]; return '<tr><td>' + esc(n) + '</td><td class="num">' + o.umpires + '</td><td class="num">' + o.completed + '</td><td class="num">' + o.progress + '</td><td class="num">' + o.attention + '</td><td class="num">' + o.quiet + '</td></tr>'; }).join('') : '<tr><td colspan="6" class="empty">No results have been recorded yet.</td></tr>') + '</tbody>';
+  }
+
   function visiblePeople(){
     var q = state.q.trim().toLowerCase();
     return state.people.filter(function(p){
       if (state.filter === 'completed' && !p.completed) return false;
       if (state.filter === 'progress' && p.completed) return false;
       if (state.filter === 'attention' && !(p.attention && !p.completed)) return false;
+      if (state.filter === 'quiet' && !p.quiet) return false;
+      if (state.assoc !== '' && (p.association || NO_ASSOC) !== state.assoc) return false;
       if (!q) return true;
       return [p.name, Object.keys(p.emails).join(' '), p.umpireId, p.association].join(' ').toLowerCase().indexOf(q) !== -1;
     }).sort(function(a, b){ return (b.last ? b.last.getTime() : 0) - (a.last ? a.last.getTime() : 0); });
@@ -933,6 +967,7 @@
   function badge(p){
     if (p.completed) return '<span class="badge done">Completed</span>';
     if (p.attention) return '<span class="badge warn">Needs attention</span>';
+    if (p.quiet) return '<span class="badge prog">Went quiet</span>';
     return '<span class="badge prog">In progress</span>';
   }
 
@@ -973,7 +1008,7 @@
   }
 
   function renderAll(){
-    renderTiles(); renderModules(); renderPeople(); renderAttempts();
+    renderTiles(); renderAssociations(); renderModules(); renderPeople(); renderAttempts();
     $('truncated').style.display = state.truncated ? '' : 'none';
     $('dash-meta').textContent = state.generated ? 'Loaded ' + fmtDateTime(state.generated) + ' \u00b7 pass mark ' + state.config.passMark + '% \u00b7 maximum ' + state.config.maxAttempts + ' attempts' : '';
   }
@@ -991,13 +1026,13 @@
   }
   function today(){ var d = new Date(); return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()); }
   function summaryHead(){
-    var h = ['Name', 'Email', 'Umpire ID', 'Association', 'Modules passed', 'Completed all ' + state.config.totalModules, 'Completed on', 'Needs attention', 'Last activity'];
+    var h = ['Name', 'Email', 'Umpire ID', 'Association', 'Modules passed', 'Completed all ' + state.config.totalModules, 'Completed on', 'Needs attention', 'Went quiet', 'Last activity'];
     for (var n = 1; n <= state.config.totalModules; n++) h.push('Module ' + pad2(n));
     return h;
   }
   function summaryRow(p){
     var r = [p.name, Object.keys(p.emails).map(function(k){ return p.emails[k]; }).join('; '), p.umpireId, p.association, p.passedCount, p.completed ? 'Yes' : 'No',
-             p.completedAt ? p.completedAt.toISOString().slice(0, 10) : '', p.attention && !p.completed ? 'Yes' : 'No', p.last ? p.last.toISOString() : ''];
+             p.completedAt ? p.completedAt.toISOString().slice(0, 10) : '', p.attention && !p.completed ? 'Yes' : 'No', p.quiet ? 'Yes' : 'No', p.last ? p.last.toISOString() : ''];
     for (var n = 1; n <= state.config.totalModules; n++){ var m = p.modules[n]; r.push(m ? (m.passed ? 'PASS (' + m.best + '%)' : 'NOT PASSED (best ' + m.best + '%, ' + m.attempts + ' attempt' + (m.attempts === 1 ? '' : 's') + ')') : ''); }
     return r;
   }
@@ -1055,6 +1090,7 @@
   $('logout-btn').addEventListener('click', function(){ forget(); state.people = []; state.rows = []; showLogin(''); });
   $('csv-all-btn').addEventListener('click', downloadAll);
   $('csv-summary-btn').addEventListener('click', function(){ downloadSummary(state.people, 'wbsc-completion-summary-' + today() + '.csv'); });
+  $('assoc-filter').addEventListener('change', function(){ state.assoc = this.value; state.open = null; renderPeople(); });
   $('search').addEventListener('input', function(){ state.q = this.value; state.open = null; renderPeople(); });
   document.querySelectorAll('.chip').forEach(function(c){ c.addEventListener('click', function(){
     state.filter = c.getAttribute('data-f'); state.open = null;

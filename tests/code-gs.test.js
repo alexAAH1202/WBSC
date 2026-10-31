@@ -11,26 +11,34 @@ function makeEnv({ failMail = null, quota = 100, quiet = true } = {}) {
   }
   const rows = [], raw = [], mails = [], cacheStore = new Map(), props = new Map(), triggers = [];
   const env = { quota, throwOnSheet: false };
-  const sheet = {
-    getLastRow: () => { if (env.throwOnSheet) throw new Error('Sheet unavailable'); return rows.length; },
-    appendRow: r => {
-      if (env.throwOnSheet) throw new Error('Sheet unavailable');
-      raw.push(r.slice());
-      rows.push(r.map(v => typeof v === 'string' && v[0] === "'" ? v.slice(1) : v));
+  const makeSheet = (r, w, main) => ({
+    getLastRow: () => { if (main && env.throwOnSheet) throw new Error('Sheet unavailable'); return r.length; },
+    appendRow: row => {
+      if (main && env.throwOnSheet) throw new Error('Sheet unavailable');
+      w.push(row.slice());
+      r.push(row.map(v => typeof v === 'string' && v[0] === "'" ? v.slice(1) : v));
     },
+    deleteRow: n => { r.splice(n - 1, 1); w.splice(n - 1, 1); },
     setFrozenRows() {},
-    getRange(r, c, nr = 1, nc = 1) {
+    getRange(rr, c, nr = 1, nc = 1) {
       return {
-        getValues: () => Array.from({ length: nr }, (_, i) => Array.from({ length: nc }, (_, j) => (rows[r - 1 + i] || [])[c - 1 + j] ?? '')),
-        getValue: () => (rows[r - 1] || [])[c - 1],
-        setValue: v => { rows[r - 1] = rows[r - 1] || []; rows[r - 1][c - 1] = v; }
+        getValues: () => Array.from({ length: nr }, (_, i) => Array.from({ length: nc }, (_, j) => (r[rr - 1 + i] || [])[c - 1 + j] ?? '')),
+        getValue: () => (r[rr - 1] || [])[c - 1],
+        setValue: v => { r[rr - 1] = r[rr - 1] || []; r[rr - 1][c - 1] = v; }
       };
     }
+  });
+  const sheet = makeSheet(rows, raw, true);
+  const progressRows = [], extraSheets = new Map();
+  const spreadsheet = {
+    getSheetByName: n => n === 'Progress' ? (env.progressCreated ? extraSheets.get('Progress') : null) : sheet,
+    insertSheet: n => { const sh = makeSheet(progressRows, [], false); extraSheets.set(n, sh); env.progressCreated = true; return sh; },
+    getSheets: () => [sheet]
   };
   const digestBytes = (s) => [...crypto.createHash('sha256').update(String(s)).digest()].map(b => (b > 127 ? b - 256 : b));
   const ctx = {
     Date: FakeDate, console: quiet ? { error() {}, log() {} } : console,
-    SpreadsheetApp: { getActiveSpreadsheet: () => ({ getSheetByName: () => sheet, getSheets: () => [sheet] }) },
+    SpreadsheetApp: { getActiveSpreadsheet: () => spreadsheet },
     LockService: { getScriptLock: () => ({ waitLock() {}, releaseLock() {} }) },
     MailApp: {
       sendEmail: (to, subject, body) => {
@@ -46,11 +54,12 @@ function makeEnv({ failMail = null, quota = 100, quiet = true } = {}) {
     }) },
     PropertiesService: { getScriptProperties: () => ({ getProperty: k => props.has(k) ? props.get(k) : null, setProperty: (k, v) => props.set(k, v) }) },
     ScriptApp: {
+      WeekDay: { MONDAY: "MONDAY" },
       getProjectTriggers: () => triggers.slice(),
       deleteTrigger: t => { const i = triggers.indexOf(t); if (i >= 0) triggers.splice(i, 1); },
       newTrigger: fn => {
         const t = { getHandlerFunction: () => fn, spec: { fn } };
-        const b = { timeBased: () => b, everyDays: d => { t.spec.days = d; return b; }, atHour: h => { t.spec.hour = h; return b; }, create: () => { triggers.push(t); return t; } };
+        const b = { timeBased: () => b, everyDays: d => { t.spec.days = d; return b; }, onWeekDay: d => { t.spec.weekday = d; return b; }, atHour: h => { t.spec.hour = h; return b; }, create: () => { triggers.push(t); return t; } };
         return b;
       }
     },
@@ -60,7 +69,7 @@ function makeEnv({ failMail = null, quota = 100, quiet = true } = {}) {
     ContentService: { MimeType: { JSON: 'json', JAVASCRIPT: 'js' }, createTextOutput: t => ({ text: t, setMimeType(m) { this.mime = m; return this; } }) }
   };
   vm.createContext(ctx); vm.runInContext(code, ctx);
-  return Object.assign(env, { ctx, rows, raw, mails, props, triggers, clock, cache: cacheStore });
+  return Object.assign(env, { ctx, rows, raw, mails, props, triggers, clock, progressRows, cache: cacheStore });
 }
 
 // ---- helpers
@@ -393,9 +402,9 @@ ok('daily check flags failed emails, stuck results, low quota, logged errors and
   for (const need of ['email to the Director FAILED', 'receipt(s) in the last 7 days FAILED', 'still "pending"', 'Only 5 emails left', '1 server error(s)', 'column 10 should be "Percentage"']) assert.ok(body.includes(need), need);
   e.props.set('HEALTH_REPORT', 'problems'); const n2 = e.mails.length; e.ctx.dailyHealthCheck(); assert.strictEqual(e.mails.length, n2 + 1, 'problems are still reported in problems-only mode');
 });
-ok('installTriggers schedules one daily check (and can be re-run); sendTestAlert reaches the owner', () => {
+ok('installTriggers schedules the daily check and the weekly summary (and can be re-run); sendTestAlert reaches the owner', () => {
   const e = makeEnv(); e.ctx.installTriggers(); e.ctx.installTriggers();
-  assert.strictEqual(e.triggers.length, 1); assert.deepStrictEqual(e.triggers[0].spec, { fn: 'dailyHealthCheck', days: 1, hour: 7 });
+  assert.strictEqual(e.triggers.length, 2); assert.deepStrictEqual(e.triggers[0].spec, { fn: 'dailyHealthCheck', days: 1, hour: 7 }); assert.deepStrictEqual(e.triggers[1].spec, { fn: 'weeklySummary', weekday: 'MONDAY', hour: 8 });
   e.ctx.removeTriggers(); assert.strictEqual(e.triggers.length, 0);
   assert.ok(/owner@example.com/.test(e.ctx.sendTestAlert())); assert.ok(/Test alert/.test(e.mails.pop().subject));
 });
@@ -436,6 +445,78 @@ ok('every language has every email phrase, and the same {placeholders} as Englis
     assert.ok(T[lg][k] != null, lg + ' is missing ' + k);
     assert.strictEqual(ph(T[lg][k]), ph(T.en[k]), lg + '.' + k + ' placeholders');
   }
+});
+
+// =====================================================================  saved progress (resume on another device)
+const prog = (o) => Object.assign({ v: 2, index: 3, score: 2, elapsedMs: 40000, qi: [0, 2, 5, 7, 9], qs: ['a', 'b', 'c', 'd', 'e'],
+  order: [[1, 0, 2, 3], [0, 1, 2, 3], [3, 2, 1, 0], [2, 0, 1, 3], [1, 2, 3, 0]], missed: [{ q: 'Q?', answer: 'A', ref: 'R', why: 'W' }] }, o);
+const putProg = (e, t, key, o) => act(e, 'saveProgress', { token: t, key, data: JSON.stringify(o) });
+const getProg = (e, t, key) => JSON.parse(e.ctx.attemptsReply_({ token: t, module: 'Module 01', type: 'Presentation Competency Assessment', pkey: key, callback: '' }).text).progress;
+ok('progress: saved against the verified email, returned with the attempts lookup, replaced on the next save, never keyed by the address itself', () => {
+  const e = makeEnv(); const t = login(e, 'jo@x.com');
+  assert.strictEqual(getProg(e, t, 'm06-pca') == null, true);
+  const r = putProg(e, t, 'm06-pca', prog()); assert.strictEqual(r.success, true, r.error);
+  const got = getProg(e, t, 'm06-pca'); assert.strictEqual(got.index, 3); assert.strictEqual(got.score, 2); assert.deepStrictEqual(got.qi, [0, 2, 5, 7, 9]);
+  assert.strictEqual(getProg(e, t, 'm07-pca') == null, true, 'another assessment has none');
+  putProg(e, t, 'm06-pca', prog({ index: 4, score: 3 })); assert.strictEqual(getProg(e, t, 'm06-pca').index, 4); assert.strictEqual(e.progressRows.length, 2, 'header + one row');
+  const t2 = login(e, 'other@x.com'); assert.strictEqual(getProg(e, t2, 'm06-pca') == null, true, 'another learner sees nothing');
+  assert.ok(!JSON.stringify(e.progressRows).includes('jo@x.com'), 'the email address is not stored in the Progress sheet');
+});
+ok('progress: expires after 24 hours, deleted after 48 by the daily check, cleared on request and when the attempt is recorded', () => {
+  const e = makeEnv(); const t = login(e, 'jo@x.com');
+  putProg(e, t, 'm06-pca', prog()); e.clock.now += 23 * HOUR; const tA = login(e, 'jo@x.com'); assert.ok(getProg(e, tA, 'm06-pca'), 'still there after 23 hours, from a new login');
+  e.clock.now += 2 * HOUR; const tB = login(e, 'jo@x.com'); assert.strictEqual(getProg(e, tB, 'm06-pca') == null, true, 'older than 24 hours is ignored');
+  assert.strictEqual(e.progressRows.length, 2);
+  e.clock.now += 24 * HOUR; e.ctx.dailyHealthCheck(); assert.strictEqual(e.progressRows.length, 1, 'older than 48 hours is deleted');
+  const t3 = login(e, 'jo@x.com'); putProg(e, t3, 'm06-pca', prog()); const c = act(e, 'clearProgress', { token: t3, key: 'm06-pca' }); assert.strictEqual(c.success, true);
+  assert.strictEqual(e.progressRows.length, 1);
+  putProg(e, t3, 'm01-pca', prog()); assert.strictEqual(e.progressRows.length, 2);
+  save(e, t3, { assessmentKey: 'm01-pca' }); assert.strictEqual(e.progressRows.length, 1, 'recording the result clears the saved attempt');
+});
+ok('progress: needs a verified session; only marked-assessment keys; bad or oversized data is refused; rate limited', () => {
+  const e = makeEnv(); const t = login(e, 'jo@x.com');
+  assert.strictEqual(putProg(e, '', 'm06-pca', prog()).code, 'auth'); assert.strictEqual(putProg(e, 'f'.repeat(64), 'm06-pca', prog()).code, 'auth');
+  assert.strictEqual(act(e, 'clearProgress', { token: 'nope', key: 'm06-pca' }).code, 'auth');
+  for (const k of ['m06-mkc', '../x', 'm06', 'M06-PCA']) assert.strictEqual(putProg(e, t, k, prog()).success, false, k);
+  for (const bad of [prog({ v: 1 }), prog({ index: 99 }), prog({ score: 9 }), prog({ qs: ['a'] }), prog({ order: [[0, 1]] }), prog({ qi: [0, 1, 2, 3, 4000] }), prog({ missed: new Array(9).fill({ q: 'x' }) })])
+    assert.strictEqual(putProg(e, t, 'm06-pca', bad).success, false);
+  assert.strictEqual(act(e, 'saveProgress', { token: t, key: 'm06-pca', data: 'not json' }).success, false);
+  const big = putProg(e, t, 'm06-pca', prog({ missed: [{ q: 'x'.repeat(5000), answer: 'y'.repeat(5000), ref: 'r'.repeat(5000), why: 'w'.repeat(5000) }] })); assert.strictEqual(big.success, true);
+  assert.ok(e.progressRows[1][3].length < 4000, 'long text is cut to the cap');
+  assert.strictEqual(e.progressRows.length, 2);
+  let last; for (let i = 0; i < 241; i++) last = putProg(e, t, 'm06-pca', prog()); assert.strictEqual(last.code, 'rate');
+});
+ok('progress: attempts lookup without a key is unchanged and an unverified lookup gets no progress', () => {
+  const e = makeEnv(); const t = login(e, 'jo@x.com'); putProg(e, t, 'm06-pca', prog());
+  const plain = JSON.parse(e.ctx.attemptsReply_({ token: t, module: 'Module 01', type: 'Presentation Competency Assessment', callback: '' }).text);
+  assert.strictEqual(plain.ok, true); assert.ok(!('progress' in plain));
+  const anon = JSON.parse(e.ctx.attemptsReply_({ token: '', module: 'Module 01', type: 'Presentation Competency Assessment', pkey: 'm06-pca', callback: '' }).text);
+  assert.strictEqual(anon.code, 'auth'); assert.ok(!('progress' in anon));
+});
+
+// =====================================================================  weekly summary for the Director
+ok('weekly summary: who finished this week, who needs attention, who went quiet, by association; only the Director is emailed', () => {
+  const e = makeEnv();
+  const T = (email, name, assoc, mods, score) => { const t = login(e, email); mods.forEach(k => save(e, t, { participantName: name, association: assoc, module: mod(k), score: score || 9, umpireId: email.split('@')[0] })); return t; };
+  e.clock.now = Date.UTC(2026, 9, 1);
+  T('quiet@x.com', 'Quiet Qi', 'Assoc A', [1, 2]);                                  // started 26 days ago, then nothing
+  T('stuck@x.com', 'Stuck Sam', 'Assoc A', [1]); { const t = login(e, 'stuck@x.com'); save(e, t, { participantName: 'Stuck Sam', association: 'Assoc A', module: mod(2), score: 5, umpireId: 'stuck' }); save(e, t, { participantName: 'Stuck Sam', association: 'Assoc A', module: mod(2), score: 6, umpireId: 'stuck' }); }
+  e.clock.now = Date.UTC(2026, 9, 24);
+  T('done@x.com', 'Done Dee', 'Assoc B', [1, 2, 3, 4, 5, 6, 7, 8]);
+  e.clock.now = Date.UTC(2026, 9, 27);
+  const before = e.mails.length; const r = e.ctx.weeklySummary(); assert.strictEqual(r.sent, true);
+  const m = e.mails.slice(before); assert.strictEqual(m.length, 1); assert.strictEqual(m[0].to, 'umpiredirector@wbscoceania.org');
+  assert.ok(/1 completed this week, 1 need attention/.test(m[0].subject), m[0].subject);
+  const b = m[0].body;
+  assert.ok(/COMPLETED THIS WEEK \(1\)\n- Done Dee \(Assoc B\), 8 of 8/.test(b), b);
+  assert.ok(/NEED ATTENTION[^\n]*\(1\)\n- Stuck Sam \(Assoc A\), 1 of 8/.test(b), b);
+  assert.ok(/WENT QUIET[^\n]*\(1\)\n- Quiet Qi \(Assoc A\), 2 of 8[^\n]*last active 26 days ago, quiet@x\.com/.test(b), b);
+  assert.ok(/- Assoc A: 2 umpires, 0 completed, 1 in progress, 1 need attention/.test(b) && /- Assoc B: 1 umpire, 1 completed, 0 in progress, 0 need attention/.test(b), b);
+  assert.ok(/does not hold a list of everyone/.test(b));
+  assert.deepStrictEqual(e.mails.slice(before).map(x => x.to), ['umpiredirector@wbscoceania.org'], 'no learner is emailed');
+});
+ok('weekly summary: nothing is sent while there are no results', () => {
+  const e = makeEnv(); const r = e.ctx.weeklySummary(); assert.strictEqual(r.sent, false); assert.strictEqual(e.mails.length, 0);
 });
 
 console.log(n + ' Code.gs checks passed');
