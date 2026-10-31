@@ -11,6 +11,9 @@
  *     summary and the learner's receipt includes one.
  *   - Serves the Director's results page (password protected) its data.
  *   - Alerts the owner when something fails, and sends a daily health check.
+ *   - Saves the progress of an unfinished marked assessment (hashed email, 24 hours) so it can be resumed on another device.
+ *   - Emails the Director a weekly summary (who finished, who needs attention, who went quiet, totals by association).
+ *   - Sends a learner's login code and receipt in the language the site was showing.
  *
  * Order of operations for a result (matches the design brief):
  *   Complete assessment -> Save result -> Confirm save -> Send emails -> Success.
@@ -26,7 +29,8 @@
  *   2. Project Settings -> Script properties -> add RESULTS_PASSWORD (the Director's
  *      password). Optional: ALERT_EMAIL (default: the owner of this script) and
  *      HEALTH_REPORT = problems (default: a daily report even when all is well).
- *   3. Run installTriggers() once from the editor and approve the permissions.
+ *   3. Run installTriggers() once from the editor and approve the permissions (it schedules the daily check and the
+ *      Monday weekly summary; run it again after any update that adds a trigger).
  *   4. Run sendTestAlert() once and check the email arrives.
  *   5. Deploy -> Manage deployments -> pencil -> New version -> Deploy (keep the
  *      existing deployment so the URL does not change).
@@ -67,6 +71,16 @@ var RESULTS_FAIL_LIMIT = 10;     // wrong passwords ...
 var RESULTS_FAIL_WINDOW_S = 900; // ... within 15 minutes lock the page ...
 var RESULTS_LOCK_S = 900;        // ... for 15 minutes
 var RESULTS_MAX_ROWS = 5000;
+
+// Saved progress for an unfinished marked assessment (so a learner can carry on from another device).
+var PROGRESS_SHEET = 'Progress';
+var PROGRESS_TTL_MS = 24 * 3600000;    // a saved attempt can be resumed for 24 hours
+var PROGRESS_KEEP_MS = 48 * 3600000;   // rows older than this are deleted by the daily check
+var PROGRESS_MAX_CHARS = 30000;        // a cell holds 50,000 characters
+var PROGRESS_HOURLY = 240;             // saves per learner per hour (a 20-question attempt is about 20)
+
+// Weekly summary for the Director.
+var STALLED_DAYS = 14;                 // started, not finished and no activity for this long
 
 // Health check.
 var HEALTH_MIN_MAIL_QUOTA = 20;
@@ -118,6 +132,8 @@ function doPost(e) {
   var p = (e && e.parameter) || {};
   if (p.action === 'sendCode') return handleSendCode_(p);
   if (p.action === 'verifyCode') return handleVerifyCode_(p);
+  if (p.action === 'saveProgress') return handleSaveProgress_(p);
+  if (p.action === 'clearProgress') return handleClearProgress_(p);
   if (p.action === 'results') return handleResults_(p);
   return handleSave_(e);
 }
@@ -349,6 +365,10 @@ function attemptsReply_(p) {
       var info = attemptInfo_(getSheet_(), probe);
       out = { ok: true, attempts: info.count, max: MAX_ATTEMPTS, remaining: Math.max(0, MAX_ATTEMPTS - info.count),
               passed: info.passed, passMark: PASS_MARK };
+      // An unfinished attempt saved from any device, for the assessment the learner is starting.
+      if (email && isProgressKey_(p.pkey)) {
+        try { out.progress = loadProgress_(email, String(p.pkey)); } catch (perr) { logError_('progress-load', perr); }
+      }
     }
   } catch (err) {
     logError_('attempts', err);
@@ -464,6 +484,137 @@ function newCode_() {
   return ('000000' + (n % 1000000)).slice(-6);
 }
 
+// ------------------------------------------------------------------ saved progress
+
+// An unfinished marked attempt, saved against the verified email so it can be resumed on another device.
+// What is kept: the question reached, the score so far, which questions were drawn, the answer order and the missed
+// questions. The email address is stored only as a hash. A row is ignored after 24 hours and deleted after 48.
+function isProgressKey_(k) { return /^m\d\d-pca$/.test(String(k || '')); }
+
+function progressSheet_() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheetByName(PROGRESS_SHEET);
+  if (!sh) {
+    sh = ss.insertSheet(PROGRESS_SHEET);
+    sh.appendRow(['Learner (hash)', 'Assessment', 'Saved at', 'Progress']);
+    try { sh.setFrozenRows(1); } catch (e) { /* cosmetic */ }
+  }
+  return sh;
+}
+
+function progressRow_(sh, who, key) {
+  var last = sh.getLastRow();
+  if (last < 2) return 0;
+  var ids = sh.getRange(2, 1, last - 1, 2).getValues();
+  for (var i = 0; i < ids.length; i++) if (String(ids[i][0]) === who && String(ids[i][1]) === key) return i + 2;
+  return 0;
+}
+
+function int_(v, lo, hi) {
+  var n = Number(v);
+  if (!(isFinite(n) && n === Math.floor(n) && n >= lo && n <= hi)) throw new Error('Invalid progress');
+  return n;
+}
+function str_(v, max) { return String(v == null ? '' : v).replace(/[\u0000-\u001f]/g, ' ').slice(0, max); }
+
+// Only the expected fields, with sizes capped, are kept.
+function cleanProgress_(o) {
+  if (!o || typeof o !== 'object' || o.v !== 2) throw new Error('Invalid progress');
+  var n = int_(o.qi && o.qi.length, 1, MAX_QUESTIONS);
+  var c = { v: 2, index: int_(o.index, 1, n), score: int_(o.score, 0, n), elapsedMs: int_(Math.round(Number(o.elapsedMs) || 0), 0, 6 * 3600000),
+            qi: [], qs: [], order: [], missed: [] };
+  if (o.qs.length !== n || o.order.length !== n) throw new Error('Invalid progress');
+  for (var i = 0; i < n; i++) {
+    c.qi.push(int_(o.qi[i], 0, 999));
+    c.qs.push(str_(o.qs[i], 60));
+    var ord = [];
+    if (!o.order[i] || o.order[i].length < 2 || o.order[i].length > 8) throw new Error('Invalid progress');
+    for (var j = 0; j < o.order[i].length; j++) ord.push(int_(o.order[i][j], 0, 7));
+    c.order.push(ord);
+  }
+  var missed = o.missed || [];
+  if (missed.length > n) throw new Error('Invalid progress');
+  for (var m = 0; m < missed.length; m++) {
+    c.missed.push({ q: str_(missed[m].q, 800), answer: str_(missed[m].answer, 800), ref: str_(missed[m].ref, 400), why: str_(missed[m].why, 900) });
+  }
+  return c;
+}
+
+function handleSaveProgress_(p) {
+  var msg = { wbscAuth: true, id: String(p.id || '').slice(0, 64), action: 'saveProgress', success: false };
+  try {
+    var email = sessionEmail_(p.token);
+    if (!email) { msg.code = 'auth'; msg.error = 'Please verify your email address first.'; return messagePage_(msg); }
+    if (!isProgressKey_(p.key)) throw new Error('Invalid assessment');
+    if (!rateHit_('prog:' + sha_(email), PROGRESS_HOURLY, 3600)) { msg.code = 'rate'; msg.error = 'Too many saves. Please try again later.'; return messagePage_(msg); }
+    var data = cleanProgress_(JSON.parse(String(p.data || '')));
+    data.savedAt = Date.now();
+    var json = JSON.stringify(data);
+    if (json.length > PROGRESS_MAX_CHARS) throw new Error('Invalid progress');
+    var lock = LockService.getScriptLock();
+    lock.waitLock(10000);
+    try {
+      var sh = progressSheet_(), who = sha_(email), row = progressRow_(sh, who, String(p.key));
+      if (row) { sh.getRange(row, 3).setValue(new Date(data.savedAt)); sh.getRange(row, 4).setValue(json); }
+      else sh.appendRow([who, String(p.key), new Date(data.savedAt), json]);
+    } finally { lock.releaseLock(); }
+    msg.success = true;
+  } catch (err) {
+    var m = String(err && err.message ? err.message : err);
+    if (/^Invalid/.test(m) || err instanceof SyntaxError) msg.error = 'Invalid progress';
+    else { logError_('saveProgress', err); msg.error = 'Progress could not be saved.'; }
+  }
+  return messagePage_(msg);
+}
+
+function deleteProgress_(email, key) {
+  var lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    var sh = progressSheet_(), row = progressRow_(sh, sha_(email), key);
+    if (row) sh.deleteRow(row);
+  } finally { lock.releaseLock(); }
+}
+
+function handleClearProgress_(p) {
+  var msg = { wbscAuth: true, id: String(p.id || '').slice(0, 64), action: 'clearProgress', success: false };
+  try {
+    var email = sessionEmail_(p.token);
+    if (!email) { msg.code = 'auth'; msg.error = 'Please verify your email address first.'; return messagePage_(msg); }
+    if (!isProgressKey_(p.key)) throw new Error('Invalid assessment');
+    deleteProgress_(email, String(p.key));
+    msg.success = true;
+  } catch (err) {
+    if (!/^Invalid/.test(String(err && err.message))) logError_('clearProgress', err);
+    msg.error = 'Progress could not be cleared.';
+  }
+  return messagePage_(msg);
+}
+
+// The saved attempt for this learner and assessment, or null if there is none or it is older than 24 hours.
+function loadProgress_(email, key) {
+  var sh = progressSheet_(), row = progressRow_(sh, sha_(email), key);
+  if (!row) return null;
+  var o = JSON.parse(String(sh.getRange(row, 4).getValue()));
+  if (!(Date.now() - Number(o.savedAt) < PROGRESS_TTL_MS)) return null;
+  return o;
+}
+
+// Deletes saved attempts older than 48 hours. Returns how many were removed.
+function purgeProgress_() {
+  var lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  var removed = 0;
+  try {
+    var sh = progressSheet_(), last = sh.getLastRow();
+    for (var r = last; r >= 2; r--) {
+      var t = new Date(sh.getRange(r, 3).getValue()).getTime();
+      if (isNaN(t) || Date.now() - t > PROGRESS_KEEP_MS) { sh.deleteRow(r); removed++; }
+    }
+  } finally { lock.releaseLock(); }
+  return removed;
+}
+
 // ------------------------------------------------------------------ save a result
 
 function handleSave_(e) {
@@ -549,7 +700,10 @@ function handleSave_(e) {
 
   // The result is saved and the reply is built. Now the emails, each in its own
   // try/catch so a mail problem can never undo or hide a saved result.
-  if (post) sendAfterSave_(post);
+  if (post) {
+    try { if (isProgressKey_(data && data.assessmentKey)) deleteProgress_(post.clean.email, String(data.assessmentKey)); } catch (perr) { logError_('progress-clear', perr); }
+    sendAfterSave_(post);
+  }
   return response;
 }
 
@@ -858,6 +1012,91 @@ function handleResults_(p) {
   return messagePage_(msg);
 }
 
+// ------------------------------------------------------------------ weekly summary for the Director
+
+// One person = rows linked by the same email OR the same Umpire ID (the same rule the results page uses).
+function people_() {
+  var sheet = getSheet_(), last = sheet.getLastRow(), rows = [];
+  if (last >= 2) {
+    var first = Math.max(2, last - RESULTS_MAX_ROWS + 1);
+    var values = sheet.getRange(first, 1, last - first + 1, COLUMNS.length).getValues();
+    for (var i = 0; i < values.length; i++) {
+      var r = values[i], t = new Date(r[0]).getTime();
+      rows.push({ ts: isNaN(t) ? 0 : t, name: String(r[1]), email: String(r[2]).trim().toLowerCase(), id: norm_(r[3]), assoc: String(r[4]),
+                  module: String(r[5]), type: String(r[6]), n: moduleNumber_(r[5]), result: String(r[16]) });
+    }
+  }
+  var parent = {};
+  function find(x) { while (parent[x] !== x) { parent[x] = parent[parent[x]]; x = parent[x]; } return x; }
+  rows.forEach(function (r, idx) {
+    var keys = [];
+    if (r.email) keys.push('e:' + r.email);
+    if (r.id) keys.push('i:' + r.id);
+    r.keys = keys;
+    keys.forEach(function (k) { if (!(k in parent)) parent[k] = k; });
+    for (var j = 1; j < keys.length; j++) parent[find(keys[0])] = find(keys[j]);
+  });
+  var groups = {};
+  rows.forEach(function (r, idx) { var g = r.keys.length ? find(r.keys[0]) : 'row:' + idx; (groups[g] = groups[g] || []).push(r); });
+  return Object.keys(groups).map(function (g) {
+    var list = groups[g].sort(function (a, b) { return a.ts - b.ts; });
+    var p = { name: list[list.length - 1].name, email: list[list.length - 1].email, assoc: '', modules: {}, passed: 0, last: list[list.length - 1].ts,
+              completed: false, completedAt: 0, attention: false };
+    list.forEach(function (r) {
+      if (r.assoc) p.assoc = r.assoc;
+      if (r.type.toLowerCase() !== COMPLETION_TYPE.toLowerCase() || !r.n || r.n > TOTAL_MODULES) return;
+      var m = p.modules[r.n] || (p.modules[r.n] = { attempts: 0, passed: false, at: 0 });
+      m.attempts++;
+      if (r.result === 'PASS' && !m.passed) { m.passed = true; m.at = r.ts; }
+    });
+    Object.keys(p.modules).forEach(function (k) {
+      var m = p.modules[k];
+      if (m.passed) { p.passed++; if (m.at > p.completedAt) p.completedAt = m.at; }
+      else if (m.attempts >= MAX_ATTEMPTS) p.attention = true;
+    });
+    p.completed = p.passed >= TOTAL_MODULES;
+    return p;
+  });
+}
+
+// Run weekly (installTriggers schedules it for Monday morning). Emails the Director a plain-text summary:
+// who finished this week, who has used every attempt without passing, who started and then went quiet, and a
+// breakdown by association / federation. Nothing is sent to learners.
+function weeklySummary() {
+  var DAY = 86400000, now = Date.now(), people = people_();
+  if (!people.length) return { sent: false, reason: 'no results yet' };
+  var done = people.filter(function (p) { return p.completed && now - p.completedAt <= 7 * DAY; });
+  var attention = people.filter(function (p) { return p.attention && !p.completed; });
+  var stalled = people.filter(function (p) { return !p.completed && !p.attention && p.last && now - p.last >= STALLED_DAYS * DAY; });
+  var completedAll = people.filter(function (p) { return p.completed; }).length;
+  function line(p) { return '- ' + p.name + ' (' + (p.assoc || 'no association given') + '), ' + p.passed + ' of ' + TOTAL_MODULES + ' modules passed'; }
+  function days(p) { return Math.floor((now - p.last) / DAY); }
+  var byAssoc = {};
+  people.forEach(function (p) {
+    var a = p.assoc || '(none given)';
+    var o = byAssoc[a] || (byAssoc[a] = { umpires: 0, completed: 0, progress: 0, attention: 0 });
+    o.umpires++;
+    if (p.completed) o.completed++; else if (p.attention) o.attention++; else o.progress++;
+  });
+  var assocLines = Object.keys(byAssoc).sort().map(function (a) {
+    var o = byAssoc[a];
+    return '- ' + a + ': ' + o.umpires + ' umpire' + (o.umpires === 1 ? '' : 's') + ', ' + o.completed + ' completed, ' + o.progress + ' in progress, ' + o.attention + ' need attention';
+  });
+  var body =
+    'WBSC Umpire Mechanics Training: weekly summary\n\n' +
+    people.length + ' umpires have a result; ' + completedAll + ' have completed all ' + TOTAL_MODULES + ' modules.\n\n' +
+    'COMPLETED THIS WEEK (' + done.length + ')\n' + (done.length ? done.map(line).join('\n') : '- none') + '\n\n' +
+    'NEED ATTENTION: used every attempt on a module without passing (' + attention.length + ')\n' + (attention.length ? attention.map(line).join('\n') : '- none') + '\n\n' +
+    'WENT QUIET: started, not finished, no activity for ' + STALLED_DAYS + ' days or more (' + stalled.length + ')\n' +
+    (stalled.length ? stalled.map(function (p) { return line(p) + ', last active ' + days(p) + ' days ago, ' + p.email; }).join('\n') : '- none') + '\n\n' +
+    'BY ASSOCIATION / FEDERATION\n' + assocLines.join('\n') + '\n\n' +
+    'Full results: ' + SPREADSHEET_URL + '\n' +
+    'Only umpires who have saved a result appear here. The site does not hold a list of everyone who should do the training.';
+  var subject = 'WBSC Umpire Training - weekly summary: ' + done.length + ' completed this week, ' + attention.length + ' need attention';
+  MailApp.sendEmail(DIRECTOR_EMAIL, subject, body);
+  return { sent: true, completedThisWeek: done.length, attention: attention.length, stalled: stalled.length };
+}
+
 // ------------------------------------------------------------------ alerts and health check
 
 function alertEmail_() {
@@ -945,6 +1184,7 @@ function dailyHealthCheck() {
       problems.push(n + ' server error(s) in the last two days. Latest: ' + lastErr);
     }
   } catch (err3) { /* ignore */ }
+  try { var purged = purgeProgress_(); if (purged) notes.push('Removed ' + purged + ' expired saved attempt(s).'); } catch (err4) { logError_('progress-purge', err4); }
   if (!props.getProperty('RESULTS_PASSWORD')) notes.push('RESULTS_PASSWORD is not set, so the Director\'s results page cannot be opened.');
 
   var ok = problems.length === 0;
@@ -960,13 +1200,15 @@ function dailyHealthCheck() {
 function installTriggers() {
   removeTriggers();
   ScriptApp.newTrigger('dailyHealthCheck').timeBased().everyDays(1).atHour(7).create();
-  return 'Daily health check scheduled for about 07:00.';
+  ScriptApp.newTrigger('weeklySummary').timeBased().onWeekDay(ScriptApp.WeekDay.MONDAY).atHour(8).create();
+  return 'Daily health check scheduled for about 07:00 and the Director\'s weekly summary for Monday about 08:00.';
 }
 
 function removeTriggers() {
   var all = ScriptApp.getProjectTriggers();
   for (var i = 0; i < all.length; i++) {
-    if (all[i].getHandlerFunction() === 'dailyHealthCheck') ScriptApp.deleteTrigger(all[i]);
+    var fn = all[i].getHandlerFunction();
+    if (fn === 'dailyHealthCheck' || fn === 'weeklySummary') ScriptApp.deleteTrigger(all[i]);
   }
 }
 

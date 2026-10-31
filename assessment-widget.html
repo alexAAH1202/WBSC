@@ -714,7 +714,7 @@
         <div id="quiz-resume" class="quiz-body quiz-gate" style="display:none;">
           <div class="watch-first" role="note">
             <p class="watch-first-title">Unfinished attempt</p>
-            <p id="resume-text">You have an unfinished attempt at this assessment on this device.</p>
+            <p id="resume-text">You have an unfinished attempt at this assessment.</p>
           </div>
           <button class="btn btn-primary" id="resume-go" type="button">Resume where I left off</button>
           <button class="btn btn-outline-navy" id="resume-restart" type="button">Start again</button>
@@ -1071,38 +1071,80 @@
     return { q: v.q, ref: v.ref, why: v.why, base: q.q, options: order.map(function(i){ return v.options[i]; }), correct: order.indexOf(q.correct), order: order };
   }
 
-  // RESUME: a marked attempt that is stopped part-way is kept in this browser (localStorage) so it can be
-  // continued on this device: the question reached, the score, the missed questions and the shuffled option order.
-  // It belongs to the verified email address, expires after 24 hours and is cleared when the attempt is finished.
+  // RESUME: a marked attempt that is stopped part-way is saved so it can be continued: the questions drawn, the question
+  // reached, the score, the missed questions and the shuffled option order. It is kept in this browser (localStorage) and,
+  // once the email is verified, on the server against that email (hashed), so the learner can carry on from another
+  // device. It belongs to the verified email address, expires after 24 hours and is cleared when the attempt is finished.
   var RESUME_KEY = 'wbscResume';
   var RESUME_TTL_MS = 24 * 60 * 60 * 1000;
-  function readProgress(key){
+  // Checks a saved attempt against the current question bank; returns it, or null if it can no longer be used.
+  function validProgress(p, key){
     try {
-      var p = JSON.parse(localStorage.getItem(RESUME_KEY) || 'null');
       var bank = QUIZ_BANK[key];
-      if (!p || p.v !== 1 || p.key !== key || !bank || !session || p.email !== session.email) return null;
-      if (!(Date.now() - p.savedAt < RESUME_TTL_MS)) return null;
-      var n = bank.questions.length;
-      if (!(p.index >= 1 && p.index <= n) || p.qs.length !== n || p.order.length !== n) return null;
+      if (!p || p.v !== 2 || !bank || !(Date.now() - p.savedAt < RESUME_TTL_MS)) return null;
+      var n = p.qi.length;
+      if (n !== drawSize(bank) || !(p.index >= 1 && p.index <= n) || p.qs.length !== n || p.order.length !== n) return null;
+      var used = {};
       for (var i = 0; i < n; i++) {
-        var o = p.order[i], len = bank.questions[i].options.length;
-        if (p.qs[i] !== bank.questions[i].q.slice(0, 60) || !o || o.length !== len) return null;
+        var pi = p.qi[i], q = bank.questions[pi];
+        if (!q || used[pi] || !hasTranslation(key, pi) || p.qs[i] !== q.q.slice(0, 60)) return null;
+        used[pi] = 1;
+        var o = p.order[i], len = q.options.length;
+        if (!o || o.length !== len) return null;
         var seen = {}; for (var j = 0; j < len; j++) { if (!(o[j] >= 0 && o[j] < len) || seen[o[j]]) return null; seen[o[j]] = 1; }
       }
       return p;
     } catch (e) { return null; }
   }
+  function readProgress(key, remote){
+    var local = null;
+    try {
+      var p = JSON.parse(localStorage.getItem(RESUME_KEY) || 'null');
+      if (p && p.key === key && session && p.email === session.email) local = validProgress(p, key);
+    } catch (e) {}
+    var far = session && remote ? validProgress(Object.assign({ key: key }, remote), key) : null;
+    if (local && far) return far.savedAt > local.savedAt ? far : local;
+    return local || far;
+  }
   function saveProgress(nextIndex){
     if (!isMarked(QUIZ_BANK[currentKey])) return;
+    var data = {
+      v: 2, index: nextIndex, score: state.score, missed: state.missed, elapsedMs: Date.now() - state.startedAt,
+      qi: QUESTIONS.map(function(q){ return q.pool; }), order: QUESTIONS.map(function(q){ return q.order; }),
+      qs: QUESTIONS.map(function(q){ return q.base.slice(0, 60); })
+    };
     try {
-      localStorage.setItem(RESUME_KEY, JSON.stringify({
-        v: 1, key: currentKey, email: session ? session.email : '', savedAt: Date.now(), index: nextIndex,
-        score: state.score, missed: state.missed, order: QUESTIONS.map(function(q){ return q.order; }),
-        qs: QUESTIONS.map(function(q){ return q.base.slice(0, 60); }), elapsedMs: Date.now() - state.startedAt
-      }));
+      localStorage.setItem(RESUME_KEY, JSON.stringify(Object.assign({ key: currentKey, email: session ? session.email : '', savedAt: Date.now() }, data)));
     } catch (e) {}
+    // Also on the server (best effort: the quiz never waits for it, and a failure only means no resume on another device).
+    if (session && session.token && APPS_SCRIPT_URL && APPS_SCRIPT_URL.indexOf('REPLACE_WITH') !== 0 && nextIndex < QUESTIONS.length) {
+      callServer('saveProgress', { token: session.token, key: currentKey, data: JSON.stringify(data) }, function(){});
+    }
   }
-  function clearProgress(){ try { localStorage.removeItem(RESUME_KEY); } catch (e) {} }
+  function clearProgress(key){
+    try { localStorage.removeItem(RESUME_KEY); } catch (e) {}
+    if (key && session && session.token && APPS_SCRIPT_URL && APPS_SCRIPT_URL.indexOf('REPLACE_WITH') !== 0) callServer('clearProgress', { token: session.token, key: key }, function(){});
+  }
+
+  // QUESTION POOL: an assessment may hold more questions than it asks (bank.draw). Each attempt draws that many at random,
+  // preferring questions the learner did not see on their previous attempt, so a retake is not the same ten questions.
+  // In a language other than English only questions that have a translation are drawn.
+  function drawSize(bank){ return bank.draw && bank.draw < bank.questions.length ? bank.draw : bank.questions.length; }
+  function pickQuestions(key, bank){
+    var eligible = [], i;
+    for (i = 0; i < bank.questions.length; i++) if (hasTranslation(key, i)) eligible.push(i);
+    var want = drawSize(bank);
+    if (eligible.length < want) eligible = bank.questions.map(function(_, k){ return k; });   // no translations at all: fall back to English
+    if (eligible.length <= want) return eligible;
+    var last = [];
+    try { var sv = JSON.parse(localStorage.getItem('wbscSeen:' + key) || 'null'); if (sv && session && sv.email === session.email) last = sv.qi || []; } catch (e) {}
+    function shuffled(a){ a = a.slice(); for (var x = a.length - 1; x > 0; x--) { var y = Math.floor(Math.random() * (x + 1)); var t = a[x]; a[x] = a[y]; a[y] = t; } return a; }
+    var fresh = shuffled(eligible.filter(function(k){ return last.indexOf(k) < 0; }));
+    var old = shuffled(eligible.filter(function(k){ return last.indexOf(k) >= 0; }));
+    var chosen = fresh.concat(old).slice(0, want).sort(function(a, b){ return a - b; });
+    try { localStorage.setItem('wbscSeen:' + key, JSON.stringify({ email: session ? session.email : '', qi: chosen })); } catch (e) {}
+    return chosen;
+  }
 
   var DEFAULT_KEY = 'm01-mkc';
   var currentKey = null;
@@ -1340,6 +1382,13 @@
     var tr = LANG !== 'en' && window.WBSC_QDICT && WBSC_QDICT[LANG] && WBSC_QDICT[LANG][key] && WBSC_QDICT[LANG][key].questions && WBSC_QDICT[LANG][key].questions[i];
     if (!tr || !tr.options || tr.options.length !== base.options.length) return base;
     return { q: tr.q || base.q, options: tr.options, ref: tr.ref || base.ref, why: tr.why || base.why, correct: base.correct };
+  }
+  // True if question i of `key` can be shown in the current language (English always can).
+  function hasTranslation(key, i){
+    if (LANG === 'en') return true;
+    var base = QUIZ_BANK[key].questions[i];
+    var tr = window.WBSC_QDICT && WBSC_QDICT[LANG] && WBSC_QDICT[LANG][key] && WBSC_QDICT[LANG][key].questions && WBSC_QDICT[LANG][key].questions[i];
+    return !!(tr && tr.q && tr.options && tr.options.length === base.options.length && (!base.why || tr.why));
   }
   function assessmentMeta(key){
     var b = QUIZ_BANK[key], tr = LANG !== 'en' && window.WBSC_QDICT && WBSC_QDICT[LANG] && WBSC_QDICT[LANG][key];
@@ -1648,6 +1697,7 @@
       association: document.getElementById('inp-assoc').value.trim(),
       module: bank.module,
       assessmentType: bank.kind,
+      assessmentKey: currentKey,   // lets the server clear the saved progress once the result is recorded
       score: score,
       totalQuestions: total,
       percentage: pct,
@@ -1709,7 +1759,7 @@
     script.src = APPS_SCRIPT_URL + '?action=attempts&callback=' + cbName +
       '&token=' + encodeURIComponent(session ? session.token : '') +
       '&umpireId=' + encodeURIComponent(document.getElementById('inp-umpid').value.trim()) +
-      '&module=' + encodeURIComponent(bank.module) + '&type=' + encodeURIComponent(bank.kind);
+      '&module=' + encodeURIComponent(bank.module) + '&type=' + encodeURIComponent(bank.kind) + '&pkey=' + encodeURIComponent(key);
     document.body.appendChild(script);
   }
 
@@ -1774,7 +1824,7 @@
     var bank = QUIZ_BANK[key];
     if (!bank) return false;
     currentKey = key;
-    var total = bank.questions.length;
+    var total = drawSize(bank);
     var need = T('{n} of {total} correct to pass', { n: neededFor(total), total: total });
     attemptNo = isMarked(bank) && info ? info.attempts + 1 : null;
     els.mode.className = 'quiz-mode ' + (isMarked(bank) ? 'marked' : 'practice');
@@ -1786,7 +1836,8 @@
         : T('Maximum {max} attempts', { max: MAX_ATTEMPTS }) + ' \u00b7 ' + T('Pass mark {pass}%', { pass: PASS_MARK }) + ' (' + need + ')';
     els.quizSection.style.display = '';
     els.tryAgain.style.display = 'none';
-    QUESTIONS = bank.questions.map(shuffleOptions);
+    var picked = pickQuestions(key, bank);
+    QUESTIONS = picked.map(function(pi){ var v = shuffleOptions(bank.questions[pi], pi); v.pool = pi; return v; });
     state = { index: 0, answered: false, score: 0, selected: null, missed: [], startedAt: Date.now() };
     els.saveState.style.display = '';
     els.practiceNote.style.display = 'none';
@@ -1800,13 +1851,13 @@
 
     els.complete.style.display = 'none';
     els.resume.style.display = 'none';
-    var saved = isMarked(bank) ? readProgress(key) : null;
+    var saved = isMarked(bank) ? readProgress(key, info && info.progress) : null;
     if (saved) {
       // An unfinished attempt is waiting on this device: offer to continue it.
       els.active.style.display = 'none';
       els.gate.style.display = 'none';
       els.resume.style.display = '';
-      document.getElementById('resume-text').textContent = T('You have an unfinished attempt at this assessment on this device: you have answered {n} of {total} questions. Resume where you left off, or start again with a fresh attempt.', { n: saved.index, total: saved.qs.length });
+      document.getElementById('resume-text').textContent = T('You have an unfinished attempt at this assessment: you have answered {n} of {total} questions. Resume where you left off, or start again with a fresh attempt.', { n: saved.index, total: saved.qs.length });
       pendingResume = saved;
     } else {
       pendingResume = null;
@@ -1834,7 +1885,7 @@
     var saved = pendingResume, bank = QUIZ_BANK[currentKey];
     if (!saved || !bank) return;
     pendingResume = null;
-    QUESTIONS = bank.questions.map(function(q, i){ return applyOrder(q, saved.order[i], i); });
+    QUESTIONS = saved.qi.map(function(pi, i){ var v = applyOrder(bank.questions[pi], saved.order[i], pi); v.pool = pi; return v; });
     state = { index: saved.index, answered: false, score: saved.score, selected: null, missed: saved.missed || [], startedAt: Date.now() - (saved.elapsedMs || 0) };
     els.resume.style.display = 'none';
     if (state.index >= QUESTIONS.length) { finishQuiz(); return; }
@@ -1844,7 +1895,7 @@
     els.question.focus({ preventScroll: true });
   });
   document.getElementById('resume-restart').addEventListener('click', function(){
-    pendingResume = null; clearProgress();
+    pendingResume = null; clearProgress(currentKey);
     els.resume.style.display = 'none';
     beginFresh(QUIZ_BANK[currentKey]);
   });

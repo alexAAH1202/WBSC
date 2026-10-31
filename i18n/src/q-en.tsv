@@ -77,6 +77,66 @@ m01-pca.9.o0	Clearly verbalise 'Strike three ... Out!' because the batter is aut
 m01-pca.9.o1	Signal safe immediately since the ball was not caught.
 m01-pca.9.o2	Say nothing, since the batter is expected to know the pitch was uncaught.
 m01-pca.9.o3	Wait for the defensive team to appeal before making any ruling.
+m01-pca.10.q	How long before the scheduled game time does the Foundations Learning Guide say the umpires should hold their partner meeting?
+m01-pca.10.o0	60 minutes before
+m01-pca.10.o1	5 minutes before
+m01-pca.10.o2	20 minutes before
+m01-pca.10.o3	45 minutes before
+m01-pca.10.why	The guide sets out self-preparation at 60 minutes, the partner meeting at 45, the field inspection at 20 and the plate meeting at 5 minutes before the game.
+m01-pca.11.q	According to the Behavioural Ethics in the Foundations Learning Guide, how early must an umpire report to the venue?
+m01-pca.11.o0	At least 15 minutes before the first pitch
+m01-pca.11.o1	As soon as the first team arrives
+m01-pca.11.o2	At least 60 minutes before the scheduled game time
+m01-pca.11.o3	At least 3 hours before the game
+m01-pca.11.why	Umpires honour all assignments and report to the venue at least 60 minutes before the scheduled game time.
+m01-pca.12.q	The guide says play must not resume after a lightning suspension until how long after the last lightning sighting or thunder heard?
+m01-pca.12.o0	60 minutes
+m01-pca.12.o1	15 minutes
+m01-pca.12.o2	10 minutes
+m01-pca.12.o3	30 minutes
+m01-pca.12.why	The game is never worth anyone's life: players leave the field immediately and shelter, and play is not resumed until 30 minutes after the last lightning or thunder.
+m01-pca.13.q	Within how many seconds should the pitcher deliver the pitch, and how quickly should the batter be in the box, to help maintain game pace?
+m01-pca.13.o0	The pitcher within 10 seconds and the batter within 20 seconds
+m01-pca.13.o1	The pitcher within 25 seconds and the batter within 5 seconds
+m01-pca.13.o2	The pitcher within 20 seconds and the batter within 10 seconds
+m01-pca.13.o3	The pitcher within 30 seconds and the batter within 15 seconds
+m01-pca.13.why	The guide also says one foot must remain in the batter's box and that lengthy conferences should not be allowed.
+m01-pca.14.q	A team refuses to continue playing when ordered to. According to the guide, what is the result of a forfeit?
+m01-pca.14.o0	The game is suspended and completed the next day
+m01-pca.14.o1	The game ends with a score of 7-0 (or per local rules) in favour of the team not at fault
+m01-pca.14.o2	The game ends with the score at the time of the refusal
+m01-pca.14.o3	The game is replayed from the start
+m01-pca.14.why	The umpires consult the crew and the UIC if available, make sure proper warnings were given and documented, and report with full details to the appropriate authority.
+m01-pca.15.q	Which of the following can be the subject of a valid protest, according to the guide?
+m01-pca.15.o0	A misapplication of a rule
+m01-pca.15.o1	A ball or strike call
+m01-pca.15.o2	A safe or out call
+m01-pca.15.o3	A fair or foul call
+m01-pca.15.why	A protest challenges the application or interpretation of a rule, not judgement. Safe/out, fair/foul, ball/strike, whether a catch was made and whether interference or obstruction occurred are judgement calls.
+m01-pca.16.q	Within what time must a written protest be filed, unless tournament rules say otherwise?
+m01-pca.16.o0	48 hours
+m01-pca.16.o1	24 hours
+m01-pca.16.o2	Before the next pitch
+m01-pca.16.o3	7 days
+m01-pca.16.why	Notice of the protest itself must be given to the plate umpire before the next pitch, before the fielders leave fair territory, or before the umpires leave the field after the last play of the game.
+m01-pca.17.q	What is the difference between an ejection and a removal, according to the guide?
+m01-pca.17.o0	An ejection lasts one inning; a removal lasts the whole game
+m01-pca.17.o1	There is no difference
+m01-pca.17.o2	An ejection applies only to players; a removal applies only to coaches
+m01-pca.17.o3	An ejected person must leave the venue entirely; a person removed for a rule violation may remain in the dugout and can still coach
+m01-pca.17.why	After an ejection the umpire points, verbalises '[Name/Number] is ejected', walks away and lets partners handle the removal.
+m01-pca.18.q	At the plate meeting, the plate umpire asks whether there are any lineup changes. For what reasons may lineups be changed at this point?
+m01-pca.18.o0	Any tactical reason
+m01-pca.18.o1	Only if the opposing coach agrees
+m01-pca.18.o2	Injury or illness only
+m01-pca.18.o3	Only because of the weather
+m01-pca.18.why	After the lineups are made official, changes must follow the substitution rules. At World Cups the lineups are official when presented at the lineup exchange.
+m01-pca.19.q	What does the bat ring test check?
+m01-pca.19.o0	That the bat is the right weight
+m01-pca.19.o1	That the ring slides freely over the barrel of the bat
+m01-pca.19.o2	That the bat has a current certification mark
+m01-pca.19.o3	That the grip is the right length
+m01-pca.19.why	If a bat is questionable the umpire tests it with the ring, consults partners, informs the coach and removes illegal bats from the game.
 m02-mkc.title	Foundations - One-Umpire Field Mechanics
 m02-mkc.nextLabel	Continue to Presentations - Foundations to Appendix 4
 m02-mkc.0.q	According to the One-Umpire System overview, what are the "Four Essential Elements" the umpire should always try to keep in view?
@@ -156,6 +216,66 @@ m02-pca.9.o0	Always stand exactly halfway between the two bases involved in the 
 m02-pca.9.o1	Ensure the chosen position does not put the umpire in the way of a player or a thrown ball
 m02-pca.9.o2	Always face the pitcher regardless of where the play is developing
 m02-pca.9.o3	Remain a fixed distance from the base at all times
+m02-pca.10.q	Where does the plate umpire stand between innings in the One-Umpire System?
+m02-pca.10.o0	At the pitcher's plate, facing home
+m02-pca.10.o1	Behind the catcher at all times
+m02-pca.10.o2	About one third of the way from home plate toward first base in one half inning and toward third base in the other, about 30 cm (12 inches) off the line in foul territory
+m02-pca.10.o3	At second base, facing home plate
+m02-pca.10.why	The umpire stands facing the diamond with the hands relaxed at the sides, with the mask under the left arm.
+m02-pca.11.q	Between innings in the One-Umpire System, which side does the plate umpire stand on?
+m02-pca.11.o0	Always on the third base side
+m02-pca.11.o1	Always on the first base side
+m02-pca.11.o2	On the side of the team going onto the field
+m02-pca.11.o3	On the side of the team coming off the field
+m02-pca.11.why	The umpire also hustles the teams on and off the field.
+m02-pca.12.q	How many warm-up pitches are allowed at the start of each inning after the first inning?
+m02-pca.12.o0	Five
+m02-pca.12.o1	Two
+m02-pca.12.o2	Three
+m02-pca.12.o3	Eight
+m02-pca.12.why	Five warm-up pitches are allowed for each pitcher in the first inning and with each new pitcher.
+m02-pca.13.q	During the warm-up pitches, what should the plate umpire tell the catcher?
+m02-pca.13.o0	When the second to last warm-up pitch has been thrown
+m02-pca.13.o1	When the first warm-up pitch has been thrown
+m02-pca.13.o2	Nothing; the catcher counts the pitches
+m02-pca.13.o3	Which pitch is the last, only if asked
+m02-pca.13.why	After the warm-up pitches the umpire sweeps the plate and takes a position behind the catcher.
+m02-pca.14.q	On every hit in the One-Umpire System, how does the plate umpire exit from behind the catcher?
+m02-pca.14.o0	By stepping straight backwards
+m02-pca.14.o1	Via the right, even on a right-handed batter
+m02-pca.14.o2	Via the side of the batter
+m02-pca.14.o3	Via the left, even on a left-handed batter
+m02-pca.14.why	If the ball is close to the foul line the umpire moves to the line and straddles it to make the fair/foul call.
+m02-pca.15.q	With runners on base, whom does the One-Umpire System say to give priority in the umpire's positioning?
+m02-pca.15.o0	The runner on third base only
+m02-pca.15.o1	The lead runner
+m02-pca.15.o2	The fielder with the ball
+m02-pca.15.o3	The batter-runner
+m02-pca.15.why	On every hit the umpire moves out from behind the plate into the infield for the best view of the play that develops.
+m02-pca.16.q	What does the One-Umpire System manual say about making a call?
+m02-pca.16.o0	Wait for the coach to ask
+m02-pca.16.o1	You should never make a call without moving out from behind the plate
+m02-pca.16.o2	Make calls from behind the plate to stay out of the way
+m02-pca.16.o3	Make the call before the ball arrives
+m02-pca.16.why	The single umpire has no partner to assist, so must move with purpose to get the best possible position to stop and make the call.
+m02-pca.17.q	Why must the One-Umpire System umpire know where the runners are every time the ball is thrown?
+m02-pca.17.o0	To signal the coaches
+m02-pca.17.o1	To count the number of throws
+m02-pca.17.o2	To know which base to sweep
+m02-pca.17.o3	In case the ball is thrown out of play
+m02-pca.17.why	The umpire must also take a quick look at the runners as they touch bases, especially when scoring at home.
+m02-pca.18.q	Where does the plate umpire carry the mask between innings in the One-Umpire System?
+m02-pca.18.o0	On the head
+m02-pca.18.o1	Under the right arm
+m02-pca.18.o2	Under the left arm
+m02-pca.18.o3	In the ball bag
+m02-pca.18.why	During the first half inning and when there is a change of pitchers the umpire may put on the mask to observe the warm-up pitches.
+m02-pca.19.q	In the One-Umpire System, which calls is the plate umpire responsible for?
+m02-pca.19.o0	Every call in the game, including illegal pitches, fair/foul balls, batting infractions, and safes and outs
+m02-pca.19.o1	Only balls and strikes
+m02-pca.19.o2	Only calls at home plate
+m02-pca.19.o3	Only fair/foul balls
+m02-pca.19.why	It is obvious that not everything that happens will be seen, so the single umpire must hustle around and inside the diamond for the best position.
 m03-mkc.title	Foundations - Two-Umpire Field Mechanics
 m03-mkc.nextLabel	Continue to Presentations - Foundations to Appendix 4
 m03-mkc.0.q	According to the Two-Umpire System manual, which of the following is NOT one of the 'Four Essential Elements' an umpire must keep in unobstructed view?
@@ -235,6 +355,66 @@ m03-pca.9.o0	Base Umpire, since the Base Umpire calls all plays including follow
 m03-pca.9.o1	Both umpires must call it simultaneously
 m03-pca.9.o2	Whichever umpire is positioned in fair territory
 m03-pca.9.o3	Plate Umpire, who is responsible for succeeding plays at third base or home plate after the first infield play
+m03-pca.10.q	Under the Two-Umpire Division Principle, which bases does the Base Umpire normally take?
+m03-pca.10.o0	Second and third base
+m03-pca.10.o1	First and second base
+m03-pca.10.o2	Home plate and first base
+m03-pca.10.o3	Third base and home plate
+m03-pca.10.why	The Plate Umpire takes all calls at home plate and third base.
+m03-pca.11.q	What does the Infield/Outfield Principle say in the Two-Umpire System?
+m03-pca.11.o0	The Plate Umpire goes out on every fly ball
+m03-pca.11.o1	Both umpires stay behind the bases
+m03-pca.11.o2	When the ball is in the infield the Base Umpire moves or stays in the outfield; when it is in the outfield the Base Umpire moves to a position in the infield
+m03-pca.11.o3	The Base Umpire always stays at first base
+m03-pca.11.why	This keeps the umpires out of the way of the play and in position to see the next one.
+m03-pca.12.q	What does the Leading Runner Principle ask of the Base Umpire?
+m03-pca.12.o0	Always start behind the trailing runner
+m03-pca.12.o1	Start at the base where no runner is
+m03-pca.12.o2	Start in a position up with the lead runner, because the catcher is expected to play the lead runner on a pick-off
+m03-pca.12.o3	Start beside the plate umpire
+m03-pca.12.why	The Base Umpire needs to be in a position to make the call on a pick-off of the lead runner.
+m03-pca.13.q	As the pitcher assumes the set position, how should the Base Umpire place their feet?
+m03-pca.13.o0	One foot well ahead of the other
+m03-pca.13.o1	Together, with the weight on the heels
+m03-pca.13.o2	As wide as possible
+m03-pca.13.o3	A comfortable distance apart, at least shoulder width, relaxed but still
+m03-pca.13.why	As the pitch is released the umpire unlocks the knees slightly, with the weight lightly on the balls of the feet and the hands drawn in close to the belt line.
+m03-pca.14.q	With no runners on, where does the Base Umpire start in the Two-Umpire System?
+m03-pca.14.o0	About 5.5 m (18 ft) behind first base in foul territory, 150 mm (6 inches) off the line
+m03-pca.14.o1	Beside the first baseman, in fair territory
+m03-pca.14.o2	About 10 m behind second base
+m03-pca.14.o3	About 3.5 m (12 ft) behind first base in fair territory
+m03-pca.14.why	The Base Umpire faces home plate with the shoulders square to the plate.
+m03-pca.15.q	At about what distance does the Base Umpire move in to see and make a call on a tag play?
+m03-pca.15.o0	About 10 m (33 ft)
+m03-pca.15.o1	About 3.5 m (10-12 ft)
+m03-pca.15.o2	About 5.5 m (18 ft)
+m03-pca.15.o3	Right on top of the base
+m03-pca.15.why	On force plays the umpire calls from about 5.5 m (18 ft). During a call it is important to be still and keep the Four Essential Elements in front.
+m03-pca.16.q	What must the Base Umpire NOT do when setting up before the pitch?
+m03-pca.16.o0	Stand relaxed
+m03-pca.16.o1	Face home plate
+m03-pca.16.o2	Keep a clear view of home plate
+m03-pca.16.o3	Set up ahead of any infielder before the catcher receives the pitch or the ball is batted
+m03-pca.16.why	The Base Umpire must keep a clear, unobstructed view of home plate.
+m03-pca.17.q	On an infield hit with no runners on base, what does the plate umpire do?
+m03-pca.17.o0	Go to second base
+m03-pca.17.o1	Trail the batter-runner about one third of the way to first base, watching for possible interference or obstruction
+m03-pca.17.o2	Move straight to third base
+m03-pca.17.o3	Stay behind the plate
+m03-pca.17.why	With a runner on first base only the plate umpire trails the runner and then moves to foul territory on the third base side for a possible call on that runner at third.
+m03-pca.18.q	Between innings in the Two-Umpire System, where does the plate umpire stand?
+m03-pca.18.o0	Just off the third base line in foul territory, about one third of the way to third base
+m03-pca.18.o1	Just off the first base line, about one third of the way to first base
+m03-pca.18.o2	Behind the catcher
+m03-pca.18.o3	At the pitcher's plate
+m03-pca.18.why	The Base Umpire stands just off the first base line in foul territory about one third of the way to first base.
+m03-pca.19.q	In the Two-Umpire System, who is responsible for calling illegal pitches?
+m03-pca.19.o0	The Plate Umpire only
+m03-pca.19.o1	Whichever umpire is closer to the pitcher's plate
+m03-pca.19.o2	Both umpires share the responsibility
+m03-pca.19.o3	The Base Umpire only
+m03-pca.19.why	The Plate Umpire is also responsible for fair/foul balls and batting infractions.
 m04-mkc.title	Foundations - Three-Umpire Field Mechanics
 m04-mkc.nextLabel	Continue to Presentations - Foundations to Appendix 4
 m04-mkc.0.q	According to the Three-Umpire System manual's 'Four Essential Elements', which four things must an umpire maintain an unobstructed view of to keep the play in front of them?
@@ -314,6 +494,66 @@ m04-pca.9.o0	Release to cover home plate
 m04-pca.9.o1	Move back out beyond the base line in fair territory
 m04-pca.9.o2	Remain on the foul line even with the base
 m04-pca.9.o3	Rotate inside the diamond
+m04-pca.10.q	When a Base Umpire goes out on a fly ball in the Three-Umpire System, how is the diamond divided?
+m04-pca.10.o0	The remaining Base Umpire takes everything
+m04-pca.10.o1	The Plate Umpire takes everything
+m04-pca.10.o2	The Plate Umpire takes all calls at home plate and third base, and the remaining Base Umpire takes all calls at first and second base
+m04-pca.10.o3	The umpire who went out keeps all calls
+m04-pca.10.why	When the Batter Runner goes to third base, the Base Umpire takes the Batter Runner there.
+m04-pca.11.q	Before turning their back to go out on a fly ball, what should the umpire do?
+m04-pca.11.o0	Look at their partners, then indicate and verbalise 'going'
+m04-pca.11.o1	Wait for the plate umpire to call the ball
+m04-pca.11.o2	Ask the coach
+m04-pca.11.o3	Run straight out without any signal
+m04-pca.11.why	Good timing and umpire-to-umpire eye contact are essential for good fly ball coverage and for making sure the correct umpire goes out.
+m04-pca.12.q	In which direction do umpires signal an out on a caught fly ball in the outfield?
+m04-pca.12.o0	Towards the scorer
+m04-pca.12.o1	Towards home plate
+m04-pca.12.o2	Towards the ball, after stopping, deciding and communicating
+m04-pca.12.o3	Towards the dugout
+m04-pca.12.why	Umpires signal no catch if the ball is judged a trapped ball; there is no need to signal safe if it is obviously a no catch.
+m04-pca.13.q	Once an umpire has gone out to the outfield, what must they do?
+m04-pca.13.o0	Remain in the outfield until all play has ceased, but keep observing infield plays so they can assist
+m04-pca.13.o1	Return to the infield immediately
+m04-pca.13.o2	Go to second base
+m04-pca.13.o3	Stay and look only at the outfield
+m04-pca.13.why	The remaining umpires revert to the Two-Umpire System.
+m04-pca.14.q	Who signals a home run in the Three-Umpire System?
+m04-pca.14.o0	Always the umpire at first base
+m04-pca.14.o1	The umpire nearest the dugout
+m04-pca.14.o2	Always the plate umpire
+m04-pca.14.o3	The umpire in the outfield, unless no base umpire moved to the outfield, in which case the plate umpire
+m04-pca.14.why	A base umpire who starts on a fair/foul line and goes out is responsible for the catch/no catch, fair/foul and home run calls.
+m04-pca.15.q	A base umpire mistakenly does not go out to a fly ball. Who makes the call?
+m04-pca.15.o0	The umpire at second base, if there is one
+m04-pca.15.o1	The plate umpire
+m04-pca.15.o2	The coach
+m04-pca.15.o3	The nearest outfielder
+m04-pca.15.why	The only planned time the plate umpire calls fair/foul and a catch on an outfield fly ball is when the umpire who normally starts on that fair/foul line starts at second base.
+m04-pca.16.q	What does 'clearing the catcher' mean in the Three-Umpire System?
+m04-pca.16.o0	Asking the catcher to move away
+m04-pca.16.o1	Moving behind the batter
+m04-pca.16.o2	Walking to the pitcher's plate
+m04-pca.16.o3	Taking a small step to the plate umpire's left to move out from behind the catcher, creating space and opening the view of the field
+m04-pca.16.why	It is the plate umpire's first priority after every pitch or batted ball in the area of the plate, and must happen before the play develops, not after.
+m04-pca.17.q	At the pre-game meeting in the Three-Umpire System, where does U1 stand?
+m04-pca.17.o0	Behind the catcher
+m04-pca.17.o1	At the infield end of the right-hander's batter's box
+m04-pca.17.o2	At the infield end of the left-hander's batter's box, looking towards the back net
+m04-pca.17.o3	On first base
+m04-pca.17.why	U3 stands at the infield end of the right-hander's batter's box. Immediately after the meeting the base umpires move to the between-innings positions.
+m04-pca.18.q	After the third out with no runners on base, who sweeps the pitcher's plate on the way to the base lines?
+m04-pca.18.o0	U3
+m04-pca.18.o1	Whoever is closest to the dugout
+m04-pca.18.o2	The plate umpire
+m04-pca.18.o3	U1
+m04-pca.18.why	The closest base umpire to the pitcher's plate sweeps it; if there are no runners on base or both are the same distance, U3 takes the responsibility.
+m04-pca.19.q	Which information does the Three-Umpire manual say umpires should know before each pitch (Pre-Pitch Preparation)?
+m04-pca.19.o0	Only the count
+m04-pca.19.o1	The number of outs, the ball-strike count, the position of the runners and the position of the fielders
+m04-pca.19.o2	The names of the batters
+m04-pca.19.o3	The weather, the score and the time
+m04-pca.19.why	Knowing these before each pitch helps the umpire anticipate likely plays.
 m05-mkc.title	Appendix 4: Elite Positioning Philosophies
 m05-mkc.nextLabel	Continue to Presentations - Foundations to Appendix 4
 m05-mkc.0.q	According to Appendix 4's Key Concepts and Glossary, what are the 'Four Essential Elements' an umpire must observe together to make an accurate decision?
@@ -393,6 +633,66 @@ m05-pca.9.o0	Primary Responsibilities, because the umpire must always rotate to 
 m05-pca.9.o1	Dynamic Positioning and Adjustments, because there is no 'X marks the spot' position - starting and observation positions must never be assumed to be the final calling position
 m05-pca.9.o2	Pre-Pitch Preparation and Outfield Coverage, because the umpire failed to anticipate outfielder depth
 m05-pca.9.o3	Parallax Error, because the umpire was aligned with the wrong plane
+m05-pca.10.q	What is the 'mental snapshot' technique described in Appendix 4?
+m05-pca.10.o0	Count the pitches in each at-bat
+m05-pca.10.o1	Memorise the batter's stance before each pitch
+m05-pca.10.o2	Take a photograph with a phone after the play
+m05-pca.10.o3	Take a mental photograph of the play from the initial angle, move quickly to a better angle, take a second photograph, and combine them into a clearer 3D picture
+m05-pca.10.why	Good judgement comes from gathering as much visual information as possible; obtaining the correct angle often matters more than physical proximity.
+m05-pca.11.q	Which sequence does Appendix 4 give for good timing on a play?
+m05-pca.11.o0	Signal, see the play, decide, stop
+m05-pca.11.o1	See the play, signal, decide, process the play
+m05-pca.11.o2	Stop, see the play, process the play, decide, signal
+m05-pca.11.o3	Decide, stop, signal, see the play
+m05-pca.11.why	Preparing the signal before the play is complete shifts the brain's focus away from the final elements of the action and encourages early calling.
+m05-pca.12.q	According to Appendix 4, what is the risk of focusing only on the tag action?
+m05-pca.12.o0	The umpire will move too early to the leading edge
+m05-pca.12.o1	The umpire will lose track of the count
+m05-pca.12.o2	The brain may prematurely 'affirm' an out because it sees the glove contact the runner, overriding the relationship between the ball, runner and base, such as the runner already touching the base
+m05-pca.12.o3	The umpire will see the ball too well
+m05-pca.12.why	Poor angle or parallax combined with affirmation bias increases the likelihood of an incorrect call; when the eyes are not aligned with the play, the brain fills in missing information, often incorrectly.
+m05-pca.13.q	Under Appendix 4, when can the umpire near second base call an illegal pitch for the pitcher's stepping foot?
+m05-pca.13.o0	Only when the plate umpire asks
+m05-pca.13.o1	Whenever the foot touches the edge of the lane
+m05-pca.13.o2	Only in the first inning
+m05-pca.13.o3	When the stepping foot lands wholly outside the pitching lane and the violation is clear and obvious
+m05-pca.13.why	Only the stepping foot must land within the pitching lane. The standard for enforcement is clear and obvious; the adjustment to see it is temporary and must not compromise primary responsibilities.
+m05-pca.14.q	According to Appendix 4, who can accurately judge whether a deep fly ball passes inside or outside the foul pole?
+m05-pca.14.o0	The plate umpire from behind the catcher
+m05-pca.14.o1	An umpire on the foul line with an unobstructed view of the foul pole
+m05-pca.14.o2	Any umpire inside the diamond
+m05-pca.14.o3	The umpire near second base
+m05-pca.14.why	Adding distance, or viewing from inside the diamond, increases parallax error; an umpire near second base is at an angle that distorts the judgement.
+m05-pca.15.q	From the slot, which parts of the strike zone does Appendix 4 say the plate umpire sees most clearly?
+m05-pca.15.o0	The inside and the top; the outside corner and the bottom are harder to judge
+m05-pca.15.o1	The outside and the bottom; the inside and the top are harder to judge
+m05-pca.15.o2	Only the middle of the plate
+m05-pca.15.o3	All parts equally
+m05-pca.15.why	The plate umpire's eyes are aligned with the inside and top planes; for the outside and low pitches the pitcher's release point and the catcher's glove movement give additional inputs.
+m05-pca.16.q	How far behind second base is the standard starting position for U2 or U3 at second base, according to Appendix 4?
+m05-pca.16.o0	On the base itself
+m05-pca.16.o1	Approximately 3-4 m (10-12 ft), within the area formed by the Second Base Diagonal Angle and the extension of the third base line
+m05-pca.16.o2	Approximately 8-10 m (26-33 ft) directly behind the base
+m05-pca.16.o3	About 1 m (3 ft), beside the base
+m05-pca.16.why	This position establishes a proactive observation point and lets the umpire move efficiently around the base; starting further away increases the movement arc.
+m05-pca.17.q	According to Appendix 4, on which hits must a base umpire in a 3- or 4-umpire system go out?
+m05-pca.17.o0	Only hits that go over the fence
+m05-pca.17.o1	Only when the plate umpire asks
+m05-pca.17.o2	Any hit that could be caught by an outfielder in their coverage area, requires a fair/foul decision in the outfield, or could be a home run
+m05-pca.17.o3	Only hits that are caught
+m05-pca.17.why	In all cases angles take priority over distance.
+m05-pca.18.q	In a Four-Umpire system, what does U2 do when U1 goes out on a fly ball toward the right-field area?
+m05-pca.18.o0	Moves inside to cover both first and second base, which reduces the need for a full crew rotation
+m05-pca.18.o1	Goes out as well
+m05-pca.18.o2	Stays at second base
+m05-pca.18.o3	Rotates to home plate
+m05-pca.18.why	U1 going out on hits to right field improves coverage of the bases closer to home plate.
+m05-pca.19.q	In a Three-Umpire system with U1 at first base and U3 at third base, how is the outfield divided for going out?
+m05-pca.19.o0	U3 takes the whole outfield
+m05-pca.19.o1	U1 takes the whole outfield
+m05-pca.19.o2	The plate umpire takes all fly balls
+m05-pca.19.o3	It is split down the middle: U1 goes out from centre field to the right-field foul line and U3 from centre field to the left-field foul line
+m05-pca.19.why	If an umpire starts at second base the split changes: the plate umpire covers fly balls from the left fielder (or right fielder) to the foul line.
 m06-mkc.title	Appendix 5: Elite Field Mechanics
 m06-mkc.nextLabel	Continue to Presentations - Appendix 5, Part A: Key Concepts
 m06-mkc.0.q	In Appendix 5a's Four Essential Element Theory (FEET), what are the four elements umpires must observe together to make a correct call?
@@ -482,6 +782,66 @@ m06-pca.9.o1	Call the runner out, because they are still processing the throw be
 m06-pca.9.o2	Call interference
 m06-pca.9.o3	Fail to see the base
 m06-pca.9.why	A slight pause on a close play gives the brain time to process all the inputs in the right order, instead of basing the call on the last thing seen.
+m06-pca.10.q	According to Appendix 5a, where is the best Observation Position at home plate when PU is not required to move to the holding position, rotate to 3B or cover the infield?
+m06-pca.10.o0	On the third base line extended, about 5 m behind the plate
+m06-pca.10.o1	Directly beside the catcher on the 3B side of the plate
+m06-pca.10.o2	Inside the catcher's box, in line with the pitch
+m06-pca.10.o3	2-4 m (6-12 ft) directly behind the plate at the Point of Plate (POP), up to the extension of the first base line
+m06-pca.10.why	From POP the umpire can observe plays at home and the surrounding field, then adjust to the calling position the play dictates.
+m06-pca.11.q	What does Appendix 5a mean by 'active feet'?
+m06-pca.11.o0	The umpire jogs in place between pitches to stay warm
+m06-pca.11.o1	The umpire takes quick small steps only while the ball is in the air
+m06-pca.11.o2	The umpire moves both feet when adjusting position so they stay balanced on the balls of their feet and ready to move
+m06-pca.11.o3	The umpire keeps one foot planted until the call is made
+m06-pca.11.why	Umpires should never be locked in position. Moving both feet keeps them stable and ready to move.
+m06-pca.12.q	With a runner on 1B only, where may the umpire working the Second Base Diagonal Angle use the Alternate Starting Position?
+m06-pca.12.o0	In front of the second baseman, level with the bag
+m06-pca.12.o1	About 6 m (20 ft) directly behind 2B
+m06-pca.12.o2	About 3.5 m (12 ft) back from 2B, 1-2 m (3-6 ft) off the 3B side of 2B, if home plate and the batter stay in clear view
+m06-pca.12.o3	About 3.5 m (12 ft) back from 2B, on the 1B side of the Second Base Diagonal Angle
+m06-pca.12.why	The Alternate Starting Position gives a proactive observation position for a potential steal, as long as the view of home plate and the batter is unobstructed.
+m06-pca.13.q	Why does Appendix 5a say umpires should not move further towards the First Base Line Extended (1BLE) than the Alternate Starting Position at 2B?
+m06-pca.13.o0	It puts the base between the umpire and the play and creates a parallax error when judging whether the runner is in contact with the base
+m06-pca.13.o1	It makes the umpire too far from the pitcher
+m06-pca.13.o2	It interferes with the centre fielder's throwing arm
+m06-pca.13.o3	It blocks the catcher's view of home plate
+m06-pca.13.why	Movement away from the Second Base Diagonal Angle toward the 1BLE increases parallax error and reduces the umpire's ability to judge accurately.
+m06-pca.14.q	When PU is not rotating, in which situation does PU NOT make the usual first movement of clearing the catcher to the left?
+m06-pca.14.o0	On every fly ball to the outfield
+m06-pca.14.o1	Whenever there is a runner on 3B
+m06-pca.14.o2	On every ground ball to the infield
+m06-pca.14.o3	On a sharp hit or foul fly ball where PU has a better position to make the call from behind the plate or by moving with the flight of the ball
+m06-pca.14.why	PU normally clears the catcher to the left first. The exceptions are a sharp hit or foul fly ball where a better position exists, and a passed ball or wild pitch when not required to rotate toward 3B.
+m06-pca.15.q	Which information does Appendix 5a say umpires should run through before each pitch (Pre-Pitch Preparation)?
+m06-pca.15.o0	The weather forecast, the crowd size and the time left in the game
+m06-pca.15.o1	The count, the number of outs, the score, the runners on base and their speed, and the outfielders' depth and arm strength
+m06-pca.15.o2	Only the count and the number of outs
+m06-pca.15.o3	The team standings and each batter's previous results
+m06-pca.15.why	Mental preparation prevents the umpire from being caught unaware or out of position in unusual situations.
+m06-pca.16.q	What should a base umpire do before deciding to go out on a fly ball, according to Appendix 5a?
+m06-pca.16.o0	Go out immediately on every ball hit past the infield
+m06-pca.16.o1	Go out only on balls hit to their own side of the field
+m06-pca.16.o2	Wait for the plate umpire to signal who goes
+m06-pca.16.o3	Look to the flight of the ball, then look to their partners and communicate before deciding to go out
+m06-pca.16.why	Each time the umpire at 2B goes out needlessly, coverage at home plate can be compromised, so the decision should not be rushed.
+m06-pca.17.q	According to Appendix 5a, what should an umpire do about a fly ball that has no real likelihood of being caught?
+m06-pca.17.o0	Leave the call to the first base coach
+m06-pca.17.o1	Always go out, to judge fair/foul
+m06-pca.17.o2	Not go out, so that base coverage is kept, especially with multiple runners or a runner going home
+m06-pca.17.o3	Go out but return before the ball lands
+m06-pca.17.why	Umpires must be aware of the depth, starting positions and ability of the outfielders. They must go out on any ball that could reasonably be caught, but not on balls that will not be.
+m06-pca.18.q	An umpire who has gone out on a fly ball turns and sees a base in the infield that is not covered because of a missed rotation. What may they do, according to Appendix 5a?
+m06-pca.18.o0	Return to the infield and make the call, communicating clearly with the crew, or give an opinion if asked
+m06-pca.18.o1	Run straight to home plate
+m06-pca.18.o2	Make the call without telling the crew
+m06-pca.18.o3	Stay in the outfield and say nothing
+m06-pca.18.why	An umpire who goes out must turn and look back to the infield. Saying "I'm here" and their name tells the crew they have covered the empty location.
+m06-pca.19.q	When U1 is at home plate at the end of a play, what releases all umpires to counter rotate to their new positions for the next pitch?
+m06-pca.19.o0	The ball returning to the pitcher's circle
+m06-pca.19.o1	Time being called by U1 at home plate
+m06-pca.19.o2	A request from the first base coach
+m06-pca.19.o3	PU signalling from the holding position
+m06-pca.19.why	Lead umpires wait to be released so that the incoming umpire has control of the area; leaving too early can leave no umpire in control of a base.
 m07-pca.title	Appendix 5b: Three-Umpire System
 m07-pca.nextLabel	Continue to Presentation - Appendix 5c: Four, Five and Six-Umpire Systems
 m07-pca.0.q	In the Three-Umpire System (Appendix 5b), where does U1 stand between innings?
@@ -544,6 +904,66 @@ m07-pca.9.o1	Run to 3B immediately
 m07-pca.9.o2	Go out toward the outfield
 m07-pca.9.o3	Trail the batter-runner about one third of the way to 1B (further if required), watch for interference, and make the fair/foul call
 m07-pca.9.why	PU trails the batter-runner for a potential tag, interference by the batter-runner or to assist at 1B, and rotates to 3B if the batter-runner reaches 1B and advances toward 2B.
+m07-pca.10.q	Where does PU stand at the pre-game plate meeting in the Three-Umpire System (Appendix 5b)?
+m07-pca.10.o0	Behind the batter's boxes at the point of the plate, with U1 and U3 on their respective sides in front of the batter's boxes
+m07-pca.10.o1	On the third base line, with U1 and U3 behind PU
+m07-pca.10.o2	At the pitcher's plate, with the base umpires beside PU
+m07-pca.10.o3	Behind the catcher's box, with the base umpires at their bases
+m07-pca.10.why	After the meeting the umpires go to their starting positions; between innings all umpires stand off the fair/foul lines.
+m07-pca.11.q	In the Three-Umpire System, with a runner on 2B but not on 3B, where does U3 start?
+m07-pca.11.o0	About 5.5 m (18 ft) behind 3B, just off the line in foul territory
+m07-pca.11.o1	About 3.5 m (12 ft) back at the Second Base Diagonal Angle
+m07-pca.11.o2	About 4.5 m (15 ft) behind 3B, just off the line in foul territory
+m07-pca.11.o3	About 3.5 m (12 ft) behind 3B, up to 2 m (6 ft) off the line
+m07-pca.11.why	With no runners on, the start is about 5.5 m (18 ft) behind 3B; with a runner on 3B it is closer, about 3.5 m (12 ft).
+m07-pca.12.q	In the Three-Umpire System, with a runner on 1B, where may U3 start?
+m07-pca.12.o0	About 5.5 m (18 ft) behind 3B in foul territory
+m07-pca.12.o1	About 3.5 m (12 ft) back at the Second Base Diagonal Angle, or up to the 3BLE on the 1B side, with an unobstructed view of the batter and home plate
+m07-pca.12.o2	On the 1B side of the pitcher's plate
+m07-pca.12.o3	Beside PU behind home plate
+m07-pca.12.why	Either the standard or the alternate Second Base Diagonal Angle position puts the umpire close to the angle, with minimal movement needed for a tag play.
+m07-pca.13.q	U3 starts at 2B and U1 at 1B. Neither base umpire goes out on a fly ball. Who takes responsibility for the tag up at 3B?
+m07-pca.13.o0	PU
+m07-pca.13.o1	Nobody; the runner is not watched
+m07-pca.13.o2	U1
+m07-pca.13.o3	U3
+m07-pca.13.why	When neither base umpire goes out, base umpires take the runner at their own base, and PU takes 3B when U3 starts at 2B or rotates to 2B.
+m07-pca.14.q	U1 is at 1B and U3 is at 3B with a runner on 3B. A ground ball is hit in the infield. What does U3 do?
+m07-pca.14.o0	Rotate inside immediately for any call at 2B
+m07-pca.14.o1	Move to 1B
+m07-pca.14.o2	Stay at 3B until the runner commits home, then rotate inside for any call at 2B
+m07-pca.14.o3	Rotate to home plate
+m07-pca.14.why	If U3 stays or is delayed at 3B, U1 is responsible for calls at 1B and 2B.
+m07-pca.15.q	U1 is at 1B and U3 is at 3B with no runners on. A ground ball goes to the outfield. What does U1 do?
+m07-pca.15.o0	Rotate straight to home plate immediately
+m07-pca.15.o1	Stay at the starting position
+m07-pca.15.o2	Go out to the outfield
+m07-pca.15.o3	Move down the foul line for possible outfield-to-1B force plays, and rotate to the POP area only if the batter-runner progresses from 2B to 3B, pushing PU to 3B
+m07-pca.15.why	U1 uses Dynamic Movement to establish a position for any call at 1B and only rotates home when a play at the plate is possible.
+m07-pca.16.q	In the Three-Umpire System, U3 starts to go out on a fly ball they first thought catchable, but then judges it will not be caught. What may U3 do?
+m07-pca.16.o0	Rotate to home plate
+m07-pca.16.o1	Stay where they are and let PU cover 2B
+m07-pca.16.o2	Keep going to the fence and say nothing
+m07-pca.16.o3	Tell U1, visually and verbally, that U3 has 2B and rotate back inside to 2B, while U1 shortens their rotation or button hooks toward the 1B foul line
+m07-pca.16.why	The correction allows better coverage of the batter-runner around the diamond.
+m07-pca.17.q	What does Appendix 5 mean by a 'button hook'?
+m07-pca.17.o0	Stepping back into foul territory and turning around the right shoulder
+m07-pca.17.o1	Going into the diamond and then turning around the left shoulder, so the umpire can cover multiple bases
+m07-pca.17.o2	Sprinting in a straight line to home plate
+m07-pca.17.o3	The hand signal for a foul ball
+m07-pca.17.why	A button hook is used whenever U1 comes inside the diamond in a Three-Umpire System, and gives U1 the ability to adapt to a different situation.
+m07-pca.18.q	On a pickoff (throw back) at 3B in the Three-Umpire System, how far may U3 move in foul territory?
+m07-pca.18.o0	About 5.5 m (18 ft) back, anywhere in foul territory
+m07-pca.18.o1	Only to the leading edge of the base
+m07-pca.18.o2	About 3 m (10 ft) from the base, but not beyond a 45-degree line through 3B
+m07-pca.18.o3	They must stay at their starting position
+m07-pca.18.why	Observing the runner's return path helps lead the umpire to the best position to see into the tag or the leading edge.
+m07-pca.19.q	According to the Three-Umpire Rotation Memory Map, what should U3 do whenever U1 goes out?
+m07-pca.19.o0	Rotate inside the diamond to take responsibility for 1B and 2B, moving to a location past the line from the pitcher's plate to 2B
+m07-pca.19.o1	Rotate to home plate
+m07-pca.19.o2	Stay at 3B
+m07-pca.19.o3	Follow U1 to the outfield
+m07-pca.19.why	The remaining base umpire moves inside and has responsibility for all calls at 1B or 2B, then rotates to 3B ahead of the batter-runner.
 m08-pca.title	Appendix 5c: Four, Five and Six-Umpire Systems
 m08-pca.nextLabel	You've completed all eight required modules - view your full assessment record
 m08-pca.0.q	In the Four-Umpire System (Appendix 5c), where does U2 stand between innings?
@@ -606,3 +1026,63 @@ m08-pca.9.o1	PU decides from the plate
 m08-pca.9.o2	The call is made by the base umpire
 m08-pca.9.o3	Both run into fair territory parallel to the flight of the ball until they have an angle, then the one taking the call indicates with a hand on the chest and/or verbalises
 m08-pca.9.why	ULF and URF are responsible for all calls beyond the base umpire and behind the infielders: fair/foul, catch/no catch and the status of a ball leaving the field of play.
+m08-pca.10.q	In the Four-Umpire System, where does U3 start with a runner on 2B?
+m08-pca.10.o0	About 3.5 m (12 ft) behind 3B, in foul territory
+m08-pca.10.o1	About 4.5 m (15 ft) behind 3B, just off the line in foul territory
+m08-pca.10.o2	About 3.5 m (12 ft) back at the Second Base Diagonal Angle
+m08-pca.10.o3	About 5.5 m (18 ft) behind 3B, just off the line in foul territory
+m08-pca.10.why	With no runners on, U3 starts about 5.5 m (18 ft) behind 3B; with a runner at 3B it is about 3.5 m (12 ft) in foul territory.
+m08-pca.11.q	U3 goes out on a fly ball in the Four-Umpire System. Who takes the tag up at 2B?
+m08-pca.11.o0	U1
+m08-pca.11.o1	PU
+m08-pca.11.o2	U2
+m08-pca.11.o3	U3, from the outfield
+m08-pca.11.why	When U3 goes out, U1 takes the tag up at 1B and U2 takes the tag up at 2B. Each umpire has the tag up at their base after any initial rotation.
+m08-pca.12.q	U1 goes out on a hard, flat hit caught in right field. U2 may not get inside in time to see the catch and the runner tagging up at 2B. What may U2 do?
+m08-pca.12.o0	Go out to the outfield as well
+m08-pca.12.o1	Ignore the tag up
+m08-pca.12.o2	Seek help from U3 on the tag up at 2B
+m08-pca.12.o3	Ask PU to take the tag up at 2B
+m08-pca.12.why	When umpires rotate inside using the Inside/Outside Theory they may not see both the first touch of the ball and the runner's lead, so they rotate quickly, glance over the shoulder and seek assistance.
+m08-pca.13.q	In the Four-Umpire System, who is responsible for the lead-off call for a runner?
+m08-pca.13.o0	PU, for all runners
+m08-pca.13.o1	U2, for runners at 1B and 2B, and U1 for the rest
+m08-pca.13.o2	U1, for runners at every base
+m08-pca.13.o3	Each umpire, for a runner at their own base
+m08-pca.13.why	In the Three-Umpire System U1 has the lead-offs at 1B and 2B; in the Four-Umpire System each umpire has the lead-off at their base.
+m08-pca.14.q	What angle should U2 and U3 aim for on force plays in the Four-Umpire System?
+m08-pca.14.o0	About 90 degrees to the throw and no more than 45 degrees off the leading edge
+m08-pca.14.o1	Directly over the base
+m08-pca.14.o2	Directly in line with the throw
+m08-pca.14.o3	Behind the fielder, at 180 degrees to the throw
+m08-pca.14.why	On tag plays they use Dynamic Movement to keep the Four Essential Elements in view on the leading edge or as the play dictates.
+m08-pca.15.q	In the Four-Umpire System with no runners on or a runner on 1B only, what does PU do on a hit to the outfield?
+m08-pca.15.o0	Run out to the outfield with the ball
+m08-pca.15.o1	Track the hit and trail the batter-runner one third of the way to 1B, further if required
+m08-pca.15.o2	Rotate immediately to 3B
+m08-pca.15.o3	Stay at home plate in the stance
+m08-pca.15.why	With a runner at 2B or 3B PU uses the holding position instead, and anticipates plays at the plate.
+m08-pca.16.q	According to the Four-Umpire Rotation Memory Map, in which situation can U2 stay out?
+m08-pca.16.o0	Whenever U3 goes out
+m08-pca.16.o1	When no runners are on and the hit is to left field
+m08-pca.16.o2	Whenever the hit is to the infield
+m08-pca.16.o3	When there is a runner on 3B and the hit is to right field
+m08-pca.16.why	U2 must rotate inside the diamond in all other situations where U1 or U3 goes out, and cover 1B when U1 goes out.
+m08-pca.17.q	In the Five-Umpire System (Appendix 5d), what do PU and the two base umpires do?
+m08-pca.17.o0	Go out to the outfield on every fly ball
+m08-pca.17.o1	Stay at their starting positions for the whole play
+m08-pca.17.o2	Leave all calls to the two outfield umpires
+m08-pca.17.o3	Stay in the infield and rotate as in the Three-Umpire System, while two outfield umpires on the fair/foul lines judge fly balls, trapped balls and home runs
+m08-pca.17.why	This leaves the remaining umpires to take care of plays at the bases.
+m08-pca.18.q	Between innings in the Five and Six-Umpire Systems, where do ULF and URF go?
+m08-pca.18.o0	To the pitcher's circle
+m08-pca.18.o1	Behind home plate beside PU
+m08-pca.18.o2	Down the line to where the U3 and U1 starting positions are
+m08-pca.18.o3	Behind the outfield fence
+m08-pca.18.why	The other umpires use the same between-innings positions as the Three-Umpire or Four-Umpire System.
+m08-pca.19.q	According to Appendix 5, why are the Five and Six-Umpire Systems useful?
+m08-pca.19.o0	They let the base umpires stay in the infield, so all bases are covered at all times and each call can be made from an advantageous position
+m08-pca.19.o1	They make games shorter
+m08-pca.19.o2	They remove the need for PU to be at home plate
+m08-pca.19.o3	They remove the need for fair/foul calls
+m08-pca.19.why	Plays closer to home affect the overall game result, so having 3B and home plate covered matters; the systems suit finals and games of a high standard.

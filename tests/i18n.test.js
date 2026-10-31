@@ -62,20 +62,28 @@ LANGS.forEach(l => {
   }
   ok('all pages open in all five languages at desktop and phone width with no script errors or sideways scrolling');
 
-  // 4. quiz questions: every question, option and explanation is translated
+  // 4. quiz questions: every question, option and explanation is translated. In a pool (bank.draw) the first `draw` questions
+  //    must be translated in every language; the extra ones only where the language is switched on (an untranslated extra question
+  //    is simply not drawn in that language, see assessment-widget.html).
   const BANK = vm.runInNewContext(fs.readFileSync(path.join(root, 'questions.js'), 'utf8') + '\n;QUIZ_BANK', {});
-  let count = 0;
+  const LIVE = (/var LIVE = \[([^\]]*)\]/.exec(fs.readFileSync(path.join(root, 'i18n.js'), 'utf8'))[1].match(/'(\w+)'/g) || []).map(x => x.replace(/'/g, ''));
+  let count = 0, extrasChecked = 0;
   for (const l of LANGS) for (const [id, bank] of Object.entries(BANK)) {
     const d = qdict[l][id]; assert.ok(d && d.title, `${l} ${id} title`);
+    const need = LIVE.includes(l) ? bank.questions.length : (bank.draw || bank.questions.length);
     bank.questions.forEach((q, i) => {
-      const t = d.questions[i]; assert.ok(t && t.q, `${l} ${id}.${i} question`);
+      const t = d.questions[i];
+      if (i >= need) { assert.ok(!t || (t.q && t.options && t.options.length === q.options.length && (!q.why || t.why)), `${l} ${id}.${i} is only half translated`); return; }
+      assert.ok(t && t.q, `${l} ${id}.${i} question`);
       assert.strictEqual(t.options.length, q.options.length, `${l} ${id}.${i} option count`);
       t.options.forEach((o, j) => assert.ok(o, `${l} ${id}.${i}.o${j}`));
       if (q.why) assert.ok(t.why, `${l} ${id}.${i} why`);
-      count++;
+      if (i >= (bank.draw || bank.questions.length)) extrasChecked++; else count++;
     });
+    const eligible = bank.questions.filter((q, i) => d.questions[i] && d.questions[i].q).length;
+    assert.ok(eligible >= (bank.draw || bank.questions.length), `${l} ${id}: only ${eligible} translated questions, ${bank.draw} are drawn`);
   }
-  ok(`all ${count / LANGS.length} questions (question, every option and explanation) are translated into all five languages`);
+  ok(`all ${count / LANGS.length} core questions are translated into all five languages, and the ${extrasChecked / LIVE.filter(l => l !== 'en').length} extra pool questions in the languages that are switched on (${LIVE.join(', ')})`);
 
   // 5. the practice quiz runs in each language and the right answer is still the one marked right
   for (const l of LANGS) for (const key of ['m01-mkc', 'm06-mkc']) {

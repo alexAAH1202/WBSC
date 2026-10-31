@@ -85,10 +85,10 @@ Script Web App into a Google Sheet.
 - Name, email, ID and association are remembered for the visit (this tab only) so a refresh does not mean retyping them.
 
 ## Tests
-- `node tests/bank.test.js`: 14 assessments in `questions.js` (Appendix 5 is split into Modules 06, 07 and 08 for Appendix 5a, 5b and 5c, 10 questions each), at least 5 questions per Knowledge Check and 10 per Competency Assessment (more is fine, up to 100), answer keys in range, no duplicate options or questions. Runs in CI.
+- `node tests/bank.test.js`: 14 assessments in `questions.js` (Appendix 5 is split into Modules 06, 07 and 08 for Appendix 5a, 5b and 5c; each marked assessment has a pool of 20 questions and asks 10), at least 5 questions per Knowledge Check and 10 per Competency Assessment (more is fine, up to 100), answer keys in range, no duplicate options or questions. Runs in CI.
 - `node tests/site.test.js`: every local link, script, stylesheet and image on every page exists. Runs in CI.
 - `node tests/code-gs.test.js`: `Code.gs` against a mock of Sheets, Mail and Lock (39 checks, including login, receipts, results password, alerts and the health check). Runs in CI.
-- `node tests/widget.test.js` (needs `npm i -D playwright`): the widget in a real browser with Google's reply simulated (27 checks).
+- `node tests/widget.test.js` (needs `npm i -D playwright`): the widget in a real browser with Google's reply simulated (about 40 checks, including the question pool and progress on the server). It takes a few minutes.
 - `node tests/notice.test.js` (needs Playwright): the pop-up on every page, no cookies, dismissal, phone width, blocked storage (9 checks).
 - `node tests/results.test.js` (needs Playwright): `results.html` with simulated replies (25 checks).
 - `node tests/a11y.test.js` (needs Playwright): heading order, landmarks, skip link, alt text and labels on every page, 320px reflow, the language menu and quiz answers by keyboard.
@@ -115,3 +115,23 @@ How it works, how to edit a translation, and the glossary are in [`i18n/README.m
 
 ## Emails in the learner's language
 The login code email and the receipt are sent in the language the learner was using (the site sends `lang`; `EMAIL_TEXT` in `Code.gs` holds the wording for English, Spanish, French, Japanese, Korean and Chinese, with English as the fallback). Emails to the Director and the owner stay English. The pass/fail decision never depends on language. **Changing this needs the Apps Script redeployed as a new version of the existing deployment.**
+
+## Question pools
+A marked assessment can hold more questions than it asks: add `draw: 10` to its entry in `questions.js` and put the extra questions after the first ten.
+Each attempt asks `draw` questions chosen at random from the pool, preferring ones the learner did not see on their previous attempt (the browser remembers
+which, with the email address, until the browser data is cleared), so a retake is not the same ten questions. The pass mark is 85% of `draw`. All eight marked assessments (Modules 01 to 08) have a pool of 20 questions and ask 10. In a language other than English only translated questions are drawn: the first ten of each must be
+translated in every language, the extras in any language that is switched on. A new question can therefore be added in English first.
+`node tests/bank.test.js` checks `draw`; `node tests/i18n.test.js` checks the translations.
+
+## Saved progress (resume on another device)
+After each answer of a marked assessment the browser saves the attempt to the browser (localStorage) and, once the email is verified, to a **Progress** tab of the
+results Sheet (created automatically): the questions drawn, the question reached, the score so far, the answer order and the questions missed. The learner is
+stored only as a hash of the email address. A saved attempt is ignored after 24 hours and deleted after 48 (by the daily check), when the learner starts again,
+and when the result is recorded. The page asks for it with the attempts lookup (`pkey`). Practice quizzes are never saved. **Needs the Apps Script redeployed.**
+
+## Weekly summary and the Director's dashboard
+- Every Monday about 08:00 `weeklySummary()` emails the Director: who completed the program that week, who has used every attempt on a module without passing,
+  who started and then went quiet (no activity for 14 days: `STALLED_DAYS`, also in `results.html`), and totals by association/federation. Nothing is sent to learners.
+  Only people who have saved a result appear: the site has no roster. **Run `installTriggers()` once from the editor after deploying** to schedule it
+  (it re-creates the daily check too). `weeklySummary()` can also be run by hand to see the email.
+- `results.html` gained an association/federation filter, a "Went quiet" filter and tile, a by-association table and a "Went quiet" column in the summary CSV.
