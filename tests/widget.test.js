@@ -50,6 +50,7 @@ async function newPage(b, opts, saveHandler) {
   });
   await pg.route(/script\.google\.com\/macros\/s\/.*\/exec\?action=status/, r => {
     const u = new URL(r.request().url()); certLookups.push(Object.fromEntries(u.searchParams));
+    if (opts.statusFail) return r.abort();
     r.fulfill({ status: 200, contentType: 'application/javascript', body: `${u.searchParams.get('callback')}(${JSON.stringify(opts.certificate || { ok: true, eligible: false })});` });
   });
   await pg.route(POST_URL, async r => {
@@ -596,6 +597,39 @@ const verifyText = pg => pg.textContent('#verify-state');
     assert.ok(!(await t.pg.isVisible('.notice-more p')) && await t.pg.isVisible('.notice-more summary')); await t.pg.click('.notice-more summary'); assert.ok(await t.pg.isVisible('.notice-more p'));
     assert.ok(/Pass mark: 85%/.test(await t.pg.textContent('#rules-note')) && /watch the full presentation first/.test(await t.pg.textContent('#rules-note')));
     ok('the preamble is shorter: one visible notice paragraph with "More about this site" folded away, and a single pass-mark note that points to the presentations');
+
+    // ---- quiz progress bar, last-attempt warning, next module, menu chip, loading and error states
+    t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false }, certificate: status });
+    await t.pg.click('[data-assessment="m01-pca"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
+    assert.ok(await t.pg.isHidden('#quiz-last-warn'), 'no warning on the first attempt'); assert.strictEqual(await t.pg.getAttribute('#quiz-bar', 'aria-valuenow'), '0');
+    for (let i = 0; i < 3; i++) { const q = await t.pg.textContent('#quiz-question'); const o = await t.pg.$$eval('.quiz-option .opt-text', a => a.map(x => x.textContent)); await t.pg.click(`.quiz-option >> nth=${o.indexOf(RIGHT[q])}`); await t.pg.click('#quiz-submit-btn'); await t.pg.click('#quiz-submit-btn'); }
+    assert.strictEqual(await t.pg.getAttribute('#quiz-bar', 'aria-valuenow'), '30'); assert.strictEqual(await t.pg.evaluate(() => document.getElementById('quiz-bar-fill').style.width), '30%');
+    t = await newPage(b, { attempts: { attempts: 1, remaining: 1, passed: false } });
+    await t.pg.click('[data-assessment="m01-pca"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
+    assert.ok(await t.pg.isVisible('#quiz-last-warn') && /last attempt this month/.test(await t.pg.textContent('#quiz-last-warn')) && /cannot try this module again until/.test(await t.pg.textContent('#quiz-last-warn')), await t.pg.textContent('#quiz-last-warn'));
+    ok('the quiz shows a progress bar that fills as questions are answered, and a clear warning on the last attempt of the month');
+
+    t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false }, certificate: status });
+    await t.pg.waitForSelector('#progress-strip', { state: 'visible' });
+    await runQuiz(t.pg, 'm01-pca'); await t.pg.waitForFunction(() => /recorded/.test(document.getElementById('quiz-save-state').textContent));
+    await t.pg.waitForSelector('#quiz-next-module', { state: 'visible' });
+    assert.strictEqual((await t.pg.textContent('#quiz-next-module')).trim(), 'Next module: Module 04'); assert.strictEqual(await t.pg.getAttribute('#quiz-next-module', 'href'), '#module-04');
+    ok('after a pass a button leads to the next module that is not yet passed (modules 02 and 03 are already passed here, so Module 04)');
+
+    // the menu chip on the other pages, from what the Assessments page remembered; it goes when the sign-in does
+    const chipData = await t.pg.evaluate(() => JSON.parse(localStorage.getItem('wbscProgressChip')));
+    assert.strictEqual(chipData.n, 3); assert.strictEqual(chipData.total, 8); assert.ok(!('email' in chipData) && !('token' in chipData), 'only a count is kept');
+    await t.pg.goto('http://localhost:' + PORT + '/index.html');
+    assert.strictEqual((await t.pg.textContent('#primary-nav .progress-chip')).trim(), '✓ 3 of 8 passed'); assert.strictEqual(await t.pg.getAttribute('#primary-nav .progress-chip', 'href'), 'assessment-widget.html#progress-strip');
+    await t.pg.evaluate(() => { const d = JSON.parse(localStorage.getItem('wbscProgressChip')); d.exp = Date.now() - 1000; localStorage.setItem('wbscProgressChip', JSON.stringify(d)); });
+    await t.pg.reload(); assert.strictEqual(await t.pg.locator('.progress-chip').count(), 0, 'an expired sign-in shows no chip');
+    ok('every page shows "N of 8 passed" in the menu while signed in (a count only), linking to the progress strip, and not after the sign-in has expired');
+
+    t = await newPage(b, { statusFail: true });
+    await t.pg.waitForSelector('#progress-strip', { state: 'visible' });
+    await t.pg.waitForFunction(() => /could not be checked/.test(document.getElementById('ps-title').textContent), null, { timeout: 15000 });
+    assert.ok(await t.pg.isVisible('#ps-retry') && /Your results are safe/.test(await t.pg.textContent('#ps-note')));
+    ok('if the progress lookup fails the strip says so, reassures that results are safe and offers Try again');
   }
 
   await b.close(); server.close(); console.log(n + ' widget checks passed');
