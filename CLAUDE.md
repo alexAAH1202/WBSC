@@ -18,6 +18,7 @@ mark and attempt rules, and how to deploy. The earlier generic quiz lives in [`d
   URL and breaks the page. If the URL ever changes, update `APPS_SCRIPT_URL` in `assessment-widget.html` and
   `tests/widget.test.js`.
 - **Only the WBSC logo (`images/wbsc-logo.svg`) may appear on the site.** No partner, sponsor or other organisation logos. `tests/site.test.js` fails if one is added.
+- **The certificate is WBSC's official PDF** (`certificate/certificate-template.pdf`, which carries the Softball Umpiring Commission emblem and signatory supplied by WBSC). Do not redesign or re-word it: replace the file, run `node tests/certificate-build.js`, keep the field names `umpire_name` and `completion_date`. `vendor/pdf-lib.min.js` (MIT) is the only third-party code, self-hosted and loaded only when a certificate is requested.
 - **Fonts are hosted in `fonts/`** (Roboto, OFL licence). Do not load Google Fonts or any other third-party font service.
 - **The temporary-site notice must stay on every page** ("This is not the official WBSC website"). The tests
   fail if it is removed.

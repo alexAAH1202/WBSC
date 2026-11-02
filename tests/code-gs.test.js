@@ -64,7 +64,7 @@ function makeEnv({ failMail = null, quota = 100, quiet = true } = {}) {
       }
     },
     Session: { getEffectiveUser: () => ({ getEmail: () => 'owner@example.com' }), getScriptTimeZone: () => 'UTC' },
-    Utilities: { formatDate: (d, tz, f) => { assert.strictEqual(f, 'yyyy-MM'); const x = new Date(d); return x.getUTCFullYear() + '-' + String(x.getUTCMonth() + 1).padStart(2, '0'); }, getUuid: () => crypto.randomUUID(), computeDigest: (a, s) => digestBytes(s), DigestAlgorithm: { SHA_256: 'SHA_256' }, Charset: { UTF_8: 'UTF_8' } },
+    Utilities: { formatDate: (d, tz, f) => { assert.ok(f === 'yyyy-MM' || f === 'yyyy-MM-dd'); const x = new Date(d); const ym = x.getUTCFullYear() + '-' + String(x.getUTCMonth() + 1).padStart(2, '0'); return f === 'yyyy-MM' ? ym : ym + '-' + String(x.getUTCDate()).padStart(2, '0'); }, getUuid: () => crypto.randomUUID(), computeDigest: (a, s) => digestBytes(s), DigestAlgorithm: { SHA_256: 'SHA_256' }, Charset: { UTF_8: 'UTF_8' } },
     HtmlService: { XFrameOptionsMode: { ALLOWALL: 'ALLOWALL' }, createHtmlOutput: h => ({ html: h, setXFrameOptionsMode(m) { this.mode = m; return this; } }) },
     ContentService: { MimeType: { JSON: 'json', JAVASCRIPT: 'js' }, createTextOutput: t => ({ text: t, setMimeType(m) { this.mime = m; return this; } }) }
   };
@@ -573,6 +573,31 @@ ok('weekly summary: a module failed 3 or more times without ever passing it is f
   const b = e.mails.length; e.ctx.weeklySummary(); const body = e.mails.slice(b)[0].body;
   assert.ok(/FAILED 3 OR MORE TIMES[^\n]*\(1\)\n- Repeat Rae \([^)]*\), \d of 8 modules passed, module 02/.test(body), body);
   assert.ok(!/- Two Tim[^\n]*module 02/.test(body) && !/- Pass Pat[^\n]*module 02/.test(body), 'two failures, or a pass at the third try, are not flagged');
+});
+
+// =====================================================================  certificate of completion
+const certLook = (e, token) => JSON.parse(e.ctx.certificateReply_({ token, callback: '' }).text);
+ok('certificate: a verified learner who passed all 8 modules gets their name and completion date; others and unverified requests get nothing', () => {
+  const e = makeEnv(); const t = login(e, 'cert@x.com');
+  assert.strictEqual(certLook(e, '').code, 'auth'); assert.strictEqual(certLook(e, 'f'.repeat(64)).code, 'auth');
+  const first = certLook(e, t); assert.strictEqual(first.ok, true); assert.strictEqual(first.eligible, false); assert.strictEqual(first.name, '');
+  let last;
+  for (let i = 1; i <= 8; i++) { e.clock.now = Date.UTC(2026, 9, 20 + i, 5, 0, 0); last = save(e, login(e, 'cert@x.com'), { participantName: i === 3 ? 'Old Typo' : 'Jo Ump', module: mod(i), score: 9, umpireId: 'cert' }); if (i < 8) assert.strictEqual(last.certName, '', 'no certificate data before the last module'); }
+  assert.strictEqual(last.completedAll, true); assert.strictEqual(last.certName, 'Jo Ump'); assert.strictEqual(last.certDate, '2026-10-28');
+  const info = certLook(e, login(e, 'cert@x.com')); assert.deepStrictEqual([info.eligible, info.name, info.date], [true, 'Jo Ump', '2026-10-28']);
+  assert.ok(!('email' in info));
+  // a retry of the saved last result gives the same data; another learner sees nothing
+  const again = save(e, login(e, 'cert@x.com'), { participantName: 'Jo Ump', module: mod(8), score: 9, umpireId: 'cert', submissionId: last.submissionId }); assert.strictEqual(again.duplicate, true); assert.strictEqual(again.certDate, '2026-10-28');
+  assert.strictEqual(certLook(e, login(e, 'other@x.com')).eligible, false);
+  // the date is when the last module was first passed, not when a later retake happened
+  e.clock.now = Date.UTC(2026, 10, 15); const later = save(e, login(e, 'cert@x.com'), { participantName: 'Jo Ump', module: mod(1), score: 5, umpireId: 'cert' });
+  assert.strictEqual(certLook(e, login(e, 'cert@x.com')).date, '2026-10-28', 'a later retake does not move the date');
+});
+ok('certificate: seven modules passed is not enough, and failed attempts do not count', () => {
+  const e = makeEnv(); const t = login(e, 'cert@x.com');
+  for (let i = 1; i <= 7; i++) save(e, t, { module: mod(i), score: 9, umpireId: 'c7' });
+  save(e, t, { module: mod(8), score: 5, umpireId: 'c7' });
+  assert.strictEqual(certLook(e, t).eligible, false);
 });
 
 console.log(n + ' Code.gs checks passed');

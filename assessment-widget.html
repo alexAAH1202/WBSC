@@ -528,6 +528,12 @@
   .quiz-save-state.saved{color:#2f7a3d;font-weight:700;}
   .quiz-save-state.local{color:var(--ink-soft);}
   .quiz-save-state.failed{color:var(--red-600);font-weight:700;}
+  .cert-box{margin-top:24px;padding:22px 24px;border:2px solid var(--gold-500);background:#fffdf6;}
+  .cert-box h2{font-size:1.15rem;margin-bottom:8px;}
+  .cert-box p{margin:0 0 14px;}
+  .cert-box .cert-state{margin:12px 0 0;font-size:0.9rem;color:var(--ink-soft);}
+  .cert-box .cert-state.bad{color:var(--red-600);}
+  .cert-inline{margin:18px 0;}
   .verify-box{margin-top:22px;padding-top:20px;border-top:1px solid var(--line);}
   .verify-state{font-size:0.92rem;color:var(--ink-soft);margin-bottom:12px;min-height:1.4em;}
   .verify-state.ok{color:#2f7a3d;font-weight:700;}
@@ -703,6 +709,12 @@
           </div>
         </div>
       </div>
+      <div class="cert-box" id="cert-box" hidden>
+        <h2>Your certificate of completion</h2>
+        <p id="cert-text"></p>
+        <button class="btn btn-primary" id="cert-btn" type="button">Download your certificate (PDF)</button>
+        <p class="cert-state" id="cert-state" role="status" aria-live="polite"></p>
+      </div>
     </div>
   </section>
 
@@ -765,6 +777,9 @@
           <button class="btn btn-primary" id="quiz-try-again" type="button" style="display:none;">Try again</button>
           <p class="practice-note" id="quiz-practice-note" style="display:none;">This was practice only: nothing was recorded and it does not count towards your completion.</p>
           <div class="quiz-review" id="quiz-review" style="display:none;"></div>
+          <div class="cert-inline" id="cert-inline" hidden>
+            <button class="btn btn-primary" id="cert-btn2" type="button">Download your certificate (PDF)</button>
+          </div>
           <div class="quiz-next" id="quiz-next-block">
             <p class="label">Next</p>
             <p class="next-title" id="quiz-next-title">Continue to Presentations - Foundations to Appendix 4</p>
@@ -1421,6 +1436,95 @@
   var AUTH_TIMEOUT_MS = 20000;
   var RESEND_WAIT_MS = 30000;
   var SAVE_TIMEOUT_MS = 25000;
+  // ---------------------------------------------------------------- certificate of completion
+  // Once a learner has passed all the modules the server tells us their name and completion date, and the browser fills
+  // the official WBSC certificate (certificate/certificate-template.pdf: two form fields, umpire_name and completion_date)
+  // and saves it as a PDF. The PDF is made on the learner's device; nothing is sent anywhere. The library (vendor/pdf-lib,
+  // MIT licence) and the template are loaded only when the learner asks for the certificate.
+  var cert = null;   // { name, date: 'yyyy-mm-dd' } once the program is complete
+  var certEls = { box: document.getElementById('cert-box'), text: document.getElementById('cert-text'), state: document.getElementById('cert-state'),
+                  btn: document.getElementById('cert-btn'), inline: document.getElementById('cert-inline'), btn2: document.getElementById('cert-btn2') };
+  function certDateText(iso){
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ''));
+    return m ? new Date(+m[1], +m[2] - 1, +m[3]).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : '';   // the certificate is printed in English and Spanish; the date is shown the same way
+  }
+  function setCertificate(c){
+    cert = c && c.name && /^\d{4}-\d{2}-\d{2}$/.test(c.date || '') ? { name: String(c.name), date: c.date } : null;
+    certEls.box.hidden = !cert;
+    certEls.inline.hidden = !cert;
+    if (cert) certEls.text.textContent = T('You have passed all {total} modules. Your certificate will show the name {name} and the completion date {date}. If your name is not right, please contact {email}.', { total: TOTAL_MODULES, name: cert.name, date: certDateText(cert.date), email: CONTACT_EMAIL });
+  }
+  function certState(kind, text){ certEls.state.className = 'cert-state' + (kind ? ' ' + kind : ''); certEls.state.textContent = text; }
+  function loadScript(src){
+    return new Promise(function(resolve, reject){
+      var s = document.createElement('script'); s.src = src; s.onload = resolve; s.onerror = function(){ reject(new Error('load ' + src)); };
+      document.head.appendChild(s);
+    });
+  }
+  function b64ToBytes(b64){ var bin = atob(b64), out = new Uint8Array(bin.length); for (var i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i); return out; }
+  // Fills and flattens the template; returns the PDF bytes. Throws a Error('chars') if the name has letters the certificate font cannot print.
+  async function makeCertificate(name, dateText){
+    var P = window.PDFLib;
+    var doc = await P.PDFDocument.load(b64ToBytes(window.WBSC_CERT_TEMPLATE));
+    var font = await doc.embedFont(P.StandardFonts.Helvetica);
+    function printable(t){ try { font.widthOfTextAtSize(t, 10); return true; } catch (e) { return false; } }
+    var shown = name;
+    if (!printable(shown)) {   // try without accents (for letters the font lacks), else give up
+      shown = name.normalize('NFD').replace(/[̀-ͯ]/g, '');
+      if (!printable(shown)) throw new Error('chars');
+    }
+    var form = doc.getForm(), nf = form.getTextField('umpire_name'), df = form.getTextField('completion_date');
+    nf.acroField.setDefaultAppearance('/Helv 12 Tf 0 g'); df.acroField.setDefaultAppearance('/Helv 12 Tf 0 g');
+    nf.setAlignment(P.TextAlignment.Center); df.setAlignment(P.TextAlignment.Center);
+    var size = 16, w = font.widthOfTextAtSize(shown, size);
+    if (w > 380) size = Math.max(7, size * 380 / w);
+    nf.setText(shown); nf.setFontSize(size); df.setText(dateText); df.setFontSize(12);
+    form.updateFieldAppearances(font);
+    form.flatten();   // the name and date become part of the page: nothing left to edit
+    return doc.save();
+  }
+  var certBusy = false;
+  async function downloadCertificate(){
+    if (!cert || certBusy) return;
+    certBusy = true; certEls.btn.disabled = true; certEls.btn2.disabled = true;
+    certState('', T('Preparing your certificate…'));
+    try {
+      if (!window.PDFLib) await loadScript('vendor/pdf-lib.min.js');
+      if (!window.WBSC_CERT_TEMPLATE) await loadScript('certificate/template.js');
+      var bytes = await makeCertificate(cert.name, certDateText(cert.date));
+      var blob = new Blob([bytes], { type: 'application/pdf' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'WBSC-Umpire-Mechanics-2026-Certificate-' + cert.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^A-Za-z0-9]+/g, '-').replace(/^-|-$/g, '') + '.pdf';
+      document.body.appendChild(a); a.click();
+      setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+      certState('', T('Your certificate has been saved to your device.'));
+    } catch (err) {
+      certState('bad', String(err && err.message) === 'chars'
+        ? T('Your name contains letters that cannot be printed on the certificate. Please contact {email} and they will issue it for you.', { email: CONTACT_EMAIL })
+        : T('The certificate could not be prepared. Please check your connection and try again.'));
+    }
+    certBusy = false; certEls.btn.disabled = false; certEls.btn2.disabled = false;
+  }
+  certEls.btn.addEventListener('click', downloadCertificate);
+  certEls.btn2.addEventListener('click', downloadCertificate);
+  // Asks the server whether the verified learner has completed every module (a script tag, like the attempts lookup).
+  var certSeq = 0;
+  function lookupCertificate(){
+    if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('REPLACE_WITH') === 0 || !session || !session.token) { setCertificate(null); return; }
+    var cb = 'wbscCert' + (++certSeq) + '_' + Date.now(), script = document.createElement('script'), done = false;
+    function finish(info){
+      if (done) return; done = true; clearTimeout(timer);
+      try { delete window[cb]; } catch (e) { window[cb] = undefined; }
+      if (script.parentNode) script.parentNode.removeChild(script);
+      setCertificate(info && info.ok && info.eligible ? info : null);
+    }
+    var timer = setTimeout(function(){ finish(null); }, 8000);
+    window[cb] = finish; script.onerror = function(){ finish(null); };
+    script.src = APPS_SCRIPT_URL + '?action=certificate&callback=' + cb + '&token=' + encodeURIComponent(session.token);
+    document.body.appendChild(script);
+  }
+
   var pendingSave = null;   // { id, payload, timer, frame, form }
 
   // ---------------------------------------------------------------
@@ -1443,7 +1547,7 @@
     return !!(session && session.exp > Date.now() &&
       session.email === document.getElementById('inp-email').value.trim().toLowerCase());
   }
-  function clearSession(){ session = null; saveSession(); refreshVerifyUI(); }
+  function clearSession(){ session = null; saveSession(); refreshVerifyUI(); if (typeof setCertificate === 'function') setCertificate(null); }
 
   var verifyEls = {
     state: document.getElementById('verify-state'),
@@ -1542,6 +1646,7 @@
         saveSession(); codeSentTo = '';
         els.validationBanner.classList.remove('show');
         refreshVerifyUI();
+        lookupCertificate();
       } else {
         if (r.code === 'expired') { codeSentTo = ''; refreshVerifyUI(); }
         setVerifyState('bad', r.error ? S(r.error) : T('That code did not work. Please try again.'));
@@ -1646,7 +1751,7 @@
         : T('✓ Your result has been recorded. A receipt will be emailed to {email}.', { email: rcpt }), false);
       if (m.result) showResult(m.result === 'PASS', m.attemptNumber, true);   // the server's decision is final
       if (m.result !== 'PASS' && m.attemptNumber >= max) showReview();          // all attempts used: now the answers can be shown
-      if (m.completedAll) els.resultText.textContent += ' ' + T('You have now passed all {total} modules. A summary will be emailed to you.', { total: TOTAL_MODULES });
+      if (m.completedAll) { els.resultText.textContent += ' ' + T('You have now passed all {total} modules. A summary will be emailed to you.', { total: TOTAL_MODULES }); setCertificate({ name: m.certName, date: m.certDate }); }
       pendingSave = null;
     } else if (m.code === 'auth') {
       // The verification expired (or was never completed). Nothing was saved; the same
@@ -1978,6 +2083,7 @@
   });
 
   refreshVerifyUI();
+  if (isVerified()) lookupCertificate();
 
   window.addEventListener('beforeunload', function(e){
     var midQuiz = els.active.style.display !== 'none' && (state.index > 0 || state.answered || state.selected !== null);
