@@ -3,7 +3,9 @@
 const fs = require('fs'), vm = require('vm'), assert = require('assert'), crypto = require('crypto'), path = require('path');
 const code = fs.readFileSync(path.join(__dirname, '..', 'apps-script', 'Code.gs'), 'utf8');
 
-function makeEnv({ failMail = null, quota = 100, quiet = true } = {}) {
+// legacyMail (default true): the old behaviour of an email to the Director for every result, a receipt for every attempt and
+// a daily health email even when all is well, so the older tests keep covering those paths. New tests pass legacyMail: false.
+function makeEnv({ failMail = null, quota = 100, quiet = true, legacyMail = true } = {}) {
   const clock = { now: Date.UTC(2026, 9, 27, 0, 0, 0) };
   class FakeDate extends Date {
     constructor(...a) { if (a.length) super(...a); else super(clock.now); }
@@ -29,10 +31,11 @@ function makeEnv({ failMail = null, quota = 100, quiet = true } = {}) {
     }
   });
   const sheet = makeSheet(rows, raw, true);
-  const progressRows = [], extraSheets = new Map();
+  const progressRows = [], sessionRows = [], extraSheets = new Map();
+  const rowsFor = n => n === 'Sessions' ? sessionRows : progressRows;
   const spreadsheet = {
-    getSheetByName: n => n === 'Progress' ? (env.progressCreated ? extraSheets.get('Progress') : null) : sheet,
-    insertSheet: n => { const sh = makeSheet(progressRows, [], false); extraSheets.set(n, sh); env.progressCreated = true; return sh; },
+    getSheetByName: n => (n === 'Progress' || n === 'Sessions') ? (extraSheets.get(n) || null) : sheet,
+    insertSheet: n => { const sh = makeSheet(rowsFor(n), [], false); extraSheets.set(n, sh); return sh; },
     getSheets: () => [sheet]
   };
   const digestBytes = (s) => [...crypto.createHash('sha256').update(String(s)).digest()].map(b => (b > 127 ? b - 256 : b));
@@ -69,7 +72,8 @@ function makeEnv({ failMail = null, quota = 100, quiet = true } = {}) {
     ContentService: { MimeType: { JSON: 'json', JAVASCRIPT: 'js' }, createTextOutput: t => ({ text: t, setMimeType(m) { this.mime = m; return this; } }) }
   };
   vm.createContext(ctx); vm.runInContext(code, ctx);
-  return Object.assign(env, { ctx, rows, raw, mails, props, triggers, clock, progressRows, cache: cacheStore });
+  if (legacyMail) { props.set('DIRECTOR_RESULT_EMAILS', 'on'); props.set('RECEIPT_EMAILS', 'all'); props.set('HEALTH_REPORT', 'daily'); }
+  return Object.assign(env, { ctx, rows, raw, mails, props, triggers, clock, progressRows, sessionRows, cache: cacheStore });
 }
 
 // ---- helpers
@@ -142,11 +146,19 @@ ok('bad addresses are refused and nothing is emailed', () => {
   for (const bad of ['', 'nope', 'a@b', 'a@b.c,d@e.fg', '<x>@y.com']) assert.strictEqual(act(e, 'sendCode', { email: bad }).success, false, bad);
   assert.strictEqual(e.mails.length, 0);
 });
-ok('a session lasts 6 hours', () => {
+ok('a sign-in lasts 14 days (kept on a Sessions tab once the 6-hour cache forgets it), then expires; expired sessions are purged', () => {
   const e = makeEnv(); const t = login(e);
   e.clock.now += 5 * HOUR; assert.strictEqual(save(e, t, {}).success, true);
-  e.clock.now += 2 * HOUR; const r = save(e, t, { module: mod(2) });
+  e.clock.now += 20 * HOUR; assert.strictEqual(save(e, t, { module: mod(2) }).success, true, 'the cache has forgotten it, the Sessions tab has not');
+  e.clock.now += 12 * 24 * HOUR; assert.strictEqual(save(e, t, { module: mod(3) }).success, true, 'still signed in 13 days later');
+  assert.strictEqual(e.sessionRows.length, 2, 'header + one session');
+  assert.ok(!JSON.stringify(e.sessionRows).includes(t), 'only a hash of the token is stored');
+  const v = act(e, 'sendCode', { email: 'late@x.com' }); const c = lastMailTo(e, 'late@x.com').body.match(/code is (\d{6})/)[1];
+  assert.strictEqual(act(e, 'verifyCode', { email: 'late@x.com', code: c }).expiresIn, 14 * 86400);
+  e.clock.now += 3 * 24 * HOUR; const r = save(e, t, { module: mod(4) });
   assert.strictEqual(r.success, false); assert.strictEqual(r.code, 'auth');
+  assert.strictEqual(e.sessionRows.length, 3); e.ctx.dailyHealthCheck();
+  assert.strictEqual(e.sessionRows.length, 2, 'the expired session is purged'); assert.strictEqual(e.sessionRows[1][1], 'late@x.com', 'the newer one stays');
 });
 
 // =====================================================================  saving needs a verified email
@@ -416,7 +428,7 @@ ok('no secret or address ends up in the cache key names', () => {
 
 // =====================================================================  learner emails in the learner's language
 ok('the login code email and the receipt come in the learner\'s language; the Director\'s email stays English; unknown language = English', () => {
-  for (const lg of ['es', 'fr', 'ja', 'ko', 'zh']) {
+  for (const lg of ['es']) {
     const e = makeEnv();
     assert.strictEqual(act(e, 'sendCode', { email: 'jo@x.com', lang: lg }).success, true);
     const mail = lastMailTo(e, 'jo@x.com');
@@ -598,6 +610,39 @@ ok('certificate: seven modules passed is not enough, and failed attempts do not 
   for (let i = 1; i <= 7; i++) save(e, t, { module: mod(i), score: 9, umpireId: 'c7' });
   save(e, t, { module: mod(8), score: 5, umpireId: 'c7' });
   assert.strictEqual(certLook(e, t).eligible, false);
+});
+
+// =====================================================================  fewer emails
+ok('by default the Director is not emailed for each result, and a receipt goes out only on a pass or the last attempt of the month', () => {
+  const e = makeEnv({ legacyMail: false }); const t = login(e, 'jo@x.com');
+  const count = () => e.mails.filter(m => m.to !== 'owner@example.com').length;
+  let before = count(); const a = save(e, t, { score: 5 });   // first fail: nothing at all
+  assert.strictEqual(a.success, true); assert.strictEqual(a.receipt, false); assert.strictEqual(count(), before, 'no email for a first failed attempt');
+  assert.strictEqual(e.rows[1][15], 'not sent (summary only)'); assert.strictEqual(e.rows[1][17], 'not sent (on screen only)');
+  before = count(); const b = save(e, t, { score: 6 });   // last attempt of the month: the learner gets a receipt, the Director still does not
+  assert.strictEqual(b.receipt, true); const sent = e.mails.slice(before); assert.deepStrictEqual(sent.map(m => m.to), ['jo@x.com']);
+  assert.ok(/available again on 2026-11-01/.test(sent[0].body));
+  const t2 = login(e, 'pa@x.com'); before = count(); const c = save(e, t2, { score: 9, umpireId: 'pa' });   // a pass: receipt
+  assert.strictEqual(c.receipt, true); assert.deepStrictEqual(e.mails.slice(before).map(m => m.to), ['pa@x.com']);
+  assert.strictEqual(e.rows[3][15], 'not sent (summary only)'); assert.strictEqual(e.rows[3][17], 'sent');
+});
+ok('the Director still gets the program-completed notice; the properties switch the old behaviour back on', () => {
+  const e = makeEnv({ legacyMail: false }); let t;
+  t = login(e, 'all@x.com');   // one sign-in is enough: it lasts 14 days
+  for (let i = 1; i <= 8; i++) { const b = e.mails.length; const r = save(e, t, { module: mod(i), score: 9, umpireId: 'all' }); if (i < 8) assert.ok(!e.mails.slice(b).some(m => m.to === 'umpiredirector@wbscoceania.org')); else assert.ok(e.mails.slice(b).some(m => /PROGRAM COMPLETED/.test(m.subject) && m.to === 'umpiredirector@wbscoceania.org')); }
+  const f = makeEnv({ legacyMail: false }); f.props.set('DIRECTOR_RESULT_EMAILS', 'on'); f.props.set('RECEIPT_EMAILS', 'all');
+  const t3 = login(f, 'jo@x.com'); const b3 = f.mails.length; save(f, t3, { score: 5 });
+  assert.deepStrictEqual(f.mails.slice(b3).map(m => m.to).sort(), ['jo@x.com', 'umpiredirector@wbscoceania.org']);
+});
+ok('the daily health check is emailed only when something is wrong (HEALTH_REPORT=daily brings back the daily email)', () => {
+  const e = makeEnv({ legacyMail: false }); const t = login(e, 'jo@x.com'); save(e, t, { score: 9 });
+  const b = e.mails.length; const r = e.ctx.dailyHealthCheck(); assert.strictEqual(r.ok, true); assert.strictEqual(r.sent, false); assert.strictEqual(e.mails.length, b, 'a quiet day sends nothing');
+  e.quota = 5; const r2 = e.ctx.dailyHealthCheck(); assert.strictEqual(r2.ok, false); assert.strictEqual(r2.sent, true); assert.ok(/ATTENTION/.test(e.mails.pop().subject));
+  e.quota = 100; e.props.set('HEALTH_REPORT', 'daily'); assert.strictEqual(e.ctx.dailyHealthCheck().sent, true);
+});
+ok('rows without a Director email or receipt are not flagged by the health check', () => {
+  const e = makeEnv({ legacyMail: false }); const t = login(e, 'jo@x.com'); save(e, t, { score: 5 });
+  e.clock.now += 3 * HOUR; const r = e.ctx.dailyHealthCheck(); assert.strictEqual(r.problems.length, 0, r.problems.join('; '));
 });
 
 console.log(n + ' Code.gs checks passed');

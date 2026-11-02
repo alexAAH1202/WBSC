@@ -40,7 +40,7 @@ const PAGES = ['index.html', 'manuals.html', 'presentations.html', 'privacy.html
   await pg.focus('.lang-btn'); await pg.keyboard.press('ArrowDown');
   assert.ok(await pg.isVisible('.lang-menu')); assert.strictEqual(await pg.evaluate(() => document.activeElement.className), 'lang-item');
   await pg.keyboard.press('ArrowDown'); assert.strictEqual(await pg.evaluate(() => document.activeElement.getAttribute('lang')), 'es');
-  await pg.keyboard.press('End'); assert.strictEqual(await pg.evaluate(() => document.activeElement.getAttribute('lang')), 'zh');
+  await pg.keyboard.press('End'); assert.strictEqual(await pg.evaluate(() => document.activeElement.getAttribute('lang')), 'es');   // the last language
   await pg.keyboard.press('ArrowDown'); assert.strictEqual(await pg.evaluate(() => document.activeElement.getAttribute('lang')), 'en');
   await pg.keyboard.press('Escape'); assert.ok(!(await pg.isVisible('.lang-menu'))); assert.strictEqual(await pg.evaluate(() => document.activeElement.className), 'lang-btn');
   ok('the language menu opens with the arrow keys, moves with arrows/Home/End and closes with Escape back to its button');

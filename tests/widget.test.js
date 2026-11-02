@@ -57,7 +57,7 @@ async function newPage(b, opts, saveHandler) {
       if (action === 'verifyCode') {
         if (params.get('code') !== '123456') return r.fulfill(page_(reply({ wbscAuth: true, id, action, success: false, code: 'wrong', error: 'That code is not right. 4 tries left.' })));
         const tok = (opts.tokens && opts.tokens.length) ? opts.tokens.shift() : TOKEN;
-        return r.fulfill(page_(reply({ wbscAuth: true, id, action, success: true, token: tok, email: params.get('email').toLowerCase(), expiresIn: 21600 })));
+        return r.fulfill(page_(reply({ wbscAuth: true, id, action, success: true, token: tok, email: params.get('email').toLowerCase(), expiresIn: 14 * 86400 })));
       }
       return r.fulfill(page_(''));
     }
@@ -480,14 +480,15 @@ const verifyText = pg => pg.textContent('#verify-state');
     for (let i = 0; i < 60 && !t.progressCalls.some(c => c.action === 'clearProgress'); i++) await new Promise(r => setTimeout(r, 50));   // the call is sent in the background
     assert.ok(t.progressCalls.some(c => c.action === 'clearProgress' && c.key === POOL && c.token === TOKEN)); ok('"Start again" also clears the saved attempt on the server');
 
-    // a language with no translated extras draws only the translated questions
-    const fr = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false }, query: '?langs=all&lang=fr' });
-    await fr.pg.click(`[data-assessment="${POOL}"]`); await fr.pg.waitForSelector('#quiz-gate', { state: 'visible' }); await fr.pg.check('#gate-check'); await fr.pg.click('#gate-start'); await fr.pg.waitForSelector('#quiz-question', { state: 'visible' });
-    const frCtx = {}; frCtx.window = frCtx; vm.runInNewContext(fs.readFileSync(path.join(root, 'i18n', 'q-fr.js'), 'utf8'), frCtx); const frCore = frCtx.WBSC_QDICT.fr['m06-pca'].questions.map(q => q.q);
+    // a language whose extra questions are not translated yet draws only the translated ones (simulated by dropping Spanish extras)
+    const es = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false }, query: '?lang=es' });
+    await es.pg.evaluate(k => { WBSC_QDICT.es[k].questions.length = 10; }, POOL);
+    await es.pg.click(`[data-assessment="${POOL}"]`); await es.pg.waitForSelector('#quiz-gate', { state: 'visible' }); await es.pg.check('#gate-check'); await es.pg.click('#gate-start'); await es.pg.waitForSelector('#quiz-question', { state: 'visible' });
+    const esCtx = {}; esCtx.window = esCtx; vm.runInNewContext(fs.readFileSync(path.join(root, 'i18n', 'q-es.js'), 'utf8'), esCtx); const esCore = esCtx.WBSC_QDICT.es['m06-pca'].questions.slice(0, 10).map(q => q.q);
     const asked = [];
-    for (let i = 0; i < 10; i++) { asked.push(await fr.pg.textContent('#quiz-question')); await fr.pg.click('.quiz-option >> nth=0'); await fr.pg.click('#quiz-submit-btn'); await fr.pg.click('#quiz-submit-btn'); }
-    assert.strictEqual(frCore.length, 10); assert.deepStrictEqual([...asked].sort(), [...frCore].sort(), 'French asks exactly its ten translated questions');
-    ok('in a language with only the core questions translated (French) the draw uses exactly those ten, all in French');
+    for (let i = 0; i < 10; i++) { asked.push(await es.pg.textContent('#quiz-question')); await es.pg.click('.quiz-option >> nth=0'); await es.pg.click('#quiz-submit-btn'); await es.pg.click('#quiz-submit-btn'); }
+    assert.strictEqual(esCore.length, 10); assert.deepStrictEqual([...asked].sort(), [...esCore].sort(), 'only the translated questions are asked');
+    ok('where only the core questions are translated, the draw uses exactly those ten, all in the learner\'s language');
   }
 
   // ====================================================================  certificate of completion
@@ -525,6 +526,28 @@ const verifyText = pg => pg.textContent('#verify-state');
     await t.pg.waitForSelector('#cert-box', { state: 'visible' }); const [dl3] = await Promise.all([t.pg.waitForEvent('download'), t.pg.click('#cert-btn')]); const t3 = pdfText(await dl3.path()); if (t3) assert.ok(/Montenegro-Alvarez/.test(t3));
     t = await newPage(b, { certificate: { ok: false, code: 'auth' } }); await new Promise(r => setTimeout(r, 300)); assert.ok(await t.pg.isHidden('#cert-box'));
     ok('a very long name still fits on the certificate, and a failed lookup shows no certificate');
+  }
+
+  // ====================================================================  fewer emails: stay signed in, receipts only sometimes
+  {
+    let t = await newPage(b, {});
+    const stored = await t.pg.evaluate(() => JSON.parse(localStorage.getItem('wbscSession')));
+    assert.ok(stored.token === TOKEN && stored.exp > Date.now() + 13 * 24 * 3600 * 1000, 'the sign-in is kept on the device for about 14 days (the page clock is simulated, so compare loosely)');
+    // a new tab on the same device: still signed in, details filled in, no new code needed
+    const tab = await t.ctx.newPage(); await tab.goto('http://localhost:' + PORT + '/assessment-widget.html');
+    assert.strictEqual(await tab.inputValue('#inp-email'), 'Jo@X.com'); assert.strictEqual(await tab.inputValue('#inp-name'), 'Jo Ump');
+    assert.ok(await tab.isVisible('#verify-done-row') && /Email verified/.test(await tab.textContent('#verify-state')), 'no code is asked for again');
+    assert.ok(/stay signed in on this device for up to 14 days/.test(await tab.textContent('#verify-done-row')));
+    ok('a returning learner on the same device is still signed in for up to 14 days: details filled in, no new code');
+    // signing out removes the sign-in and the remembered details
+    await tab.click('#verify-change-btn');
+    assert.strictEqual(await tab.evaluate(() => localStorage.getItem('wbscSession')), null); assert.strictEqual(await tab.evaluate(() => localStorage.getItem('wbscIdentity')), null);
+    ok('"Use a different email address" signs out and forgets the remembered details');
+    // no receipt for a middle failed attempt: the page says the result is on screen
+    t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false } }, (r, p) => r.fulfill(page_(reply({ wbscSave: true, success: true, submissionId: p.submissionId, attemptNumber: 1, maxAttempts: 2, result: 'NOT PASSED', receipt: false }))));
+    await runQuiz(t.pg, 'm01-pca', 4); await t.pg.waitForFunction(() => /recorded/.test(document.getElementById('quiz-save-state').textContent));
+    const st = await t.pg.textContent('#quiz-save-state'); assert.ok(/receipt is emailed when you pass or use your last attempt/.test(st) && !/will be emailed to/.test(st), st);
+    ok('when no receipt is emailed (a first failed attempt) the page says so instead of promising one');
   }
 
   await b.close(); server.close(); console.log(n + ' widget checks passed');

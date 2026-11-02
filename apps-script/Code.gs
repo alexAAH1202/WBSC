@@ -28,7 +28,9 @@
  *   1. Paste this file into the Apps Script project, Save.
  *   2. Project Settings -> Script properties -> add RESULTS_PASSWORD (the Director's
  *      password). Optional: ALERT_EMAIL (default: the owner of this script) and
- *      HEALTH_REPORT = problems (default: a daily report even when all is well).
+ *      HEALTH_REPORT = daily (default: the daily check is emailed only when something is wrong),
+ *      DIRECTOR_RESULT_EMAILS = on (default off: the Director gets the Monday summary and completion notices, not an email per result),
+ *      RECEIPT_EMAILS = all (default: a receipt only when the learner passes or uses their last attempt of the month).
  *   3. Run installTriggers() once from the editor and approve the permissions (it schedules the daily check and the
  *      Monday weekly summary; run it again after any update that adds a trigger).
  *   4. Run sendTestAlert() once and check the email arrives.
@@ -67,7 +69,8 @@ var CODE_MAX_TRIES = 5;          // wrong guesses before the code is thrown away
 var CODE_EMAIL_HOURLY = 3;       // codes per email address per hour
 var CODE_EMAIL_6H = 6;           // ... and per 6 hours
 var CODE_GLOBAL_HOURLY = 60;     // codes for everyone per hour (protects the mail quota)
-var SESSION_TTL_S = 21600;       // a verified session lasts 6 hours
+var SESSION_TTL_S = 21600;       // the cache keeps a session for 6 hours at most ...
+var SESSION_DAYS = 14;           // ... a verified session lasts this long: it is also kept on a Sessions tab of the Sheet
 
 // Director's results page.
 var RESULTS_FAIL_LIMIT = 10;     // wrong passwords ...
@@ -85,6 +88,13 @@ var PROGRESS_HOURLY = 240;             // saves per learner per hour (a 20-quest
 // Weekly summary for the Director.
 var REPEAT_FAILS = 3;                  // failed this many times on a module without ever passing it: flagged in the weekly summary
 var STALLED_DAYS = 14;                 // started, not finished and no activity for this long
+
+// Fewer emails (the free Gmail limit is about 100 a day). By default:
+//   - the Director is NOT emailed for every result: there is the results page, the Monday summary and the completion notice;
+//   - a learner is emailed a receipt only when they pass or use their last attempt for the month;
+//   - the daily health check is emailed only when something is wrong.
+// Script properties restore the old behaviour: DIRECTOR_RESULT_EMAILS = on, RECEIPT_EMAILS = all, HEALTH_REPORT = daily.
+var SESSIONS_SHEET = 'Sessions';
 
 // Health check.
 var HEALTH_MIN_MAIL_QUOTA = 20;
@@ -149,7 +159,7 @@ function doPost(e) {
 // showing when they asked. English is the source and the fallback: a missing key or an unknown language gives
 // English. Emails to the Director and the owner are always English. {x} marks a value filled in at send time.
 // Keep these in step with i18n/README.md (glossary). Native-speaker reviewers should check them with the site text.
-var EMAIL_LANGS = ['en', 'es', 'fr', 'ja', 'ko', 'zh'];
+var EMAIL_LANGS = ['en', 'es'];
 var EMAIL_TEXT = {
   en: {
     codeSubject: 'Your WBSC training verification code: {code}',
@@ -196,98 +206,6 @@ var EMAIL_TEXT = {
     modPass: 'Módulo {nn}: APROBADO ({best}%, intentos usados: {a})',
     modFail: 'Módulo {nn}: aún no aprobado (mejor resultado {best}%, intentos usados este mes: {a} de {max})',
     footer: 'Este es un comprobante automático de un sitio de formación temporal. No es un certificado oficial de la WBSC y el sitio no es el sitio web oficial de la WBSC. Consultas: {email}.'
-  },
-  fr: {
-    codeSubject: 'Votre code de vérification pour la formation WBSC : {code}',
-    codeBody: 'Votre code de vérification est {code}\n\n' +
-      'Saisissez-le sur le site de formation à la mécanique d’arbitrage de la WBSC pour confirmer cette adresse e-mail. Il expire dans {min} minutes et ne peut être utilisé qu’une seule fois.\n\n' +
-      'Si vous n’avez pas demandé ce code, ignorez ce message : il ne se passe rien tant que le code n’est pas saisi.\n\n' +
-      'Ceci est un site de formation temporaire, et non le site web officiel de la WBSC.',
-    receiptSubject: 'Votre reçu de la formation à la mécanique d’arbitrage de la WBSC : {module} - {result}',
-    hello: 'Bonjour {name},',
-    intro: 'Voici votre reçu du site de formation à la mécanique d’arbitrage de la WBSC.',
-    lModule: 'Module', lAssessment: 'Évaluation', lScore: 'Score', lResult: 'Résultat', lAttempt: 'Tentative', lDate: 'Date et heure', lRef: 'Référence',
-    resultLine: '{result} (note de passage : {mark} %)',
-    attemptLine: '{n} sur {max}',
-    PASS: 'RÉUSSI', FAIL: 'NON RÉUSSI',
-    nextPass: 'Vous avez réussi cette évaluation.',
-    nextLeft: 'Vous n’avez pas atteint la note de passage. Tentatives restantes pour cette évaluation : {n}. Relisez le manuel et la présentation avant de réessayer.',
-    nextNone: 'Vous n’avez pas atteint la note de passage et avez utilisé les {max} tentatives de ce mois. Vos tentatives seront de nouveau disponibles le {date}. Si vous avez besoin d’aide d’ici là, veuillez contacter {email}.',
-    complete: 'Vous avez maintenant réussi les {n} modules. Félicitations ! Vous pouvez télécharger votre certificat de réussite depuis la page Évaluations après avoir confirmé cette adresse e-mail.',
-    progress: 'Votre progression jusqu’ici :',
-    modNone: 'Module {nn} : pas encore tenté',
-    modPass: 'Module {nn} : RÉUSSI ({best} %, tentatives utilisées : {a})',
-    modFail: 'Module {nn} : pas encore réussi (meilleur résultat {best} %, tentatives utilisées ce mois-ci : {a} sur {max})',
-    footer: 'Ceci est un reçu automatique d’un site de formation temporaire. Ce n’est pas un certificat officiel de la WBSC et le site n’est pas le site web officiel de la WBSC. Questions : {email}.'
-  },
-  ja: {
-    codeSubject: 'WBSC 研修の確認コード: {code}',
-    codeBody: '確認コードは {code} です。\n\n' +
-      'このメールアドレスを確認するため、WBSC 審判メカニクス研修サイトに入力してください。コードの有効期限は {min} 分で、1回のみ使用できます。\n\n' +
-      'このコードを請求していない場合は、このメールを無視してください。コードが入力されない限り、何も起こりません。\n\n' +
-      'これは臨時の研修サイトであり、WBSC の公式ウェブサイトではありません。',
-    receiptSubject: 'WBSC 審判メカニクス研修の受領書: {module} - {result}',
-    hello: '{name} 様',
-    intro: 'WBSC 審判メカニクス研修サイトからの受領書です。',
-    lModule: 'モジュール', lAssessment: '評価', lScore: 'スコア', lResult: '結果', lAttempt: '受験回数', lDate: '日時', lRef: '参照番号',
-    resultLine: '{result}（合格基準 {mark}%）',
-    attemptLine: '{max} 回中 {n} 回目',
-    PASS: '合格', FAIL: '不合格',
-    nextPass: 'この評価に合格しました。',
-    nextLeft: '合格基準に達しませんでした。この評価の残り受験回数: {n}。マニュアルとプレゼンテーションを見直してから、もう一度受験してください。',
-    nextNone: '合格基準に達せず、今月の {max} 回の受験をすべて使い切りました。受験回数は {date} に再び利用できます。それまでにサポートが必要な場合は {email} までご連絡ください。',
-    complete: '{n} 個のモジュールすべてに合格しました。おめでとうございます！このメールアドレスを確認すると、評価ページから修了証をダウンロードできます。',
-    progress: 'これまでの進捗:',
-    modNone: 'モジュール {nn}: まだ受験していません',
-    modPass: 'モジュール {nn}: 合格（{best}%、使用した受験回数: {a}）',
-    modFail: 'モジュール {nn}: まだ合格していません（最高 {best}%、今月使用した受験回数: {a} / {max}）',
-    footer: 'これは臨時の研修サイトからの自動送信の受領書です。WBSC の公式な修了証ではなく、このサイトは WBSC の公式ウェブサイトではありません。お問い合わせ: {email}'
-  },
-  ko: {
-    codeSubject: 'WBSC 교육 인증 코드: {code}',
-    codeBody: '인증 코드는 {code} 입니다.\n\n' +
-      '이 이메일 주소를 확인하려면 WBSC 심판 메커닉스 교육 사이트에 입력하세요. 코드는 {min}분 후에 만료되며 한 번만 사용할 수 있습니다.\n\n' +
-      '이 코드를 요청하지 않으셨다면 이 이메일을 무시하세요. 코드를 입력하지 않으면 아무 일도 일어나지 않습니다.\n\n' +
-      '이곳은 임시 교육 사이트이며 WBSC 공식 웹사이트가 아닙니다.',
-    receiptSubject: 'WBSC 심판 메커닉스 교육 확인서: {module} - {result}',
-    hello: '{name} 님, 안녕하세요.',
-    intro: 'WBSC 심판 메커닉스 교육 사이트에서 보내는 확인서입니다.',
-    lModule: '모듈', lAssessment: '평가', lScore: '점수', lResult: '결과', lAttempt: '응시', lDate: '날짜 및 시간', lRef: '참조 번호',
-    resultLine: '{result} (합격 기준 {mark}%)',
-    attemptLine: '{max}회 중 {n}회',
-    PASS: '합격', FAIL: '불합격',
-    nextPass: '이 평가에 합격하셨습니다.',
-    nextLeft: '합격 기준에 도달하지 못했습니다. 이 평가의 남은 응시 횟수: {n}. 다시 응시하기 전에 매뉴얼과 프레젠테이션을 복습하세요.',
-    nextNone: '합격 기준에 도달하지 못했고 이번 달 {max}회의 응시 기회를 모두 사용했습니다. 응시 기회는 {date}에 다시 제공됩니다. 그 전에 도움이 필요하시면 {email}(으)로 문의해 주세요.',
-    complete: '{n}개 모듈을 모두 통과하셨습니다. 축하합니다! 이 이메일 주소를 확인하신 후 평가 페이지에서 수료증을 내려받을 수 있습니다.',
-    progress: '지금까지의 진행 상황:',
-    modNone: '모듈 {nn}: 아직 응시하지 않음',
-    modPass: '모듈 {nn}: 합격 ({best}%, 사용한 응시 횟수: {a})',
-    modFail: '모듈 {nn}: 아직 합격하지 못함 (최고 {best}%, 이번 달 사용한 응시 횟수: {a}/{max})',
-    footer: '이 확인서는 임시 교육 사이트에서 자동으로 발송되었습니다. WBSC 공식 수료증이 아니며, 이 사이트는 WBSC 공식 웹사이트가 아닙니다. 문의: {email}'
-  },
-  zh: {
-    codeSubject: 'WBSC 培训验证码：{code}',
-    codeBody: '您的验证码是 {code}\n\n' +
-      '请在 WBSC 裁判员机制培训网站输入该验证码，以确认此电子邮件地址。验证码将在 {min} 分钟后失效，且只能使用一次。\n\n' +
-      '如果您没有请求此验证码，请忽略本邮件：不输入验证码，不会发生任何事情。\n\n' +
-      '这是一个临时培训网站，不是 WBSC 官方网站。',
-    receiptSubject: 'WBSC 裁判员机制培训回执：{module} - {result}',
-    hello: '{name}，您好：',
-    intro: '这是来自 WBSC 裁判员机制培训网站的回执。',
-    lModule: '模块', lAssessment: '评估', lScore: '得分', lResult: '结果', lAttempt: '第几次尝试', lDate: '日期和时间', lRef: '参考编号',
-    resultLine: '{result}（及格线 {mark}%）',
-    attemptLine: '共 {max} 次，第 {n} 次',
-    PASS: '通过', FAIL: '未通过',
-    nextPass: '您已通过本次评估。',
-    nextLeft: '您未达到及格线。本评估剩余尝试次数：{n}。请先复习手册和演示文稿，再重新尝试。',
-    nextNone: '您未达到及格线，且已用完本月全部 {max} 次尝试机会。您的尝试次数将在 {date} 重新开放。如在此之前需要帮助，请联系 {email}。',
-    complete: '您已通过全部 {n} 个模块。恭喜！确认此电子邮箱地址后，您可以在评估页面下载完成证书。',
-    progress: '您目前的进度：',
-    modNone: '模块 {nn}：尚未尝试',
-    modPass: '模块 {nn}：通过（{best}%，已用尝试次数：{a}）',
-    modFail: '模块 {nn}：尚未通过（最高 {best}%，本月已用尝试次数：{a}/{max}）',
-    footer: '这是来自临时培训网站的自动回执。它不是 WBSC 官方证书，本网站也不是 WBSC 官方网站。如有疑问：{email}'
   }
 };
 
@@ -334,6 +252,7 @@ function saveMessage_(result) {
     maxAttempts: result.maxAttempts || MAX_ATTEMPTS,
     code: result.code || '',
     resetsOn: result.resetsOn || '',
+    receipt: !!result.receipt,
     certName: result.certName || '',
     certDate: result.certDate || '',
     error: result.error || ''
@@ -501,10 +420,11 @@ function handleVerifyCode_(p) {
       cacheRemove_(key);
       var token = (Utilities.getUuid() + Utilities.getUuid()).replace(/-/g, '');
       cachePutJson_('sess:' + sha_(token), { email: email }, SESSION_TTL_S);
+      saveSession_(token, email);
       msg.success = true;
       msg.token = token;
       msg.email = email;
-      msg.expiresIn = SESSION_TTL_S;
+      msg.expiresIn = SESSION_DAYS * 86400;
     } else {
       entry.tries++;
       cachePutJson_(key, entry, CODE_TTL_S);
@@ -523,12 +443,58 @@ function handleVerifyCode_(p) {
   return messagePage_(msg);
 }
 
+// A verified session lasts SESSION_DAYS. The cache is fast but holds a value for 6 hours at most, so each session is also
+// written to a Sessions tab (a hash of the token, the email, the expiry) and read back from there when the cache has forgotten it.
+function sessionsSheet_() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheetByName(SESSIONS_SHEET);
+  if (!sh) {
+    sh = ss.insertSheet(SESSIONS_SHEET);
+    sh.appendRow(['Session (hash)', 'Email', 'Expires']);
+    try { sh.setFrozenRows(1); } catch (e) { /* cosmetic */ }
+  }
+  return sh;
+}
+
+function saveSession_(token, email) {
+  var lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try { sessionsSheet_().appendRow([sha_(token), email, new Date(Date.now() + SESSION_DAYS * 86400000)]); } finally { lock.releaseLock(); }
+}
+
 // The verified email behind a session token, or '' if there is none.
 function sessionEmail_(token) {
   var t = String(token || '');
   if (!/^[a-f0-9]{64}$/.test(t)) return '';
-  var s = cacheGetJson_('sess:' + sha_(t));
-  return s && s.email ? String(s.email) : '';
+  var key = 'sess:' + sha_(t);
+  var s = cacheGetJson_(key);
+  if (s && s.email) return String(s.email);
+  try {
+    var sh = sessionsSheet_(), last = sh.getLastRow();
+    if (last < 2) return '';
+    var h = sha_(t), rows = sh.getRange(2, 1, last - 1, 3).getValues();
+    for (var i = rows.length - 1; i >= 0; i--) {
+      if (String(rows[i][0]) !== h) continue;
+      if (new Date(rows[i][2]).getTime() > Date.now()) { cachePutJson_(key, { email: String(rows[i][1]) }, SESSION_TTL_S); return String(rows[i][1]); }
+      return '';
+    }
+  } catch (err) { logError_('session', err); }
+  return '';
+}
+
+// Deletes expired sessions (run by the daily check). Returns how many were removed.
+function purgeSessions_() {
+  var lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  var removed = 0;
+  try {
+    var sh = sessionsSheet_(), last = sh.getLastRow();
+    for (var r = last; r >= 2; r--) {
+      var t = new Date(sh.getRange(r, 3).getValue()).getTime();
+      if (isNaN(t) || t < Date.now()) { sh.deleteRow(r); removed++; }
+    }
+  } finally { lock.releaseLock(); }
+  return removed;
 }
 
 function cleanEmail_(v) {
@@ -712,6 +678,7 @@ function handleSave_(e) {
         result.passed = result.result === 'PASS';
         result.maxAttempts = MAX_ATTEMPTS;
         result.resetsOn = result.passed ? '' : nextResetDate_();
+        result.receipt = receiptWanted_(result.passed, Number(result.attemptNumber));
         var dsum = completionSummary_(sheet, clean);
         result.completedAll = dsum.passedCount >= TOTAL_MODULES;
         if (result.completedAll) { result.certName = clean.name; result.certDate = completionDay_(dsum); }
@@ -744,6 +711,7 @@ function handleSave_(e) {
         result.passed = clean.passed;
         result.maxAttempts = MAX_ATTEMPTS;
         result.resetsOn = clean.passed ? '' : nextResetDate_();   // when this month's attempts are renewed
+        result.receipt = receiptWanted_(clean.passed, attemptNumber);
         result.completedAll = after.passedCount >= TOTAL_MODULES;
         if (result.completedAll) { result.certName = clean.name; result.certDate = completionDay_(after); }
         post = {
@@ -774,11 +742,17 @@ function handleSave_(e) {
   return response;
 }
 
+// Who is emailed about a saved result (see the "Fewer emails" settings).
+function directorEmailsOn_() { return PropertiesService.getScriptProperties().getProperty('DIRECTOR_RESULT_EMAILS') === 'on'; }
+function receiptWanted_(passed, attemptNumber) {
+  return PropertiesService.getScriptProperties().getProperty('RECEIPT_EMAILS') === 'all' || !!passed || attemptNumber >= MAX_ATTEMPTS;
+}
+
 function sendAfterSave_(post) {
   var directorStatus, receiptStatus;
   try {
-    sendAdminNotification_(post.clean, post.attemptNumber);
-    directorStatus = 'sent';
+    if (directorEmailsOn_()) { sendAdminNotification_(post.clean, post.attemptNumber); directorStatus = 'sent'; }
+    else directorStatus = 'not sent (summary only)';
   } catch (mailErr) {
     directorStatus = 'FAILED: ' + String(mailErr).slice(0, 150);
     logError_('director-email', mailErr);
@@ -787,8 +761,8 @@ function sendAfterSave_(post) {
       '\nSee the "Email Status" column in the Sheet.');
   }
   try {
-    sendReceipt_(post.clean, post.attemptNumber, post.summary);
-    receiptStatus = 'sent';
+    if (receiptWanted_(post.clean.passed, post.attemptNumber)) { sendReceipt_(post.clean, post.attemptNumber, post.summary); receiptStatus = 'sent'; }
+    else receiptStatus = 'not sent (on screen only)';
   } catch (mailErr2) {
     receiptStatus = 'FAILED: ' + String(mailErr2).slice(0, 150);
     logError_('receipt-email', mailErr2);
@@ -1279,11 +1253,12 @@ function dailyHealthCheck() {
       problems.push(n + ' server error(s) in the last two days. Latest: ' + lastErr);
     }
   } catch (err3) { /* ignore */ }
+  try { var purgedS = purgeSessions_(); if (purgedS) notes.push('Removed ' + purgedS + ' expired sign-in session(s).'); } catch (err5) { logError_('session-purge', err5); }
   try { var purged = purgeProgress_(); if (purged) notes.push('Removed ' + purged + ' expired saved attempt(s).'); } catch (err4) { logError_('progress-purge', err4); }
   if (!props.getProperty('RESULTS_PASSWORD')) notes.push('RESULTS_PASSWORD is not set, so the Director\'s results page cannot be opened.');
 
   var ok = problems.length === 0;
-  if (ok && props.getProperty('HEALTH_REPORT') === 'problems') return { ok: ok, problems: problems, notes: notes, sent: false };
+  if (ok && props.getProperty('HEALTH_REPORT') !== 'daily') return { ok: ok, problems: problems, notes: notes, sent: false };
   var body = (ok ? 'Everything looks fine.\n\n' : 'These need attention:\n- ' + problems.join('\n- ') + '\n\n') +
     notes.join('\n') + '\n\nSheet: ' + SPREADSHEET_URL;
   MailApp.sendEmail(alertEmail_(), '[WBSC portal] Daily check: ' + (ok ? 'OK' : 'ATTENTION NEEDED'), body);

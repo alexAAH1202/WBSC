@@ -94,7 +94,7 @@ Script Web App into a Google Sheet.
 - `node tests/results.test.js` (needs Playwright): `results.html` with simulated replies (25 checks).
 - `node tests/a11y.test.js` (needs Playwright): heading order, landmarks, skip link, alt text and labels on every page, 320px reflow, the language menu and quiz answers by keyboard.
 - `node tests/certificate.test.js`: the certificate template still has its two fields and `certificate/template.js` is up to date.
-- `node tests/i18n.test.js` (needs Playwright): the language selector, that every visible string and every quiz question has a translation in all five languages, pages open in each language at desktop and phone width, and the practice quizzes run in each language with the right answer still marked right.
+- `node tests/i18n.test.js` (needs Playwright): the language selector, that every visible string and every quiz question has a Spanish translation, pages open in each language at desktop and phone width, and the practice quizzes run in Spanish with the right answer still marked right.
 
 The browser tests do **not** prove the real Apps Script reply reaches the widget on the live site;
 step 3 under "Deploying" is the check that does.
@@ -107,16 +107,16 @@ step 3 under "Deploying" is the check that does.
 - **Resume.** An unfinished marked attempt is kept in the browser's localStorage (`wbscResume`, one attempt at a time) for 24 hours: question reached, score, missed questions and the shuffled option order. It is tied to the verified email, ignored if the question bank changed, and cleared on finish or "Start again". It does not follow the learner to another device. Practice quizzes are not saved.
 
 ## Languages
-The site and the quiz questions can be shown in English, Spanish, French, Japanese, Korean and Chinese, using the same
+The site and the quiz questions can be shown in English and Spanish, using the same
 language menu idea as the WBSC site. English is the source and the fallback: a string without a translation stays in English,
-so a gap can never break a page. Manuals, presentations, emails and the Director results page stay in English.
-Spanish is switched on for now; French, Japanese, Korean and Chinese are built but switched off until a native speaker has reviewed them.
-To switch a language on or off, add or remove its code in `LIVE` in `i18n.js` (now `en`, `es`; hiding Spanish again means setting it back to `['en']`).
-Reviewers can look at any language before that with `?langs=all` on any page (adds the menu) or `?lang=es`.
+so a gap can never break a page. Manuals, presentations and the Director results page stay in English; the login code and receipt emails follow the language chosen.
+Both languages are live. (French, Japanese, Korean and Chinese were built earlier and removed; they are in the git history if they are ever wanted again.)
+To add a language: translate every `.tsv` string and question (see `i18n/README.md`), list it in `LANGS` and `LIVE` in `i18n.js`, add its wording to `EMAIL_TEXT` and `EMAIL_LANGS` in `Code.gs`, and add its code to `LANGS` in `tests/i18n.test.js`. Keep it out of `LIVE` until a native speaker has reviewed it:
+reviewers can look at it before that with `?langs=all` on any page (adds the menu) or `?lang=xx`.
 How it works, how to edit a translation, and the glossary are in [`i18n/README.md`](./i18n/README.md).
 
 ## Emails in the learner's language
-The login code email and the receipt are sent in the language the learner was using (the site sends `lang`; `EMAIL_TEXT` in `Code.gs` holds the wording for English, Spanish, French, Japanese, Korean and Chinese, with English as the fallback). Emails to the Director and the owner stay English. The pass/fail decision never depends on language. **Changing this needs the Apps Script redeployed as a new version of the existing deployment.**
+The login code email and the receipt are sent in the language the learner was using (the site sends `lang`; `EMAIL_TEXT` in `Code.gs` holds the wording for English and Spanish, with English as the fallback). Emails to the Director and the owner stay English. The pass/fail decision never depends on language. **Changing this needs the Apps Script redeployed as a new version of the existing deployment.**
 
 ## Question pools
 A marked assessment can hold more questions than it asks: add `draw: 10` to its entry in `questions.js` and put the extra questions after the first ten.
@@ -150,3 +150,11 @@ A learner who has passed all eight modules can download the official WBSC certif
 - **Names.** Latin letters and accents print. Anything the certificate font cannot print (for example Japanese or Chinese names) shows a message to contact the Director.
 - **Changing the template.** Replace `certificate/certificate-template.pdf` (keep the two field names), run `node tests/certificate-build.js`, then `node tests/certificate.test.js`.
 - The certificate wording lists Appendix 4 and 5a to 5d, as supplied by WBSC. `node tests/certificate.test.js` checks the template and its base64 copy.
+
+## Fewer emails
+A free Gmail account sends about 100 emails a day, so the site sends as few as it can (all switchable with Script properties):
+- **The Director** is not emailed for every result (the results page, the Monday summary and the program-completed notice cover it). `DIRECTOR_RESULT_EMAILS` = `on` brings back one email per result.
+- **Learners** get a receipt when they pass or use the last attempt of the month; after a first failed attempt the page says the result is on screen. `RECEIPT_EMAILS` = `all` sends one for every attempt. The Sheet's "Email Status" / "Receipt Status" columns say "not sent" for these rows and the health check ignores them.
+- **Sign-in** lasts 14 days (`SESSION_DAYS`): the token is kept in the browser's localStorage with the details typed, and the server keeps a record (hash of the token, email, expiry) on a **Sessions** tab of the Sheet, purged by the daily check, because the script cache holds a value for 6 hours at most. "Use a different email address" signs out. This means one login code per device per fortnight instead of one per visit.
+- **The daily health check** is emailed only when something is wrong. `HEALTH_REPORT` = `daily` restores the daily email.
+**Needs the Apps Script redeployed.** Privacy page and pop-up say all of this.
