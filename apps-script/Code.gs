@@ -49,6 +49,9 @@ var SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/158AIqlbHMG7E55nMT
 // person, module and assessment type). Both are enforced here, on the server.
 var PASS_MARK = 85;
 var MAX_ATTEMPTS = 2;
+// Attempts are renewed on the 1st of every calendar month (script time zone) for a module the learner has not passed:
+// only attempts made in the current month count towards MAX_ATTEMPTS. Earlier rows stay in the Sheet as history.
+// A module that has been passed keeps counting all its attempts.
 
 // A learner has completed the program when they have PASSED this assessment
 // for every one of these modules.
@@ -161,12 +164,12 @@ var EMAIL_TEXT = {
     PASS: 'PASS', FAIL: 'NOT PASSED',
     nextPass: 'You have passed this assessment.',
     nextLeft: 'You did not reach the pass mark. Attempts left for this assessment: {n}. Revisit the manual and presentation before trying again.',
-    nextNone: 'You did not reach the pass mark and have used all {max} attempts. Please contact {email}.',
+    nextNone: 'You did not reach the pass mark and have used all {max} attempts for this month. Your attempts are available again on {date}. If you need help before then, please contact {email}.',
     complete: 'You have now passed all {n} modules. Congratulations!',
     progress: 'Your progress so far:',
     modNone: 'Module {nn}: not attempted yet',
     modPass: 'Module {nn}: PASSED ({best}%, attempts used: {a})',
-    modFail: 'Module {nn}: not passed yet (best {best}%, attempts used: {a} of {max})',
+    modFail: 'Module {nn}: not passed yet (best {best}%, attempts used this month: {a} of {max})',
     footer: 'This is an automated receipt from a temporary training site. It is not an official WBSC certificate and the site is not the official WBSC website. Questions: {email}.'
   },
   es: {
@@ -184,12 +187,12 @@ var EMAIL_TEXT = {
     PASS: 'APROBADO', FAIL: 'NO APROBADO',
     nextPass: 'Has aprobado esta evaluación.',
     nextLeft: 'No has alcanzado la nota mínima para aprobar. Intentos restantes en esta evaluación: {n}. Repasa el manual y la presentación antes de volver a intentarlo.',
-    nextNone: 'No has alcanzado la nota mínima para aprobar y has usado los {max} intentos. Ponte en contacto con {email}.',
+    nextNone: 'No has alcanzado la nota mínima para aprobar y has usado los {max} intentos de este mes. Tus intentos estarán disponibles de nuevo el {date}. Si necesitas ayuda antes, ponte en contacto con {email}.',
     complete: 'Has aprobado ya los {n} módulos. ¡Enhorabuena!',
     progress: 'Tu progreso hasta ahora:',
     modNone: 'Módulo {nn}: aún sin intentar',
     modPass: 'Módulo {nn}: APROBADO ({best}%, intentos usados: {a})',
-    modFail: 'Módulo {nn}: aún no aprobado (mejor resultado {best}%, intentos usados: {a} de {max})',
+    modFail: 'Módulo {nn}: aún no aprobado (mejor resultado {best}%, intentos usados este mes: {a} de {max})',
     footer: 'Este es un comprobante automático de un sitio de formación temporal. No es un certificado oficial de la WBSC y el sitio no es el sitio web oficial de la WBSC. Consultas: {email}.'
   },
   fr: {
@@ -207,12 +210,12 @@ var EMAIL_TEXT = {
     PASS: 'RÉUSSI', FAIL: 'NON RÉUSSI',
     nextPass: 'Vous avez réussi cette évaluation.',
     nextLeft: 'Vous n’avez pas atteint la note de passage. Tentatives restantes pour cette évaluation : {n}. Relisez le manuel et la présentation avant de réessayer.',
-    nextNone: 'Vous n’avez pas atteint la note de passage et avez utilisé les {max} tentatives. Veuillez contacter {email}.',
+    nextNone: 'Vous n’avez pas atteint la note de passage et avez utilisé les {max} tentatives de ce mois. Vos tentatives seront de nouveau disponibles le {date}. Si vous avez besoin d’aide d’ici là, veuillez contacter {email}.',
     complete: 'Vous avez maintenant réussi les {n} modules. Félicitations !',
     progress: 'Votre progression jusqu’ici :',
     modNone: 'Module {nn} : pas encore tenté',
     modPass: 'Module {nn} : RÉUSSI ({best} %, tentatives utilisées : {a})',
-    modFail: 'Module {nn} : pas encore réussi (meilleur résultat {best} %, tentatives utilisées : {a} sur {max})',
+    modFail: 'Module {nn} : pas encore réussi (meilleur résultat {best} %, tentatives utilisées ce mois-ci : {a} sur {max})',
     footer: 'Ceci est un reçu automatique d’un site de formation temporaire. Ce n’est pas un certificat officiel de la WBSC et le site n’est pas le site web officiel de la WBSC. Questions : {email}.'
   },
   ja: {
@@ -230,12 +233,12 @@ var EMAIL_TEXT = {
     PASS: '合格', FAIL: '不合格',
     nextPass: 'この評価に合格しました。',
     nextLeft: '合格基準に達しませんでした。この評価の残り受験回数: {n}。マニュアルとプレゼンテーションを見直してから、もう一度受験してください。',
-    nextNone: '合格基準に達せず、{max} 回の受験をすべて使い切りました。{email} までご連絡ください。',
+    nextNone: '合格基準に達せず、今月の {max} 回の受験をすべて使い切りました。受験回数は {date} に再び利用できます。それまでにサポートが必要な場合は {email} までご連絡ください。',
     complete: '{n} 個のモジュールすべてに合格しました。おめでとうございます！',
     progress: 'これまでの進捗:',
     modNone: 'モジュール {nn}: まだ受験していません',
     modPass: 'モジュール {nn}: 合格（{best}%、使用した受験回数: {a}）',
-    modFail: 'モジュール {nn}: まだ合格していません（最高 {best}%、使用した受験回数: {a} / {max}）',
+    modFail: 'モジュール {nn}: まだ合格していません（最高 {best}%、今月使用した受験回数: {a} / {max}）',
     footer: 'これは臨時の研修サイトからの自動送信の受領書です。WBSC の公式な修了証ではなく、このサイトは WBSC の公式ウェブサイトではありません。お問い合わせ: {email}'
   },
   ko: {
@@ -253,12 +256,12 @@ var EMAIL_TEXT = {
     PASS: '합격', FAIL: '불합격',
     nextPass: '이 평가에 합격하셨습니다.',
     nextLeft: '합격 기준에 도달하지 못했습니다. 이 평가의 남은 응시 횟수: {n}. 다시 응시하기 전에 매뉴얼과 프레젠테이션을 복습하세요.',
-    nextNone: '합격 기준에 도달하지 못했고 {max}회의 응시 기회를 모두 사용했습니다. {email}(으)로 문의해 주세요.',
+    nextNone: '합격 기준에 도달하지 못했고 이번 달 {max}회의 응시 기회를 모두 사용했습니다. 응시 기회는 {date}에 다시 제공됩니다. 그 전에 도움이 필요하시면 {email}(으)로 문의해 주세요.',
     complete: '{n}개 모듈을 모두 통과하셨습니다. 축하합니다!',
     progress: '지금까지의 진행 상황:',
     modNone: '모듈 {nn}: 아직 응시하지 않음',
     modPass: '모듈 {nn}: 합격 ({best}%, 사용한 응시 횟수: {a})',
-    modFail: '모듈 {nn}: 아직 합격하지 못함 (최고 {best}%, 사용한 응시 횟수: {a}/{max})',
+    modFail: '모듈 {nn}: 아직 합격하지 못함 (최고 {best}%, 이번 달 사용한 응시 횟수: {a}/{max})',
     footer: '이 확인서는 임시 교육 사이트에서 자동으로 발송되었습니다. WBSC 공식 수료증이 아니며, 이 사이트는 WBSC 공식 웹사이트가 아닙니다. 문의: {email}'
   },
   zh: {
@@ -276,12 +279,12 @@ var EMAIL_TEXT = {
     PASS: '通过', FAIL: '未通过',
     nextPass: '您已通过本次评估。',
     nextLeft: '您未达到及格线。本评估剩余尝试次数：{n}。请先复习手册和演示文稿，再重新尝试。',
-    nextNone: '您未达到及格线，且已用完全部 {max} 次尝试机会。请联系 {email}。',
+    nextNone: '您未达到及格线，且已用完本月全部 {max} 次尝试机会。您的尝试次数将在 {date} 重新开放。如在此之前需要帮助，请联系 {email}。',
     complete: '您已通过全部 {n} 个模块。恭喜！',
     progress: '您目前的进度：',
     modNone: '模块 {nn}：尚未尝试',
     modPass: '模块 {nn}：通过（{best}%，已用尝试次数：{a}）',
-    modFail: '模块 {nn}：尚未通过（最高 {best}%，已用尝试次数：{a}/{max}）',
+    modFail: '模块 {nn}：尚未通过（最高 {best}%，本月已用尝试次数：{a}/{max}）',
     footer: '这是来自临时培训网站的自动回执。它不是 WBSC 官方证书，本网站也不是 WBSC 官方网站。如有疑问：{email}'
   }
 };
@@ -328,6 +331,7 @@ function saveMessage_(result) {
     completedAll: !!result.completedAll,
     maxAttempts: result.maxAttempts || MAX_ATTEMPTS,
     code: result.code || '',
+    resetsOn: result.resetsOn || '',
     error: result.error || ''
   };
 }
@@ -364,7 +368,7 @@ function attemptsReply_(p) {
       if (!probe.module || !probe.assessmentType || (!probe.email && !probe.umpireId)) throw new Error('Missing details');
       var info = attemptInfo_(getSheet_(), probe);
       out = { ok: true, attempts: info.count, max: MAX_ATTEMPTS, remaining: Math.max(0, MAX_ATTEMPTS - info.count),
-              passed: info.passed, passMark: PASS_MARK };
+              passed: info.passed, passMark: PASS_MARK, resetsOn: info.passed ? '' : info.resetsOn };
       // An unfinished attempt saved from any device, for the assessment the learner is starting.
       if (email && isProgressKey_(p.pkey)) {
         try { out.progress = loadProgress_(email, String(p.pkey)); } catch (perr) { logError_('progress-load', perr); }
@@ -653,17 +657,22 @@ function handleSave_(e) {
         result.result = String(sheet.getRange(existing, COL_RESULT).getValue() || '');
         result.passed = result.result === 'PASS';
         result.maxAttempts = MAX_ATTEMPTS;
+        result.resetsOn = result.passed ? '' : nextResetDate_();
         result.completedAll = completionSummary_(sheet, clean).passedCount >= TOTAL_MODULES;
       } else if (attemptInfo_(sheet, clean).count >= MAX_ATTEMPTS) {
         // Hard limit: nothing is saved or emailed.
+        var lim = attemptInfo_(sheet, clean);
         result.success = false;
         result.code = 'max_attempts';
         result.attemptNumber = null;
         result.maxAttempts = MAX_ATTEMPTS;
-        result.error = 'You have already used the maximum of ' + MAX_ATTEMPTS + ' attempts for this assessment. Please contact ' + CONTACT_EMAIL + '.';
+        result.resetsOn = lim.passed ? '' : lim.resetsOn;
+        result.error = lim.passed
+          ? 'You have already used the maximum of ' + MAX_ATTEMPTS + ' attempts for this assessment. Please contact ' + CONTACT_EMAIL + '.'
+          : 'You have already used the maximum of ' + MAX_ATTEMPTS + ' attempts for this assessment this month. Your attempts are available again on ' + lim.resetsOn + '. Please contact ' + CONTACT_EMAIL + '.';
       } else {
         var before = completionSummary_(sheet, clean);
-        var attemptNumber = attemptInfo_(sheet, clean).count + 1;
+        var attemptNumber = attemptInfo_(sheet, clean).count + 1;   // within this month (or all attempts once passed)
         var now = new Date();
         sheet.appendRow([
           now, clean.name, clean.email, clean.umpireId, clean.association,
@@ -678,6 +687,7 @@ function handleSave_(e) {
         result.result = clean.result;
         result.passed = clean.passed;
         result.maxAttempts = MAX_ATTEMPTS;
+        result.resetsOn = clean.passed ? '' : nextResetDate_();   // when this month's attempts are renewed
         result.completedAll = after.passedCount >= TOTAL_MODULES;
         post = {
           clean: clean, attemptNumber: attemptNumber, rowIndex: rowIndex, summary: after,
@@ -836,22 +846,43 @@ function norm_(v) {
 // Looks at earlier rows for the same person (by email OR umpire ID), module and
 // assessment type. Comparisons ignore case and spacing, and treat numbers and
 // text alike. Returns { count, passed }. The client's attempt number is ignored.
+// The calendar month (script time zone) of a date, as 'yyyy-MM'.
+function monthKey_(d) {
+  var tz = 'UTC';
+  try { tz = Session.getScriptTimeZone() || 'UTC'; } catch (e) { /* UTC */ }
+  return Utilities.formatDate(new Date(d), tz, 'yyyy-MM');
+}
+
+// The first day of next month, 'yyyy-MM-DD', in the script time zone: when this month's attempts are renewed.
+function nextResetDate_() {
+  var key = monthKey_(new Date()).split('-'), y = Number(key[0]), m = Number(key[1]);
+  if (m === 12) { y++; m = 1; } else m++;
+  return y + '-' + ('0' + m).slice(-2) + '-01';
+}
+
+// Attempts a person has used on one assessment. `count` is what counts towards the limit: this month's attempts, or
+// every attempt once the module has been passed. `total` is all attempts ever.
 function attemptInfo_(sheet, c) {
   var last = sheet.getLastRow();
-  if (last < 2) return { count: 0, passed: false };
+  var out = { count: 0, total: 0, month: 0, passed: false, resetsOn: nextResetDate_() };
+  if (last < 2) return out;
+  var times = sheet.getRange(2, 1, last - 1, 1).getValues();
   var rows = sheet.getRange(2, 2, last - 1, 6).getValues(); // B:G = Name, Email, UmpireID, Assoc, Module, Type
   var results = sheet.getRange(2, COL_RESULT, last - 1, 1).getValues();
   var email = norm_(c.email), id = norm_(c.umpireId), mod = norm_(c.module), type = norm_(c.assessmentType);
-  var count = 0, passed = false;
+  var thisMonth = monthKey_(new Date());
   for (var i = 0; i < rows.length; i++) {
     var r = rows[i];
     var same = (email && norm_(r[1]) === email) || (id && norm_(r[2]) === id);
     if (same && norm_(r[4]) === mod && norm_(r[5]) === type) {
-      count++;
-      if (String(results[i][0]) === 'PASS') passed = true;
+      out.total++;
+      var t = new Date(times[i][0]);
+      if (isNaN(t.getTime()) || monthKey_(t) === thisMonth) out.month++;
+      if (String(results[i][0]) === 'PASS') out.passed = true;
     }
   }
-  return { count: count, passed: passed };
+  out.count = out.passed ? out.total : out.month;
+  return out;
 }
 
 // "Module 03 - Foundations ..." -> 3
@@ -863,7 +894,7 @@ function moduleNumber_(s) {
 // For one person (email OR umpire ID): how each module's marked assessment stands.
 // Returns { modules: { 1: {n, module, attempts, passed, best, passedAt}, ... }, passedCount }
 function completionSummary_(sheet, c) {
-  var modules = {}, passedCount = 0;
+  var modules = {}, passedCount = 0, thisMonth = monthKey_(new Date());
   var last = sheet.getLastRow();
   if (last >= 2) {
     var rows = sheet.getRange(2, 1, last - 1, COLUMNS.length).getValues();
@@ -874,9 +905,11 @@ function completionSummary_(sheet, c) {
       if (!same || norm_(r[6]) !== type) continue;
       var n = moduleNumber_(r[5]);
       if (!n || n > TOTAL_MODULES) continue;
-      var m = modules[n] || (modules[n] = { n: n, module: '', attempts: 0, passed: false, best: 0, passedAt: null });
+      var m = modules[n] || (modules[n] = { n: n, module: '', attempts: 0, monthAttempts: 0, passed: false, best: 0, passedAt: null });
       m.module = String(r[5]);
       m.attempts++;
+      var rt = new Date(r[0]);
+      if (isNaN(rt.getTime()) || monthKey_(rt) === thisMonth) m.monthAttempts++;
       var pct = Number(r[9]) || 0;
       if (pct > m.best) m.best = pct;
       if (String(r[16]) === 'PASS' && !m.passed) { m.passed = true; m.passedAt = r[0]; }
@@ -893,7 +926,7 @@ function summaryLines_(summary, lg) {
     var m = summary.modules[n], nn = ('0' + n).slice(-2);
     if (!m) lines.push(et_(lg, 'modNone', { nn: nn }));
     else if (m.passed) lines.push(et_(lg, 'modPass', { nn: nn, best: m.best, a: m.attempts }));
-    else lines.push(et_(lg, 'modFail', { nn: nn, best: m.best, a: m.attempts, max: MAX_ATTEMPTS }));
+    else lines.push(et_(lg, 'modFail', { nn: nn, best: m.best, a: m.monthAttempts, max: MAX_ATTEMPTS }));
   }
   return lines.join('\n');
 }
@@ -925,7 +958,7 @@ function sendReceipt_(c, attemptNumber, summary) {
   var next;
   if (c.passed) next = et_(lg, 'nextPass');
   else if (left > 0) next = et_(lg, 'nextLeft', { n: left });
-  else next = et_(lg, 'nextNone', { max: MAX_ATTEMPTS, email: CONTACT_EMAIL });
+  else next = et_(lg, 'nextNone', { max: MAX_ATTEMPTS, email: CONTACT_EMAIL, date: nextResetDate_() });
   var complete = summary.passedCount >= TOTAL_MODULES;
   var body =
     et_(lg, 'hello', { name: c.name }) + '\n\n' +
@@ -1046,7 +1079,7 @@ function people_() {
       if (r.assoc) p.assoc = r.assoc;
       if (r.type.toLowerCase() !== COMPLETION_TYPE.toLowerCase() || !r.n || r.n > TOTAL_MODULES) return;
       var m = p.modules[r.n] || (p.modules[r.n] = { attempts: 0, passed: false, at: 0 });
-      m.attempts++;
+      if (monthKey_(r.ts) === monthKey_(new Date())) m.attempts++;   // this month's attempts: they are renewed on the 1st
       if (r.result === 'PASS' && !m.passed) { m.passed = true; m.at = r.ts; }
     });
     Object.keys(p.modules).forEach(function (k) {

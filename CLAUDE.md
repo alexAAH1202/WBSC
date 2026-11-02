@@ -12,7 +12,7 @@ mark and attempt rules, and how to deploy. The earlier generic quiz lives in [`d
   already public in the pages and are fine.
 - **Relative links only**, so the site works at `/WBSC/` or anywhere else. `node tests/site.test.js` checks them.
 - **Save before email, and the server decides.** `apps-script/Code.gs` decides PASS / NOT PASSED (85%) and
-  refuses a third attempt. The values in `assessment-widget.html` are display only: keep `PASS_MARK`,
+  refuses a third attempt in a calendar month (attempts are renewed on the 1st for a module not yet passed). The values in `assessment-widget.html` are display only: keep `PASS_MARK`,
   `MAX_ATTEMPTS` and the contact address equal in both files.
 - **Update the existing Apps Script deployment with a new version.** A "New deployment" creates a different
   URL and breaks the page. If the URL ever changes, update `APPS_SCRIPT_URL` in `assessment-widget.html` and

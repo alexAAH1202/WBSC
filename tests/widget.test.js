@@ -146,6 +146,15 @@ const verifyText = pg => pg.textContent('#verify-state');
   assert.ok(/Module 01/.test(t.lookups[0].module)); assert.strictEqual(t.lookups[0].type, 'Presentation Competency Assessment');
   ok('attempt label comes from the server count; the lookup names the module and type');
 
+  t = await newPage(b, { attempts: { attempts: 2, remaining: 0, passed: false, resetsOn: '2026-12-01' } });
+  await t.pg.click('[data-assessment="m01-pca"]'); await t.pg.waitForFunction(() => /all 2 attempts at this assessment this month/.test(document.getElementById('validation-banner').textContent));
+  assert.ok(/available again on 1 December 2026/.test(await t.pg.textContent('#validation-banner')), await t.pg.textContent('#validation-banner')); ok('out of attempts this month: the page says when they are renewed (1 December 2026)');
+  // the save itself is refused with a renewal date
+  t = await newPage(b, { lookup: 'fail' }, (r, p) => r.fulfill(page_(reply({ wbscSave: true, success: false, code: 'max_attempts', submissionId: p.submissionId, maxAttempts: 2, resetsOn: '2027-01-01', error: 'x' }))));
+  await runQuiz(t.pg); await t.pg.waitForFunction(() => /available again on 1 January 2027/.test(document.getElementById('quiz-save-state').textContent)); ok('a refused save (attempts used this month) shows the renewal date');
+  // the last failed attempt tells the learner when attempts are renewed
+  t = await newPage(b, { attempts: { attempts: 1, remaining: 1, passed: false } }, (r, p) => r.fulfill(page_(reply({ wbscSave: true, success: true, submissionId: p.submissionId, attemptNumber: 2, maxAttempts: 2, result: 'NOT PASSED', resetsOn: '2026-12-01' }))));
+  await runQuiz(t.pg, 'm01-pca', 3); await t.pg.waitForFunction(() => /available again on 1 December 2026/.test(document.getElementById('quiz-result-text') ? document.getElementById('quiz-result-text').textContent : document.body.textContent)); ok('after the second failed attempt the result says attempts are renewed on the 1st');
   t = await newPage(b, { attempts: { attempts: 2, remaining: 0, passed: false } });
   await t.pg.click('[data-assessment="m01-pca"]'); await t.pg.waitForFunction(() => /maximum of 2 attempts/.test(document.getElementById('validation-banner').textContent));
   assert.ok(!(await t.pg.isVisible('#quiz')) && /umpiredirector@wbscoceania\.org/.test(await t.pg.textContent('#validation-banner')));

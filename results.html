@@ -763,7 +763,7 @@
             <div class="tablewrap"><table class="grid" id="attempts-table"></table></div>
           </div>
         </div>
-        <p class="msg">A module counts as completed only when the <strong>marked</strong> assessment (the Presentation Competency Assessment) is passed. Knowledge Checks do not count. &ldquo;Needs attention&rdquo; means an umpire has used every attempt on a module without passing it.</p>
+        <p class="msg">A module counts as completed only when the <strong>marked</strong> assessment (the Presentation Competency Assessment) is passed. Knowledge Checks do not count. &ldquo;Needs attention&rdquo; means an umpire has used every attempt this month on a module without passing it; attempts are renewed on the 1st of every month.</p>
       </div>
     </div>
   </section>
@@ -810,6 +810,7 @@
   var PW_KEY = 'wbscResultsPw';
 
   var $ = function(id){ return document.getElementById(id); };
+  var NOW = new Date();   // attempts are counted per calendar month
   var STALLED_DAYS = 14;   // keep equal to STALLED_DAYS in Code.gs (the weekly summary email)
   var state = { people: [], rows: [], config: { passMark: 85, maxAttempts: 2, totalModules: 8, completionType: 'Presentation Competency Assessment' },
                 filter: 'all', assoc: '', q: '', open: null, tab: 'umpires', generated: null, truncated: false };
@@ -877,14 +878,15 @@
         if (r.umpireId) p.umpireId = r.umpireId; if (r.association) p.association = r.association; p.emails[String(r.email).toLowerCase()] = r.email;
         if (!r.marked) { p.kc++; return; }
         if (!r.n || r.n > cfg.totalModules) return;
-        var m = p.modules[r.n] || (p.modules[r.n] = { n: r.n, label: '', attempts: 0, best: 0, passed: false, passedAt: null });
+        var m = p.modules[r.n] || (p.modules[r.n] = { n: r.n, label: '', attempts: 0, month: 0, best: 0, passed: false, passedAt: null });
         m.label = r.module; m.attempts++;
+        if (r.ts && r.ts.getFullYear() === NOW.getFullYear() && r.ts.getMonth() === NOW.getMonth()) m.month++;   // attempts are renewed on the 1st of every month
         if (r.percent > m.best) m.best = r.percent;
         if (r.result === 'PASS' && !m.passed) { m.passed = true; m.passedAt = r.ts; }
       });
       Object.keys(p.modules).forEach(function(k){
         var m = p.modules[k]; if (m.passed) p.passedCount++;
-        if (!m.passed && m.attempts >= cfg.maxAttempts) p.attention = true;
+        if (!m.passed && m.month >= cfg.maxAttempts) p.attention = true;   // locked out until the 1st
       });
       p.completed = p.passedCount >= cfg.totalModules;
       if (p.completed) p.completedAt = Object.keys(p.modules).map(function(k){ return p.modules[k].passedAt; }).filter(Boolean).sort(function(a, b){ return b - a; })[0] || null;
@@ -912,7 +914,7 @@
       ['Umpires', P.length, 'with any result', ''],
       ['Completed all ' + cfg.totalModules, completed, P.length ? Math.round(completed / P.length * 100) + '% of umpires' : '', 'good'],
       ['In progress', P.length - completed, 'not yet completed', ''],
-      ['Need attention', attention, 'used every attempt on a module', attention ? 'warn' : ''],
+      ['Need attention', attention, 'used every attempt this month', attention ? 'warn' : ''],
       ['Went quiet', P.filter(function(p){ return p.quiet; }).length, 'no activity for ' + STALLED_DAYS + '+ days', ''],
       ['Marked attempts', marked.length, marked.length ? Math.round(passes / marked.length * 100) + '% passed' : 'none yet', ''],
       ['Last 7 days', week, 'results of any kind', '']
@@ -927,10 +929,10 @@
     state.people.forEach(function(p){ Object.keys(p.modules).forEach(function(k){ labels[k] = p.modules[k].label; }); });
     for (var n = 1; n <= cfg.totalModules; n++){
       var tried = 0, passed = 0, stuck = 0;
-      state.people.forEach(function(p){ var m = p.modules[n]; if (m) { tried++; if (m.passed) passed++; else if (m.attempts >= cfg.maxAttempts) stuck++; } });
+      state.people.forEach(function(p){ var m = p.modules[n]; if (m) { tried++; if (m.passed) passed++; else if (m.month >= cfg.maxAttempts) stuck++; } });
       rows += '<tr><td>' + esc(labels[n] || ('Module ' + pad2(n))) + '</td><td class="num">' + tried + '</td><td class="num">' + passed + '</td><td class="num">' + stuck + '</td><td class="num">' + (tried ? Math.round(passed / tried * 100) + '%' : '') + '</td></tr>';
     }
-    $('module-table').innerHTML = '<caption class="msg" style="text-align:left;margin:0 0 8px;caption-side:top;">Marked assessment only. &ldquo;Out of attempts&rdquo; = used every attempt without passing.</caption><thead><tr><th scope="col">Module</th><th scope="col" class="num">Umpires attempted</th><th scope="col" class="num">Passed</th><th scope="col" class="num">Out of attempts</th><th scope="col" class="num">Pass rate</th></tr></thead><tbody>' + rows + '</tbody>';
+    $('module-table').innerHTML = '<caption class="msg" style="text-align:left;margin:0 0 8px;caption-side:top;">Marked assessment only. &ldquo;Out of attempts&rdquo; = used every attempt this month without passing (renewed on the 1st).</caption><thead><tr><th scope="col">Module</th><th scope="col" class="num">Umpires attempted</th><th scope="col" class="num">Passed</th><th scope="col" class="num">Out of attempts</th><th scope="col" class="num">Pass rate</th></tr></thead><tbody>' + rows + '</tbody>';
   }
 
   var NO_ASSOC = '(none given)';
@@ -975,12 +977,12 @@
     var cfg = state.config, rows = '';
     for (var n = 1; n <= cfg.totalModules; n++){
       var m = p.modules[n];
-      rows += '<tr><td>' + esc(m ? m.label : 'Module ' + pad2(n)) + '</td><td>' + esc(moduleStatusText(m)) + '</td><td class="num">' + (m ? m.attempts + ' of ' + cfg.maxAttempts : '0 of ' + cfg.maxAttempts) + '</td><td>' + esc(m && m.passed ? fmtDate(m.passedAt) : '') + '</td></tr>';
+      rows += '<tr><td>' + esc(m ? m.label : 'Module ' + pad2(n)) + '</td><td>' + esc(moduleStatusText(m)) + '</td><td class="num">' + (m ? m.month + ' of ' + cfg.maxAttempts : '0 of ' + cfg.maxAttempts) + '</td><td>' + esc(m && m.passed ? fmtDate(m.passedAt) : '') + '</td></tr>';
     }
     return '<h4>' + esc(p.name) + '</h4><p class="meta">' + esc(Object.keys(p.emails).map(function(k){ return p.emails[k]; }).join(', ')) +
       (p.umpireId ? ' &middot; ID ' + esc(p.umpireId) : '') + (p.association ? ' &middot; ' + esc(p.association) : '') +
       ' &middot; ' + p.kc + ' Knowledge Check result' + (p.kc === 1 ? '' : 's') + (p.last ? ' &middot; last activity ' + esc(fmtDate(p.last)) : '') + '</p>' +
-      '<table class="grid"><thead><tr><th scope="col">Module</th><th scope="col">Marked assessment</th><th scope="col" class="num">Attempts used</th><th scope="col">Passed on</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+      '<table class="grid"><thead><tr><th scope="col">Module</th><th scope="col">Marked assessment</th><th scope="col" class="num">Attempts this month</th><th scope="col">Passed on</th></tr></thead><tbody>' + rows + '</tbody></table>' +
       '<p class="meta" style="margin-top:10px;"><strong>' + (p.completed ? 'Completed all ' + cfg.totalModules + ' modules' + (p.completedAt ? ' on ' + esc(fmtDate(p.completedAt)) : '') : p.passedCount + ' of ' + cfg.totalModules + ' modules passed') + '</strong></p>' +
       '<div class="detail-actions"><button class="btn btn-primary small" type="button" data-act="print">Print summary</button><button class="btn btn-outline-navy small" type="button" data-act="csv-one">Download this summary (CSV)</button></div>';
   }
@@ -1055,7 +1057,7 @@
       '<p><strong>' + esc(p.name) + '</strong><br>' + esc(Object.keys(p.emails).map(function(k){ return p.emails[k]; }).join(', ')) +
       (p.umpireId ? '<br>Umpire ID: ' + esc(p.umpireId) : '') + (p.association ? '<br>Association / Federation: ' + esc(p.association) : '') + '</p>' +
       '<p class="status">' + (p.completed ? 'Completed all ' + cfg.totalModules + ' modules' + (p.completedAt ? ' on ' + esc(fmtDate(p.completedAt)) : '') : p.passedCount + ' of ' + cfg.totalModules + ' modules passed (not yet complete)') + '</p>' +
-      '<table><thead><tr><th>Module</th><th>Marked assessment</th><th>Attempts used</th><th>Passed on</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+      '<table><thead><tr><th>Module</th><th>Marked assessment</th><th>Attempts this month</th><th>Passed on</th></tr></thead><tbody>' + rows + '</tbody></table>' +
       '<p>Pass mark: ' + cfg.passMark + '%. Maximum ' + cfg.maxAttempts + ' attempts per assessment.</p>' +
       '<p class="fine">Prepared ' + esc(fmtDateTime(new Date())) + ' from the results held by the program administrator. This summary is produced by a temporary training site that is not the official WBSC website, and it is not an official WBSC certificate.</p>';
     document.body.classList.add('print-one');
