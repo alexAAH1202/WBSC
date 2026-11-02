@@ -17,8 +17,8 @@ const row = (ago, name, email, id, mod, type, pct, attempt, result, es, rs) =>
 const MODS = [1, 2, 3, 4, 5, 6].map(n => 'Module 0' + n + ' Something');
 const ROWS = [];
 MODS.forEach((m, i) => ROWS.push(row(10 - i, 'Alice Done', 'alice@x.com', 'A1', m, PCA, 90, 1, 'PASS')));
-ROWS.push(row(3, 'Bob Stuck', 'bob@x.com', '', MODS[0], PCA, 60, 1, 'NOT PASSED'));
-ROWS.push(row(2, 'Bob Stuck', 'bob@x.com', '', MODS[0], PCA, 70, 2, 'NOT PASSED', 'sent', 'FAILED: boom'));
+ROWS.push(row(0.003, 'Bob Stuck', 'bob@x.com', '', MODS[0], PCA, 60, 1, 'NOT PASSED'));   // minutes ago: attempts are counted per calendar month
+ROWS.push(row(0.002, 'Bob Stuck', 'bob@x.com', '', MODS[0], PCA, 70, 2, 'NOT PASSED', 'sent', 'FAILED: boom'));
 ROWS.push(row(1, 'Cara Mid', 'cara@x.com', 'C9', MODS[1], PCA, 100, 1, 'PASS'));
 ROWS.push(row(1, 'Cara M (same ID, new email)', 'cara2@y.com', 'C9', MODS[2], KC, 100, 1, 'PASS'));
 ROWS.push(row(1, '<img src=x onerror=window.__xss=1>', 'evil@x.com', '', MODS[0], PCA, 100, 1, 'PASS'));
@@ -108,8 +108,8 @@ let PORT;
     const withAssoc = (r, a) => { const c = r.slice(); c[4] = a; return c; };
     const ROWS2 = [
       ...MODS.map((m, i) => withAssoc(row(10 - i, 'Alice Done', 'alice@x.com', 'A1', m, PCA, 90, 1, 'PASS'), 'Australia')),
-      withAssoc(row(3, 'Bob Stuck', 'bob@x.com', 'B1', MODS[0], PCA, 60, 1, 'NOT PASSED'), 'New Zealand'),
-      withAssoc(row(2, 'Bob Stuck', 'bob@x.com', 'B1', MODS[0], PCA, 70, 2, 'NOT PASSED'), 'New Zealand'),
+      withAssoc(row(0.003, 'Bob Stuck', 'bob@x.com', 'B1', MODS[0], PCA, 60, 1, 'NOT PASSED'), 'New Zealand'),
+      withAssoc(row(0.002, 'Bob Stuck', 'bob@x.com', 'B1', MODS[0], PCA, 70, 2, 'NOT PASSED'), 'New Zealand'),
       withAssoc(row(30, 'Dan Quiet', 'dan@x.com', 'D1', MODS[0], PCA, 90, 1, 'PASS'), 'New Zealand'),
       withAssoc(row(5, 'Eve Active', 'eve@x.com', 'E1', MODS[0], PCA, 90, 1, 'PASS'), 'Australia'),
       withAssoc(row(1, 'Fay Nowhere', 'fay@x.com', 'F1', MODS[0], PCA, 90, 1, 'PASS'), '')
@@ -128,6 +128,14 @@ let PORT;
     await q.pg.selectOption('#assoc-filter', ''); assert.strictEqual(await q.pg.locator('#people-table .prow').count(), 5);
     const [dl2] = await Promise.all([q.pg.waitForEvent('download'), q.pg.click('#csv-summary-btn')]); const csv2 = fs.readFileSync(await dl2.path(), 'utf8');
     assert(/"Needs attention","Went quiet","Last activity"/.test(csv2) && /"Dan Quiet".*"No","Yes"/.test(csv2)); ok('the summary CSV has a Went quiet column');
+    // attempts are renewed on the 1st of every month: two failures in an earlier month do not lock anyone out now
+    const ROWS3 = [row(45, 'Hal Renewed', 'hal@x.com', 'H1', MODS[0], PCA, 60, 1, 'NOT PASSED'), row(44, 'Hal Renewed', 'hal@x.com', 'H1', MODS[0], PCA, 70, 2, 'NOT PASSED'),
+      row(0.003, 'Ivy Locked', 'ivy@x.com', 'I1', MODS[0], PCA, 60, 1, 'NOT PASSED'), row(0.002, 'Ivy Locked', 'ivy@x.com', 'I1', MODS[0], PCA, 70, 2, 'NOT PASSED')];
+    const m3 = await open(b, p => p.get('password') === 'right' ? { success: true, cols: COLS, rows: ROWS3, config: CONFIG } : { success: false, code: 'wrong', error: 'no' });
+    await m3.pg.fill('#pw', 'right'); await m3.pg.click('#login-btn'); await m3.pg.waitForSelector('#dash-view', { state: 'visible' });
+    const badges = await m3.pg.$$eval('#people-table .prow', a => a.map(r => r.textContent.replace(/\s+/g, ' ')));
+    assert.ok(badges.some(t => /Ivy Locked/.test(t) && /Needs attention/.test(t)), badges.join(' | ')); assert.ok(badges.some(t => /Hal Renewed/.test(t) && /Went quiet/.test(t) && !/Needs attention/.test(t)), badges.join(' | '));
+    ok('two failed attempts this month need attention; two from an earlier month do not (attempts renew on the 1st)');
     const bad = [...o.hosts].filter(h => !/^localhost:|^script\.google\.com$/.test(h)); assert.deepStrictEqual(bad, []); ok('no requests to other hosts');
   } finally { await b.close(); server.close(); }
   console.log(n + ' checks passed');

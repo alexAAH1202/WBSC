@@ -63,8 +63,8 @@ function makeEnv({ failMail = null, quota = 100, quiet = true } = {}) {
         return b;
       }
     },
-    Session: { getEffectiveUser: () => ({ getEmail: () => 'owner@example.com' }) },
-    Utilities: { getUuid: () => crypto.randomUUID(), computeDigest: (a, s) => digestBytes(s), DigestAlgorithm: { SHA_256: 'SHA_256' }, Charset: { UTF_8: 'UTF_8' } },
+    Session: { getEffectiveUser: () => ({ getEmail: () => 'owner@example.com' }), getScriptTimeZone: () => 'UTC' },
+    Utilities: { formatDate: (d, tz, f) => { assert.strictEqual(f, 'yyyy-MM'); const x = new Date(d); return x.getUTCFullYear() + '-' + String(x.getUTCMonth() + 1).padStart(2, '0'); }, getUuid: () => crypto.randomUUID(), computeDigest: (a, s) => digestBytes(s), DigestAlgorithm: { SHA_256: 'SHA_256' }, Charset: { UTF_8: 'UTF_8' } },
     HtmlService: { XFrameOptionsMode: { ALLOWALL: 'ALLOWALL' }, createHtmlOutput: h => ({ html: h, setXFrameOptionsMode(m) { this.mode = m; return this; } }) },
     ContentService: { MimeType: { JSON: 'json', JAVASCRIPT: 'js' }, createTextOutput: t => ({ text: t, setMimeType(m) { this.mime = m; return this; } }) }
   };
@@ -183,7 +183,7 @@ ok('a result emails the Director and a receipt to the learner; statuses recorded
   const [dir, rec] = sent;
   assert.strictEqual(dir.to, 'umpiredirector@wbscoceania.org'); assert.ok(/NOT PASSED: Jo Ump/.test(dir.subject));
   assert.strictEqual(rec.to, 'jo@x.com'); assert.ok(/receipt/i.test(rec.subject) && /NOT PASSED/.test(rec.subject));
-  for (const need of ['Hello Jo Ump', 'Score: 8 / 10 (80%)', 'Result: NOT PASSED (pass mark 85%)', 'Attempt: 1 of 2', 'Attempts left for this assessment: 1', 'not an official WBSC certificate', 'Module 02: not passed yet (best 80%, attempts used: 1 of 2)', 'Module 01: not attempted yet']) {
+  for (const need of ['Hello Jo Ump', 'Score: 8 / 10 (80%)', 'Result: NOT PASSED (pass mark 85%)', 'Attempt: 1 of 2', 'Attempts left for this assessment: 1', 'not an official WBSC certificate', 'Module 02: not passed yet (best 80%, attempts used this month: 1 of 2)', 'Module 01: not attempted yet']) {
     assert.ok(rec.body.includes(need), 'receipt contains: ' + need);
   }
   assert.ok(/Reference: [A-Z0-9-]{8}\n/.test(rec.body));
@@ -517,6 +517,49 @@ ok('weekly summary: who finished this week, who needs attention, who went quiet,
 });
 ok('weekly summary: nothing is sent while there are no results', () => {
   const e = makeEnv(); const r = e.ctx.weeklySummary(); assert.strictEqual(r.sent, false); assert.strictEqual(e.mails.length, 0);
+});
+
+// =====================================================================  attempts are renewed on the 1st of every month
+ok('after two failed attempts a third is refused until the 1st of next month, when two fresh attempts open', () => {
+  const e = makeEnv(); const t = login(e, 'jo@x.com');     // the clock is 27 October 2026
+  assert.strictEqual(save(e, t, { score: 5 }).attemptNumber, 1); assert.strictEqual(save(e, t, { score: 6 }).attemptNumber, 2);
+  const refused = save(e, t, { score: 9 });
+  assert.strictEqual(refused.success, false); assert.strictEqual(refused.code, 'max_attempts'); assert.strictEqual(refused.resetsOn, '2026-11-01');
+  assert.ok(/this month/.test(refused.error) && /2026-11-01/.test(refused.error));
+  const look = () => JSON.parse(e.ctx.attemptsReply_({ token: t, module: 'Module 01 — Foundations', type: 'Presentation Competency Assessment', callback: '' }).text);
+  assert.strictEqual(look().remaining, 0); assert.strictEqual(look().resetsOn, '2026-11-01');
+  const rowsBefore = e.rows.length; e.clock.now = Date.UTC(2026, 9, 31, 23, 59, 0); assert.strictEqual(save(e, login(e, 'jo@x.com'), { score: 9 }).code, 'max_attempts', 'still October at 23:59 on the 31st');
+  e.clock.now = Date.UTC(2026, 10, 1, 0, 1, 0); const t2 = login(e, 'jo@x.com');
+  const look2 = () => JSON.parse(e.ctx.attemptsReply_({ token: t2, module: 'Module 01 — Foundations', type: 'Presentation Competency Assessment', callback: '' }).text);
+  assert.strictEqual(look2().attempts, 0); assert.strictEqual(look2().remaining, 2); assert.strictEqual(look2().resetsOn, '2026-12-01');
+  const a = save(e, t2, { score: 6 }); assert.strictEqual(a.success, true); assert.strictEqual(a.attemptNumber, 1, 'the attempt number counts from 1 again');
+  const b = save(e, t2, { score: 7 }); assert.strictEqual(b.attemptNumber, 2);
+  assert.strictEqual(save(e, t2, { score: 7 }).code, 'max_attempts');
+  assert.strictEqual(e.rows.length, rowsBefore + 2, 'earlier rows stay in the Sheet as history');
+});
+ok('a module that has been passed does not get fresh attempts each month', () => {
+  const e = makeEnv(); const t = login(e, 'jo@x.com');
+  save(e, t, { score: 9 }); save(e, t, { score: 5 });   // pass, then a retry
+  e.clock.now = Date.UTC(2026, 10, 2); const t2 = login(e, 'jo@x.com');
+  const r = save(e, t2, { score: 9 }); assert.strictEqual(r.code, 'max_attempts'); assert.strictEqual(r.resetsOn, '');
+  assert.ok(!/available again/.test(r.error));
+});
+ok('the receipt after the last failed attempt says when attempts are renewed, and the progress shows this month\'s attempts', () => {
+  const e = makeEnv(); const t = login(e, 'jo@x.com');
+  save(e, t, { score: 5, module: mod(1) }); const before = e.mails.length; save(e, t, { score: 6, module: mod(1) });
+  const rec = e.mails.slice(before).find(m => m.to === 'jo@x.com');
+  assert.ok(/available again on 2026-11-01/.test(rec.body), rec.body); assert.ok(/attempts used this month: 2 of 2/.test(rec.body));
+  e.clock.now = Date.UTC(2026, 10, 3); const t2 = login(e, 'jo@x.com'); const b2 = e.mails.length; save(e, t2, { score: 9, module: mod(2) });
+  const r2 = e.mails.slice(b2).find(m => m.to === 'jo@x.com');
+  assert.ok(/Module 01: not passed yet \(best 60%, attempts used this month: 0 of 2\)/.test(r2.body), r2.body);
+});
+ok('the weekly summary counts only this month\'s attempts as "need attention"', () => {
+  const e = makeEnv(); const t = login(e, 'stuck@x.com');
+  save(e, t, { participantName: 'Stuck Sam', score: 5, umpireId: 'stuck' }); save(e, t, { participantName: 'Stuck Sam', score: 6, umpireId: 'stuck' });
+  e.clock.now = Date.UTC(2026, 10, 2);   // 2 November
+  let b = e.mails.length; e.ctx.weeklySummary(); assert.ok(/0 need attention/.test(e.mails.slice(b)[0].subject), 'renewed on the 1st, so no longer locked out');
+  const t2 = login(e, 'stuck@x.com'); save(e, t2, { participantName: 'Stuck Sam', score: 5, umpireId: 'stuck' }); save(e, t2, { participantName: 'Stuck Sam', score: 6, umpireId: 'stuck' });
+  b = e.mails.length; e.ctx.weeklySummary(); assert.ok(/1 need attention/.test(e.mails.slice(b)[0].subject));
 });
 
 console.log(n + ' Code.gs checks passed');

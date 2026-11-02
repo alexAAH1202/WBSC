@@ -653,7 +653,7 @@
     <div class="wrap">
       <div class="rules-note" id="rules-note">
         <strong>Pass mark: 85%</strong> on each Presentation Competency Assessment (the marked assessment).
-        <strong>You have a maximum of 2 attempts</strong> at each one, and the limit is checked when your result is saved.
+        <strong>You have a maximum of 2 attempts</strong> at each one each month, and the limit is checked when your result is saved. If you have not passed, your attempts are renewed on the 1st of every month.
         The Manual Knowledge Checks are unmarked practice: try them as often as you like, the correct answers are shown, and nothing is recorded.
       </div>
       <div class="watch-first" role="note">
@@ -1408,6 +1408,13 @@
   Array.prototype.forEach.call(document.querySelectorAll('[data-marked-note]'), function(el){
     el.textContent = T('Counts toward your record. Pass mark {pass}%, maximum {max} attempts.', { pass: PASS_MARK, max: MAX_ATTEMPTS });
   });
+  // 'yyyy-mm-dd' from the server as a long date in the page language, for "your attempts are available again on ...".
+  var resetDate = '';
+  function longDate(iso){
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ''));
+    if (!m) return '';
+    try { return new Date(+m[1], +m[2] - 1, +m[3]).toLocaleDateString(LANG === 'en' ? 'en-GB' : LANG, { day: 'numeric', month: 'long', year: 'numeric' }); } catch (e) { return iso; }
+  }
   var CONTACT_EMAIL = 'umpiredirector@wbscoceania.org';
   var LOOKUP_TIMEOUT_MS = 8000;
 
@@ -1628,6 +1635,7 @@
       return;
     }
     if (!m || m.wbscSave !== true || !pendingSave || m.submissionId !== pendingSave.id) return;
+    resetDate = m.resetsOn || '';   // when this month's attempts are renewed (not passed)
     if (!trustedOrigin(ev.origin)) return;
     cleanupSave();
     if (m.success) {
@@ -1648,7 +1656,9 @@
       document.querySelector('.identity-panel').scrollIntoView({behavior:'smooth', block:'center'});
     } else if (m.code === 'max_attempts') {
       // Nothing was saved. This is final, so no Retry.
-      setSaveState('failed', m.error ? S(m.error) : T('You have already used the maximum of {n} attempts for this assessment.', { n: MAX_ATTEMPTS }), false);
+      setSaveState('failed', m.resetsOn
+        ? T('You have used all {n} attempts at this assessment this month. Your attempts are available again on {date}. Please contact {email} if you need help before then.', { n: MAX_ATTEMPTS, date: longDate(m.resetsOn), email: CONTACT_EMAIL })
+        : (m.error ? S(m.error) : T('You have already used the maximum of {n} attempts for this assessment.', { n: MAX_ATTEMPTS })), false);
       els.resultPill.className = 'result-pill fail'; els.resultPill.textContent = T('Not recorded');
       els.resultText.textContent = T('This attempt was not counted.');
       els.nextBlock.style.display = 'none';
@@ -1680,6 +1690,7 @@
     if (passed) text = T('You reached the pass mark of {pass}%.', { pass: PASS_MARK });
     else if (!confirmed) text = T('The pass mark is {pass}%.', { pass: PASS_MARK });
     else if (left > 0) text = left === 1 ? T('You did not reach the pass mark of {pass}%. You have 1 attempt left.', { pass: PASS_MARK }) : T('You did not reach the pass mark of {pass}%. You have {left} attempts left.', { pass: PASS_MARK, left: left });
+    else if (resetDate) text = T('You did not reach the pass mark of {pass}% and have used all {max} attempts this month. Your attempts are available again on {date}. Please contact {email} if you need help before then.', { pass: PASS_MARK, max: MAX_ATTEMPTS, date: longDate(resetDate), email: CONTACT_EMAIL });
     else text = T('You did not reach the pass mark of {pass}% and have used all {max} attempts. Please contact {email}.', { pass: PASS_MARK, max: MAX_ATTEMPTS, email: CONTACT_EMAIL });
     els.resultText.textContent = text;
     els.nextBlock.style.display = passed ? '' : 'none';
@@ -1808,7 +1819,9 @@
       if (info && info.remaining <= 0) {
         showBanner(info.passed
           ? T('You have already used the maximum of {n} attempts for this assessment (you have passed it). Please contact {email} if you need help.', { n: info.max || MAX_ATTEMPTS, email: CONTACT_EMAIL })
-          : T('You have already used the maximum of {n} attempts for this assessment. Please contact {email} if you need help.', { n: info.max || MAX_ATTEMPTS, email: CONTACT_EMAIL }));
+          : (info.resetsOn
+              ? T('You have used all {n} attempts at this assessment this month. Your attempts are available again on {date}. Please contact {email} if you need help before then.', { n: info.max || MAX_ATTEMPTS, date: longDate(info.resetsOn), email: CONTACT_EMAIL })
+              : T('You have already used the maximum of {n} attempts for this assessment. Please contact {email} if you need help.', { n: info.max || MAX_ATTEMPTS, email: CONTACT_EMAIL })));
         return;
       }
       els.validationBanner.classList.remove('show');
