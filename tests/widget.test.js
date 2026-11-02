@@ -118,6 +118,17 @@ const verifyText = pg => pg.textContent('#verify-state');
   assert.ok(!(await t.pg.isVisible('#quiz'))); assert.strictEqual(t.lookups.length, 0, 'no lookup before verification');
   ok('Start is blocked until the email is verified (no lookup, quiz hidden)');
 
+  t = await newPage(b, { unverified: true });
+  assert.ok(await t.pg.isHidden('#email-popup'), 'not shown on arrival');
+  await t.pg.click('#verify-send-btn'); await t.pg.waitForSelector('#verify-code-row', { state: 'visible' });
+  assert.ok(await t.pg.isVisible('#email-popup'));
+  { const txt = await t.pg.textContent('#email-popup'); assert.ok(/100 emails a day/.test(txt) && /try again later today or tomorrow/.test(txt) && /spam/.test(txt), txt); }
+  assert.ok(await t.pg.isEnabled('#inp-code') && await t.pg.evaluate(() => document.activeElement.id) === 'inp-code', 'the popup does not take focus from the code box');
+  await t.pg.click('#email-popup-ok'); assert.ok(await t.pg.isHidden('#email-popup'));
+  await t.pg.click('#verify-resend-btn').catch(() => {}); assert.ok(await t.pg.isHidden('#email-popup'), 'shown once per visit');
+  await t.pg.keyboard.press('Escape');
+  ok('pressing "Email me a code" shows a note that the site can send about 100 emails a day, so a late code means trying again later or tomorrow; OK closes it and it is not repeated');
+
   t = await newPage(b, { unverified: true, sendCode: 'rate' });
   await t.pg.click('#verify-send-btn'); await t.pg.waitForFunction(() => /Too many codes/.test(document.getElementById('verify-state').textContent));
   assert.ok(!(await t.pg.isVisible('#verify-code-row')), 'no code box when the server refused');

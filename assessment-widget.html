@@ -483,6 +483,13 @@
   .quiz-bar{height:6px;background:var(--line);margin:10px 0 0;}
   .quiz-bar i{display:block;height:100%;width:0;background:var(--gold-500);transition:width .25s;}
   @media (prefers-reduced-motion:reduce){.quiz-bar i{transition:none;}}
+  .email-popup{position:fixed;right:16px;bottom:16px;z-index:8000;max-width:400px;background:var(--white);color:var(--ink);border:1px solid var(--line);border-top:4px solid var(--gold-500);padding:16px 18px;box-shadow:0 8px 28px rgba(10,20,45,.28);font-size:0.92rem;line-height:1.5;}
+  .email-popup[hidden]{display:none;}
+  .email-popup h2{font-size:1rem;margin:0 0 6px;color:var(--navy-950);}
+  .email-popup p{margin:0 0 12px;}
+  .email-popup .btn{padding:8px 22px;}
+  @media (max-width:520px){.email-popup{left:8px;right:8px;bottom:8px;max-width:none;}}
+  @media print{.email-popup{display:none;}}
   .last-warn{margin:14px 0 0;padding:14px 22px;background:#fdf2f1;border:1px solid #e3b8b4;border-left:5px solid var(--red-600);font-size:0.95rem;color:var(--navy-950);}
   .last-warn strong{color:var(--red-600);}
   .quiz-next .next-module{margin-top:10px;margin-left:10px;}
@@ -731,6 +738,11 @@
         </div>
         <div class="verify-box" id="verify-box">
           <p class="verify-state" id="verify-state" role="status" aria-live="polite"></p>
+          <div class="email-popup" id="email-popup" role="dialog" aria-labelledby="email-popup-title" aria-live="polite" hidden>
+            <h2 id="email-popup-title">If your code does not arrive</h2>
+            <p>This site sends its emails from a free Gmail account, which can send only about 100 emails a day for everyone. On a busy day your code may not arrive. If it has not come after a few minutes (check your spam folder first), please try again later today or tomorrow. Your results are not affected, and once you are signed in you stay signed in on this device for 14 days.</p>
+            <button class="btn btn-primary" id="email-popup-ok" type="button">OK</button>
+          </div>
           <div class="verify-row" id="verify-send-row">
             <button class="btn btn-outline-navy" id="verify-send-btn" type="button">Email me a code</button>
             <span class="verify-hint">We will send a 6-digit code to the email address above to confirm it is yours.</span>
@@ -1748,6 +1760,7 @@
     }
     document.getElementById('field-email').classList.remove('invalid');
     verifyEls.sendBtn.disabled = true; verifyEls.resendBtn.disabled = true;
+    if (!emailPopupShown) showEmailPopup();   // once per visit; it is shown again if the server says it is busy
     setVerifyState('', T('Sending a code to {email}\u2026', { email: email }));
     callServer('sendCode', { email: email, lang: LANG, website: document.getElementById('inp-website').value }, function(r){
       verifyEls.sendBtn.disabled = false;
@@ -1761,9 +1774,15 @@
         verifyEls.resendBtn.disabled = false;
         refreshVerifyUI();
         setVerifyState('bad', r.error ? S(r.error) : T('We could not send the code. Please try again.'));
+        if (r.code === 'rate' || r.code === 'busy' || /busy|Too many codes/i.test(r.error || '')) showEmailPopup();
       }
     });
   }
+  // A note, not a blocker: the free Gmail account can send about 100 emails a day, so a code may be late on a busy day.
+  var emailPopupShown = false;
+  function showEmailPopup(){ emailPopupShown = true; document.getElementById('email-popup').hidden = false; }
+  document.getElementById('email-popup-ok').addEventListener('click', function(){ document.getElementById('email-popup').hidden = true; });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') document.getElementById('email-popup').hidden = true; });
 
   function checkCode(){
     var email = document.getElementById('inp-email').value.trim();
