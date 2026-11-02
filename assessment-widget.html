@@ -403,9 +403,9 @@
   .page-strip p{font-size:0.86rem;color:var(--ink-soft);}
   .page-strip a{color:var(--navy-950);text-decoration:underline;text-underline-offset:3px;}
 
-  .page-hero{background:var(--navy-950);color:var(--white);padding:64px 0 52px;}
+  .page-hero{background:var(--navy-950);color:var(--white);padding:36px 0 30px;}   /* compact: the learner's progress and modules should be near the top */
   .page-hero .eyebrow{color:var(--gold-500);margin-bottom:14px;display:block;}
-  .page-hero h1{color:var(--white);font-size:clamp(2rem,4.4vw,3rem);margin-bottom:16px;}
+  .page-hero h1{color:var(--white);font-size:clamp(1.8rem,4vw,2.4rem);margin-bottom:10px;}
   .page-hero p{color:#c9d3e6;max-width:70ch;font-size:1.05rem;}
 
   /* Identity panel */
@@ -528,6 +528,22 @@
   .quiz-save-state.saved{color:#2f7a3d;font-weight:700;}
   .quiz-save-state.local{color:var(--ink-soft);}
   .quiz-save-state.failed{color:var(--red-600);font-weight:700;}
+  .progress-strip{margin:0 0 22px;padding:22px 24px;border:1px solid var(--line);background:var(--white);}
+  .progress-strip h2{font-size:1.15rem;margin-bottom:12px;}
+  .ps-bar{height:8px;background:#e8e4d6;margin-bottom:16px;}
+  .ps-bar i{display:block;height:100%;width:0;background:#2f7a3d;}
+  .ps-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+  .ps-grid a{display:block;height:100%;padding:12px 14px;border:1.5px solid var(--line);background:#faf9f6;color:var(--navy-950);text-decoration:none;}
+  .ps-grid a:hover{border-color:var(--navy-950);}
+  .ps-grid a:focus-visible{outline:3px solid var(--gold-500);outline-offset:2px;}
+  .ps-grid .ps-mod{display:block;font-family:var(--font-display);font-weight:900;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-soft);}
+  .ps-grid .ps-name{display:block;font-weight:700;font-size:0.92rem;line-height:1.25;margin:3px 0 6px;}
+  .ps-grid .ps-state{display:block;font-size:0.82rem;color:var(--ink-soft);}
+  .ps-grid a.passed{border-color:#2f7a3d;background:#eaf5ec;}
+  .ps-grid a.passed .ps-state{color:#2f7a3d;font-weight:700;}
+  .ps-grid a.locked{border-color:var(--red-600);background:#fdf6f5;}
+  .ps-grid a.locked .ps-state{color:var(--red-600);font-weight:700;}
+  @media (max-width:900px){.ps-grid{grid-template-columns:repeat(2,1fr);}}
   .cert-box{margin-top:24px;padding:22px 24px;border:2px solid var(--gold-500);background:#fffdf6;}
   .cert-box h2{font-size:1.15rem;margin-bottom:8px;}
   .cert-box p{margin:0 0 14px;}
@@ -586,7 +602,7 @@
     .pillar{padding:22px 20px;}
     .step{padding:18px 16px;}
     .seq-col{padding:22px 22px;}
-    .page-hero{padding:48px 0 40px;}
+    .page-hero{padding:28px 0 24px;}
     .identity{padding:40px 0 8px;}
     .directory{padding:40px 0 16px;}
     .quiz-section{padding:44px 0 56px;}
@@ -602,6 +618,10 @@
     .notice{position:relative;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);padding-left:calc(50vw - 50%);padding-right:calc(50vw - 50%);}
     .notice-bar{position:absolute;left:0;top:36px;bottom:36px;}
   }
+  .notice-more{margin-top:8px;}
+  .notice-more summary{cursor:pointer;font-weight:700;color:var(--navy-950);text-decoration:underline;display:inline-block;}
+  .notice-more summary:focus-visible{outline:3px solid var(--gold-500);outline-offset:2px;}
+  .notice-more p{margin-top:10px;}
 </style>
 <script src="i18n.js" data-quiz></script>
 </head>
@@ -637,7 +657,10 @@
             Important
           </div>
           <p><strong>This is not the official WBSC website.</strong> This temporary training site has been established to support WBSC Softball Umpires during the implementation of the 2026-2029 Umpire Mechanics Program, while WBSC transitions the training program to the My.WBSC Officials Training Academy.</p>
-          <p>All official WBSC manuals and publications accessed through this site remain hosted on the official WBSC website.</p>
+          <details class="notice-more">
+            <summary>More about this site</summary>
+            <p>All official WBSC manuals and publications accessed through this site remain hosted on the official WBSC website.</p>
+          </details>
         </div>
       </div>
     </div>
@@ -657,18 +680,23 @@
 
   <section class="identity">
     <div class="wrap">
-      <div class="rules-note" id="rules-note">
-        <strong>Pass mark: 85%</strong> on each Presentation Competency Assessment (the marked assessment).
-        <strong>You have a maximum of 2 attempts</strong> at each one each month, and the limit is checked when your result is saved. If you have not passed, your attempts are renewed on the 1st of every month.
-        The Manual Knowledge Checks are unmarked practice: try them as often as you like, the correct answers are shown, and nothing is recorded.
+      <div class="progress-strip" id="progress-strip" hidden>
+        <h2 id="ps-title"></h2>
+        <div class="ps-bar" aria-hidden="true"><i id="ps-fill"></i></div>
+        <ol class="ps-grid" id="ps-grid"></ol>
       </div>
-      <div class="watch-first" role="note">
-        <p class="watch-first-title">Watch the full presentation first</p>
-        <p><strong>Appendix 4 Elite Philosophies &amp; Appendix 5 Elite 3, 4, 5 &amp; 6 Field Mechanics:</strong> the assessment questions are based on the <strong>FULL presentation</strong>, so please complete the assessment after you have watched and studied it. You will be asked to confirm this before you start. <a href="presentations.html">Go to the presentations</a>.</p>
+      <div class="cert-box" id="cert-box" hidden>
+        <h2>Your certificate of completion</h2>
+        <p id="cert-text"></p>
+        <button class="btn btn-primary" id="cert-btn" type="button">Download your certificate (PDF)</button>
+        <p class="cert-state" id="cert-state" role="status" aria-live="polite"></p>
+      </div>
+      <div class="rules-note" id="rules-note">
+        <strong>Pass mark: 85%</strong> on each marked assessment, with up to <strong>2 attempts a month</strong> for each module (renewed on the 1st of every month if you have not passed). Practice quizzes are unmarked: try them as often as you like. For Appendix 4 and 5, <a href="presentations.html">watch the full presentation first</a>: the questions are based on it.
       </div>
       <div class="identity-panel">
         <h2>Your Details</h2>
-        <p class="desc">Required once per visit before starting an assessment, so your result can be recorded against you. You will confirm your email address with a one-time code. This information is only used for your completion record - it's sent to the program administrator together with your score.</p>
+        <p class="desc">Enter your details and confirm your email with a one-time code, so your result is recorded against you. They are used only for your completion record.</p>
         <div class="hp-field" aria-hidden="true"><label for="inp-website">Website (leave this empty)</label><input type="text" id="inp-website" name="website" tabindex="-1" autocomplete="off"></div>
         <div class="identity-grid">
           <div class="field" id="field-name">
@@ -709,12 +737,6 @@
             <span class="verify-hint">You stay signed in on this device for up to 14 days. Choose &ldquo;Use a different email address&rdquo; to sign out, for example on a shared computer.</span>
           </div>
         </div>
-      </div>
-      <div class="cert-box" id="cert-box" hidden>
-        <h2>Your certificate of completion</h2>
-        <p id="cert-text"></p>
-        <button class="btn btn-primary" id="cert-btn" type="button">Download your certificate (PDF)</button>
-        <p class="cert-state" id="cert-state" role="status" aria-live="polite"></p>
       </div>
     </div>
   </section>
@@ -1509,20 +1531,41 @@
   }
   certEls.btn.addEventListener('click', downloadCertificate);
   certEls.btn2.addEventListener('click', downloadCertificate);
-  // Asks the server whether the verified learner has completed every module (a script tag, like the attempts lookup).
+  // "Your progress": one tile per module, from the server's status lookup (shown only while signed in).
+  function renderProgress(info){
+    var strip = document.getElementById('progress-strip');
+    if (!info || !info.modules) { strip.hidden = true; return; }
+    var total = info.total || TOTAL_MODULES, grid = document.getElementById('ps-grid'), html = '';
+    document.getElementById('ps-title').textContent = T('Your progress: {n} of {total} modules passed', { n: info.passedCount || 0, total: total });
+    document.getElementById('ps-fill').style.width = Math.round((info.passedCount || 0) / total * 100) + '%';
+    for (var n = 1; n <= total; n++) {
+      var m = info.modules[n] || { state: 'new' }, key = 'm0' + n + '-pca', bank = QUIZ_BANK[key];
+      if (!bank) continue;
+      var cls = '', state;
+      if (m.state === 'passed') { cls = 'passed'; state = T('✓ Passed ({pct}%)', { pct: m.best }); }
+      else if (m.state === 'tried' && m.left <= 0) { cls = 'locked'; state = T('No attempts left until {date}', { date: longDate(info.resetsOn) }); }
+      else if (m.state === 'tried') state = T('Attempts left this month: {n}', { n: m.left });
+      else state = T('Not started');
+      html += '<li><a class="' + cls + '" href="#module-0' + n + '"><span class="ps-mod">' + escHtml(T('Module {n}', { n: '0' + n })) + '</span><span class="ps-name">' + escHtml(assessmentMeta(key).title) + '</span><span class="ps-state">' + escHtml(state) + '</span></a></li>';
+    }
+    grid.innerHTML = html;
+    strip.hidden = false;
+  }
+  // Asks the server how the verified learner is getting on, including whether they have completed every module (a script tag, like the attempts lookup).
   var certSeq = 0;
   function lookupCertificate(){
-    if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('REPLACE_WITH') === 0 || !session || !session.token) { setCertificate(null); return; }
+    if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('REPLACE_WITH') === 0 || !session || !session.token) { setCertificate(null); renderProgress(null); return; }
     var cb = 'wbscCert' + (++certSeq) + '_' + Date.now(), script = document.createElement('script'), done = false;
     function finish(info){
       if (done) return; done = true; clearTimeout(timer);
       try { delete window[cb]; } catch (e) { window[cb] = undefined; }
       if (script.parentNode) script.parentNode.removeChild(script);
       setCertificate(info && info.ok && info.eligible ? info : null);
+      renderProgress(info && info.ok ? info : null);
     }
     var timer = setTimeout(function(){ finish(null); }, 8000);
     window[cb] = finish; script.onerror = function(){ finish(null); };
-    script.src = APPS_SCRIPT_URL + '?action=certificate&callback=' + cb + '&token=' + encodeURIComponent(session.token);
+    script.src = APPS_SCRIPT_URL + '?action=status&callback=' + cb + '&token=' + encodeURIComponent(session.token);
     document.body.appendChild(script);
   }
 
@@ -1752,6 +1795,7 @@
     if (m.success) {
       var max = m.maxAttempts || MAX_ATTEMPTS;
       var rcpt = session ? session.email : '';
+      lookupCertificate();   // refresh "Your progress"
       setSaveState('saved', m.attemptNumber
         ? (m.receipt === false
             ? T('✓ Your result has been recorded (attempt {n} of {max}). A receipt is emailed when you pass or use your last attempt; this page is your record for now.', { n: m.attemptNumber, max: max })

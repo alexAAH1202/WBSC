@@ -645,4 +645,24 @@ ok('rows without a Director email or receipt are not flagged by the health check
   e.clock.now += 3 * HOUR; const r = e.ctx.dailyHealthCheck(); assert.strictEqual(r.problems.length, 0, r.problems.join('; '));
 });
 
+// =====================================================================  "my progress" status
+const statusOf = (e, token) => JSON.parse(e.ctx.statusReply_({ token, callback: '' }).text);
+ok('status: each module is new, tried (with attempts left this month) or passed (with the best score); needs a verified session', () => {
+  const e = makeEnv(); const t = login(e, 'st@x.com');
+  assert.strictEqual(statusOf(e, '').code, 'auth'); assert.strictEqual(statusOf(e, 'f'.repeat(64)).code, 'auth');
+  let st = statusOf(e, t); assert.strictEqual(st.ok, true); assert.strictEqual(st.total, 8); assert.strictEqual(st.passedCount, 0); assert.strictEqual(st.eligible, false);
+  assert.deepStrictEqual(Object.keys(st.modules).sort(), ['1', '2', '3', '4', '5', '6', '7', '8']); assert.ok(Object.values(st.modules).every(m => m.state === 'new'));
+  save(e, t, { module: mod(1), score: 9, umpireId: 'st' }); save(e, t, { module: mod(2), score: 6, umpireId: 'st' });
+  st = statusOf(e, t); assert.deepStrictEqual(st.modules[1], { state: 'passed', best: 90 }); assert.deepStrictEqual(st.modules[2], { state: 'tried', best: 60, left: 1 }); assert.strictEqual(st.modules[3].state, 'new');
+  assert.strictEqual(st.passedCount, 1); assert.strictEqual(st.max, 2); assert.strictEqual(st.resetsOn, '2026-11-01');
+  save(e, t, { module: mod(2), score: 5, umpireId: 'st' }); assert.strictEqual(statusOf(e, t).modules[2].left, 0);
+  e.clock.now = Date.UTC(2026, 10, 2); const t2 = login(e, 'st@x.com'); assert.strictEqual(statusOf(e, t2).modules[2].left, 2, 'attempts renewed on the 1st'); assert.strictEqual(statusOf(e, t2).modules[1].state, 'passed');
+  assert.ok(!JSON.stringify(st).includes('st@x.com'), 'no email address in the reply');
+});
+ok('status: once all eight are passed it carries the certificate name and date', () => {
+  const e = makeEnv(); const t = login(e, 'all@x.com');
+  for (let i = 1; i <= 8; i++) save(e, t, { module: mod(i), score: 9, umpireId: 'all', participantName: 'Alex Ump' });
+  const st = statusOf(e, t); assert.deepStrictEqual([st.passedCount, st.eligible, st.name, st.date], [8, true, 'Alex Ump', '2026-10-27']);
+});
+
 console.log(n + ' Code.gs checks passed');
