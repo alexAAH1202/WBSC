@@ -256,6 +256,10 @@ function saveMessage_(result) {
     receipt: !!result.receipt,
     certName: result.certName || '',
     certDate: result.certDate || '',
+    score: result.score == null ? null : result.score,   // marked here from the answers sent
+    total: result.total || 0,
+    percentage: result.percentage == null ? null : result.percentage,
+    review: result.review || null,   // [[question, right option]] for the questions missed, only once the attempts are used
     error: result.error || ''
   };
 }
@@ -545,8 +549,8 @@ function newCode_() {
 // ------------------------------------------------------------------ saved progress
 
 // An unfinished marked attempt, saved against the verified email so it can be resumed on another device.
-// What is kept: the question reached, the score so far, which questions were drawn, the answer order and the missed
-// questions. The email address is stored only as a hash. A row is ignored after 24 hours and deleted after 48.
+// What is kept: the question reached, which questions were drawn, the answer order and the options chosen so far.
+// No score or answer key is kept. The email address is stored only as a hash. A row is ignored after 24 hours and deleted after 48.
 function isProgressKey_(k) { return /^m\d\d-pca$/.test(String(k || '')); }
 
 function progressSheet_() {
@@ -577,10 +581,10 @@ function str_(v, max) { return String(v == null ? '' : v).replace(/[\u0000-\u001
 
 // Only the expected fields, with sizes capped, are kept.
 function cleanProgress_(o) {
-  if (!o || typeof o !== 'object' || o.v !== 2) throw new Error('Invalid progress');
+  if (!o || typeof o !== 'object' || o.v !== 3) throw new Error('Invalid progress');
   var n = int_(o.qi && o.qi.length, 1, MAX_QUESTIONS);
-  var c = { v: 2, index: int_(o.index, 1, n), score: int_(o.score, 0, n), elapsedMs: int_(Math.round(Number(o.elapsedMs) || 0), 0, 6 * 3600000),
-            qi: [], qs: [], order: [], missed: [] };
+  var c = { v: 3, index: int_(o.index, 1, n), elapsedMs: int_(Math.round(Number(o.elapsedMs) || 0), 0, 6 * 3600000),
+            qi: [], qs: [], order: [], answers: [] };
   if (o.qs.length !== n || o.order.length !== n) throw new Error('Invalid progress');
   for (var i = 0; i < n; i++) {
     c.qi.push(int_(o.qi[i], 0, 999));
@@ -590,11 +594,10 @@ function cleanProgress_(o) {
     for (var j = 0; j < o.order[i].length; j++) ord.push(int_(o.order[i][j], 0, 7));
     c.order.push(ord);
   }
-  var missed = o.missed || [];
-  if (missed.length > n) throw new Error('Invalid progress');
-  for (var m = 0; m < missed.length; m++) {
-    c.missed.push({ q: str_(missed[m].q, 800), answer: str_(missed[m].answer, 800), ref: str_(missed[m].ref, 400), why: str_(missed[m].why, 900) });
-  }
+  // The option chosen for each question answered so far (the answers are marked by the server when the attempt is sent).
+  var ans = o.answers || [];
+  if (ans.length > n) throw new Error('Invalid progress');
+  for (var m = 0; m < ans.length; m++) c.answers.push(int_(ans[m], 0, 7));
   return c;
 }
 
@@ -710,6 +713,8 @@ function handleSave_(e) {
         result.attemptNumber = sheet.getRange(existing, COL_ATTEMPT).getValue();
         result.result = String(sheet.getRange(existing, COL_RESULT).getValue() || '');
         result.passed = result.result === 'PASS';
+        result.score = clean.score; result.total = clean.total; result.percentage = clean.percentage;
+        if (!result.passed && Number(result.attemptNumber) >= MAX_ATTEMPTS) result.review = clean.missed;
         result.maxAttempts = MAX_ATTEMPTS;
         result.resetsOn = result.passed ? '' : nextResetDate_();
         result.receipt = receiptWanted_(result.passed, Number(result.attemptNumber));
@@ -743,6 +748,8 @@ function handleSave_(e) {
         result.attemptNumber = attemptNumber;
         result.result = clean.result;
         result.passed = clean.passed;
+        result.score = clean.score; result.total = clean.total; result.percentage = clean.percentage;
+        if (!clean.passed && attemptNumber >= MAX_ATTEMPTS) result.review = clean.missed;   // the right answers to the questions missed, shown only once the attempts are used
         result.maxAttempts = MAX_ATTEMPTS;
         result.resetsOn = clean.passed ? '' : nextResetDate_();   // when this month's attempts are renewed
         result.receipt = receiptWanted_(clean.passed, attemptNumber);
@@ -841,11 +848,12 @@ function validate_(data) {
   // Only the marked assessment is recorded. Manual Knowledge Checks are practice and are never saved.
   if (c.assessmentType.toLowerCase() !== COMPLETION_TYPE.toLowerCase()) throw new Error('Invalid assessment type: only the ' + COMPLETION_TYPE + ' is recorded');
 
-  var score = Number(data.score), total = Number(data.totalQuestions);
-  if (!(isFinite(score) && isFinite(total) && total >= 1 && total <= MAX_QUESTIONS &&
-        score >= 0 && score <= total && score === Math.floor(score) && total === Math.floor(total))) {
-    throw new Error('Invalid score');
-  }
+  // The server marks the answers itself. The browser never sends a score and does not hold the answer key.
+  c.assessmentKey = String(data.assessmentKey || '');
+  if (!isProgressKey_(c.assessmentKey) || moduleNumber_(c.module) !== parseInt(c.assessmentKey.slice(1, 3), 10)) throw new Error('Invalid assessment');
+  var marked = mark_(c.assessmentKey, data.answers);
+  var score = marked.score, total = marked.total;
+  c.missed = marked.missed;
   var elapsed = Number(data.elapsedSeconds);
   if (String(data.website || '') !== '' || !(isFinite(elapsed) && elapsed >= MIN_SECONDS_PER_QUESTION * total)) {
     throw new Error('Invalid submission: the assessment was completed too quickly to be a real attempt');
@@ -859,6 +867,38 @@ function validate_(data) {
   c.programVersion = text_(data.programVersion) || '2026-2029';
   c.lang = lang_(data.lang);   // only used to choose the language of the learner's receipt
   return c;
+}
+
+// ------------------------------------------------------------------ marking (the answer key is private)
+
+// The answer key is the Script property ANSWER_KEY (built by tests/answer-key-build.js, never committed):
+//   { "m01-pca": { draw: 10, f: [fingerprint of each question], c: [index of the right option for each question] }, ... }
+// An answer is [pool question index, option index (in the order written in questions.js), the page's fingerprint of that question].
+// The fingerprint proves the page and the key describe the same question; if a question is edited and the key is not updated,
+// results are refused instead of being marked wrongly.
+function answerKey_(assessmentKey) {
+  var raw = PropertiesService.getScriptProperties().getProperty('ANSWER_KEY');
+  if (!raw) throw new Error('Marking is not set up: the ANSWER_KEY Script property is missing');
+  var all = JSON.parse(raw), k = all[assessmentKey];
+  if (!k) throw new Error('Marking is not set up for ' + assessmentKey);
+  return k;
+}
+
+function mark_(assessmentKey, answers) {
+  if (!Array.isArray(answers)) throw new Error('Invalid request: please reload the page and try again');
+  var k = answerKey_(assessmentKey);
+  if (answers.length !== k.draw) throw new Error('Invalid answers');
+  var seen = {}, score = 0, missed = [];
+  for (var n = 0; n < answers.length; n++) {
+    var a = answers[n];
+    if (!Array.isArray(a) || a.length !== 3) throw new Error('Invalid answers');
+    var i = a[0], o = a[1];
+    if (!(i === Math.floor(i) && i >= 0 && i < k.c.length) || seen[i] || !(o === Math.floor(o) && o >= 0 && o <= 9)) throw new Error('Invalid answers');
+    seen[i] = true;
+    if (String(a[2]) !== k.f[i]) throw new Error('Invalid submission: this assessment was updated. Please reload the page and start again.');
+    if (o === k.c[i]) score++; else missed.push([i, k.c[i]]);
+  }
+  return { score: score, total: answers.length, missed: missed };
 }
 
 // Trim, cap the length, and stop text from being read as a spreadsheet formula.

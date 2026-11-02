@@ -406,5 +406,12 @@ WBSC_DICT["es"] = { t: {
  "Not started": "Sin empezar",
  "More about this site": "Más información sobre este sitio",
  "<strong>Pass mark: 85%</strong> on each marked assessment, with up to <strong>2 attempts a month</strong> for each module (renewed on the 1st of every month if you have not passed). Practice quizzes are unmarked: try them as often as you like. For Appendix 4 and 5, <a href=\"presentations.html\">watch the full presentation first</a>: the questions are based on it.": "<strong>Nota mínima: 85 %</strong> en cada evaluación calificada, con hasta <strong>2 intentos al mes</strong> por módulo (se renuevan el día 1 de cada mes si no has aprobado). Los cuestionarios de práctica no se califican: repítelos cuantas veces quieras. Para los Apéndices 4 y 5, <a href=\"presentations.html\">mira primero la presentación completa</a>: las preguntas se basan en ella.",
- "Enter your details and confirm your email with a one-time code, so your result is recorded against you. They are used only for your completion record.": "Introduce tus datos y confirma tu correo electrónico con un código de un solo uso, para que tu resultado quede registrado a tu nombre. Solo se usan para tu registro de finalización."
+ "Enter your details and confirm your email with a one-time code, so your result is recorded against you. They are used only for your completion record.": "Introduce tus datos y confirma tu correo electrónico con un código de un solo uso, para que tu resultado quede registrado a tu nombre. Solo se usan para tu registro de finalización.",
+ "✓ Answer recorded": "✓ Respuesta registrada",
+ "Your answers are marked when you finish. You will see which ones were right after the last question.": "Tus respuestas se califican al terminar. Verás cuáles eran correctas después de la última pregunta.",
+ "Marking…": "Calificando…",
+ "Not marked": "Sin calificar",
+ "This demo isn’t yet connected to the results spreadsheet, so your answers could not be marked or saved - see Code.gs to connect it.": "Esta demostración aún no está conectada a la hoja de resultados, por lo que no se pudieron calificar ni guardar tus respuestas; consulta Code.gs para conectarla.",
+ "Invalid submission: this assessment was updated. Please reload the page and start again.": "Envío no válido: esta evaluación se actualizó. Vuelve a cargar la página y empieza de nuevo.",
+ "Invalid request: please reload the page and try again": "Solicitud no válida: vuelve a cargar la página e inténtalo de nuevo."
 } };

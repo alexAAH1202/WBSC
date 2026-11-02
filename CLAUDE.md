@@ -11,7 +11,7 @@ mark and attempt rules, and how to deploy. The earlier generic quiz lives in [`d
 - **Never commit secrets** (passwords, keys). The Web App URL and the Director of Umpires' address are
   already public in the pages and are fine.
 - **Relative links only**, so the site works at `/WBSC/` or anywhere else. `node tests/site.test.js` checks them.
-- **Save before email, and the server decides.** `apps-script/Code.gs` decides PASS / NOT PASSED (85%) and
+- **Save before email, and the server decides.** `apps-script/Code.gs` marks the answers against the private `ANSWER_KEY` Script property and decides PASS / NOT PASSED (85%). Marked (`-pca`) questions in `questions.js` carry **no `correct`** (the repo is public); the answers live in git-ignored `private/answers.json` (see README, "Marked on the server"). Never commit answers or `private/`. It also
   refuses a third attempt in a calendar month (attempts are renewed on the 1st for a module not yet passed). The values in `assessment-widget.html` are display only: keep `PASS_MARK`,
   `MAX_ATTEMPTS` and the contact address equal in both files.
 - **Update the existing Apps Script deployment with a new version.** A "New deployment" creates a different

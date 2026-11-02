@@ -1088,6 +1088,13 @@
 
   // Answer options are shuffled for every attempt (the key is remapped), so the
   // right answer is not always in the same position. Question order is unchanged.
+  // Fingerprint of a question (English text and options, in the order written in questions.js). The server checks it against
+  // its own copy of the key, so a result is refused rather than marked wrongly if the two ever disagree. Same function as in Code.gs's key tool.
+  function fingerprint(q){
+    var h = 0x811c9dc5, t = q.q + '|' + q.options.join('|');
+    for (var i = 0; i < t.length; i++) { h ^= t.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
+    return ('00000000' + h.toString(16)).slice(-8);
+  }
   function shuffleOptions(q, idx){
     var v = qview(currentKey, idx);
     var order = q.options.map(function(_, i){ return i; });
@@ -1098,15 +1105,15 @@
     return {
       q: v.q, ref: v.ref, why: v.why, base: q.q,
       options: order.map(function(i){ return v.options[i]; }),
-      correct: order.indexOf(q.correct),
-      order: order
+      correct: order.indexOf(q.correct),   // marked assessments have no answer key in the page: this is -1 there, and the server marks
+      order: order, fp: fingerprint(q)
     };
   }
 
   // Rebuilds a question with a stored option order (used when resuming an unfinished attempt).
   function applyOrder(q, order, idx){
     var v = qview(currentKey, idx);
-    return { q: v.q, ref: v.ref, why: v.why, base: q.q, options: order.map(function(i){ return v.options[i]; }), correct: order.indexOf(q.correct), order: order };
+    return { q: v.q, ref: v.ref, why: v.why, base: q.q, options: order.map(function(i){ return v.options[i]; }), correct: order.indexOf(q.correct), order: order, fp: fingerprint(q) };
   }
 
   // RESUME: a marked attempt that is stopped part-way is saved so it can be continued: the questions drawn, the question
@@ -1119,7 +1126,7 @@
   function validProgress(p, key){
     try {
       var bank = QUIZ_BANK[key];
-      if (!p || p.v !== 2 || !bank || !(Date.now() - p.savedAt < RESUME_TTL_MS)) return null;
+      if (!p || p.v !== 3 || !bank || !(Date.now() - p.savedAt < RESUME_TTL_MS)) return null;
       var n = p.qi.length;
       if (n !== drawSize(bank) || !(p.index >= 1 && p.index <= n) || p.qs.length !== n || p.order.length !== n) return null;
       var used = {};
@@ -1147,7 +1154,7 @@
   function saveProgress(nextIndex){
     if (!isMarked(QUIZ_BANK[currentKey])) return;
     var data = {
-      v: 2, index: nextIndex, score: state.score, missed: state.missed, elapsedMs: Date.now() - state.startedAt,
+      v: 3, index: nextIndex, answers: state.answers, elapsedMs: Date.now() - state.startedAt,
       qi: QUESTIONS.map(function(q){ return q.pool; }), order: QUESTIONS.map(function(q){ return q.order; }),
       qs: QUESTIONS.map(function(q){ return q.base.slice(0, 60); })
     };
@@ -1188,7 +1195,7 @@
   var currentKey = null;
   var attemptNo = null;   // which attempt this is (1 or 2), when the server could tell us
   var QUESTIONS = [];
-  var state = { index: 0, answered: false, score: 0, selected: null, missed: [], startedAt: 0 };
+  var state = { index: 0, answered: false, score: 0, selected: null, answers: [], startedAt: 0 };
 
   var els = {
     validationBanner: document.getElementById('validation-banner'),
@@ -1289,12 +1296,29 @@
     if (state.selected === null || state.answered) return;
     state.answered = true;
     var q = QUESTIONS[state.index];
+    var marked = isMarked(QUIZ_BANK[currentKey]);
+    if (marked) {
+      // Marked: the page does not know the answer. It records the choice (as an option of the question as written in
+      // questions.js), locks it, and the server marks the whole attempt at the end. Nothing is said about right or wrong yet.
+      state.answers[state.index] = q.order[state.selected];
+      Array.prototype.forEach.call(els.options.children, function(el){ el.disabled = true; });
+      saveProgress(state.index + 1);      // an answered question is never asked again if the learner comes back
+      els.feedback.style.display = 'block';
+      els.feedback.className = 'quiz-feedback';
+      els.feedbackHead.textContent = T('✓ Answer recorded');
+      els.feedbackBody.textContent = T('Your answers are marked when you finish. You will see which ones were right after the last question.');
+      els.feedbackRef.textContent = ''; els.feedbackWhy.textContent = ''; els.feedbackWhy.style.display = 'none';
+      var last = state.index === QUESTIONS.length - 1;
+      els.submitBtn.textContent = last ? T('See Results') : T('Next Question');
+      els.submitBtn.onclick = last ? finishQuiz : nextQuestion;
+      els.submitBtn.disabled = false;
+      buildDots();
+      return;
+    }
     var isCorrect = state.selected === q.correct;
     if (isCorrect) state.score++;
 
-    var marked = isMarked(QUIZ_BANK[currentKey]);
-    // Marked: say right or wrong and point to the manual section, but do not give the answer away
-    // (the full answers are shown only once both attempts are used). Practice: show the answer.
+    // Practice: show the answer.
     Array.prototype.forEach.call(els.options.children, function(el, i){
       el.disabled = true;
       if (i === state.selected && isCorrect) {
@@ -1308,9 +1332,6 @@
         el.querySelector('.opt-mark').textContent = '✕';
       }
     });
-    if (!isCorrect && marked) state.missed.push({ q: q.q, answer: q.options[q.correct], ref: q.ref, why: q.why });
-    saveProgress(state.index + 1);      // an answered question is never asked again if the learner comes back
-
     els.feedback.style.display = 'block';
     els.feedback.className = 'quiz-feedback ' + (isCorrect ? 'correct' : 'incorrect');
     els.feedbackHead.textContent = isCorrect ? T('✓ Correct') : T('✕ Not quite');
@@ -1342,12 +1363,26 @@
     els.review.style.display = 'none'; els.review.innerHTML = '';
     var bank = QUIZ_BANK[currentKey];
     var total = QUESTIONS.length;
+    var scoreBox = els.scoreFrac.parentNode;
+    if (isMarked(bank)) {
+      // The server marks the answers; the score appears when its reply arrives.
+      els.scoreFrac.textContent = '…'; els.scorePct.textContent = '';
+      els.resultPill.className = 'result-pill'; els.resultPill.textContent = T('Marking…');
+      els.resultText.textContent = T('The pass mark is {pass}%.', { pass: PASS_MARK });
+      els.nextBlock.style.display = 'none'; els.tryAgain.style.display = 'none';
+      els.saveState.style.display = '';
+      els.practiceNote.style.display = 'none';
+      clearProgress();
+      scoreBox.setAttribute('tabindex', '-1');
+      scoreBox.focus({ preventScroll: true });
+      saveResult();
+      return;
+    }
     var pct = Math.round((state.score / total) * 100);
     els.scoreFrac.textContent = state.score + ' / ' + total;
     els.scorePct.textContent = pct + '%';
-    var scoreBox = els.scoreFrac.parentNode;
     var passedNow = state.score * 100 >= PASS_MARK * total;
-    if (!isMarked(bank)) {
+    {
       // Practice: nothing is saved, no attempts are used.
       els.resultPill.className = 'result-pill ' + (passedNow ? 'pass' : 'fail');
       els.resultPill.textContent = passedNow ? T('Well done') : T('Keep practising');
@@ -1360,21 +1395,17 @@
       scoreBox.focus({ preventScroll: true });
       return;
     }
-    els.saveState.style.display = '';
-    els.practiceNote.style.display = 'none';
-    clearProgress();
-    showResult(passedNow, attemptNo, false);
-    scoreBox.setAttribute('tabindex', '-1');
-    scoreBox.focus({ preventScroll: true });
-    saveResult(state.score, total, pct);
   }
 
   // Once both attempts are used without a pass, show what was missed with the right answers.
-  function showReview(){
-    if (!state.missed.length) return;
+  // `missed` comes from the server: [[pool question index, index of the right option]], only once the attempts are used.
+  function showReview(missed){
+    if (!missed || !missed.length) return;
     var h = '<h3>' + escHtml(T('Review: the questions you missed')) + '</h3><ol>';
-    state.missed.forEach(function(m){
-      h += '<li>' + escHtml(m.q) + '<br><span class="ans">' + escHtml(T('Correct answer: {answer}', { answer: m.answer })) + '</span><br><span class="rf">' + escHtml(m.ref) + '</span>' + (m.why ? '<br>' + escHtml(m.why) : '') + '</li>';
+    missed.forEach(function(m){
+      var q = qview(currentKey, m[0]), ans = q.options && q.options[m[1]];
+      if (ans === undefined) return;
+      h += '<li>' + escHtml(q.q) + '<br><span class="ans">' + escHtml(T('Correct answer: {answer}', { answer: ans })) + '</span><br><span class="rf">' + escHtml(q.ref) + '</span>' + (q.why ? '<br>' + escHtml(q.why) : '') + '</li>';
     });
     els.review.innerHTML = h + '</ol>';
     els.review.style.display = '';
@@ -1801,8 +1832,9 @@
             ? T('✓ Your result has been recorded (attempt {n} of {max}). A receipt is emailed when you pass or use your last attempt; this page is your record for now.', { n: m.attemptNumber, max: max })
             : T('✓ Your result has been recorded (attempt {n} of {max}). A receipt will be emailed to {email}.', { n: m.attemptNumber, max: max, email: rcpt }))
         : T('✓ Your result has been recorded. A receipt will be emailed to {email}.', { email: rcpt }), false);
+      if (m.total) { els.scoreFrac.textContent = m.score + ' / ' + m.total; els.scorePct.textContent = m.percentage + '%'; }   // marked by the server
       if (m.result) showResult(m.result === 'PASS', m.attemptNumber, true);   // the server's decision is final
-      if (m.result !== 'PASS' && m.attemptNumber >= max) showReview();          // all attempts used: now the answers can be shown
+      if (m.result !== 'PASS' && m.attemptNumber >= max) showReview(m.review);  // all attempts used: now the answers can be shown
       if (m.completedAll) { els.resultText.textContent += ' ' + T('You have now passed all {total} modules. A summary will be emailed to you.', { total: TOTAL_MODULES }); setCertificate({ name: m.certName, date: m.certDate }); }
       pendingSave = null;
     } else if (m.code === 'auth') {
@@ -1854,7 +1886,7 @@
     els.tryAgain.style.display = (!passed && confirmed && left > 0) ? '' : 'none';
   }
 
-  function saveResult(score, total, pct){
+  function saveResult(){
     var bank = QUIZ_BANK[currentKey];
     if (!isMarked(bank)) return;     // practice is never recorded
     var payload = {
@@ -1866,9 +1898,7 @@
       module: bank.module,
       assessmentType: bank.kind,
       assessmentKey: currentKey,   // lets the server clear the saved progress once the result is recorded
-      score: score,
-      totalQuestions: total,
-      percentage: pct,
+      answers: state.answers.map(function(a, i){ return [QUESTIONS[i].pool, a, QUESTIONS[i].fp]; }),   // marked by the server: the page sends choices, never a score
       elapsedSeconds: Math.round((Date.now() - state.startedAt) / 1000),
       website: document.getElementById('inp-website').value,
       lang: LANG,   // the language of the receipt email
@@ -1878,7 +1908,8 @@
     };
 
     if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('REPLACE_WITH') === 0) {
-      setSaveState('local', T('Score calculated above. This demo isn’t yet connected to the results spreadsheet, so nothing was saved - see Code.gs to connect it.'), false);
+      els.resultPill.textContent = T('Not marked');
+      setSaveState('local', T('This demo isn’t yet connected to the results spreadsheet, so your answers could not be marked or saved - see Code.gs to connect it.'), false);
       return;
     }
 
@@ -2008,7 +2039,7 @@
     els.tryAgain.style.display = 'none';
     var picked = pickQuestions(key, bank);
     QUESTIONS = picked.map(function(pi){ var v = shuffleOptions(bank.questions[pi], pi); v.pool = pi; return v; });
-    state = { index: 0, answered: false, score: 0, selected: null, missed: [], startedAt: Date.now() };
+    state = { index: 0, answered: false, score: 0, selected: null, answers: [], startedAt: Date.now() };
     els.saveState.style.display = '';
     els.practiceNote.style.display = 'none';
     els.review.style.display = 'none';
@@ -2056,7 +2087,7 @@
     if (!saved || !bank) return;
     pendingResume = null;
     QUESTIONS = saved.qi.map(function(pi, i){ var v = applyOrder(bank.questions[pi], saved.order[i], pi); v.pool = pi; return v; });
-    state = { index: saved.index, answered: false, score: saved.score, selected: null, missed: saved.missed || [], startedAt: Date.now() - (saved.elapsedMs || 0) };
+    state = { index: saved.index, answered: false, score: 0, selected: null, answers: (saved.answers || []).slice(0, saved.index), startedAt: Date.now() - (saved.elapsedMs || 0) };
     els.resume.style.display = 'none';
     if (state.index >= QUESTIONS.length) { finishQuiz(); return; }
     els.active.style.display = '';

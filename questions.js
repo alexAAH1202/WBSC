@@ -1,6 +1,10 @@
 // The question bank for assessment-widget.html. Add or edit questions here; the page itself does not need to change.
 // Each assessment is one entry: { module, moduleShort, kind, title, nextLabel, nextHref, questions: [...] }.
 // A question is { q, options: [..], correct: <index into options>, ref: 'manual section to revisit', why: 'optional explanation' }.
+// MARKED assessments ('-pca') have NO `correct` here: the site is public and the answers are marked by the server (Code.gs).
+// The right answers live in private/answers.json (git-ignored) and in the ANSWER_KEY Script property. After adding or editing a
+// marked question, add its answer to private/answers.json (same position), run `node tests/answer-key-build.js`, and paste
+// private/ANSWER_KEY.json into the ANSWER_KEY Script property. Practice ('-mkc') questions keep `correct`: they are unmarked.
 // `why` is optional. It is shown after the answer in practice, after a correct answer in the marked assessment,
 // and in the end-of-attempts review. Leave it out and nothing extra is shown.
 // Any number of questions works: the pass mark is 85% of however many are asked (the server decides).
@@ -93,7 +97,6 @@ var QUIZ_BANK = {
           "The head coach is ejected automatically for exceeding the conference limit.",
           "The conference is simply not charged since it is the fourth of the game."
         ],
-        "correct": 0,
         "ref": "Foundations Learning Guide, Module 3 - Definitions, §3.7.1 Conference."
       },
       {
@@ -104,7 +107,6 @@ var QUIZ_BANK = {
           "Confront the umpire about the mistake immediately on the field before leaving.",
           "Discuss the play honestly and respectfully as part of the debrief, focus on learning rather than blaming, and ask permission before questioning another umpire's call."
         ],
-        "correct": 3,
         "ref": "Foundations Learning Guide, Module 6 - Game Management, §6.9.2 Crew debriefs."
       },
       {
@@ -115,7 +117,6 @@ var QUIZ_BANK = {
           "Wait and monitor for another few minutes before deciding.",
           "Continue play but move all metal equipment away from the field."
         ],
-        "correct": 1,
         "ref": "Foundations Learning Guide, Module 6 - Game Management, §6.8.2 Lightning safety protocol."
       },
       {
@@ -126,7 +127,6 @@ var QUIZ_BANK = {
           "The batter is not awarded first base, because a batter cannot be awarded a base when hit by a pitch that was in the strike zone.",
           "The pitch is ruled a balk and all runners advance one base."
         ],
-        "correct": 2,
         "ref": "Foundations Learning Guide, Module 3 - Definitions, §3.5.19 Batter Hit by the Pitch."
       },
       {
@@ -137,7 +137,6 @@ var QUIZ_BANK = {
           "The umpire should have gone out toward the outfield instead of staying on the infield.",
           "From directly above the base the ball, fielder, runner, and leading edge can appear to line up, making timing hard to judge; the umpire should work just short of the leading edge at a slight angle."
         ],
-        "correct": 3,
         "ref": "Foundations Learning Guide, Module 3 - Definitions, §3.2.1 Leading Edge."
       },
       {
@@ -148,7 +147,6 @@ var QUIZ_BANK = {
           "Move inside the diamond, between the baselines.",
           "Stay in the holding zone until the ball is fielded."
         ],
-        "correct": 2,
         "ref": "Foundations Learning Guide, Module 3 - Definitions, §3.3.1 Inside-Outside Theory."
       },
       {
@@ -159,7 +157,6 @@ var QUIZ_BANK = {
           "Immediately return to their original starting position regardless of other plays.",
           "Signal for time to reset the umpires' positions."
         ],
-        "correct": 1,
         "ref": "Foundations Learning Guide, Module 3 - Definitions, §3.3.4 Going Out (sometimes referred to as Chasing)."
       },
       {
@@ -170,7 +167,6 @@ var QUIZ_BANK = {
           "Give a second warning before taking any further action.",
           "Call the game a forfeit immediately."
         ],
-        "correct": 0,
         "ref": "Foundations Learning Guide, Module 6 - Game Management, §6.7 Ejections."
       },
       {
@@ -181,7 +177,6 @@ var QUIZ_BANK = {
           "Yes, but only if the coach files it in writing within 48 hours.",
           "No - substitution rule disputes can never be protested under any circumstances."
         ],
-        "correct": 1,
         "ref": "Foundations Learning Guide, Module 6 - Game Management, §6.6 Protests."
       },
       {
@@ -192,7 +187,6 @@ var QUIZ_BANK = {
           "Say nothing, since the batter is expected to know the pitch was uncaught.",
           "Wait for the defensive team to appeal before making any ruling."
         ],
-        "correct": 0,
         "ref": "Foundations Learning Guide, Module 9 - Mechanics, §9.6.2 At the Plate."
       },
       {
@@ -203,7 +197,6 @@ var QUIZ_BANK = {
           "20 minutes before",
           "45 minutes before"
         ],
-        "correct": 3,
         "ref": "Foundations Learning Guide, Module 5 - Pre-Game Preparation, §5.2.2 Partner Meeting.",
         "why": "The guide sets out self-preparation at 60 minutes, the partner meeting at 45, the field inspection at 20 and the plate meeting at 5 minutes before the game."
       },
@@ -215,7 +208,6 @@ var QUIZ_BANK = {
           "At least 60 minutes before the scheduled game time",
           "At least 3 hours before the game"
         ],
-        "correct": 2,
         "ref": "Foundations Learning Guide, Module 2 - What it Means to be a WBSC Umpire, §2.2 Ethics.",
         "why": "Umpires honour all assignments and report to the venue at least 60 minutes before the scheduled game time."
       },
@@ -227,7 +219,6 @@ var QUIZ_BANK = {
           "10 minutes",
           "30 minutes"
         ],
-        "correct": 3,
         "ref": "Foundations Learning Guide, Module 6 - Game Management, §6.8.2 Lightning safety protocol.",
         "why": "The game is never worth anyone's life: players leave the field immediately and shelter, and play is not resumed until 30 minutes after the last lightning or thunder."
       },
@@ -239,7 +230,6 @@ var QUIZ_BANK = {
           "The pitcher within 20 seconds and the batter within 10 seconds",
           "The pitcher within 30 seconds and the batter within 15 seconds"
         ],
-        "correct": 2,
         "ref": "Foundations Learning Guide, Module 6 - Game Management, §6.2 Maintaining game pace.",
         "why": "The guide also says one foot must remain in the batter's box and that lengthy conferences should not be allowed."
       },
@@ -251,7 +241,6 @@ var QUIZ_BANK = {
           "The game ends with the score at the time of the refusal",
           "The game is replayed from the start"
         ],
-        "correct": 1,
         "ref": "Foundations Learning Guide, Module 6 - Game Management, §6.5 Forfeits.",
         "why": "The umpires consult the crew and the UIC if available, make sure proper warnings were given and documented, and report with full details to the appropriate authority."
       },
@@ -263,7 +252,6 @@ var QUIZ_BANK = {
           "A safe or out call",
           "A fair or foul call"
         ],
-        "correct": 0,
         "ref": "Foundations Learning Guide, Module 6 - Game Management, §6.6 Protests.",
         "why": "A protest challenges the application or interpretation of a rule, not judgement. Safe/out, fair/foul, ball/strike, whether a catch was made and whether interference or obstruction occurred are judgement calls."
       },
@@ -275,7 +263,6 @@ var QUIZ_BANK = {
           "Before the next pitch",
           "7 days"
         ],
-        "correct": 0,
         "ref": "Foundations Learning Guide, Module 6 - Game Management, §6.6 Protests - Written Protest Requirements.",
         "why": "Notice of the protest itself must be given to the plate umpire before the next pitch, before the fielders leave fair territory, or before the umpires leave the field after the last play of the game."
       },
@@ -287,7 +274,6 @@ var QUIZ_BANK = {
           "An ejection applies only to players; a removal applies only to coaches",
           "An ejected person must leave the venue entirely; a person removed for a rule violation may remain in the dugout and can still coach"
         ],
-        "correct": 3,
         "ref": "Foundations Learning Guide, Module 6 - Game Management, §6.7 Ejections - Important Distinction.",
         "why": "After an ejection the umpire points, verbalises '[Name/Number] is ejected', walks away and lets partners handle the removal."
       },
@@ -299,7 +285,6 @@ var QUIZ_BANK = {
           "Injury or illness only",
           "Only because of the weather"
         ],
-        "correct": 2,
         "ref": "Foundations Learning Guide, Module 5 - Pre-Game Preparation, §5.2.4 Plate Meeting.",
         "why": "After the lineups are made official, changes must follow the substitution rules. At World Cups the lineups are official when presented at the lineup exchange."
       },
@@ -311,7 +296,6 @@ var QUIZ_BANK = {
           "That the bat has a current certification mark",
           "That the grip is the right length"
         ],
-        "correct": 1,
         "ref": "Foundations Learning Guide, Module 5 - Pre-Game Preparation, §5.3 Equipment inspection - Bat Inspection.",
         "why": "If a bat is questionable the umpire tests it with the ring, consults partners, informs the coach and removes illegal bats from the game."
       }
@@ -399,7 +383,6 @@ var QUIZ_BANK = {
           "Straight up the first base line, following the batter-runner",
           "Stay behind the catcher and make the call from the plate"
         ],
-        "correct": 1,
         "ref": "Foundations - One-Umpire Field Mechanics, \"No Runners on Base,\" Ball hit to the infield."
       },
       {
@@ -410,7 +393,6 @@ var QUIZ_BANK = {
           "Remain stationary behind the catcher",
           "Sprint directly to first base"
         ],
-        "correct": 0,
         "ref": "Foundations - One-Umpire Field Mechanics, \"Runner at Third Base,\" Ball hit in the infield."
       },
       {
@@ -421,7 +403,6 @@ var QUIZ_BANK = {
           "Directly behind second base",
           "Into foul ball territory toward third base"
         ],
-        "correct": 3,
         "ref": "Foundations - One-Umpire Field Mechanics, \"Bases Loaded,\" Ball hit to the outfield."
       },
       {
@@ -432,7 +413,6 @@ var QUIZ_BANK = {
           "Stop… Wait… Call and Signal",
           "Move continuously while calling to keep angle on the play"
         ],
-        "correct": 2,
         "ref": "Foundations - One-Umpire Field Mechanics, \"No Runners on Base,\" Ball hit to the infield."
       },
       {
@@ -443,7 +423,6 @@ var QUIZ_BANK = {
           "Whether the fielder is left- or right-handed",
           "Catch or no catch"
         ],
-        "correct": 3,
         "ref": "Foundations - One-Umpire Field Mechanics, \"No Runners on Base,\" Ball hit to the outfield."
       },
       {
@@ -454,7 +433,6 @@ var QUIZ_BANK = {
           "Immediately return to the dugout area",
           "Call an automatic conference with the coaches"
         ],
-        "correct": 0,
         "ref": "Foundations - One-Umpire Field Mechanics, \"No Runners on Base,\" Ball hit to the outfield."
       },
       {
@@ -465,7 +443,6 @@ var QUIZ_BANK = {
           "The runner on second base (the lead runner)",
           "Whichever runner is physically closest to the umpire's current position"
         ],
-        "correct": 2,
         "ref": "Foundations - One-Umpire Field Mechanics, \"One Umpire System\" section (\"give the lead runner priority in your positioning\")."
       },
       {
@@ -476,7 +453,6 @@ var QUIZ_BANK = {
           "Call \"Time\" immediately once the throw to first is released",
           "Move to the outfield to prepare for the next batter"
         ],
-        "correct": 1,
         "ref": "Foundations - One-Umpire Field Mechanics, \"One Umpire System\" section."
       },
       {
@@ -487,7 +463,6 @@ var QUIZ_BANK = {
           "Call the runner out for running outside the baseline",
           "Request assistance from the third base coach"
         ],
-        "correct": 0,
         "ref": "Foundations - One-Umpire Field Mechanics, \"Runner at Third Base,\" Ball hit in the infield."
       },
       {
@@ -498,7 +473,6 @@ var QUIZ_BANK = {
           "Always face the pitcher regardless of where the play is developing",
           "Remain a fixed distance from the base at all times"
         ],
-        "correct": 1,
         "ref": "Foundations - One-Umpire Field Mechanics, \"One Umpire System\" section."
       },
       {
@@ -509,7 +483,6 @@ var QUIZ_BANK = {
           "About one third of the way from home plate toward first base in one half inning and toward third base in the other, about 30 cm (12 inches) off the line in foul territory",
           "At second base, facing home plate"
         ],
-        "correct": 2,
         "ref": "Appendix 1, One-Umpire System, Starting Position - Plate umpire.",
         "why": "The umpire stands facing the diamond with the hands relaxed at the sides, with the mask under the left arm."
       },
@@ -521,7 +494,6 @@ var QUIZ_BANK = {
           "On the side of the team going onto the field",
           "On the side of the team coming off the field"
         ],
-        "correct": 3,
         "ref": "Appendix 1, One-Umpire System, Starting Position - Plate umpire.",
         "why": "The umpire also hustles the teams on and off the field."
       },
@@ -533,7 +505,6 @@ var QUIZ_BANK = {
           "Three",
           "Eight"
         ],
-        "correct": 2,
         "ref": "Appendix 1, One-Umpire System, Starting Position - Plate umpire.",
         "why": "Five warm-up pitches are allowed for each pitcher in the first inning and with each new pitcher."
       },
@@ -545,7 +516,6 @@ var QUIZ_BANK = {
           "Nothing; the catcher counts the pitches",
           "Which pitch is the last, only if asked"
         ],
-        "correct": 0,
         "ref": "Appendix 1, One-Umpire System, Starting Position - Plate umpire.",
         "why": "After the warm-up pitches the umpire sweeps the plate and takes a position behind the catcher."
       },
@@ -557,7 +527,6 @@ var QUIZ_BANK = {
           "Via the side of the batter",
           "Via the left, even on a left-handed batter"
         ],
-        "correct": 3,
         "ref": "Appendix 1, One-Umpire System, Plate Umpire Starting Position.",
         "why": "If the ball is close to the foul line the umpire moves to the line and straddles it to make the fair/foul call."
       },
@@ -569,7 +538,6 @@ var QUIZ_BANK = {
           "The fielder with the ball",
           "The batter-runner"
         ],
-        "correct": 1,
         "ref": "Appendix 1, One-Umpire System - introduction.",
         "why": "On every hit the umpire moves out from behind the plate into the infield for the best view of the play that develops."
       },
@@ -581,7 +549,6 @@ var QUIZ_BANK = {
           "Make calls from behind the plate to stay out of the way",
           "Make the call before the ball arrives"
         ],
-        "correct": 1,
         "ref": "Appendix 1, One-Umpire System - introduction.",
         "why": "The single umpire has no partner to assist, so must move with purpose to get the best possible position to stop and make the call."
       },
@@ -593,7 +560,6 @@ var QUIZ_BANK = {
           "To know which base to sweep",
           "In case the ball is thrown out of play"
         ],
-        "correct": 3,
         "ref": "Appendix 1, One-Umpire System - introduction.",
         "why": "The umpire must also take a quick look at the runners as they touch bases, especially when scoring at home."
       },
@@ -605,7 +571,6 @@ var QUIZ_BANK = {
           "Under the left arm",
           "In the ball bag"
         ],
-        "correct": 2,
         "ref": "Appendix 1, One-Umpire System, Starting Position - Plate umpire.",
         "why": "During the first half inning and when there is a change of pitchers the umpire may put on the mask to observe the warm-up pitches."
       },
@@ -617,7 +582,6 @@ var QUIZ_BANK = {
           "Only calls at home plate",
           "Only fair/foul balls"
         ],
-        "correct": 0,
         "ref": "Appendix 1, One-Umpire System - Plate Umpire Starting Position.",
         "why": "It is obvious that not everything that happens will be seen, so the single umpire must hustle around and inside the diamond for the best position."
       }
@@ -705,7 +669,6 @@ var QUIZ_BANK = {
           "Base Umpire, who makes all calls on the first throw on base plays",
           "Plate Umpire, because the hit occurred in fair territory"
         ],
-        "correct": 2,
         "ref": "Foundations - Two-Umpire Field Mechanics, No Runners on Base - Ball hit in the infield."
       },
       {
@@ -716,7 +679,6 @@ var QUIZ_BANK = {
           "Immediately move to third base to cover R1's advance",
           "Hand off first-base coverage to the Plate Umpire"
         ],
-        "correct": 0,
         "ref": "Foundations - Two-Umpire Field Mechanics, Runner at First Base - Ball hit in the infield."
       },
       {
@@ -727,7 +689,6 @@ var QUIZ_BANK = {
           "Both umpires jointly",
           "Neither - tag-ups are not judged on caught fly balls"
         ],
-        "correct": 1,
         "ref": "Foundations - Two-Umpire Field Mechanics, Runner at First Base - Ball hit to the outfield."
       },
       {
@@ -738,7 +699,6 @@ var QUIZ_BANK = {
           "Whichever umpire has the clearer angle in the moment",
           "Base Umpire"
         ],
-        "correct": 3,
         "ref": "Foundations - Two-Umpire Field Mechanics, Three Basic Principles - The Division Principle, Exceptions."
       },
       {
@@ -749,7 +709,6 @@ var QUIZ_BANK = {
           "R3, the runner originally on third base",
           "Neither - the Plate Umpire takes all runners into third base on outfield hits"
         ],
-        "correct": 0,
         "ref": "Foundations - Two-Umpire Field Mechanics, Runners at Second & Third Base - Ball hit to the outfield."
       },
       {
@@ -760,7 +719,6 @@ var QUIZ_BANK = {
           "As requiring a defensive appeal",
           "As a force play"
         ],
-        "correct": 3,
         "ref": "Foundations - Two-Umpire Field Mechanics, Bases Loaded - Ball hit to the infield."
       },
       {
@@ -771,7 +729,6 @@ var QUIZ_BANK = {
           "Whichever umpire started the play closer to third base",
           "Plate Umpire, because the Base Umpire only covers first and second base calls"
         ],
-        "correct": 1,
         "ref": "Foundations - Two-Umpire Field Mechanics, Three Basic Principles - The Division Principle, Exceptions."
       },
       {
@@ -782,7 +739,6 @@ var QUIZ_BANK = {
           "Behind and off the shortstop, shading toward the runner on second base, with a view of the pitcher, runner and home plate area",
           "In the outfield grass behind second base"
         ],
-        "correct": 2,
         "ref": "Foundations - Two-Umpire Field Mechanics, Runner at Second Base - Starting Position."
       },
       {
@@ -793,7 +749,6 @@ var QUIZ_BANK = {
           "Move to 4-5 meters (15 feet) behind the baseline",
           "Retreat further into foul territory for a wider angle"
         ],
-        "correct": 0,
         "ref": "Foundations - Two-Umpire Field Mechanics, Base Umpire Position for Calls."
       },
       {
@@ -804,7 +759,6 @@ var QUIZ_BANK = {
           "Whichever umpire is positioned in fair territory",
           "Plate Umpire, who is responsible for succeeding plays at third base or home plate after the first infield play"
         ],
-        "correct": 3,
         "ref": "Foundations - Two-Umpire Field Mechanics, Runners at First & Third Base - Ball hit in the infield."
       },
       {
@@ -815,7 +769,6 @@ var QUIZ_BANK = {
           "Home plate and first base",
           "Third base and home plate"
         ],
-        "correct": 1,
         "ref": "Appendix 2, Two-Umpire System, Three Basic Principles - The Division Principle.",
         "why": "The Plate Umpire takes all calls at home plate and third base."
       },
@@ -827,7 +780,6 @@ var QUIZ_BANK = {
           "When the ball is in the infield the Base Umpire moves or stays in the outfield; when it is in the outfield the Base Umpire moves to a position in the infield",
           "The Base Umpire always stays at first base"
         ],
-        "correct": 2,
         "ref": "Appendix 2, Two-Umpire System, Three Basic Principles - The Infield/Outfield Principle.",
         "why": "This keeps the umpires out of the way of the play and in position to see the next one."
       },
@@ -839,7 +791,6 @@ var QUIZ_BANK = {
           "Start in a position up with the lead runner, because the catcher is expected to play the lead runner on a pick-off",
           "Start beside the plate umpire"
         ],
-        "correct": 2,
         "ref": "Appendix 2, Two-Umpire System, Three Basic Principles - The Leading Runner Principle.",
         "why": "The Base Umpire needs to be in a position to make the call on a pick-off of the lead runner."
       },
@@ -851,7 +802,6 @@ var QUIZ_BANK = {
           "As wide as possible",
           "A comfortable distance apart, at least shoulder width, relaxed but still"
         ],
-        "correct": 3,
         "ref": "Appendix 2, Two-Umpire System, Base Umpire Ready Position.",
         "why": "As the pitch is released the umpire unlocks the knees slightly, with the weight lightly on the balls of the feet and the hands drawn in close to the belt line."
       },
@@ -863,7 +813,6 @@ var QUIZ_BANK = {
           "About 10 m behind second base",
           "About 3.5 m (12 ft) behind first base in fair territory"
         ],
-        "correct": 0,
         "ref": "Appendix 2, Two-Umpire System, Base Umpire Position for Calls.",
         "why": "The Base Umpire faces home plate with the shoulders square to the plate."
       },
@@ -875,7 +824,6 @@ var QUIZ_BANK = {
           "About 5.5 m (18 ft)",
           "Right on top of the base"
         ],
-        "correct": 1,
         "ref": "Appendix 2, Two-Umpire System, Base Umpire Position for Calls.",
         "why": "On force plays the umpire calls from about 5.5 m (18 ft). During a call it is important to be still and keep the Four Essential Elements in front."
       },
@@ -887,7 +835,6 @@ var QUIZ_BANK = {
           "Keep a clear view of home plate",
           "Set up ahead of any infielder before the catcher receives the pitch or the ball is batted"
         ],
-        "correct": 3,
         "ref": "Appendix 2, Two-Umpire System, Base Umpire - Starting Position in Relation to Fielders.",
         "why": "The Base Umpire must keep a clear, unobstructed view of home plate."
       },
@@ -899,7 +846,6 @@ var QUIZ_BANK = {
           "Move straight to third base",
           "Stay behind the plate"
         ],
-        "correct": 1,
         "ref": "Appendix 2, Two-Umpire System, Plate Umpire Starting Position.",
         "why": "With a runner on first base only the plate umpire trails the runner and then moves to foul territory on the third base side for a possible call on that runner at third."
       },
@@ -911,7 +857,6 @@ var QUIZ_BANK = {
           "Behind the catcher",
           "At the pitcher's plate"
         ],
-        "correct": 0,
         "ref": "Appendix 2, Two-Umpire System, Between Inning Position.",
         "why": "The Base Umpire stands just off the first base line in foul territory about one third of the way to first base."
       },
@@ -923,7 +868,6 @@ var QUIZ_BANK = {
           "Both umpires share the responsibility",
           "The Base Umpire only"
         ],
-        "correct": 2,
         "ref": "Appendix 2, Two-Umpire System, Starting Position (Base Umpire).",
         "why": "The Plate Umpire is also responsible for fair/foul balls and batting infractions."
       }
@@ -1011,7 +955,6 @@ var QUIZ_BANK = {
           "U3, rotating to second base in line with the plate umpire",
           "U3 remains at third base and does not rotate"
         ],
-        "correct": 2,
         "ref": "Foundations - Three-Umpire Field Mechanics, No Runners on Base - Ball Hit to Infield."
       },
       {
@@ -1022,7 +965,6 @@ var QUIZ_BANK = {
           "U1 returns from the outfield to take the runner",
           "Coverage is shared equally between the Plate Umpire and U3"
         ],
-        "correct": 1,
         "ref": "Foundations - Three-Umpire Field Mechanics, No Runners on Base-Umpire 1 Goes Out."
       },
       {
@@ -1033,7 +975,6 @@ var QUIZ_BANK = {
           "Remains in the original ready position off the third base line",
           "Goes out toward the outfield to back up the throw"
         ],
-        "correct": 0,
         "ref": "Foundations - Three-Umpire Field Mechanics, Runner on First Base - Ball Hit to Infield - Potential Double Play."
       },
       {
@@ -1044,7 +985,6 @@ var QUIZ_BANK = {
           "Both U1 and U3 share the calls",
           "U1"
         ],
-        "correct": 3,
         "ref": "Foundations - Three-Umpire Field Mechanics, Runner on Second Base - Ball Hit to Infield."
       },
       {
@@ -1055,7 +995,6 @@ var QUIZ_BANK = {
           "The Plate Umpire, moving up the first base line",
           "No umpire - the play is a dead ball"
         ],
-        "correct": 0,
         "ref": "Foundations - Three-Umpire Field Mechanics, Runner on Third Base - Ball Hit to Infield."
       },
       {
@@ -1066,7 +1005,6 @@ var QUIZ_BANK = {
           "U1, before leaving for the outfield",
           "No umpire watches the tag-up in this situation"
         ],
-        "correct": 1,
         "ref": "Foundations - Three-Umpire Field Mechanics, Runner on Third Base-Umpire 1 Goes Out."
       },
       {
@@ -1077,7 +1015,6 @@ var QUIZ_BANK = {
           "Moves into fair territory about one step in anticipation of a play on R1",
           "Goes out to the outfield to back up a potential overthrow"
         ],
-        "correct": 2,
         "ref": "Foundations - Three-Umpire Field Mechanics, Runner on First and Second Base - Ball Hit to the infield (potential double play)."
       },
       {
@@ -1088,7 +1025,6 @@ var QUIZ_BANK = {
           "Immediately rotates to first base",
           "Moves into fair territory about one step in anticipation of a play on R2 progressing from second base"
         ],
-        "correct": 3,
         "ref": "Foundations - Three-Umpire Field Mechanics, Runners on Second and third Base - Ball Hit to the Infield."
       },
       {
@@ -1099,7 +1035,6 @@ var QUIZ_BANK = {
           "The Plate Umpire remains at home plate",
           "Second base, alongside U3"
         ],
-        "correct": 1,
         "ref": "Foundations - Three-Umpire Field Mechanics, Runner on First Base - Ball Hit Through the Infield."
       },
       {
@@ -1110,7 +1045,6 @@ var QUIZ_BANK = {
           "Remain on the foul line even with the base",
           "Rotate inside the diamond"
         ],
-        "correct": 3,
         "ref": "Foundations - Three-Umpire Field Mechanics, Runner on Second Base - Ball Hit Through the Infield (Note)."
       },
       {
@@ -1121,7 +1055,6 @@ var QUIZ_BANK = {
           "The Plate Umpire takes all calls at home plate and third base, and the remaining Base Umpire takes all calls at first and second base",
           "The umpire who went out keeps all calls"
         ],
-        "correct": 2,
         "ref": "Appendix 3, Three-Umpire System, Two Basic Coverage Principles - The Division Principle.",
         "why": "When the Batter Runner goes to third base, the Base Umpire takes the Batter Runner there."
       },
@@ -1133,7 +1066,6 @@ var QUIZ_BANK = {
           "Ask the coach",
           "Run straight out without any signal"
         ],
-        "correct": 0,
         "ref": "Appendix 3, Three-Umpire System, Outfield Coverage Key Points.",
         "why": "Good timing and umpire-to-umpire eye contact are essential for good fly ball coverage and for making sure the correct umpire goes out."
       },
@@ -1145,7 +1077,6 @@ var QUIZ_BANK = {
           "Towards the ball, after stopping, deciding and communicating",
           "Towards the dugout"
         ],
-        "correct": 2,
         "ref": "Appendix 3, Three-Umpire System, Outfield Coverage Key Points.",
         "why": "Umpires signal no catch if the ball is judged a trapped ball; there is no need to signal safe if it is obviously a no catch."
       },
@@ -1157,7 +1088,6 @@ var QUIZ_BANK = {
           "Go to second base",
           "Stay and look only at the outfield"
         ],
-        "correct": 0,
         "ref": "Appendix 3, Three-Umpire System, Outfield Coverage Key Points.",
         "why": "The remaining umpires revert to the Two-Umpire System."
       },
@@ -1169,7 +1099,6 @@ var QUIZ_BANK = {
           "Always the plate umpire",
           "The umpire in the outfield, unless no base umpire moved to the outfield, in which case the plate umpire"
         ],
-        "correct": 3,
         "ref": "Appendix 3, Three-Umpire System, Outfield Coverage Key Points.",
         "why": "A base umpire who starts on a fair/foul line and goes out is responsible for the catch/no catch, fair/foul and home run calls."
       },
@@ -1181,7 +1110,6 @@ var QUIZ_BANK = {
           "The coach",
           "The nearest outfielder"
         ],
-        "correct": 1,
         "ref": "Appendix 3, Three-Umpire System, Outfield Coverage Key Points.",
         "why": "The only planned time the plate umpire calls fair/foul and a catch on an outfield fly ball is when the umpire who normally starts on that fair/foul line starts at second base."
       },
@@ -1193,7 +1121,6 @@ var QUIZ_BANK = {
           "Walking to the pitcher's plate",
           "Taking a small step to the plate umpire's left to move out from behind the catcher, creating space and opening the view of the field"
         ],
-        "correct": 3,
         "ref": "Appendix 3, Three-Umpire System, Plate Umpire Responsibilities and Positions.",
         "why": "It is the plate umpire's first priority after every pitch or batted ball in the area of the plate, and must happen before the play develops, not after."
       },
@@ -1205,7 +1132,6 @@ var QUIZ_BANK = {
           "At the infield end of the left-hander's batter's box, looking towards the back net",
           "On first base"
         ],
-        "correct": 2,
         "ref": "Appendix 3, Three-Umpire System, Pre-Game Meeting Positioning.",
         "why": "U3 stands at the infield end of the right-hander's batter's box. Immediately after the meeting the base umpires move to the between-innings positions."
       },
@@ -1217,7 +1143,6 @@ var QUIZ_BANK = {
           "The plate umpire",
           "U1"
         ],
-        "correct": 0,
         "ref": "Appendix 3, Three-Umpire System, Completion of Innings.",
         "why": "The closest base umpire to the pitcher's plate sweeps it; if there are no runners on base or both are the same distance, U3 takes the responsibility."
       },
@@ -1229,7 +1154,6 @@ var QUIZ_BANK = {
           "The names of the batters",
           "The weather, the score and the time"
         ],
-        "correct": 1,
         "ref": "Appendix 3, Three-Umpire System, Pre-Pitch Preparation.",
         "why": "Knowing these before each pitch helps the umpire anticipate likely plays."
       }
@@ -1318,7 +1242,6 @@ var QUIZ_BANK = {
           "Parallax error, because the umpire was positioned too far from the play",
           "A breach of primary responsibilities, because the umpire failed to rotate to the correct base"
         ],
-        "correct": 1,
         "ref": "Appendix 4, Section 9 - Visual Discipline and Cognitive Bias in Umpire Judgment, \"Affirmation Bias: Focusing Only on the Tag.\""
       },
       {
@@ -1329,7 +1252,6 @@ var QUIZ_BANK = {
           "It is only a concern for home run judgments, not for line drives near a base",
           "Parallax may make the ball appear fair or foul incorrectly from behind the plate; mechanics require an umpire to be on the foul line to accurately judge the call"
         ],
-        "correct": 3,
         "ref": "Appendix 4, Section 8 - Parallax Error in Softball Umpiring, \"Fair/Foul on Line Drives.\""
       },
       {
@@ -1340,7 +1262,6 @@ var QUIZ_BANK = {
           "Adjust position along the diagonal or move off it as needed, since the priority is always maintaining an unobstructed view of the key elements",
           "Call time and reposition only after the play has concluded"
         ],
-        "correct": 2,
         "ref": "Appendix 4, Section 1 - Key Concepts and Glossary, \"Second Base Diagonal Angle.\""
       },
       {
@@ -1351,7 +1272,6 @@ var QUIZ_BANK = {
           "The umpire correctly anticipated the play and should hold their ground next time",
           "This is a normal and unavoidable part of elite mechanics requiring no adjustment"
         ],
-        "correct": 0,
         "ref": "Appendix 4, Section 4 - Observation and calling positions."
       },
       {
@@ -1362,7 +1282,6 @@ var QUIZ_BANK = {
           "If certain, call the illegal pitch, since WBSC mechanics permit the umpire near second base to manage the stepping foot when it is completely outside the pitching lane",
           "Signal the Plate Umpire discreetly but never call the violation directly"
         ],
-        "correct": 2,
         "ref": "Appendix 4, Section 6 - Managing Pitching Philosophy, Responsibility and the Pitching Lane."
       },
       {
@@ -1373,7 +1292,6 @@ var QUIZ_BANK = {
           "It improves reaction time and is a recommended technique for bang-bang plays",
           "It only affects balls and strikes calls, not tag plays"
         ],
-        "correct": 0,
         "ref": "Appendix 4, Section 9 - Visual Discipline and Cognitive Bias in Umpire Judgment, \"Anticipatory Signalling.\""
       },
       {
@@ -1384,7 +1302,6 @@ var QUIZ_BANK = {
           "Neither umpire should go out; the Plate Umpire must cover all converging fly balls",
           "U1 should have the first opportunity to go out, since U2 should allow U1 or U3 the first opportunity and only go out if neither does"
         ],
-        "correct": 3,
         "ref": "Appendix 4, Section 7 - Outfield coverage, \"In a Four-Umpire system.\""
       },
       {
@@ -1395,7 +1312,6 @@ var QUIZ_BANK = {
           "Parallax correction, which eliminates the need to change position",
           "The leading edge principle, which requires the umpire to remain at 90 degrees to the runner's path at all times"
         ],
-        "correct": 1,
         "ref": "Appendix 4, Section 8 - Parallax Error in Softball Umpiring, \"Mental Snapshots: A Technique to Improve Judgment.\""
       },
       {
@@ -1406,7 +1322,6 @@ var QUIZ_BANK = {
           "Neither position; the umpire should request a video review",
           "The closer position, because distance takes priority over angle in outfield coverage"
         ],
-        "correct": 0,
         "ref": "Appendix 4, Section 7 - Outfield coverage."
       },
       {
@@ -1417,7 +1332,6 @@ var QUIZ_BANK = {
           "Pre-Pitch Preparation and Outfield Coverage, because the umpire failed to anticipate outfielder depth",
           "Parallax Error, because the umpire was aligned with the wrong plane"
         ],
-        "correct": 1,
         "ref": "Appendix 4, Section 2.1 - Dynamic Positioning and Adjustments."
       },
       {
@@ -1428,7 +1342,6 @@ var QUIZ_BANK = {
           "Take a photograph with a phone after the play",
           "Take a mental photograph of the play from the initial angle, move quickly to a better angle, take a second photograph, and combine them into a clearer 3D picture"
         ],
-        "correct": 3,
         "ref": "Appendix 4, Section 8 - Parallax Error in Softball Umpiring, Mental Snapshots.",
         "why": "Good judgement comes from gathering as much visual information as possible; obtaining the correct angle often matters more than physical proximity."
       },
@@ -1440,7 +1353,6 @@ var QUIZ_BANK = {
           "Stop, see the play, process the play, decide, signal",
           "Decide, stop, signal, see the play"
         ],
-        "correct": 2,
         "ref": "Appendix 4, Section 9 - Visual Discipline and Cognitive Bias in Umpire Judgment, Anticipatory Signalling.",
         "why": "Preparing the signal before the play is complete shifts the brain's focus away from the final elements of the action and encourages early calling."
       },
@@ -1452,7 +1364,6 @@ var QUIZ_BANK = {
           "The brain may prematurely 'affirm' an out because it sees the glove contact the runner, overriding the relationship between the ball, runner and base, such as the runner already touching the base",
           "The umpire will see the ball too well"
         ],
-        "correct": 2,
         "ref": "Appendix 4, Section 9 - Visual Discipline and Cognitive Bias in Umpire Judgment, Affirmation Bias.",
         "why": "Poor angle or parallax combined with affirmation bias increases the likelihood of an incorrect call; when the eyes are not aligned with the play, the brain fills in missing information, often incorrectly."
       },
@@ -1464,7 +1375,6 @@ var QUIZ_BANK = {
           "Only in the first inning",
           "When the stepping foot lands wholly outside the pitching lane and the violation is clear and obvious"
         ],
-        "correct": 3,
         "ref": "Appendix 4, Section 6 - Managing Pitching Philosophy, Responsibility and the Pitching Lane.",
         "why": "Only the stepping foot must land within the pitching lane. The standard for enforcement is clear and obvious; the adjustment to see it is temporary and must not compromise primary responsibilities."
       },
@@ -1476,7 +1386,6 @@ var QUIZ_BANK = {
           "Any umpire inside the diamond",
           "The umpire near second base"
         ],
-        "correct": 1,
         "ref": "Appendix 4, Section 8 - Parallax Error in Softball Umpiring, Home Run Judgments.",
         "why": "Adding distance, or viewing from inside the diamond, increases parallax error; an umpire near second base is at an angle that distorts the judgement."
       },
@@ -1488,7 +1397,6 @@ var QUIZ_BANK = {
           "Only the middle of the plate",
           "All parts equally"
         ],
-        "correct": 0,
         "ref": "Appendix 4, Section 8 - Parallax Error in Softball Umpiring, Balls & Strikes.",
         "why": "The plate umpire's eyes are aligned with the inside and top planes; for the outside and low pitches the pitcher's release point and the catcher's glove movement give additional inputs."
       },
@@ -1500,7 +1408,6 @@ var QUIZ_BANK = {
           "Approximately 8-10 m (26-33 ft) directly behind the base",
           "About 1 m (3 ft), beside the base"
         ],
-        "correct": 1,
         "ref": "Appendix 4, Section 5 - Starting position at second base: U2 or U3.",
         "why": "This position establishes a proactive observation point and lets the umpire move efficiently around the base; starting further away increases the movement arc."
       },
@@ -1512,7 +1419,6 @@ var QUIZ_BANK = {
           "Any hit that could be caught by an outfielder in their coverage area, requires a fair/foul decision in the outfield, or could be a home run",
           "Only hits that are caught"
         ],
-        "correct": 2,
         "ref": "Appendix 4, Section 7 - Outfield coverage.",
         "why": "In all cases angles take priority over distance."
       },
@@ -1524,7 +1430,6 @@ var QUIZ_BANK = {
           "Stays at second base",
           "Rotates to home plate"
         ],
-        "correct": 0,
         "ref": "Appendix 4, Section 7 - Outfield coverage.",
         "why": "U1 going out on hits to right field improves coverage of the bases closer to home plate."
       },
@@ -1536,7 +1441,6 @@ var QUIZ_BANK = {
           "The plate umpire takes all fly balls",
           "It is split down the middle: U1 goes out from centre field to the right-field foul line and U3 from centre field to the left-field foul line"
         ],
-        "correct": 3,
         "ref": "Appendix 4, Section 7 - Outfield coverage.",
         "why": "If an umpire starts at second base the split changes: the plate umpire covers fly balls from the left fielder (or right fielder) to the foul line."
       }
@@ -1625,7 +1529,6 @@ var QUIZ_BANK = {
           "The ball, the defensive player, the offensive players, and the base or the area of the play",
           "The ball, the fielder, the dugout and the foul line"
         ],
-        "correct": 2,
         "ref": "Appendix 5a, Key Concepts - Four Essential Element Theory (FEET).",
         "why": "The elements must be observed together, especially control of the ball and tag attempts, because the correct call depends on seeing how they come together."
       },
@@ -1637,7 +1540,6 @@ var QUIZ_BANK = {
           "When the umpire moves with active feet during the play",
           "When the umpire stands on the leading edge of the base"
         ],
-        "correct": 1,
         "ref": "Appendix 5a, Key Concepts - Parallax Error.",
         "why": "Straight-lining reduces depth perception and can distort the sequence of events. Umpires reduce parallax by adjusting position to keep angle and separation between the elements."
       },
@@ -1649,7 +1551,6 @@ var QUIZ_BANK = {
           "Wait for the ball to stop before deciding",
           "Position themselves on the plane of the call, such as on the fair/foul line"
         ],
-        "correct": 3,
         "ref": "Appendix 5a, Key Concepts - Parallax Error.",
         "why": "Moving onto the plane that forms the call turns the plane into a line in the umpire's view, so the position of the ball relative to it can be judged directly."
       },
@@ -1661,7 +1562,6 @@ var QUIZ_BANK = {
           "4.5 m (15 ft)",
           "7 m (23 ft)"
         ],
-        "correct": 0,
         "ref": "Appendix 5a, Key Concepts - Optimising Angle and Distance.",
         "why": "With no runners the start is 5.5 m (18 ft) at 1B and 3B, and 4.5 m (15 ft) at 2B. It closes to about 3.5 m (12 ft) with a runner at the umpire's own base."
       },
@@ -1673,7 +1573,6 @@ var QUIZ_BANK = {
           "About 5 m (16 ft) for both",
           "About 3 m (10 ft) for both"
         ],
-        "correct": 1,
         "ref": "Appendix 5a, Key Concepts - Optimising Angle and Distance.",
         "why": "On a tag play the umpire must be close enough to adjust left or right and reach the leading edge while keeping every element in front."
       },
@@ -1685,7 +1584,6 @@ var QUIZ_BANK = {
           "Whichever is closer to the base",
           "Neither; the umpire should stand still"
         ],
-        "correct": 0,
         "ref": "Appendix 5a, Key Concepts - Optimising Angle and Distance.",
         "why": "Being closer can still help the umpire make controlled movements to a better angle, and parallax error increases with both distance and angle."
       },
@@ -1697,7 +1595,6 @@ var QUIZ_BANK = {
           "It prevents the umpire from using the verbal call",
           "The umpire's eyes are vertically aligned with the base, so the ball, tag and leading edge collapse into a straight-lined view with no depth perception"
         ],
-        "correct": 3,
         "ref": "Appendix 5a, Key Concepts - Starting Position, Observation Position and Calling Position.",
         "why": "At elite speeds the difference between a tag on the leading edge and past it may be a few centimetres. A calling position just short of the leading edge keeps the elements visually separated."
       },
@@ -1709,7 +1606,6 @@ var QUIZ_BANK = {
           "Inside the diamond",
           "On the foul line"
         ],
-        "correct": 2,
         "ref": "Appendix 5a, Advanced Base Umpire Movements - Inside/Outside Theory.",
         "why": "When the ball is in the outfield base umpires come inside; when it is in the infield they are outside the diamond. If any umpire goes out, all the others must come inside to cover bases and backfill."
       },
@@ -1721,7 +1617,6 @@ var QUIZ_BANK = {
           "A coach requesting a conference",
           "The ball being returned to the pitcher"
         ],
-        "correct": 0,
         "ref": "Appendix 5a, Advanced Base Umpire Movements - Backfilling.",
         "why": "After PU communicates that they are staying at HP, the base umpires adjust: the umpire who has not gone out covers 3B and U1 rotates inside to cover 1B and 2B if possible."
       },
@@ -1733,7 +1628,6 @@ var QUIZ_BANK = {
           "Call interference",
           "Fail to see the base"
         ],
-        "correct": 1,
         "ref": "Appendix 5a, Advanced Base Umpire Movements - Errors Due to Timing and Focus.",
         "why": "A slight pause on a close play gives the brain time to process all the inputs in the right order, instead of basing the call on the last thing seen."
       },
@@ -1745,7 +1639,6 @@ var QUIZ_BANK = {
           "Inside the catcher's box, in line with the pitch",
           "2-4 m (6-12 ft) directly behind the plate at the Point of Plate (POP), up to the extension of the first base line"
         ],
-        "correct": 3,
         "ref": "Appendix 5a, Key Concepts - Starting Position, Observation Position and Calling Position.",
         "why": "From POP the umpire can observe plays at home and the surrounding field, then adjust to the calling position the play dictates."
       },
@@ -1757,7 +1650,6 @@ var QUIZ_BANK = {
           "The umpire moves both feet when adjusting position so they stay balanced on the balls of their feet and ready to move",
           "The umpire keeps one foot planted until the call is made"
         ],
-        "correct": 2,
         "ref": "Appendix 5a, Key Concepts - Dynamic Movement.",
         "why": "Umpires should never be locked in position. Moving both feet keeps them stable and ready to move."
       },
@@ -1769,7 +1661,6 @@ var QUIZ_BANK = {
           "About 3.5 m (12 ft) back from 2B, 1-2 m (3-6 ft) off the 3B side of 2B, if home plate and the batter stay in clear view",
           "About 3.5 m (12 ft) back from 2B, on the 1B side of the Second Base Diagonal Angle"
         ],
-        "correct": 2,
         "ref": "Appendix 5a, Advanced Base Umpire Movements - Second Base Diagonal Angle.",
         "why": "The Alternate Starting Position gives a proactive observation position for a potential steal, as long as the view of home plate and the batter is unobstructed."
       },
@@ -1781,7 +1672,6 @@ var QUIZ_BANK = {
           "It interferes with the centre fielder's throwing arm",
           "It blocks the catcher's view of home plate"
         ],
-        "correct": 0,
         "ref": "Appendix 5a, Advanced Base Umpire Movements - Second Base Diagonal Angle.",
         "why": "Movement away from the Second Base Diagonal Angle toward the 1BLE increases parallax error and reduces the umpire's ability to judge accurately."
       },
@@ -1793,7 +1683,6 @@ var QUIZ_BANK = {
           "On every ground ball to the infield",
           "On a sharp hit or foul fly ball where PU has a better position to make the call from behind the plate or by moving with the flight of the ball"
         ],
-        "correct": 3,
         "ref": "Appendix 5a, Key Concepts - Plate Movement.",
         "why": "PU normally clears the catcher to the left first. The exceptions are a sharp hit or foul fly ball where a better position exists, and a passed ball or wild pitch when not required to rotate toward 3B."
       },
@@ -1805,7 +1694,6 @@ var QUIZ_BANK = {
           "Only the count and the number of outs",
           "The team standings and each batter's previous results"
         ],
-        "correct": 1,
         "ref": "Appendix 5a, Key Concepts - Pre-Pitch Preparation (PPP).",
         "why": "Mental preparation prevents the umpire from being caught unaware or out of position in unusual situations."
       },
@@ -1817,7 +1705,6 @@ var QUIZ_BANK = {
           "Wait for the plate umpire to signal who goes",
           "Look to the flight of the ball, then look to their partners and communicate before deciding to go out"
         ],
-        "correct": 3,
         "ref": "Appendix 5a, Key Concepts - Pre-Pitch Preparation and Outfield Coverage.",
         "why": "Each time the umpire at 2B goes out needlessly, coverage at home plate can be compromised, so the decision should not be rushed."
       },
@@ -1829,7 +1716,6 @@ var QUIZ_BANK = {
           "Not go out, so that base coverage is kept, especially with multiple runners or a runner going home",
           "Go out but return before the ball lands"
         ],
-        "correct": 2,
         "ref": "Appendix 5a, Key Concepts - Pre-Pitch Preparation and Outfield Coverage.",
         "why": "Umpires must be aware of the depth, starting positions and ability of the outfielders. They must go out on any ball that could reasonably be caught, but not on balls that will not be."
       },
@@ -1841,7 +1727,6 @@ var QUIZ_BANK = {
           "Make the call without telling the crew",
           "Stay in the outfield and say nothing"
         ],
-        "correct": 0,
         "ref": "Appendix 5a, Advanced Base Umpire Movements - Umpire Goes Out - Infield Awareness.",
         "why": "An umpire who goes out must turn and look back to the infield. Saying \"I'm here\" and their name tells the crew they have covered the empty location."
       },
@@ -1853,7 +1738,6 @@ var QUIZ_BANK = {
           "A request from the first base coach",
           "PU signalling from the holding position"
         ],
-        "correct": 1,
         "ref": "Appendix 5a, Advanced Base Umpire Movements - End of Play Counter Rotations.",
         "why": "Lead umpires wait to be released so that the incoming umpire has control of the area; leaving too early can leave no umpire in control of a base."
       }
@@ -1877,7 +1761,6 @@ var QUIZ_BANK = {
           "One third of the way from HP to 3B",
           "Behind the batter's boxes at the point of the plate"
         ],
-        "correct": 0,
         "ref": "Appendix 5b, Pre-Game Plate Meeting and Between Innings Positions.",
         "why": "Between innings PU stands one third of the way from HP to 3B, U1 halfway from HP to 1B and U3 two thirds of the way from HP to 3B, all off the lines."
       },
@@ -1889,7 +1772,6 @@ var QUIZ_BANK = {
           "About 3.5 m (12 ft) behind 1B in foul territory",
           "On the 3B side of 2B"
         ],
-        "correct": 2,
         "ref": "Appendix 5b, U1 Starting Position.",
         "why": "With no runners or a runner only on 3B the start is about 5.5 m (18 ft) behind 1B; with a runner on 1B it is closer so the umpire can stay in foul territory with a clear view."
       },
@@ -1901,7 +1783,6 @@ var QUIZ_BANK = {
           "To be ready to rotate to first base",
           "To keep an unobstructed view of the pitcher, runner, batter and home plate and not be affected by the runner leading off on the release of the pitch"
         ],
-        "correct": 3,
         "ref": "Appendix 5b, U3 Starting Position - Runner on 3B.",
         "why": "The starting position is chosen so the umpire can watch the whole pitch and the runner's lead without the runner blocking the view."
       },
@@ -1913,7 +1794,6 @@ var QUIZ_BANK = {
           "Directly to the leading edge of 1B",
           "They must stay at the starting position"
         ],
-        "correct": 1,
         "ref": "Appendix 5b, Pickoff Plays - U1 Pickoff at 1B.",
         "why": "If U1 reads that the play will be at the leading edge, they may step inside to fair territory, always keeping the Four Essential Elements in front."
       },
@@ -1925,7 +1805,6 @@ var QUIZ_BANK = {
           "Nobody; the runner is not watched",
           "PU"
         ],
-        "correct": 3,
         "ref": "Appendix 5b, Tag Ups.",
         "why": "The base umpire who remains on the infield takes the tag ups at 1B and 2B, and PU takes the tag up at 3B."
       },
@@ -1937,7 +1816,6 @@ var QUIZ_BANK = {
           "PU",
           "The umpire nearest the runner"
         ],
-        "correct": 0,
         "ref": "Appendix 5b, Leadoffs.",
         "why": "U1 is responsible for the lead-off calls for runners at 1B and 2B, and U3 for a runner at 3B."
       },
@@ -1949,7 +1827,6 @@ var QUIZ_BANK = {
           "PU",
           "U1 and U3 share it equally"
         ],
-        "correct": 1,
         "ref": "Appendix 5b, Outfield Fly-Ball Coverage Area - U1 at 1B; U3 at 3B.",
         "why": "U1 takes F8 fly balls moving toward RF and foul; U3 takes F8 fly balls moving toward LF and foul."
       },
@@ -1961,7 +1838,6 @@ var QUIZ_BANK = {
           "PU",
           "ULF"
         ],
-        "correct": 2,
         "ref": "Appendix 5b, Outfield Fly-Ball Coverage Area - U1 at 1B; U3 at 2B, runner on 1B.",
         "why": "PU takes fly balls to F7 and foul, U1 takes the right field area and foul, and U3 takes F8 and F7 moving toward CF. U1 taking F9 keeps U1 out of the runner's base path and lets U3 get inside."
       },
@@ -1973,7 +1849,6 @@ var QUIZ_BANK = {
           "Run to home plate",
           "Go out to the outfield as well"
         ],
-        "correct": 1,
         "ref": "Appendix 5b, Outfield Fly-Ball Coverage Area.",
         "why": "If the ball is caught and the remaining umpire can take the last runner to 3B and communicate with PU, they should, which keeps PU at home for important plays."
       },
@@ -1985,7 +1860,6 @@ var QUIZ_BANK = {
           "Go out toward the outfield",
           "Trail the batter-runner about one third of the way to 1B (further if required), watch for interference, and make the fair/foul call"
         ],
-        "correct": 3,
         "ref": "Appendix 5b, Live Ball Play from Infield - U1 at 1B; U3 at 3B, no runners.",
         "why": "PU trails the batter-runner for a potential tag, interference by the batter-runner or to assist at 1B, and rotates to 3B if the batter-runner reaches 1B and advances toward 2B."
       },
@@ -1997,7 +1871,6 @@ var QUIZ_BANK = {
           "At the pitcher's plate, with the base umpires beside PU",
           "Behind the catcher's box, with the base umpires at their bases"
         ],
-        "correct": 0,
         "ref": "Appendix 5b, Pre-Game Plate Meeting and Between Innings Positions.",
         "why": "After the meeting the umpires go to their starting positions; between innings all umpires stand off the fair/foul lines."
       },
@@ -2009,7 +1882,6 @@ var QUIZ_BANK = {
           "About 4.5 m (15 ft) behind 3B, just off the line in foul territory",
           "About 3.5 m (12 ft) behind 3B, up to 2 m (6 ft) off the line"
         ],
-        "correct": 2,
         "ref": "Appendix 5b, U3 Starting Position.",
         "why": "With no runners on, the start is about 5.5 m (18 ft) behind 3B; with a runner on 3B it is closer, about 3.5 m (12 ft)."
       },
@@ -2021,7 +1893,6 @@ var QUIZ_BANK = {
           "On the 1B side of the pitcher's plate",
           "Beside PU behind home plate"
         ],
-        "correct": 1,
         "ref": "Appendix 5b, U3 Starting Position.",
         "why": "Either the standard or the alternate Second Base Diagonal Angle position puts the umpire close to the angle, with minimal movement needed for a tag play."
       },
@@ -2033,7 +1904,6 @@ var QUIZ_BANK = {
           "U1",
           "U3"
         ],
-        "correct": 0,
         "ref": "Appendix 5b, Tag Ups.",
         "why": "When neither base umpire goes out, base umpires take the runner at their own base, and PU takes 3B when U3 starts at 2B or rotates to 2B."
       },
@@ -2045,7 +1915,6 @@ var QUIZ_BANK = {
           "Stay at 3B until the runner commits home, then rotate inside for any call at 2B",
           "Rotate to home plate"
         ],
-        "correct": 2,
         "ref": "Appendix 5b, Live Ball Play from Infield - U1 at 1B; U3 at 3B, runner on 3B.",
         "why": "If U3 stays or is delayed at 3B, U1 is responsible for calls at 1B and 2B."
       },
@@ -2057,7 +1926,6 @@ var QUIZ_BANK = {
           "Go out to the outfield",
           "Move down the foul line for possible outfield-to-1B force plays, and rotate to the POP area only if the batter-runner progresses from 2B to 3B, pushing PU to 3B"
         ],
-        "correct": 3,
         "ref": "Appendix 5b, Ground Ball to Outfield - U1 at 1B; U3 at 3B.",
         "why": "U1 uses Dynamic Movement to establish a position for any call at 1B and only rotates home when a play at the plate is possible."
       },
@@ -2069,7 +1937,6 @@ var QUIZ_BANK = {
           "Keep going to the fence and say nothing",
           "Tell U1, visually and verbally, that U3 has 2B and rotate back inside to 2B, while U1 shortens their rotation or button hooks toward the 1B foul line"
         ],
-        "correct": 3,
         "ref": "Appendix 5a, Advanced Base Umpire Movements - Three-Umpire System - U3 Going Out Correction.",
         "why": "The correction allows better coverage of the batter-runner around the diamond."
       },
@@ -2081,7 +1948,6 @@ var QUIZ_BANK = {
           "Sprinting in a straight line to home plate",
           "The hand signal for a foul ball"
         ],
-        "correct": 1,
         "ref": "Appendix 5a, Advanced Base Umpire Movements - U1 Using Button Hook.",
         "why": "A button hook is used whenever U1 comes inside the diamond in a Three-Umpire System, and gives U1 the ability to adapt to a different situation."
       },
@@ -2093,7 +1959,6 @@ var QUIZ_BANK = {
           "About 3 m (10 ft) from the base, but not beyond a 45-degree line through 3B",
           "They must stay at their starting position"
         ],
-        "correct": 2,
         "ref": "Appendix 5b, Pickoff Plays - U3 Pickoff at 3B.",
         "why": "Observing the runner's return path helps lead the umpire to the best position to see into the tag or the leading edge."
       },
@@ -2105,7 +1970,6 @@ var QUIZ_BANK = {
           "Stay at 3B",
           "Follow U1 to the outfield"
         ],
-        "correct": 0,
         "ref": "Appendix 5b, Three-Umpire System Rotation Memory Map.",
         "why": "The remaining base umpire moves inside and has responsibility for all calls at 1B or 2B, then rotates to 3B ahead of the batter-runner."
       }
@@ -2129,7 +1993,6 @@ var QUIZ_BANK = {
           "Next to PU",
           "Two thirds of the way from HP to 1B"
         ],
-        "correct": 3,
         "ref": "Appendix 5c, Pre-Game Plate Meeting and Between Innings Positions.",
         "why": "Between innings PU stands one third of the way from HP to 3B, U1 one third of the way from HP to 1B, U2 two thirds of the way from HP to 1B and U3 two thirds of the way from HP to 3B."
       },
@@ -2141,7 +2004,6 @@ var QUIZ_BANK = {
           "About 5.5 m (18 ft)",
           "About 2 m (6 ft)"
         ],
-        "correct": 0,
         "ref": "Appendix 5c, Starting Positions - U2.",
         "why": "Without a runner the Second Base Diagonal Angle starting position is about 4.5 m (15 ft) back; with a runner on any base it is about 3.5 m (12 ft)."
       },
@@ -2153,7 +2015,6 @@ var QUIZ_BANK = {
           "U2",
           "U3"
         ],
-        "correct": 2,
         "ref": "Appendix 5c, Outfield Fly-Ball Coverage Area.",
         "why": "U1 goes out for fly balls to right field and F8 running to right; U3 for left field and F8 running to left. U1 or U3 should be given the first option by U2."
       },
@@ -2165,7 +2026,6 @@ var QUIZ_BANK = {
           "U3",
           "Nobody"
         ],
-        "correct": 1,
         "ref": "Appendix 5c, Tag-ups - When U1 goes out on a fly ball.",
         "why": "PU takes the tag up at 1B because PU has the Four Essential Elements in front of them at all times. U2 takes 2B and U3 takes 3B."
       },
@@ -2177,7 +2037,6 @@ var QUIZ_BANK = {
           "U3",
           "U2, from the outfield"
         ],
-        "correct": 2,
         "ref": "Appendix 5c, Tag-ups - When U2 goes out on a fly ball.",
         "why": "U1 keeps 1B, U3 takes 2B including the tag up, and PU takes the tag up at 3B."
       },
@@ -2189,7 +2048,6 @@ var QUIZ_BANK = {
           "U1 stays at 1B for the whole play",
           "U1 covers 3B on every fly ball"
         ],
-        "correct": 1,
         "ref": "Appendix 5c, Four-Umpire System Rotation Memory Map - U1.",
         "why": "U1 also communicates with PU when coming to HP and pushes PU up to 3B, and clears away from HP when PU indicates a back-fill situation."
       },
@@ -2201,7 +2059,6 @@ var QUIZ_BANK = {
           "Move to the POP area to assist PU",
           "Rotate to 3B"
         ],
-        "correct": 0,
         "ref": "Appendix 5c, Ground Ball to Outfield - U2, Hit to LF.",
         "why": "On a hit to RF or CF U2 button hooks inside for any call at 2B; on a hit to LF the acute angle on the throw is better from outside."
       },
@@ -2213,7 +2070,6 @@ var QUIZ_BANK = {
           "Next to PU behind home plate",
           "In front of the outfielder, halfway between the outfielder and the base umpire, up to one metre off the line in fair territory"
         ],
-        "correct": 3,
         "ref": "Appendix 5d, Starting Positions - Base and Outfield Umpires.",
         "why": "If LF or RF is fielding in close, the outfield umpire should always be in front of the outfielder to accurately judge trapped balls."
       },
@@ -2225,7 +2081,6 @@ var QUIZ_BANK = {
           "The nearest base umpire takes every call",
           "PU takes none"
         ],
-        "correct": 0,
         "ref": "Appendix 5d, Fair/Foul Responsibility.",
         "why": "When tracking a ball near the foul pole, the outfield umpire stays well back on the foul line to have the right depth to judge the flight over the pole or fence."
       },
@@ -2237,7 +2092,6 @@ var QUIZ_BANK = {
           "The call is made by the base umpire",
           "Both run into fair territory parallel to the flight of the ball until they have an angle, then the one taking the call indicates with a hand on the chest and/or verbalises"
         ],
-        "correct": 3,
         "ref": "Appendix 5d, Fly-ball Coverage.",
         "why": "ULF and URF are responsible for all calls beyond the base umpire and behind the infielders: fair/foul, catch/no catch and the status of a ball leaving the field of play."
       },
@@ -2249,7 +2103,6 @@ var QUIZ_BANK = {
           "About 3.5 m (12 ft) back at the Second Base Diagonal Angle",
           "About 5.5 m (18 ft) behind 3B, just off the line in foul territory"
         ],
-        "correct": 1,
         "ref": "Appendix 5c, Starting Positions - U3.",
         "why": "With no runners on, U3 starts about 5.5 m (18 ft) behind 3B; with a runner at 3B it is about 3.5 m (12 ft) in foul territory."
       },
@@ -2261,7 +2114,6 @@ var QUIZ_BANK = {
           "U2",
           "U3, from the outfield"
         ],
-        "correct": 2,
         "ref": "Appendix 5c, Tag-ups - When U3 goes out on a fly ball.",
         "why": "When U3 goes out, U1 takes the tag up at 1B and U2 takes the tag up at 2B. Each umpire has the tag up at their base after any initial rotation."
       },
@@ -2273,7 +2125,6 @@ var QUIZ_BANK = {
           "Seek help from U3 on the tag up at 2B",
           "Ask PU to take the tag up at 2B"
         ],
-        "correct": 2,
         "ref": "Appendix 5c, Tag-ups.",
         "why": "When umpires rotate inside using the Inside/Outside Theory they may not see both the first touch of the ball and the runner's lead, so they rotate quickly, glance over the shoulder and seek assistance."
       },
@@ -2285,7 +2136,6 @@ var QUIZ_BANK = {
           "U1, for runners at every base",
           "Each umpire, for a runner at their own base"
         ],
-        "correct": 3,
         "ref": "Appendix 5c, Leadoffs.",
         "why": "In the Three-Umpire System U1 has the lead-offs at 1B and 2B; in the Four-Umpire System each umpire has the lead-off at their base."
       },
@@ -2297,7 +2147,6 @@ var QUIZ_BANK = {
           "Directly in line with the throw",
           "Behind the fielder, at 180 degrees to the throw"
         ],
-        "correct": 0,
         "ref": "Appendix 5c, Live Ball Play from Infield.",
         "why": "On tag plays they use Dynamic Movement to keep the Four Essential Elements in view on the leading edge or as the play dictates."
       },
@@ -2309,7 +2158,6 @@ var QUIZ_BANK = {
           "Rotate immediately to 3B",
           "Stay at home plate in the stance"
         ],
-        "correct": 1,
         "ref": "Appendix 5c, Four-Umpire System Rotation Memory Map - PU.",
         "why": "With a runner at 2B or 3B PU uses the holding position instead, and anticipates plays at the plate."
       },
@@ -2321,7 +2169,6 @@ var QUIZ_BANK = {
           "Whenever the hit is to the infield",
           "When there is a runner on 3B and the hit is to right field"
         ],
-        "correct": 1,
         "ref": "Appendix 5c, Four-Umpire System Rotation Memory Map - U2.",
         "why": "U2 must rotate inside the diamond in all other situations where U1 or U3 goes out, and cover 1B when U1 goes out."
       },
@@ -2333,7 +2180,6 @@ var QUIZ_BANK = {
           "Leave all calls to the two outfield umpires",
           "Stay in the infield and rotate as in the Three-Umpire System, while two outfield umpires on the fair/foul lines judge fly balls, trapped balls and home runs"
         ],
-        "correct": 3,
         "ref": "Appendix 5d, Five Umpire System.",
         "why": "This leaves the remaining umpires to take care of plays at the bases."
       },
@@ -2345,7 +2191,6 @@ var QUIZ_BANK = {
           "Down the line to where the U3 and U1 starting positions are",
           "Behind the outfield fence"
         ],
-        "correct": 2,
         "ref": "Appendix 5d, Five Umpire System / Six-Umpire System.",
         "why": "The other umpires use the same between-innings positions as the Three-Umpire or Four-Umpire System."
       },
@@ -2357,7 +2202,6 @@ var QUIZ_BANK = {
           "They remove the need for PU to be at home plate",
           "They remove the need for fair/foul calls"
         ],
-        "correct": 0,
         "ref": "Appendix 5a, Key Concepts - Purpose of the Five and Six-Umpire Systems.",
         "why": "Plays closer to home affect the overall game result, so having 3B and home plate covered matters; the systems suit finals and games of a high standard."
       }

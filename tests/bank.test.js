@@ -33,10 +33,16 @@ for (const m of modules) for (const t of hasPractice(m) ? ['mkc', 'pca'] : ['pca
     if (!Array.isArray(q.options) || q.options.length < 2) { errors.push(`${at}: needs 2+ options`); return; }
     if (q.options.some(o => !String(o).trim())) errors.push(`${at}: empty option`);
     if (new Set(q.options).size !== q.options.length) errors.push(`${at}: duplicate options`);
-    if (!Number.isInteger(q.correct) || q.correct < 0 || q.correct >= q.options.length) errors.push(`${at}: correct out of range`);
+    if (t === 'pca') { if (q.correct !== undefined) errors.push(`${at}: a marked question must not carry its answer (the site is public; the server holds the key)`); }
+    else if (!Number.isInteger(q.correct) || q.correct < 0 || q.correct >= q.options.length) errors.push(`${at}: correct out of range`);
     if (q.options.some(o => /\b(all|none) of the above\b/i.test(o))) errors.push(`${at}: option depends on position, which breaks shuffling`);
   });
 }
+// The private answer key (not in the repo): present on the owner's machine, absent in CI. When present it must fit the questions exactly.
+const priv = path.join(__dirname, '..', 'private', 'answers.json');
+if (fs.existsSync(priv)) {
+  try { require('./answer-key-build.js').build(BANK, JSON.parse(fs.readFileSync(priv, 'utf8'))); } catch (e) { errors.push('private/answers.json: ' + e.message); }
+} else warnings.push('private/answers.json not found: the answer key was not checked (it is not stored in the repository)');
 // Required page furniture: the temporary-site disclosure, a privacy page that exists, and no ./ brand link.
 const NOTICE = /This is not the official WBSC website/;
 for (const f of ['assessment-widget.html', 'index.html', 'privacy.html', 'presentations.html', 'manuals.html', 'results.html']) {
