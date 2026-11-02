@@ -135,4 +135,5 @@ and when the result is recorded. The page asks for it with the attempts lookup (
   who started and then went quiet (no activity for 14 days: `STALLED_DAYS`, also in `results.html`), and totals by association/federation. Nothing is sent to learners.
   Only people who have saved a result appear: the site has no roster. **Run `installTriggers()` once from the editor after deploying** to schedule it
   (it re-creates the daily check too). `weeklySummary()` can also be run by hand to see the email.
+- **Failed 3+ times.** A module failed three or more times without ever being passed (counted across months, so the monthly renewal does not hide it) is flagged: a badge, a tile, a filter and a CSV column on `results.html`, and a section in the Monday summary (`REPEAT_FAILS` in `Code.gs` and `results.html`). People who later pass the module are not flagged.
 - `results.html` gained an association/federation filter, a "Went quiet" filter and tile, a by-association table and a "Went quiet" column in the summary CSV.

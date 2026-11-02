@@ -751,6 +751,7 @@
                 <button class="chip" type="button" data-f="progress" aria-pressed="false">In progress</button>
                 <button class="chip" type="button" data-f="attention" aria-pressed="false">Needs attention</button>
                 <button class="chip" type="button" data-f="quiet" aria-pressed="false">Went quiet</button>
+                <button class="chip" type="button" data-f="repeat" aria-pressed="false">Failed 3+ times</button>
               </div>
               <label class="assoc-label" for="assoc-filter"><span class="sr-only">Association / Federation</span>
                 <select id="assoc-filter" aria-label="Filter by association or federation"><option value="">All associations / federations</option></select>
@@ -811,6 +812,7 @@
 
   var $ = function(id){ return document.getElementById(id); };
   var NOW = new Date();   // attempts are counted per calendar month
+  var REPEAT_FAILS = 3;   // failed this many times on a module without ever passing it: flagged (keep equal to REPEAT_FAILS in Code.gs)
   var STALLED_DAYS = 14;   // keep equal to STALLED_DAYS in Code.gs (the weekly summary email)
   var state = { people: [], rows: [], config: { passMark: 85, maxAttempts: 2, totalModules: 8, completionType: 'Presentation Competency Assessment' },
                 filter: 'all', assoc: '', q: '', open: null, tab: 'umpires', generated: null, truncated: false };
@@ -888,6 +890,7 @@
         var m = p.modules[k]; if (m.passed) p.passedCount++;
         if (!m.passed && m.month >= cfg.maxAttempts) p.attention = true;   // locked out until the 1st
       });
+      p.repeat = Object.keys(p.modules).filter(function(k){ var m = p.modules[k]; return !m.passed && m.attempts >= REPEAT_FAILS; }).map(Number).sort(function(a, b){ return a - b; });   // all-time, not just this month
       p.completed = p.passedCount >= cfg.totalModules;
       if (p.completed) p.completedAt = Object.keys(p.modules).map(function(k){ return p.modules[k].passedAt; }).filter(Boolean).sort(function(a, b){ return b - a; })[0] || null;
       p.quiet = !p.completed && !p.attention && !!p.last && Date.now() - p.last.getTime() >= STALLED_DAYS * 864e5;   // started, then nothing for two weeks
@@ -915,6 +918,7 @@
       ['Completed all ' + cfg.totalModules, completed, P.length ? Math.round(completed / P.length * 100) + '% of umpires' : '', 'good'],
       ['In progress', P.length - completed, 'not yet completed', ''],
       ['Need attention', attention, 'used every attempt this month', attention ? 'warn' : ''],
+      ['Failed 3+ times', P.filter(function(p){ return p.repeat.length; }).length, 'a module, never passed', P.some(function(p){ return p.repeat.length; }) ? 'warn' : ''],
       ['Went quiet', P.filter(function(p){ return p.quiet; }).length, 'no activity for ' + STALLED_DAYS + '+ days', ''],
       ['Marked attempts', marked.length, marked.length ? Math.round(passes / marked.length * 100) + '% passed' : 'none yet', ''],
       ['Last 7 days', week, 'results of any kind', '']
@@ -960,13 +964,18 @@
       if (state.filter === 'progress' && p.completed) return false;
       if (state.filter === 'attention' && !(p.attention && !p.completed)) return false;
       if (state.filter === 'quiet' && !p.quiet) return false;
+      if (state.filter === 'repeat' && !p.repeat.length) return false;
       if (state.assoc !== '' && (p.association || NO_ASSOC) !== state.assoc) return false;
       if (!q) return true;
       return [p.name, Object.keys(p.emails).join(' '), p.umpireId, p.association].join(' ').toLowerCase().indexOf(q) !== -1;
     }).sort(function(a, b){ return (b.last ? b.last.getTime() : 0) - (a.last ? a.last.getTime() : 0); });
   }
 
+  function repeatBadge(p){ return p.repeat.length ? ' <span class="badge warn" title="Failed ' + REPEAT_FAILS + ' or more times on: ' + esc(p.repeat.map(function(n){ return 'Module ' + pad2(n); }).join(', ')) + '">Failed ' + REPEAT_FAILS + '+ times</span>' : ''; }
   function badge(p){
+    return statusBadge(p) + repeatBadge(p);
+  }
+  function statusBadge(p){
     if (p.completed) return '<span class="badge done">Completed</span>';
     if (p.attention) return '<span class="badge warn">Needs attention</span>';
     if (p.quiet) return '<span class="badge prog">Went quiet</span>';
@@ -1028,13 +1037,13 @@
   }
   function today(){ var d = new Date(); return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()); }
   function summaryHead(){
-    var h = ['Name', 'Email', 'Umpire ID', 'Association', 'Modules passed', 'Completed all ' + state.config.totalModules, 'Completed on', 'Needs attention', 'Went quiet', 'Last activity'];
+    var h = ['Name', 'Email', 'Umpire ID', 'Association', 'Modules passed', 'Completed all ' + state.config.totalModules, 'Completed on', 'Needs attention', 'Went quiet', 'Failed 3+ times (modules)', 'Last activity'];
     for (var n = 1; n <= state.config.totalModules; n++) h.push('Module ' + pad2(n));
     return h;
   }
   function summaryRow(p){
     var r = [p.name, Object.keys(p.emails).map(function(k){ return p.emails[k]; }).join('; '), p.umpireId, p.association, p.passedCount, p.completed ? 'Yes' : 'No',
-             p.completedAt ? p.completedAt.toISOString().slice(0, 10) : '', p.attention && !p.completed ? 'Yes' : 'No', p.quiet ? 'Yes' : 'No', p.last ? p.last.toISOString() : ''];
+             p.completedAt ? p.completedAt.toISOString().slice(0, 10) : '', p.attention && !p.completed ? 'Yes' : 'No', p.quiet ? 'Yes' : 'No', p.repeat.map(function(n){ return 'Module ' + pad2(n); }).join('; '), p.last ? p.last.toISOString() : ''];
     for (var n = 1; n <= state.config.totalModules; n++){ var m = p.modules[n]; r.push(m ? (m.passed ? 'PASS (' + m.best + '%)' : 'NOT PASSED (best ' + m.best + '%, ' + m.attempts + ' attempt' + (m.attempts === 1 ? '' : 's') + ')') : ''); }
     return r;
   }

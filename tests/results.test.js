@@ -127,15 +127,25 @@ let PORT;
     await q.pg.click('.chip[data-f=all]'); await q.pg.selectOption('#assoc-filter', '(none given)'); assert.strictEqual(await q.pg.locator('#people-table .prow').count(), 1); ok('umpires with no association can be filtered too');
     await q.pg.selectOption('#assoc-filter', ''); assert.strictEqual(await q.pg.locator('#people-table .prow').count(), 5);
     const [dl2] = await Promise.all([q.pg.waitForEvent('download'), q.pg.click('#csv-summary-btn')]); const csv2 = fs.readFileSync(await dl2.path(), 'utf8');
-    assert(/"Needs attention","Went quiet","Last activity"/.test(csv2) && /"Dan Quiet".*"No","Yes"/.test(csv2)); ok('the summary CSV has a Went quiet column');
+    assert(/"Needs attention","Went quiet","Failed 3\+ times \(modules\)","Last activity"/.test(csv2) && /"Dan Quiet".*"No","Yes",""/.test(csv2)); ok('the summary CSV has a Went quiet column');
     // attempts are renewed on the 1st of every month: two failures in an earlier month do not lock anyone out now
     const ROWS3 = [row(45, 'Hal Renewed', 'hal@x.com', 'H1', MODS[0], PCA, 60, 1, 'NOT PASSED'), row(44, 'Hal Renewed', 'hal@x.com', 'H1', MODS[0], PCA, 70, 2, 'NOT PASSED'),
-      row(0.003, 'Ivy Locked', 'ivy@x.com', 'I1', MODS[0], PCA, 60, 1, 'NOT PASSED'), row(0.002, 'Ivy Locked', 'ivy@x.com', 'I1', MODS[0], PCA, 70, 2, 'NOT PASSED')];
+      row(0.003, 'Ivy Locked', 'ivy@x.com', 'I1', MODS[0], PCA, 60, 1, 'NOT PASSED'), row(0.002, 'Ivy Locked', 'ivy@x.com', 'I1', MODS[0], PCA, 70, 2, 'NOT PASSED'),
+      row(70, 'Jay Repeat', 'jay@x.com', 'J1', MODS[1], PCA, 50, 1, 'NOT PASSED'), row(69, 'Jay Repeat', 'jay@x.com', 'J1', MODS[1], PCA, 60, 2, 'NOT PASSED'), row(0.001, 'Jay Repeat', 'jay@x.com', 'J1', MODS[1], PCA, 70, 1, 'NOT PASSED'),
+      row(70, 'Kim Passed', 'kim@x.com', 'K1', MODS[1], PCA, 50, 1, 'NOT PASSED'), row(69, 'Kim Passed', 'kim@x.com', 'K1', MODS[1], PCA, 60, 2, 'NOT PASSED'), row(0.001, 'Kim Passed', 'kim@x.com', 'K1', MODS[1], PCA, 90, 1, 'PASS')];
     const m3 = await open(b, p => p.get('password') === 'right' ? { success: true, cols: COLS, rows: ROWS3, config: CONFIG } : { success: false, code: 'wrong', error: 'no' });
     await m3.pg.fill('#pw', 'right'); await m3.pg.click('#login-btn'); await m3.pg.waitForSelector('#dash-view', { state: 'visible' });
     const badges = await m3.pg.$$eval('#people-table .prow', a => a.map(r => r.textContent.replace(/\s+/g, ' ')));
     assert.ok(badges.some(t => /Ivy Locked/.test(t) && /Needs attention/.test(t)), badges.join(' | ')); assert.ok(badges.some(t => /Hal Renewed/.test(t) && /Went quiet/.test(t) && !/Needs attention/.test(t)), badges.join(' | '));
     ok('two failed attempts this month need attention; two from an earlier month do not (attempts renew on the 1st)');
+    // "Failed 3+ times": failed a module three times without ever passing it, counted across months
+    assert.ok(badges.some(t => /Jay Repeat/.test(t) && /Failed 3\+ times/.test(t)), badges.join(' | ')); assert.ok(!badges.some(t => /Kim Passed|Ivy Locked|Hal Renewed/.test(t) && /Failed 3\+ times/.test(t)), 'only three failures and no pass are flagged');
+    assert.ok((await m3.pg.$$eval('#tiles .tile', a => a.map(t => t.querySelector('.k').textContent + '=' + t.querySelector('.v').textContent))).includes('Failed 3+ times=1'));
+    await m3.pg.click('.chip[data-f=repeat]'); assert.strictEqual(await m3.pg.locator('#people-table .prow').count(), 1); assert(/Jay Repeat/.test(await m3.pg.textContent('#people-table')));
+    const [dl3] = await Promise.all([m3.pg.waitForEvent('download'), m3.pg.click('#csv-summary-btn')]); const csv3 = fs.readFileSync(await dl3.path(), 'utf8');
+    assert(/"Failed 3\+ times \(modules\)"/.test(csv3) && /"Jay Repeat".*"Module 02"/.test(csv3));
+    ok('"Failed 3+ times" flags a module failed three times without a pass: badge, tile, filter and CSV column');
+    await m3.pg.click('.chip[data-f=all]');
     const bad = [...o.hosts].filter(h => !/^localhost:|^script\.google\.com$/.test(h)); assert.deepStrictEqual(bad, []); ok('no requests to other hosts');
   } finally { await b.close(); server.close(); }
   console.log(n + ' checks passed');

@@ -83,6 +83,7 @@ var PROGRESS_MAX_CHARS = 30000;        // a cell holds 50,000 characters
 var PROGRESS_HOURLY = 240;             // saves per learner per hour (a 20-question attempt is about 20)
 
 // Weekly summary for the Director.
+var REPEAT_FAILS = 3;                  // failed this many times on a module without ever passing it: flagged in the weekly summary
 var STALLED_DAYS = 14;                 // started, not finished and no activity for this long
 
 // Health check.
@@ -1078,7 +1079,8 @@ function people_() {
     list.forEach(function (r) {
       if (r.assoc) p.assoc = r.assoc;
       if (r.type.toLowerCase() !== COMPLETION_TYPE.toLowerCase() || !r.n || r.n > TOTAL_MODULES) return;
-      var m = p.modules[r.n] || (p.modules[r.n] = { attempts: 0, passed: false, at: 0 });
+      var m = p.modules[r.n] || (p.modules[r.n] = { attempts: 0, total: 0, passed: false, at: 0 });
+      m.total++;   // all attempts ever (the monthly count below is what locks a learner out)
       if (monthKey_(r.ts) === monthKey_(new Date())) m.attempts++;   // this month's attempts: they are renewed on the 1st
       if (r.result === 'PASS' && !m.passed) { m.passed = true; m.at = r.ts; }
     });
@@ -1088,6 +1090,7 @@ function people_() {
       else if (m.attempts >= MAX_ATTEMPTS) p.attention = true;
     });
     p.completed = p.passed >= TOTAL_MODULES;
+    p.repeat = Object.keys(p.modules).filter(function (k) { return !p.modules[k].passed && p.modules[k].total >= REPEAT_FAILS; }).map(Number).sort(function (a, b) { return a - b; });
     return p;
   });
 }
@@ -1101,6 +1104,7 @@ function weeklySummary() {
   var done = people.filter(function (p) { return p.completed && now - p.completedAt <= 7 * DAY; });
   var attention = people.filter(function (p) { return p.attention && !p.completed; });
   var stalled = people.filter(function (p) { return !p.completed && !p.attention && p.last && now - p.last >= STALLED_DAYS * DAY; });
+  var repeat = people.filter(function (p) { return p.repeat.length && !p.completed; });
   var completedAll = people.filter(function (p) { return p.completed; }).length;
   function line(p) { return '- ' + p.name + ' (' + (p.assoc || 'no association given') + '), ' + p.passed + ' of ' + TOTAL_MODULES + ' modules passed'; }
   function days(p) { return Math.floor((now - p.last) / DAY); }
@@ -1120,6 +1124,8 @@ function weeklySummary() {
     people.length + ' umpires have a result; ' + completedAll + ' have completed all ' + TOTAL_MODULES + ' modules.\n\n' +
     'COMPLETED THIS WEEK (' + done.length + ')\n' + (done.length ? done.map(line).join('\n') : '- none') + '\n\n' +
     'NEED ATTENTION: used every attempt on a module without passing (' + attention.length + ')\n' + (attention.length ? attention.map(line).join('\n') : '- none') + '\n\n' +
+    'FAILED ' + REPEAT_FAILS + ' OR MORE TIMES on a module and never passed it (' + repeat.length + ')\n' +
+    (repeat.length ? repeat.map(function (p) { return line(p) + ', module' + (p.repeat.length === 1 ? '' : 's') + ' ' + p.repeat.map(function (n) { return ('0' + n).slice(-2); }).join(', '); }).join('\n') : '- none') + '\n\n' +
     'WENT QUIET: started, not finished, no activity for ' + STALLED_DAYS + ' days or more (' + stalled.length + ')\n' +
     (stalled.length ? stalled.map(function (p) { return line(p) + ', last active ' + days(p) + ' days ago, ' + p.email; }).join('\n') : '- none') + '\n\n' +
     'BY ASSOCIATION / FEDERATION\n' + assocLines.join('\n') + '\n\n' +

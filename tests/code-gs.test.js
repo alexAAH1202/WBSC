@@ -562,4 +562,17 @@ ok('the weekly summary counts only this month\'s attempts as "need attention"', 
   b = e.mails.length; e.ctx.weeklySummary(); assert.ok(/1 need attention/.test(e.mails.slice(b)[0].subject));
 });
 
+ok('weekly summary: a module failed 3 or more times without ever passing it is flagged (counted across months, not for people who passed it)', () => {
+  const e = makeEnv(); const u = (email, name) => ({ participantName: name, umpireId: email.split('@')[0] });
+  let t = login(e, 'rep@x.com'); save(e, t, Object.assign(u('rep@x.com', 'Repeat Rae'), { score: 5, module: mod(2) })); save(e, t, Object.assign(u('rep@x.com', 'Repeat Rae'), { score: 6, module: mod(2) }));
+  t = login(e, 'two@x.com'); save(e, t, Object.assign(u('two@x.com', 'Two Tim'), { score: 5, module: mod(2) })); save(e, t, Object.assign(u('two@x.com', 'Two Tim'), { score: 6, module: mod(2) }));
+  t = login(e, 'pass@x.com'); save(e, t, Object.assign(u('pass@x.com', 'Pass Pat'), { score: 5, module: mod(2) })); save(e, t, Object.assign(u('pass@x.com', 'Pass Pat'), { score: 6, module: mod(2) }));
+  e.clock.now = Date.UTC(2026, 10, 2);   // the 1st has renewed everyone's attempts
+  t = login(e, 'rep@x.com'); save(e, t, Object.assign(u('rep@x.com', 'Repeat Rae'), { score: 7, module: mod(2) }));       // third failure, in a new month
+  t = login(e, 'pass@x.com'); save(e, t, Object.assign(u('pass@x.com', 'Pass Pat'), { score: 9, module: mod(2) }));      // passes at the third try
+  const b = e.mails.length; e.ctx.weeklySummary(); const body = e.mails.slice(b)[0].body;
+  assert.ok(/FAILED 3 OR MORE TIMES[^\n]*\(1\)\n- Repeat Rae \([^)]*\), \d of 8 modules passed, module 02/.test(body), body);
+  assert.ok(!/- Two Tim[^\n]*module 02/.test(body) && !/- Pass Pat[^\n]*module 02/.test(body), 'two failures, or a pass at the third try, are not flagged');
+});
+
 console.log(n + ' Code.gs checks passed');
