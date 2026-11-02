@@ -150,3 +150,11 @@ A learner who has passed all eight modules can download the official WBSC certif
 - **Names.** Latin letters and accents print. Anything the certificate font cannot print (for example Japanese or Chinese names) shows a message to contact the Director.
 - **Changing the template.** Replace `certificate/certificate-template.pdf` (keep the two field names), run `node tests/certificate-build.js`, then `node tests/certificate.test.js`.
 - The certificate wording lists Appendix 4 and 5a to 5d, as supplied by WBSC. `node tests/certificate.test.js` checks the template and its base64 copy.
+
+## Fewer emails
+A free Gmail account sends about 100 emails a day, so the site sends as few as it can (all switchable with Script properties):
+- **The Director** is not emailed for every result (the results page, the Monday summary and the program-completed notice cover it). `DIRECTOR_RESULT_EMAILS` = `on` brings back one email per result.
+- **Learners** get a receipt when they pass or use the last attempt of the month; after a first failed attempt the page says the result is on screen. `RECEIPT_EMAILS` = `all` sends one for every attempt. The Sheet's "Email Status" / "Receipt Status" columns say "not sent" for these rows and the health check ignores them.
+- **Sign-in** lasts 14 days (`SESSION_DAYS`): the token is kept in the browser's localStorage with the details typed, and the server keeps a record (hash of the token, email, expiry) on a **Sessions** tab of the Sheet, purged by the daily check, because the script cache holds a value for 6 hours at most. "Use a different email address" signs out. This means one login code per device per fortnight instead of one per visit.
+- **The daily health check** is emailed only when something is wrong. `HEALTH_REPORT` = `daily` restores the daily email.
+**Needs the Apps Script redeployed.** Privacy page and pop-up say all of this.

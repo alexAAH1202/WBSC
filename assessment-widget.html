@@ -706,6 +706,7 @@
           </div>
           <div class="verify-row" id="verify-done-row" style="display:none;">
             <button class="btn-ghost" id="verify-change-btn" type="button">Use a different email address</button>
+            <span class="verify-hint">You stay signed in on this device for up to 14 days. Choose &ldquo;Use a different email address&rdquo; to sign out, for example on a shared computer.</span>
           </div>
         </div>
       </div>
@@ -1531,17 +1532,22 @@
   // EMAIL VERIFICATION (one-time code)
   // The learner proves they control the email address with a 6-digit code the
   // server emails them. The server then gives this page a session token, which
-  // is kept for this visit only (sessionStorage) and sent with every attempts
+  // is kept on this device for up to 14 days (localStorage) and sent with every attempts
   // lookup and result. Results are always recorded against the VERIFIED address.
   // ---------------------------------------------------------------
   var session = null;      // { token, email, exp }
   try {
-    var storedSession = JSON.parse(sessionStorage.getItem('wbscSession') || 'null');
+    var storedSession = JSON.parse(localStorage.getItem('wbscSession') || 'null');   // the sign-in lasts up to 14 days on this device
     if (storedSession && storedSession.token && storedSession.exp > Date.now()) session = storedSession;
+    else localStorage.removeItem('wbscSession');
   } catch (e) {}
 
   function saveSession(){
-    try { if (session) sessionStorage.setItem('wbscSession', JSON.stringify(session)); else sessionStorage.removeItem('wbscSession'); } catch (e) {}
+    try {
+      if (session) localStorage.setItem('wbscSession', JSON.stringify(session));
+      else { localStorage.removeItem('wbscSession'); localStorage.removeItem('wbscIdentity'); }
+    } catch (e) {}
+    if (typeof saveIdentity === 'function') saveIdentity();
   }
   function isVerified(){
     return !!(session && session.exp > Date.now() &&
@@ -1747,7 +1753,9 @@
       var max = m.maxAttempts || MAX_ATTEMPTS;
       var rcpt = session ? session.email : '';
       setSaveState('saved', m.attemptNumber
-        ? T('✓ Your result has been recorded (attempt {n} of {max}). A receipt will be emailed to {email}.', { n: m.attemptNumber, max: max, email: rcpt })
+        ? (m.receipt === false
+            ? T('✓ Your result has been recorded (attempt {n} of {max}). A receipt is emailed when you pass or use your last attempt; this page is your record for now.', { n: m.attemptNumber, max: max })
+            : T('✓ Your result has been recorded (attempt {n} of {max}). A receipt will be emailed to {email}.', { n: m.attemptNumber, max: max, email: rcpt }))
         : T('✓ Your result has been recorded. A receipt will be emailed to {email}.', { email: rcpt }), false);
       if (m.result) showResult(m.result === 'PASS', m.attemptNumber, true);   // the server's decision is final
       if (m.result !== 'PASS' && m.attemptNumber >= max) showReview();          // all attempts used: now the answers can be shown
@@ -2060,21 +2068,23 @@
     });
   });
 
-  // Remember the details for this visit only (sessionStorage), so a refresh does not mean retyping them.
+  // Remember the details typed, so a refresh does not mean retyping them: for this visit (sessionStorage) and, while the
+  // learner is signed in, on this device for as long as the sign-in lasts (localStorage), so a returning learner does not retype them either.
   var IDENTITY_FIELDS = ['inp-name', 'inp-email', 'inp-umpid', 'inp-assoc'];
+  function saveIdentity(){
+    try {
+      var o = {};
+      IDENTITY_FIELDS.forEach(function(k){ o[k] = document.getElementById(k).value; });
+      sessionStorage.setItem('wbscIdentity', JSON.stringify(o));
+      if (session) { o.exp = session.exp; localStorage.setItem('wbscIdentity', JSON.stringify(o)); }
+    } catch (e) {}
+  }
   try {
-    var saved = JSON.parse(sessionStorage.getItem('wbscIdentity') || '{}');
-    IDENTITY_FIELDS.forEach(function(id){ if (saved[id]) document.getElementById(id).value = saved[id]; });
+    var saved = JSON.parse(sessionStorage.getItem('wbscIdentity') || 'null');
+    if (!saved) { var kept = JSON.parse(localStorage.getItem('wbscIdentity') || 'null'); if (kept && session && kept.exp > Date.now()) saved = kept; }
+    IDENTITY_FIELDS.forEach(function(id){ if (saved && saved[id]) document.getElementById(id).value = saved[id]; });
   } catch (e) {}
-  IDENTITY_FIELDS.forEach(function(id){
-    document.getElementById(id).addEventListener('input', function(){
-      try {
-        var o = {};
-        IDENTITY_FIELDS.forEach(function(k){ o[k] = document.getElementById(k).value; });
-        sessionStorage.setItem('wbscIdentity', JSON.stringify(o));
-      } catch (e) {}
-    });
-  });
+  IDENTITY_FIELDS.forEach(function(id){ document.getElementById(id).addEventListener('input', saveIdentity); });
 
   var navToggle = document.getElementById('nav-toggle');
   navToggle.addEventListener('click', function(){

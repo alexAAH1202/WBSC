@@ -28,7 +28,9 @@
  *   1. Paste this file into the Apps Script project, Save.
  *   2. Project Settings -> Script properties -> add RESULTS_PASSWORD (the Director's
  *      password). Optional: ALERT_EMAIL (default: the owner of this script) and
- *      HEALTH_REPORT = problems (default: a daily report even when all is well).
+ *      HEALTH_REPORT = daily (default: the daily check is emailed only when something is wrong),
+ *      DIRECTOR_RESULT_EMAILS = on (default off: the Director gets the Monday summary and completion notices, not an email per result),
+ *      RECEIPT_EMAILS = all (default: a receipt only when the learner passes or uses their last attempt of the month).
  *   3. Run installTriggers() once from the editor and approve the permissions (it schedules the daily check and the
  *      Monday weekly summary; run it again after any update that adds a trigger).
  *   4. Run sendTestAlert() once and check the email arrives.
@@ -67,7 +69,8 @@ var CODE_MAX_TRIES = 5;          // wrong guesses before the code is thrown away
 var CODE_EMAIL_HOURLY = 3;       // codes per email address per hour
 var CODE_EMAIL_6H = 6;           // ... and per 6 hours
 var CODE_GLOBAL_HOURLY = 60;     // codes for everyone per hour (protects the mail quota)
-var SESSION_TTL_S = 21600;       // a verified session lasts 6 hours
+var SESSION_TTL_S = 21600;       // the cache keeps a session for 6 hours at most ...
+var SESSION_DAYS = 14;           // ... a verified session lasts this long: it is also kept on a Sessions tab of the Sheet
 
 // Director's results page.
 var RESULTS_FAIL_LIMIT = 10;     // wrong passwords ...
@@ -85,6 +88,13 @@ var PROGRESS_HOURLY = 240;             // saves per learner per hour (a 20-quest
 // Weekly summary for the Director.
 var REPEAT_FAILS = 3;                  // failed this many times on a module without ever passing it: flagged in the weekly summary
 var STALLED_DAYS = 14;                 // started, not finished and no activity for this long
+
+// Fewer emails (the free Gmail limit is about 100 a day). By default:
+//   - the Director is NOT emailed for every result: there is the results page, the Monday summary and the completion notice;
+//   - a learner is emailed a receipt only when they pass or use their last attempt for the month;
+//   - the daily health check is emailed only when something is wrong.
+// Script properties restore the old behaviour: DIRECTOR_RESULT_EMAILS = on, RECEIPT_EMAILS = all, HEALTH_REPORT = daily.
+var SESSIONS_SHEET = 'Sessions';
 
 // Health check.
 var HEALTH_MIN_MAIL_QUOTA = 20;
@@ -242,6 +252,7 @@ function saveMessage_(result) {
     maxAttempts: result.maxAttempts || MAX_ATTEMPTS,
     code: result.code || '',
     resetsOn: result.resetsOn || '',
+    receipt: !!result.receipt,
     certName: result.certName || '',
     certDate: result.certDate || '',
     error: result.error || ''
@@ -409,10 +420,11 @@ function handleVerifyCode_(p) {
       cacheRemove_(key);
       var token = (Utilities.getUuid() + Utilities.getUuid()).replace(/-/g, '');
       cachePutJson_('sess:' + sha_(token), { email: email }, SESSION_TTL_S);
+      saveSession_(token, email);
       msg.success = true;
       msg.token = token;
       msg.email = email;
-      msg.expiresIn = SESSION_TTL_S;
+      msg.expiresIn = SESSION_DAYS * 86400;
     } else {
       entry.tries++;
       cachePutJson_(key, entry, CODE_TTL_S);
@@ -431,12 +443,58 @@ function handleVerifyCode_(p) {
   return messagePage_(msg);
 }
 
+// A verified session lasts SESSION_DAYS. The cache is fast but holds a value for 6 hours at most, so each session is also
+// written to a Sessions tab (a hash of the token, the email, the expiry) and read back from there when the cache has forgotten it.
+function sessionsSheet_() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheetByName(SESSIONS_SHEET);
+  if (!sh) {
+    sh = ss.insertSheet(SESSIONS_SHEET);
+    sh.appendRow(['Session (hash)', 'Email', 'Expires']);
+    try { sh.setFrozenRows(1); } catch (e) { /* cosmetic */ }
+  }
+  return sh;
+}
+
+function saveSession_(token, email) {
+  var lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try { sessionsSheet_().appendRow([sha_(token), email, new Date(Date.now() + SESSION_DAYS * 86400000)]); } finally { lock.releaseLock(); }
+}
+
 // The verified email behind a session token, or '' if there is none.
 function sessionEmail_(token) {
   var t = String(token || '');
   if (!/^[a-f0-9]{64}$/.test(t)) return '';
-  var s = cacheGetJson_('sess:' + sha_(t));
-  return s && s.email ? String(s.email) : '';
+  var key = 'sess:' + sha_(t);
+  var s = cacheGetJson_(key);
+  if (s && s.email) return String(s.email);
+  try {
+    var sh = sessionsSheet_(), last = sh.getLastRow();
+    if (last < 2) return '';
+    var h = sha_(t), rows = sh.getRange(2, 1, last - 1, 3).getValues();
+    for (var i = rows.length - 1; i >= 0; i--) {
+      if (String(rows[i][0]) !== h) continue;
+      if (new Date(rows[i][2]).getTime() > Date.now()) { cachePutJson_(key, { email: String(rows[i][1]) }, SESSION_TTL_S); return String(rows[i][1]); }
+      return '';
+    }
+  } catch (err) { logError_('session', err); }
+  return '';
+}
+
+// Deletes expired sessions (run by the daily check). Returns how many were removed.
+function purgeSessions_() {
+  var lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  var removed = 0;
+  try {
+    var sh = sessionsSheet_(), last = sh.getLastRow();
+    for (var r = last; r >= 2; r--) {
+      var t = new Date(sh.getRange(r, 3).getValue()).getTime();
+      if (isNaN(t) || t < Date.now()) { sh.deleteRow(r); removed++; }
+    }
+  } finally { lock.releaseLock(); }
+  return removed;
 }
 
 function cleanEmail_(v) {
@@ -620,6 +678,7 @@ function handleSave_(e) {
         result.passed = result.result === 'PASS';
         result.maxAttempts = MAX_ATTEMPTS;
         result.resetsOn = result.passed ? '' : nextResetDate_();
+        result.receipt = receiptWanted_(result.passed, Number(result.attemptNumber));
         var dsum = completionSummary_(sheet, clean);
         result.completedAll = dsum.passedCount >= TOTAL_MODULES;
         if (result.completedAll) { result.certName = clean.name; result.certDate = completionDay_(dsum); }
@@ -652,6 +711,7 @@ function handleSave_(e) {
         result.passed = clean.passed;
         result.maxAttempts = MAX_ATTEMPTS;
         result.resetsOn = clean.passed ? '' : nextResetDate_();   // when this month's attempts are renewed
+        result.receipt = receiptWanted_(clean.passed, attemptNumber);
         result.completedAll = after.passedCount >= TOTAL_MODULES;
         if (result.completedAll) { result.certName = clean.name; result.certDate = completionDay_(after); }
         post = {
@@ -682,11 +742,17 @@ function handleSave_(e) {
   return response;
 }
 
+// Who is emailed about a saved result (see the "Fewer emails" settings).
+function directorEmailsOn_() { return PropertiesService.getScriptProperties().getProperty('DIRECTOR_RESULT_EMAILS') === 'on'; }
+function receiptWanted_(passed, attemptNumber) {
+  return PropertiesService.getScriptProperties().getProperty('RECEIPT_EMAILS') === 'all' || !!passed || attemptNumber >= MAX_ATTEMPTS;
+}
+
 function sendAfterSave_(post) {
   var directorStatus, receiptStatus;
   try {
-    sendAdminNotification_(post.clean, post.attemptNumber);
-    directorStatus = 'sent';
+    if (directorEmailsOn_()) { sendAdminNotification_(post.clean, post.attemptNumber); directorStatus = 'sent'; }
+    else directorStatus = 'not sent (summary only)';
   } catch (mailErr) {
     directorStatus = 'FAILED: ' + String(mailErr).slice(0, 150);
     logError_('director-email', mailErr);
@@ -695,8 +761,8 @@ function sendAfterSave_(post) {
       '\nSee the "Email Status" column in the Sheet.');
   }
   try {
-    sendReceipt_(post.clean, post.attemptNumber, post.summary);
-    receiptStatus = 'sent';
+    if (receiptWanted_(post.clean.passed, post.attemptNumber)) { sendReceipt_(post.clean, post.attemptNumber, post.summary); receiptStatus = 'sent'; }
+    else receiptStatus = 'not sent (on screen only)';
   } catch (mailErr2) {
     receiptStatus = 'FAILED: ' + String(mailErr2).slice(0, 150);
     logError_('receipt-email', mailErr2);
@@ -1187,11 +1253,12 @@ function dailyHealthCheck() {
       problems.push(n + ' server error(s) in the last two days. Latest: ' + lastErr);
     }
   } catch (err3) { /* ignore */ }
+  try { var purgedS = purgeSessions_(); if (purgedS) notes.push('Removed ' + purgedS + ' expired sign-in session(s).'); } catch (err5) { logError_('session-purge', err5); }
   try { var purged = purgeProgress_(); if (purged) notes.push('Removed ' + purged + ' expired saved attempt(s).'); } catch (err4) { logError_('progress-purge', err4); }
   if (!props.getProperty('RESULTS_PASSWORD')) notes.push('RESULTS_PASSWORD is not set, so the Director\'s results page cannot be opened.');
 
   var ok = problems.length === 0;
-  if (ok && props.getProperty('HEALTH_REPORT') === 'problems') return { ok: ok, problems: problems, notes: notes, sent: false };
+  if (ok && props.getProperty('HEALTH_REPORT') !== 'daily') return { ok: ok, problems: problems, notes: notes, sent: false };
   var body = (ok ? 'Everything looks fine.\n\n' : 'These need attention:\n- ' + problems.join('\n- ') + '\n\n') +
     notes.join('\n') + '\n\nSheet: ' + SPREADSHEET_URL;
   MailApp.sendEmail(alertEmail_(), '[WBSC portal] Daily check: ' + (ok ? 'OK' : 'ATTENTION NEEDED'), body);
