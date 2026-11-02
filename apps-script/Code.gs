@@ -133,6 +133,7 @@ function doGet(e) {
   var p = (e && e.parameter) || {};
   if (p.action === 'attempts') return attemptsReply_(p);
   if (p.action === 'certificate') return certificateReply_(p);
+  if (p.action === 'status') return statusReply_(p);
   try {
     return HtmlService.createHtmlOutputFromFile('assessment-widget')
       .setTitle('Assessment - WBSC Umpire Mechanics Training')
@@ -353,6 +354,39 @@ function certificateReply_(p) {
   } catch (err) {
     logError_('certificate', err);
     out = { ok: false, error: 'Could not check the certificate' };
+  }
+  var cb = String(p.callback || ''), json = JSON.stringify(out);
+  if (/^[A-Za-z_$][A-Za-z0-9_$]{0,40}$/.test(cb)) return ContentService.createTextOutput(cb + '(' + json + ');').setMimeType(ContentService.MimeType.JAVASCRIPT);
+  return ContentService.createTextOutput(json).setMimeType(ContentService.MimeType.JSON);
+}
+
+// Where a verified learner stands: for each module whether it is passed, their best score, how many attempts they have
+// left this month, plus the certificate data once everything is passed. One lookup for the "My progress" strip.
+function statusReply_(p) {
+  var out;
+  try {
+    var email = sessionEmail_(p.token);
+    if (!email) out = { ok: false, code: 'auth', error: 'Please verify your email address first.' };
+    else {
+      var sheet = getSheet_(), last = sheet.getLastRow(), id = '';
+      if (last >= 2) {
+        var rows = sheet.getRange(2, 1, last - 1, COLUMNS.length).getValues();
+        for (var i = 0; i < rows.length; i++) if (norm_(rows[i][2]) === norm_(email) && norm_(rows[i][3])) id = String(rows[i][3]);
+      }
+      var summary = completionSummary_(sheet, { email: email, umpireId: id }), mods = {};
+      for (var n = 1; n <= TOTAL_MODULES; n++) {
+        var m = summary.modules[n];
+        mods[n] = !m ? { state: 'new' }
+          : m.passed ? { state: 'passed', best: m.best }
+          : { state: 'tried', best: m.best, left: Math.max(0, MAX_ATTEMPTS - m.monthAttempts) };
+      }
+      var cert = certificateInfo_(email);
+      out = { ok: true, total: TOTAL_MODULES, passedCount: summary.passedCount, max: MAX_ATTEMPTS, resetsOn: nextResetDate_(), modules: mods,
+              eligible: cert.eligible, name: cert.name, date: cert.date };
+    }
+  } catch (err) {
+    logError_('status', err);
+    out = { ok: false, error: 'Could not check your progress' };
   }
   var cb = String(p.callback || ''), json = JSON.stringify(out);
   if (/^[A-Za-z_$][A-Za-z0-9_$]{0,40}$/.test(cb)) return ContentService.createTextOutput(cb + '(' + json + ');').setMimeType(ContentService.MimeType.JAVASCRIPT);

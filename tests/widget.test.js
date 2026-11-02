@@ -36,7 +36,7 @@ async function newPage(b, opts, saveHandler) {
     const a = opts.attempts || { attempts: 0, remaining: 2, passed: false };
     r.fulfill({ status: 200, contentType: 'application/javascript', body: `${cb}(${JSON.stringify(Object.assign({ ok: true, max: 2, passMark: 85 }, a))});` });
   });
-  await pg.route(/script\.google\.com\/macros\/s\/.*\/exec\?action=certificate/, r => {
+  await pg.route(/script\.google\.com\/macros\/s\/.*\/exec\?action=status/, r => {
     const u = new URL(r.request().url()); certLookups.push(Object.fromEntries(u.searchParams));
     r.fulfill({ status: 200, contentType: 'application/javascript', body: `${u.searchParams.get('callback')}(${JSON.stringify(opts.certificate || { ok: true, eligible: false })});` });
   });
@@ -511,7 +511,7 @@ const verifyText = pg => pg.textContent('#verify-state');
     await t.pg.waitForFunction(() => /saved to your device/.test(document.getElementById('cert-state').textContent));
     ok('a learner who has passed every module can download the official certificate with their name and completion date filled in' + (txt ? ' (text checked in the PDF)' : ''));
     // the last result: the save reply carries the name and date, and a button appears under the result
-    t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false } }, (r, p) => r.fulfill(page_(reply({ wbscSave: true, success: true, submissionId: p.submissionId, attemptNumber: 1, maxAttempts: 2, result: 'PASS', completedAll: true, certName: 'Jo Ump', certDate: '2026-11-02' }))));
+    t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false }, certificate: { ok: true, eligible: true, name: 'Jo Ump', date: '2026-11-02' } }, (r, p) => r.fulfill(page_(reply({ wbscSave: true, success: true, submissionId: p.submissionId, attemptNumber: 1, maxAttempts: 2, result: 'PASS', completedAll: true, certName: 'Jo Ump', certDate: '2026-11-02' }))));
     await runQuiz(t.pg, 'm01-pca', 0); await t.pg.waitForSelector('#cert-inline', { state: 'visible' });
     assert.ok(await t.pg.isVisible('#cert-box') && /2 November 2026/.test(await t.pg.textContent('#cert-text')));
     const [dl2] = await Promise.all([t.pg.waitForEvent('download'), t.pg.click('#cert-btn2')]); const t2 = pdfText(await dl2.path()); if (t2) assert.ok(/Jo Ump/.test(t2) && /2 November 2026/.test(t2));
@@ -548,6 +548,29 @@ const verifyText = pg => pg.textContent('#verify-state');
     await runQuiz(t.pg, 'm01-pca', 4); await t.pg.waitForFunction(() => /recorded/.test(document.getElementById('quiz-save-state').textContent));
     const st = await t.pg.textContent('#quiz-save-state'); assert.ok(/receipt is emailed when you pass or use your last attempt/.test(st) && !/will be emailed to/.test(st), st);
     ok('when no receipt is emailed (a first failed attempt) the page says so instead of promising one');
+  }
+
+  // ====================================================================  "Your progress" strip and the shorter preamble
+  {
+    const status = { ok: true, eligible: false, total: 8, passedCount: 3, max: 2, resetsOn: '2026-12-01', modules: { 1: { state: 'passed', best: 90 }, 2: { state: 'passed', best: 100 }, 3: { state: 'passed', best: 85 }, 4: { state: 'tried', best: 60, left: 1 }, 5: { state: 'tried', best: 50, left: 0 }, 6: { state: 'new' }, 7: { state: 'new' }, 8: { state: 'new' } } };
+    let t = await newPage(b, { unverified: true });
+    assert.ok(await t.pg.isHidden('#progress-strip'), 'nothing to show before signing in');
+    t = await newPage(b, { certificate: status });
+    await t.pg.waitForSelector('#progress-strip', { state: 'visible' });
+    assert.ok(/Your progress: 3 of 8 modules passed/.test(await t.pg.textContent('#ps-title')));
+    assert.strictEqual(await t.pg.locator('#ps-grid li').count(), 8); assert.strictEqual(await t.pg.evaluate(() => document.getElementById('ps-fill').style.width), '38%');
+    const tiles = await t.pg.$$eval('#ps-grid a', a => a.map(x => x.className + '|' + x.textContent.replace(/\s+/g, ' ').trim()));
+    assert.ok(/^passed\|Module 01.*✓ Passed \(90%\)$/.test(tiles[0]), tiles[0]); assert.ok(/Attempts left this month: 1$/.test(tiles[3]), tiles[3]);
+    assert.ok(/^locked\|.*No attempts left until 1 December 2026$/.test(tiles[4]), tiles[4]); assert.ok(/Not started$/.test(tiles[5]), tiles[5]);
+    await t.pg.click('#ps-grid li:nth-child(5) a'); assert.strictEqual(await t.pg.evaluate(() => location.hash), '#module-05');
+    ok('a signed-in learner sees "Your progress": passed, attempts left, locked until the 1st, not started, each linking to its module');
+    // after a result the strip is asked for again
+    const before = t.certLookups.length;
+    // the preamble is short: the red box is gone, the notice is one paragraph with the rest folded away
+    assert.ok(await t.pg.isVisible('.notice p'), 'the "not the official WBSC website" notice stays visible'); assert.ok(/This is not the official WBSC website/.test(await t.pg.textContent('.notice p')));
+    assert.ok(!(await t.pg.isVisible('.notice-more p')) && await t.pg.isVisible('.notice-more summary')); await t.pg.click('.notice-more summary'); assert.ok(await t.pg.isVisible('.notice-more p'));
+    assert.ok(/Pass mark: 85%/.test(await t.pg.textContent('#rules-note')) && /watch the full presentation first/.test(await t.pg.textContent('#rules-note')));
+    ok('the preamble is shorter: one visible notice paragraph with "More about this site" folded away, and a single pass-mark note that points to the presentations');
   }
 
   await b.close(); server.close(); console.log(n + ' widget checks passed');

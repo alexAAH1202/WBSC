@@ -543,6 +543,10 @@
     .notice{position:relative;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);padding-left:calc(50vw - 50%);padding-right:calc(50vw - 50%);}
     .notice-bar{position:absolute;left:0;top:36px;bottom:36px;}
   }
+  .notice-more{margin-top:8px;}
+  .notice-more summary{cursor:pointer;font-weight:700;color:var(--navy-950);text-decoration:underline;display:inline-block;}
+  .notice-more summary:focus-visible{outline:3px solid var(--gold-500);outline-offset:2px;}
+  .notice-more p{margin-top:10px;}
 </style>
 <script src="i18n.js"></script>
 </head>
@@ -605,8 +609,11 @@
             Important
           </div>
           <p><strong>This is not the official WBSC website.</strong> This temporary training site has been established to support WBSC Softball Umpires during the implementation of the 2026-2029 Umpire Mechanics Program, while WBSC transitions the training program to the My.WBSC Officials Training Academy.</p>
-          <p>All official WBSC manuals and publications accessed through this site remain hosted on the official WBSC website.</p>
-          <p>This training site is intended for WBSC-certified Softball Umpires participating in the 2026-2029 accreditation and reaccreditation cycle.</p>
+          <details class="notice-more">
+            <summary>More about this site</summary>
+            <p>All official WBSC manuals and publications accessed through this site remain hosted on the official WBSC website.</p>
+            <p>This training site is intended for WBSC-certified Softball Umpires participating in the 2026-2029 accreditation and reaccreditation cycle.</p>
+          </details>
         </div>
       </div>
     </div>
