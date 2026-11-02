@@ -83,6 +83,7 @@ var PROGRESS_MAX_CHARS = 30000;        // a cell holds 50,000 characters
 var PROGRESS_HOURLY = 240;             // saves per learner per hour (a 20-question attempt is about 20)
 
 // Weekly summary for the Director.
+var REPEAT_FAILS = 3;                  // failed this many times on a module without ever passing it: flagged in the weekly summary
 var STALLED_DAYS = 14;                 // started, not finished and no activity for this long
 
 // Health check.
@@ -121,6 +122,7 @@ var MIN_SECONDS_PER_QUESTION = 2;   // bot check: a result sent faster than this
 function doGet(e) {
   var p = (e && e.parameter) || {};
   if (p.action === 'attempts') return attemptsReply_(p);
+  if (p.action === 'certificate') return certificateReply_(p);
   try {
     return HtmlService.createHtmlOutputFromFile('assessment-widget')
       .setTitle('Assessment - WBSC Umpire Mechanics Training')
@@ -165,7 +167,7 @@ var EMAIL_TEXT = {
     nextPass: 'You have passed this assessment.',
     nextLeft: 'You did not reach the pass mark. Attempts left for this assessment: {n}. Revisit the manual and presentation before trying again.',
     nextNone: 'You did not reach the pass mark and have used all {max} attempts for this month. Your attempts are available again on {date}. If you need help before then, please contact {email}.',
-    complete: 'You have now passed all {n} modules. Congratulations!',
+    complete: 'You have now passed all {n} modules. Congratulations! You can download your certificate of completion from the Assessments page after confirming this email address.',
     progress: 'Your progress so far:',
     modNone: 'Module {nn}: not attempted yet',
     modPass: 'Module {nn}: PASSED ({best}%, attempts used: {a})',
@@ -188,7 +190,7 @@ var EMAIL_TEXT = {
     nextPass: 'Has aprobado esta evaluación.',
     nextLeft: 'No has alcanzado la nota mínima para aprobar. Intentos restantes en esta evaluación: {n}. Repasa el manual y la presentación antes de volver a intentarlo.',
     nextNone: 'No has alcanzado la nota mínima para aprobar y has usado los {max} intentos de este mes. Tus intentos estarán disponibles de nuevo el {date}. Si necesitas ayuda antes, ponte en contacto con {email}.',
-    complete: 'Has aprobado ya los {n} módulos. ¡Enhorabuena!',
+    complete: 'Has aprobado ya los {n} módulos. ¡Enhorabuena! Puedes descargar tu certificado de finalización desde la página de Evaluaciones después de confirmar esta dirección de correo electrónico.',
     progress: 'Tu progreso hasta ahora:',
     modNone: 'Módulo {nn}: aún sin intentar',
     modPass: 'Módulo {nn}: APROBADO ({best}%, intentos usados: {a})',
@@ -211,7 +213,7 @@ var EMAIL_TEXT = {
     nextPass: 'Vous avez réussi cette évaluation.',
     nextLeft: 'Vous n’avez pas atteint la note de passage. Tentatives restantes pour cette évaluation : {n}. Relisez le manuel et la présentation avant de réessayer.',
     nextNone: 'Vous n’avez pas atteint la note de passage et avez utilisé les {max} tentatives de ce mois. Vos tentatives seront de nouveau disponibles le {date}. Si vous avez besoin d’aide d’ici là, veuillez contacter {email}.',
-    complete: 'Vous avez maintenant réussi les {n} modules. Félicitations !',
+    complete: 'Vous avez maintenant réussi les {n} modules. Félicitations ! Vous pouvez télécharger votre certificat de réussite depuis la page Évaluations après avoir confirmé cette adresse e-mail.',
     progress: 'Votre progression jusqu’ici :',
     modNone: 'Module {nn} : pas encore tenté',
     modPass: 'Module {nn} : RÉUSSI ({best} %, tentatives utilisées : {a})',
@@ -234,7 +236,7 @@ var EMAIL_TEXT = {
     nextPass: 'この評価に合格しました。',
     nextLeft: '合格基準に達しませんでした。この評価の残り受験回数: {n}。マニュアルとプレゼンテーションを見直してから、もう一度受験してください。',
     nextNone: '合格基準に達せず、今月の {max} 回の受験をすべて使い切りました。受験回数は {date} に再び利用できます。それまでにサポートが必要な場合は {email} までご連絡ください。',
-    complete: '{n} 個のモジュールすべてに合格しました。おめでとうございます！',
+    complete: '{n} 個のモジュールすべてに合格しました。おめでとうございます！このメールアドレスを確認すると、評価ページから修了証をダウンロードできます。',
     progress: 'これまでの進捗:',
     modNone: 'モジュール {nn}: まだ受験していません',
     modPass: 'モジュール {nn}: 合格（{best}%、使用した受験回数: {a}）',
@@ -257,7 +259,7 @@ var EMAIL_TEXT = {
     nextPass: '이 평가에 합격하셨습니다.',
     nextLeft: '합격 기준에 도달하지 못했습니다. 이 평가의 남은 응시 횟수: {n}. 다시 응시하기 전에 매뉴얼과 프레젠테이션을 복습하세요.',
     nextNone: '합격 기준에 도달하지 못했고 이번 달 {max}회의 응시 기회를 모두 사용했습니다. 응시 기회는 {date}에 다시 제공됩니다. 그 전에 도움이 필요하시면 {email}(으)로 문의해 주세요.',
-    complete: '{n}개 모듈을 모두 통과하셨습니다. 축하합니다!',
+    complete: '{n}개 모듈을 모두 통과하셨습니다. 축하합니다! 이 이메일 주소를 확인하신 후 평가 페이지에서 수료증을 내려받을 수 있습니다.',
     progress: '지금까지의 진행 상황:',
     modNone: '모듈 {nn}: 아직 응시하지 않음',
     modPass: '모듈 {nn}: 합격 ({best}%, 사용한 응시 횟수: {a})',
@@ -280,7 +282,7 @@ var EMAIL_TEXT = {
     nextPass: '您已通过本次评估。',
     nextLeft: '您未达到及格线。本评估剩余尝试次数：{n}。请先复习手册和演示文稿，再重新尝试。',
     nextNone: '您未达到及格线，且已用完本月全部 {max} 次尝试机会。您的尝试次数将在 {date} 重新开放。如在此之前需要帮助，请联系 {email}。',
-    complete: '您已通过全部 {n} 个模块。恭喜！',
+    complete: '您已通过全部 {n} 个模块。恭喜！确认此电子邮箱地址后，您可以在评估页面下载完成证书。',
     progress: '您目前的进度：',
     modNone: '模块 {nn}：尚未尝试',
     modPass: '模块 {nn}：通过（{best}%，已用尝试次数：{a}）',
@@ -332,6 +334,8 @@ function saveMessage_(result) {
     maxAttempts: result.maxAttempts || MAX_ATTEMPTS,
     code: result.code || '',
     resetsOn: result.resetsOn || '',
+    certName: result.certName || '',
+    certDate: result.certDate || '',
     error: result.error || ''
   };
 }
@@ -383,6 +387,56 @@ function attemptsReply_(p) {
   if (/^[A-Za-z_$][A-Za-z0-9_$]{0,40}$/.test(cb)) {
     return ContentService.createTextOutput(cb + '(' + json + ');').setMimeType(ContentService.MimeType.JAVASCRIPT);
   }
+  return ContentService.createTextOutput(json).setMimeType(ContentService.MimeType.JSON);
+}
+
+// ------------------------------------------------------------------ certificate of completion
+
+// 'yyyy-MM-dd' of a date in the script time zone.
+function dayKey_(d) {
+  var tz = 'UTC';
+  try { tz = Session.getScriptTimeZone() || 'UTC'; } catch (e) { /* UTC */ }
+  return Utilities.formatDate(new Date(d), tz, 'yyyy-MM-dd');
+}
+
+// The date the learner finished: when they passed the last of the required modules (the latest first pass).
+function completionDay_(summary) {
+  var latest = 0;
+  for (var k in summary.modules) {
+    var m = summary.modules[k];
+    if (m.passed && m.passedAt) { var t = new Date(m.passedAt).getTime(); if (!isNaN(t) && t > latest) latest = t; }
+  }
+  return latest ? dayKey_(latest) : '';
+}
+
+// Whether a verified email has passed every module, with the name and date to print on the certificate. The name is the
+// one the learner entered on their most recent result. The certificate itself is made in the learner's browser.
+function certificateInfo_(email) {
+  var sheet = getSheet_(), last = sheet.getLastRow(), name = '', id = '';
+  if (last >= 2) {
+    var rows = sheet.getRange(2, 1, last - 1, COLUMNS.length).getValues();
+    for (var i = 0; i < rows.length; i++) {
+      if (norm_(rows[i][2]) === norm_(email)) { name = String(rows[i][1]); if (norm_(rows[i][3])) id = String(rows[i][3]); }
+    }
+  }
+  var summary = completionSummary_(sheet, { email: email, umpireId: id });
+  var done = summary.passedCount >= TOTAL_MODULES;
+  return { eligible: done, name: done ? name : '', date: done ? completionDay_(summary) : '' };
+}
+
+// Looked up with a <script> tag (JSONP) like the attempts lookup; needs a verified session.
+function certificateReply_(p) {
+  var out;
+  try {
+    var email = sessionEmail_(p.token);
+    if (!email) out = { ok: false, code: 'auth', error: 'Please verify your email address first.' };
+    else { var info = certificateInfo_(email); out = { ok: true, eligible: info.eligible, name: info.name, date: info.date }; }
+  } catch (err) {
+    logError_('certificate', err);
+    out = { ok: false, error: 'Could not check the certificate' };
+  }
+  var cb = String(p.callback || ''), json = JSON.stringify(out);
+  if (/^[A-Za-z_$][A-Za-z0-9_$]{0,40}$/.test(cb)) return ContentService.createTextOutput(cb + '(' + json + ');').setMimeType(ContentService.MimeType.JAVASCRIPT);
   return ContentService.createTextOutput(json).setMimeType(ContentService.MimeType.JSON);
 }
 
@@ -658,7 +712,9 @@ function handleSave_(e) {
         result.passed = result.result === 'PASS';
         result.maxAttempts = MAX_ATTEMPTS;
         result.resetsOn = result.passed ? '' : nextResetDate_();
-        result.completedAll = completionSummary_(sheet, clean).passedCount >= TOTAL_MODULES;
+        var dsum = completionSummary_(sheet, clean);
+        result.completedAll = dsum.passedCount >= TOTAL_MODULES;
+        if (result.completedAll) { result.certName = clean.name; result.certDate = completionDay_(dsum); }
       } else if (attemptInfo_(sheet, clean).count >= MAX_ATTEMPTS) {
         // Hard limit: nothing is saved or emailed.
         var lim = attemptInfo_(sheet, clean);
@@ -689,6 +745,7 @@ function handleSave_(e) {
         result.maxAttempts = MAX_ATTEMPTS;
         result.resetsOn = clean.passed ? '' : nextResetDate_();   // when this month's attempts are renewed
         result.completedAll = after.passedCount >= TOTAL_MODULES;
+        if (result.completedAll) { result.certName = clean.name; result.certDate = completionDay_(after); }
         post = {
           clean: clean, attemptNumber: attemptNumber, rowIndex: rowIndex, summary: after,
           completedNow: after.passedCount >= TOTAL_MODULES && before.passedCount < TOTAL_MODULES
@@ -1078,7 +1135,8 @@ function people_() {
     list.forEach(function (r) {
       if (r.assoc) p.assoc = r.assoc;
       if (r.type.toLowerCase() !== COMPLETION_TYPE.toLowerCase() || !r.n || r.n > TOTAL_MODULES) return;
-      var m = p.modules[r.n] || (p.modules[r.n] = { attempts: 0, passed: false, at: 0 });
+      var m = p.modules[r.n] || (p.modules[r.n] = { attempts: 0, total: 0, passed: false, at: 0 });
+      m.total++;   // all attempts ever (the monthly count below is what locks a learner out)
       if (monthKey_(r.ts) === monthKey_(new Date())) m.attempts++;   // this month's attempts: they are renewed on the 1st
       if (r.result === 'PASS' && !m.passed) { m.passed = true; m.at = r.ts; }
     });
@@ -1088,6 +1146,7 @@ function people_() {
       else if (m.attempts >= MAX_ATTEMPTS) p.attention = true;
     });
     p.completed = p.passed >= TOTAL_MODULES;
+    p.repeat = Object.keys(p.modules).filter(function (k) { return !p.modules[k].passed && p.modules[k].total >= REPEAT_FAILS; }).map(Number).sort(function (a, b) { return a - b; });
     return p;
   });
 }
@@ -1101,6 +1160,7 @@ function weeklySummary() {
   var done = people.filter(function (p) { return p.completed && now - p.completedAt <= 7 * DAY; });
   var attention = people.filter(function (p) { return p.attention && !p.completed; });
   var stalled = people.filter(function (p) { return !p.completed && !p.attention && p.last && now - p.last >= STALLED_DAYS * DAY; });
+  var repeat = people.filter(function (p) { return p.repeat.length && !p.completed; });
   var completedAll = people.filter(function (p) { return p.completed; }).length;
   function line(p) { return '- ' + p.name + ' (' + (p.assoc || 'no association given') + '), ' + p.passed + ' of ' + TOTAL_MODULES + ' modules passed'; }
   function days(p) { return Math.floor((now - p.last) / DAY); }
@@ -1120,6 +1180,8 @@ function weeklySummary() {
     people.length + ' umpires have a result; ' + completedAll + ' have completed all ' + TOTAL_MODULES + ' modules.\n\n' +
     'COMPLETED THIS WEEK (' + done.length + ')\n' + (done.length ? done.map(line).join('\n') : '- none') + '\n\n' +
     'NEED ATTENTION: used every attempt on a module without passing (' + attention.length + ')\n' + (attention.length ? attention.map(line).join('\n') : '- none') + '\n\n' +
+    'FAILED ' + REPEAT_FAILS + ' OR MORE TIMES on a module and never passed it (' + repeat.length + ')\n' +
+    (repeat.length ? repeat.map(function (p) { return line(p) + ', module' + (p.repeat.length === 1 ? '' : 's') + ' ' + p.repeat.map(function (n) { return ('0' + n).slice(-2); }).join(', '); }).join('\n') : '- none') + '\n\n' +
     'WENT QUIET: started, not finished, no activity for ' + STALLED_DAYS + ' days or more (' + stalled.length + ')\n' +
     (stalled.length ? stalled.map(function (p) { return line(p) + ', last active ' + days(p) + ' days ago, ' + p.email; }).join('\n') : '- none') + '\n\n' +
     'BY ASSOCIATION / FEDERATION\n' + assocLines.join('\n') + '\n\n' +

@@ -93,6 +93,7 @@ Script Web App into a Google Sheet.
 - `node tests/notice.test.js` (needs Playwright): the pop-up on every page, no cookies, dismissal, phone width, blocked storage (9 checks).
 - `node tests/results.test.js` (needs Playwright): `results.html` with simulated replies (25 checks).
 - `node tests/a11y.test.js` (needs Playwright): heading order, landmarks, skip link, alt text and labels on every page, 320px reflow, the language menu and quiz answers by keyboard.
+- `node tests/certificate.test.js`: the certificate template still has its two fields and `certificate/template.js` is up to date.
 - `node tests/i18n.test.js` (needs Playwright): the language selector, that every visible string and every quiz question has a translation in all five languages, pages open in each language at desktop and phone width, and the practice quizzes run in each language with the right answer still marked right.
 
 The browser tests do **not** prove the real Apps Script reply reaches the widget on the live site;
@@ -135,4 +136,17 @@ and when the result is recorded. The page asks for it with the attempts lookup (
   who started and then went quiet (no activity for 14 days: `STALLED_DAYS`, also in `results.html`), and totals by association/federation. Nothing is sent to learners.
   Only people who have saved a result appear: the site has no roster. **Run `installTriggers()` once from the editor after deploying** to schedule it
   (it re-creates the daily check too). `weeklySummary()` can also be run by hand to see the email.
+- **Failed 3+ times.** A module failed three or more times without ever being passed (counted across months, so the monthly renewal does not hide it) is flagged: a badge, a tile, a filter and a CSV column on `results.html`, and a section in the Monday summary (`REPEAT_FAILS` in `Code.gs` and `results.html`). People who later pass the module are not flagged.
 - `results.html` gained an association/federation filter, a "Went quiet" filter and tile, a by-association table and a "Went quiet" column in the summary CSV.
+
+## Certificate of completion
+A learner who has passed all eight modules can download the official WBSC certificate of completion (the PDF supplied by WBSC,
+`certificate/certificate-template.pdf`, with two fill-in fields `umpire_name` and `completion_date`) with their name and completion date filled in.
+- **Who and when.** The server decides: `certificateReply_` in `Code.gs` (looked up with the verified session token) returns the name from the learner's
+  most recent result and the date they first passed the last required module (script time zone). The final save reply carries the same data, so the button
+  appears on the result screen straight after the last pass. A later retake does not move the date.
+- **How.** The certificate is made in the learner's browser: `vendor/pdf-lib.min.js` (MIT, licence in `vendor/`) fills the two fields, flattens the form and saves the PDF.
+  The library and `certificate/template.js` (the template as base64, built by `node tests/certificate-build.js`) are loaded only when the button is pressed. Nothing is stored or sent.
+- **Names.** Latin letters and accents print. Anything the certificate font cannot print (for example Japanese or Chinese names) shows a message to contact the Director.
+- **Changing the template.** Replace `certificate/certificate-template.pdf` (keep the two field names), run `node tests/certificate-build.js`, then `node tests/certificate.test.js`.
+- The certificate wording lists Appendix 4 and 5a to 5d, as supplied by WBSC. `node tests/certificate.test.js` checks the template and its base64 copy.

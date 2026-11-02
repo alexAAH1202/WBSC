@@ -25,7 +25,7 @@ const ok = m => { console.log('  ok -', m); n++; };
 async function newPage(b, opts, saveHandler) {
   opts = opts || {};
   if (lastCtx) await lastCtx.close().catch(() => {});   // one page at a time keeps the browser light
-  const ctx = lastCtx = await b.newContext(); await ctx.addInitScript(() => { try { localStorage.setItem('wbscNoticeSeen', '1'); } catch (e) {} }); const pg = await ctx.newPage(); const posts = [], progressCalls = [], fetches = [], lookups = [], calls = [];
+  const ctx = lastCtx = await b.newContext(); await ctx.addInitScript(() => { try { localStorage.setItem('wbscNoticeSeen', '1'); } catch (e) {} }); const pg = await ctx.newPage(); const posts = [], progressCalls = [], certLookups = [], fetches = [], lookups = [], calls = [];
   pg.on('pageerror', e => console.log('PAGE ERROR', e.message));
   pg.on('request', r => { if (r.resourceType() === 'fetch' || r.resourceType() === 'xhr') fetches.push(r.url()); });
   await pg.route(/script\.google\.com\/macros\/s\/.*\/exec\?action=attempts/, r => {
@@ -35,6 +35,10 @@ async function newPage(b, opts, saveHandler) {
     if (opts.lookupAuth === 'expired') return r.fulfill({ status: 200, contentType: 'application/javascript', body: `${cb}({"ok":false,"code":"auth","error":"Please verify your email address first."});` });
     const a = opts.attempts || { attempts: 0, remaining: 2, passed: false };
     r.fulfill({ status: 200, contentType: 'application/javascript', body: `${cb}(${JSON.stringify(Object.assign({ ok: true, max: 2, passMark: 85 }, a))});` });
+  });
+  await pg.route(/script\.google\.com\/macros\/s\/.*\/exec\?action=certificate/, r => {
+    const u = new URL(r.request().url()); certLookups.push(Object.fromEntries(u.searchParams));
+    r.fulfill({ status: 200, contentType: 'application/javascript', body: `${u.searchParams.get('callback')}(${JSON.stringify(opts.certificate || { ok: true, eligible: false })});` });
   });
   await pg.route(POST_URL, async r => {
     const params = new URLSearchParams(r.request().postData() || '');
@@ -64,7 +68,7 @@ async function newPage(b, opts, saveHandler) {
   await pg.goto('http://localhost:' + PORT + '/assessment-widget.html' + (opts.query || ''));
   await pg.fill('#inp-name', 'Jo Ump'); await pg.fill('#inp-email', 'Jo@X.com');
   if (!opts.unverified) await verifyEmail(pg);
-  return { pg, posts, fetches, lookups, calls, progressCalls };
+  return { pg, posts, fetches, lookups, calls, progressCalls, certLookups, ctx };
 }
 async function verifyEmail(pg, code = '123456') {
   await pg.click('#verify-send-btn'); await pg.waitForSelector('#verify-code-row', { state: 'visible' });
@@ -484,6 +488,43 @@ const verifyText = pg => pg.textContent('#verify-state');
     for (let i = 0; i < 10; i++) { asked.push(await fr.pg.textContent('#quiz-question')); await fr.pg.click('.quiz-option >> nth=0'); await fr.pg.click('#quiz-submit-btn'); await fr.pg.click('#quiz-submit-btn'); }
     assert.strictEqual(frCore.length, 10); assert.deepStrictEqual([...asked].sort(), [...frCore].sort(), 'French asks exactly its ten translated questions');
     ok('in a language with only the core questions translated (French) the draw uses exactly those ten, all in French');
+  }
+
+  // ====================================================================  certificate of completion
+  {
+    const { PDFDocument } = require('../vendor/pdf-lib.min.js'), cp = require('child_process');
+    const pdfText = f => { try { return cp.execFileSync('pdftotext', [f, '-'], { encoding: 'utf8' }); } catch (e) { return null; } };
+    // not completed: nothing shown
+    let t = await newPage(b, { certificate: { ok: true, eligible: false } });
+    assert.ok(await t.pg.isHidden('#cert-box')); assert.ok(t.certLookups.length >= 1 && t.certLookups[0].token === TOKEN, 'asked the server with the session token');
+    ok('before every module is passed there is no certificate box, and the server is asked with the session token');
+    // completed: box with name and date; the download is the official template, filled and flattened
+    t = await newPage(b, { certificate: { ok: true, eligible: true, name: 'Zoë Ñandú Ump', date: '2026-10-28' } });
+    await t.pg.waitForSelector('#cert-box', { state: 'visible' });
+    assert.ok(/Zoë Ñandú Ump/.test(await t.pg.textContent('#cert-text')) && /28 October 2026/.test(await t.pg.textContent('#cert-text')));
+    const [dl] = await Promise.all([t.pg.waitForEvent('download'), t.pg.click('#cert-btn')]);
+    assert.ok(/^WBSC-Umpire-Mechanics-2026-Certificate-Zoe-Nandu-Ump\.pdf$/.test(dl.suggestedFilename()), dl.suggestedFilename());
+    const file = await dl.path(), doc = await PDFDocument.load(fs.readFileSync(file));
+    assert.strictEqual(doc.getPageCount(), 1); assert.strictEqual(doc.getForm().getFields().length, 0, 'the form is flattened: name and date cannot be edited');
+    const txt = pdfText(file); if (txt) { assert.ok(/Zoë Ñandú Ump/.test(txt) && /28 October 2026/.test(txt) && /CERTIFICATE OF COMPLETION/.test(txt) && /Nacho Pardo/.test(txt), txt); }
+    await t.pg.waitForFunction(() => /saved to your device/.test(document.getElementById('cert-state').textContent));
+    ok('a learner who has passed every module can download the official certificate with their name and completion date filled in' + (txt ? ' (text checked in the PDF)' : ''));
+    // the last result: the save reply carries the name and date, and a button appears under the result
+    t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false } }, (r, p) => r.fulfill(page_(reply({ wbscSave: true, success: true, submissionId: p.submissionId, attemptNumber: 1, maxAttempts: 2, result: 'PASS', completedAll: true, certName: 'Jo Ump', certDate: '2026-11-02' }))));
+    await runQuiz(t.pg, 'm01-pca', 0); await t.pg.waitForSelector('#cert-inline', { state: 'visible' });
+    assert.ok(await t.pg.isVisible('#cert-box') && /2 November 2026/.test(await t.pg.textContent('#cert-text')));
+    const [dl2] = await Promise.all([t.pg.waitForEvent('download'), t.pg.click('#cert-btn2')]); const t2 = pdfText(await dl2.path()); if (t2) assert.ok(/Jo Ump/.test(t2) && /2 November 2026/.test(t2));
+    ok('finishing the last module offers the certificate straight away, from the result screen as well');
+    // a name the certificate font cannot print gets a clear message instead of a broken file
+    t = await newPage(b, { certificate: { ok: true, eligible: true, name: '山田 太郎', date: '2026-10-28' } });
+    await t.pg.waitForSelector('#cert-box', { state: 'visible' }); await t.pg.click('#cert-btn');
+    await t.pg.waitForFunction(() => /cannot be printed on the certificate/.test(document.getElementById('cert-state').textContent)); assert.ok(/umpiredirector@wbscoceania\.org/.test(await t.pg.textContent('#cert-state')));
+    ok('a name with letters the certificate cannot print gets a message to contact the Director');
+    // a long name is shrunk to fit; a lookup that fails shows nothing
+    t = await newPage(b, { certificate: { ok: true, eligible: true, name: 'Maria de los Angeles Fernandez-Rodriguez de la Torre y Montenegro-Alvarez', date: '2026-10-28' } });
+    await t.pg.waitForSelector('#cert-box', { state: 'visible' }); const [dl3] = await Promise.all([t.pg.waitForEvent('download'), t.pg.click('#cert-btn')]); const t3 = pdfText(await dl3.path()); if (t3) assert.ok(/Montenegro-Alvarez/.test(t3));
+    t = await newPage(b, { certificate: { ok: false, code: 'auth' } }); await new Promise(r => setTimeout(r, 300)); assert.ok(await t.pg.isHidden('#cert-box'));
+    ok('a very long name still fits on the certificate, and a failed lookup shows no certificate');
   }
 
   await b.close(); server.close(); console.log(n + ' widget checks passed');
