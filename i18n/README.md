@@ -23,15 +23,15 @@ Open any page with `?langs=all` (a menu appears) or `?lang=es`. Check meaning fi
 Keep these English terms in the translation as the WBSC manuals use them: U1, U2, U3, PU, HP, ULF, URF, F7, F8, F9, POP, FEET (the Four Essential Elements).
 
 ## Glossary
-| English | es | fr | ja | ko | zh |
-|---|---|---|---|---|---|
-| umpire | árbitro | arbitre | 審判員 | 심판 | 裁判员 |
-| Plate umpire (PU) | árbitro de home (PU) | arbitre au marbre (PU) | 球審 (PU) | 구심 (PU) | 主审 (PU) |
-| base umpire | árbitro de base | arbitre de but | 塁審 | 루심 | 垒审 |
-| Four Essential Elements | Cuatro Elementos Esenciales | Quatre éléments essentiels | 4つの基本要素 | 네 가지 핵심 요소 | 四大基本要素 |
-| backfill | backfilling | backfilling | バックフィル | 백필 (backfill) | 补位 (backfill) |
-| tag up | tag up | tag-up | タッグアップ | 태그업 | 触垒返回 |
-| leading edge | borde de ataque | bord d’attaque | リーディングエッジ | 리딩 에지 | 前缘 |
-| Knowledge Check | Comprobación de conocimientos | Vérification des connaissances | 理解度チェック | 지식 점검 | 知识自测 |
+| English | Spanish |
+|---|---|
+| umpire | árbitro |
+| Plate umpire (PU) | árbitro de home (PU) |
+| base umpire | árbitro de base |
+| Four Essential Elements | Cuatro Elementos Esenciales |
+| backfill | backfilling |
+| tag up | tag up |
+| leading edge | borde de entrada |
+| Knowledge Check | Comprobación de conocimientos |
 
 (Reviewers: please correct this table too; the glossary is a starting point and the pages are the authority.)

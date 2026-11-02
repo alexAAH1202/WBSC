@@ -10,13 +10,9 @@
   'use strict';
   var LANGS = [
     { c: 'en', n: 'English', s: 'EN' },
-    { c: 'es', n: 'Español', s: 'ES' },
-    { c: 'fr', n: 'Français', s: 'FR' },
-    { c: 'ja', n: '日本語', s: '日本語' },
-    { c: 'ko', n: '한국어', s: '한국어' },
-    { c: 'zh', n: '中文', s: '中文' }
+    { c: 'es', n: 'Español', s: 'ES' }
   ];
-  var LIVE = ['en', 'es'];            // languages switched on for everyone; es is on for now (not yet reviewed). Others stay hidden until reviewed
+  var LIVE = ['en', 'es'];            // languages switched on for everyone (a new language is added here once a native speaker has reviewed it)
   var KEY = 'wbscLang', PREVIEW_KEY = 'wbscLangPreview';
 
   function qs(name) { try { return new URLSearchParams(location.search).get(name); } catch (e) { return null; } }
@@ -136,11 +132,7 @@
     '.lang-item[aria-current="true"]{font-weight:700;color:#0a1e46;background:#eef1f7;}' +
     '@media (max-width:760px){.lang-switch{margin:0;padding:12px 24px;border-top:1px solid rgba(255,255,255,.18);}.lang-menu{left:24px;right:auto;}}' +
     '.lang-note{background:#eef1f7;color:#16213a;border-bottom:1px solid #cfd5df;padding:10px 24px;font-size:.88rem;text-align:center;}' +
-    'html.i18n-pending body{visibility:hidden;}' +
-    'html[lang="ja"] body,html[lang="ja"] button,html[lang="ja"] input{font-family:Roboto,"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo","Noto Sans JP",sans-serif;}' +
-    'html[lang="ko"] body,html[lang="ko"] button,html[lang="ko"] input{font-family:Roboto,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;}' +
-    'html[lang="zh"] body,html[lang="zh"] button,html[lang="zh"] input{font-family:Roboto,"PingFang SC","Microsoft YaHei","Noto Sans SC","Noto Sans CJK SC",sans-serif;}' +
-    'html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="ja"] h4,html[lang="ko"] h1,html[lang="ko"] h2,html[lang="ko"] h3,html[lang="ko"] h4,html[lang="zh"] h1,html[lang="zh"] h2,html[lang="zh"] h3,html[lang="zh"] h4{letter-spacing:0;}';
+    'html.i18n-pending body{visibility:hidden;}';
 
   var GLOBE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19M12 2.5c2.6 2.7 4 5.9 4 9.5s-1.4 6.8-4 9.5c-2.6-2.7-4-5.9-4-9.5s1.4-6.8 4-9.5z"/></svg>';
 

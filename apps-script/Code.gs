@@ -149,7 +149,7 @@ function doPost(e) {
 // showing when they asked. English is the source and the fallback: a missing key or an unknown language gives
 // English. Emails to the Director and the owner are always English. {x} marks a value filled in at send time.
 // Keep these in step with i18n/README.md (glossary). Native-speaker reviewers should check them with the site text.
-var EMAIL_LANGS = ['en', 'es', 'fr', 'ja', 'ko', 'zh'];
+var EMAIL_LANGS = ['en', 'es'];
 var EMAIL_TEXT = {
   en: {
     codeSubject: 'Your WBSC training verification code: {code}',
@@ -196,98 +196,6 @@ var EMAIL_TEXT = {
     modPass: 'Módulo {nn}: APROBADO ({best}%, intentos usados: {a})',
     modFail: 'Módulo {nn}: aún no aprobado (mejor resultado {best}%, intentos usados este mes: {a} de {max})',
     footer: 'Este es un comprobante automático de un sitio de formación temporal. No es un certificado oficial de la WBSC y el sitio no es el sitio web oficial de la WBSC. Consultas: {email}.'
-  },
-  fr: {
-    codeSubject: 'Votre code de vérification pour la formation WBSC : {code}',
-    codeBody: 'Votre code de vérification est {code}\n\n' +
-      'Saisissez-le sur le site de formation à la mécanique d’arbitrage de la WBSC pour confirmer cette adresse e-mail. Il expire dans {min} minutes et ne peut être utilisé qu’une seule fois.\n\n' +
-      'Si vous n’avez pas demandé ce code, ignorez ce message : il ne se passe rien tant que le code n’est pas saisi.\n\n' +
-      'Ceci est un site de formation temporaire, et non le site web officiel de la WBSC.',
-    receiptSubject: 'Votre reçu de la formation à la mécanique d’arbitrage de la WBSC : {module} - {result}',
-    hello: 'Bonjour {name},',
-    intro: 'Voici votre reçu du site de formation à la mécanique d’arbitrage de la WBSC.',
-    lModule: 'Module', lAssessment: 'Évaluation', lScore: 'Score', lResult: 'Résultat', lAttempt: 'Tentative', lDate: 'Date et heure', lRef: 'Référence',
-    resultLine: '{result} (note de passage : {mark} %)',
-    attemptLine: '{n} sur {max}',
-    PASS: 'RÉUSSI', FAIL: 'NON RÉUSSI',
-    nextPass: 'Vous avez réussi cette évaluation.',
-    nextLeft: 'Vous n’avez pas atteint la note de passage. Tentatives restantes pour cette évaluation : {n}. Relisez le manuel et la présentation avant de réessayer.',
-    nextNone: 'Vous n’avez pas atteint la note de passage et avez utilisé les {max} tentatives de ce mois. Vos tentatives seront de nouveau disponibles le {date}. Si vous avez besoin d’aide d’ici là, veuillez contacter {email}.',
-    complete: 'Vous avez maintenant réussi les {n} modules. Félicitations ! Vous pouvez télécharger votre certificat de réussite depuis la page Évaluations après avoir confirmé cette adresse e-mail.',
-    progress: 'Votre progression jusqu’ici :',
-    modNone: 'Module {nn} : pas encore tenté',
-    modPass: 'Module {nn} : RÉUSSI ({best} %, tentatives utilisées : {a})',
-    modFail: 'Module {nn} : pas encore réussi (meilleur résultat {best} %, tentatives utilisées ce mois-ci : {a} sur {max})',
-    footer: 'Ceci est un reçu automatique d’un site de formation temporaire. Ce n’est pas un certificat officiel de la WBSC et le site n’est pas le site web officiel de la WBSC. Questions : {email}.'
-  },
-  ja: {
-    codeSubject: 'WBSC 研修の確認コード: {code}',
-    codeBody: '確認コードは {code} です。\n\n' +
-      'このメールアドレスを確認するため、WBSC 審判メカニクス研修サイトに入力してください。コードの有効期限は {min} 分で、1回のみ使用できます。\n\n' +
-      'このコードを請求していない場合は、このメールを無視してください。コードが入力されない限り、何も起こりません。\n\n' +
-      'これは臨時の研修サイトであり、WBSC の公式ウェブサイトではありません。',
-    receiptSubject: 'WBSC 審判メカニクス研修の受領書: {module} - {result}',
-    hello: '{name} 様',
-    intro: 'WBSC 審判メカニクス研修サイトからの受領書です。',
-    lModule: 'モジュール', lAssessment: '評価', lScore: 'スコア', lResult: '結果', lAttempt: '受験回数', lDate: '日時', lRef: '参照番号',
-    resultLine: '{result}（合格基準 {mark}%）',
-    attemptLine: '{max} 回中 {n} 回目',
-    PASS: '合格', FAIL: '不合格',
-    nextPass: 'この評価に合格しました。',
-    nextLeft: '合格基準に達しませんでした。この評価の残り受験回数: {n}。マニュアルとプレゼンテーションを見直してから、もう一度受験してください。',
-    nextNone: '合格基準に達せず、今月の {max} 回の受験をすべて使い切りました。受験回数は {date} に再び利用できます。それまでにサポートが必要な場合は {email} までご連絡ください。',
-    complete: '{n} 個のモジュールすべてに合格しました。おめでとうございます！このメールアドレスを確認すると、評価ページから修了証をダウンロードできます。',
-    progress: 'これまでの進捗:',
-    modNone: 'モジュール {nn}: まだ受験していません',
-    modPass: 'モジュール {nn}: 合格（{best}%、使用した受験回数: {a}）',
-    modFail: 'モジュール {nn}: まだ合格していません（最高 {best}%、今月使用した受験回数: {a} / {max}）',
-    footer: 'これは臨時の研修サイトからの自動送信の受領書です。WBSC の公式な修了証ではなく、このサイトは WBSC の公式ウェブサイトではありません。お問い合わせ: {email}'
-  },
-  ko: {
-    codeSubject: 'WBSC 교육 인증 코드: {code}',
-    codeBody: '인증 코드는 {code} 입니다.\n\n' +
-      '이 이메일 주소를 확인하려면 WBSC 심판 메커닉스 교육 사이트에 입력하세요. 코드는 {min}분 후에 만료되며 한 번만 사용할 수 있습니다.\n\n' +
-      '이 코드를 요청하지 않으셨다면 이 이메일을 무시하세요. 코드를 입력하지 않으면 아무 일도 일어나지 않습니다.\n\n' +
-      '이곳은 임시 교육 사이트이며 WBSC 공식 웹사이트가 아닙니다.',
-    receiptSubject: 'WBSC 심판 메커닉스 교육 확인서: {module} - {result}',
-    hello: '{name} 님, 안녕하세요.',
-    intro: 'WBSC 심판 메커닉스 교육 사이트에서 보내는 확인서입니다.',
-    lModule: '모듈', lAssessment: '평가', lScore: '점수', lResult: '결과', lAttempt: '응시', lDate: '날짜 및 시간', lRef: '참조 번호',
-    resultLine: '{result} (합격 기준 {mark}%)',
-    attemptLine: '{max}회 중 {n}회',
-    PASS: '합격', FAIL: '불합격',
-    nextPass: '이 평가에 합격하셨습니다.',
-    nextLeft: '합격 기준에 도달하지 못했습니다. 이 평가의 남은 응시 횟수: {n}. 다시 응시하기 전에 매뉴얼과 프레젠테이션을 복습하세요.',
-    nextNone: '합격 기준에 도달하지 못했고 이번 달 {max}회의 응시 기회를 모두 사용했습니다. 응시 기회는 {date}에 다시 제공됩니다. 그 전에 도움이 필요하시면 {email}(으)로 문의해 주세요.',
-    complete: '{n}개 모듈을 모두 통과하셨습니다. 축하합니다! 이 이메일 주소를 확인하신 후 평가 페이지에서 수료증을 내려받을 수 있습니다.',
-    progress: '지금까지의 진행 상황:',
-    modNone: '모듈 {nn}: 아직 응시하지 않음',
-    modPass: '모듈 {nn}: 합격 ({best}%, 사용한 응시 횟수: {a})',
-    modFail: '모듈 {nn}: 아직 합격하지 못함 (최고 {best}%, 이번 달 사용한 응시 횟수: {a}/{max})',
-    footer: '이 확인서는 임시 교육 사이트에서 자동으로 발송되었습니다. WBSC 공식 수료증이 아니며, 이 사이트는 WBSC 공식 웹사이트가 아닙니다. 문의: {email}'
-  },
-  zh: {
-    codeSubject: 'WBSC 培训验证码：{code}',
-    codeBody: '您的验证码是 {code}\n\n' +
-      '请在 WBSC 裁判员机制培训网站输入该验证码，以确认此电子邮件地址。验证码将在 {min} 分钟后失效，且只能使用一次。\n\n' +
-      '如果您没有请求此验证码，请忽略本邮件：不输入验证码，不会发生任何事情。\n\n' +
-      '这是一个临时培训网站，不是 WBSC 官方网站。',
-    receiptSubject: 'WBSC 裁判员机制培训回执：{module} - {result}',
-    hello: '{name}，您好：',
-    intro: '这是来自 WBSC 裁判员机制培训网站的回执。',
-    lModule: '模块', lAssessment: '评估', lScore: '得分', lResult: '结果', lAttempt: '第几次尝试', lDate: '日期和时间', lRef: '参考编号',
-    resultLine: '{result}（及格线 {mark}%）',
-    attemptLine: '共 {max} 次，第 {n} 次',
-    PASS: '通过', FAIL: '未通过',
-    nextPass: '您已通过本次评估。',
-    nextLeft: '您未达到及格线。本评估剩余尝试次数：{n}。请先复习手册和演示文稿，再重新尝试。',
-    nextNone: '您未达到及格线，且已用完本月全部 {max} 次尝试机会。您的尝试次数将在 {date} 重新开放。如在此之前需要帮助，请联系 {email}。',
-    complete: '您已通过全部 {n} 个模块。恭喜！确认此电子邮箱地址后，您可以在评估页面下载完成证书。',
-    progress: '您目前的进度：',
-    modNone: '模块 {nn}：尚未尝试',
-    modPass: '模块 {nn}：通过（{best}%，已用尝试次数：{a}）',
-    modFail: '模块 {nn}：尚未通过（最高 {best}%，本月已用尝试次数：{a}/{max}）',
-    footer: '这是来自临时培训网站的自动回执。它不是 WBSC 官方证书，本网站也不是 WBSC 官方网站。如有疑问：{email}'
   }
 };
 

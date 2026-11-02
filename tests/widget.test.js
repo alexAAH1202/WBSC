@@ -480,14 +480,15 @@ const verifyText = pg => pg.textContent('#verify-state');
     for (let i = 0; i < 60 && !t.progressCalls.some(c => c.action === 'clearProgress'); i++) await new Promise(r => setTimeout(r, 50));   // the call is sent in the background
     assert.ok(t.progressCalls.some(c => c.action === 'clearProgress' && c.key === POOL && c.token === TOKEN)); ok('"Start again" also clears the saved attempt on the server');
 
-    // a language with no translated extras draws only the translated questions
-    const fr = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false }, query: '?langs=all&lang=fr' });
-    await fr.pg.click(`[data-assessment="${POOL}"]`); await fr.pg.waitForSelector('#quiz-gate', { state: 'visible' }); await fr.pg.check('#gate-check'); await fr.pg.click('#gate-start'); await fr.pg.waitForSelector('#quiz-question', { state: 'visible' });
-    const frCtx = {}; frCtx.window = frCtx; vm.runInNewContext(fs.readFileSync(path.join(root, 'i18n', 'q-fr.js'), 'utf8'), frCtx); const frCore = frCtx.WBSC_QDICT.fr['m06-pca'].questions.map(q => q.q);
+    // a language whose extra questions are not translated yet draws only the translated ones (simulated by dropping Spanish extras)
+    const es = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false }, query: '?lang=es' });
+    await es.pg.evaluate(k => { WBSC_QDICT.es[k].questions.length = 10; }, POOL);
+    await es.pg.click(`[data-assessment="${POOL}"]`); await es.pg.waitForSelector('#quiz-gate', { state: 'visible' }); await es.pg.check('#gate-check'); await es.pg.click('#gate-start'); await es.pg.waitForSelector('#quiz-question', { state: 'visible' });
+    const esCtx = {}; esCtx.window = esCtx; vm.runInNewContext(fs.readFileSync(path.join(root, 'i18n', 'q-es.js'), 'utf8'), esCtx); const esCore = esCtx.WBSC_QDICT.es['m06-pca'].questions.slice(0, 10).map(q => q.q);
     const asked = [];
-    for (let i = 0; i < 10; i++) { asked.push(await fr.pg.textContent('#quiz-question')); await fr.pg.click('.quiz-option >> nth=0'); await fr.pg.click('#quiz-submit-btn'); await fr.pg.click('#quiz-submit-btn'); }
-    assert.strictEqual(frCore.length, 10); assert.deepStrictEqual([...asked].sort(), [...frCore].sort(), 'French asks exactly its ten translated questions');
-    ok('in a language with only the core questions translated (French) the draw uses exactly those ten, all in French');
+    for (let i = 0; i < 10; i++) { asked.push(await es.pg.textContent('#quiz-question')); await es.pg.click('.quiz-option >> nth=0'); await es.pg.click('#quiz-submit-btn'); await es.pg.click('#quiz-submit-btn'); }
+    assert.strictEqual(esCore.length, 10); assert.deepStrictEqual([...asked].sort(), [...esCore].sort(), 'only the translated questions are asked');
+    ok('where only the core questions are translated, the draw uses exactly those ten, all in the learner\'s language');
   }
 
   // ====================================================================  certificate of completion

@@ -10,7 +10,7 @@ const server = http.createServer((req, res) => {
   fs.readFile(f, (e, d) => e ? (res.writeHead(404), res.end()) : (res.writeHead(200, { 'Content-Type': type }), res.end(d)));
 });
 let n = 0; const ok = m => { console.log('  ok -', m); n++; };
-const LANGS = ['es', 'fr', 'ja', 'ko', 'zh'];
+const LANGS = ['es'];
 const PAGES = ['index.html', 'manuals.html', 'presentations.html', 'privacy.html', 'assessment-widget.html'];   // results.html is the Director's page and stays in English
 const dict = {}, qdict = {};
 LANGS.forEach(l => {
@@ -28,13 +28,13 @@ LANGS.forEach(l => {
   let [c, pg] = await mk();
   for (const f of PAGES) { await pg.goto(base + f); assert.strictEqual(await pg.locator('.lang-item').count(), 2, f + ' offers English and Spanish'); assert.strictEqual(await pg.getAttribute('html', 'lang'), 'en'); }
   ok('the public menu offers only the languages that are switched on');
-  await pg.goto(base + 'index.html?lang=ja'); assert.strictEqual(await pg.getAttribute('html', 'lang'), 'ja');   // ?lang= is the reviewer preview
-  await pg.goto(base + 'index.html'); assert.strictEqual(await pg.getAttribute('html', 'lang'), 'en'); ok('?lang= previews a language for a reviewer, but a stored choice is ignored for the public while the language is not switched on');
+  await pg.goto(base + 'index.html?lang=fr'); assert.strictEqual(await pg.getAttribute('html', 'lang'), 'en', 'a language that does not exist is ignored');
+  await pg.evaluate(() => localStorage.setItem('wbscLang', 'ja')); await pg.goto(base + 'index.html'); assert.strictEqual(await pg.getAttribute('html', 'lang'), 'en'); ok('an unknown language in the address or in storage is ignored');
   assert.deepStrictEqual(pg.errors, []); await c.close();
 
   // 2. reviewer preview: six languages, choice persists
   [c, pg] = await mk(); await pg.goto(base + 'index.html?langs=all');
-  assert.strictEqual(await pg.locator('.lang-item').count(), 6); ok('?langs=all shows English plus five languages');
+  assert.strictEqual(await pg.locator('.lang-item').count(), 2); ok('?langs=all shows English and Spanish');
   await pg.click('.lang-btn'); await pg.click('.lang-item[lang="es"]'); await pg.waitForLoadState();
   assert.strictEqual(await pg.getAttribute('html', 'lang'), 'es');
   assert.strictEqual(await pg.evaluate(() => localStorage.getItem('wbscLang')), 'es');
@@ -49,7 +49,7 @@ LANGS.forEach(l => {
     const keys = await pg.evaluate(() => { const k = []; WBSC_I18N.units(document.body, (el, key) => k.push(key)); WBSC_I18N.attrs(document.body, (el, a, key) => k.push(key)); return k; });
     for (const l of LANGS) { /* the menu button's own label is built by i18n.js */ const miss = keys.filter(k => dict[l][k] == null && !/^Language: /.test(k)); assert.deepStrictEqual(miss, [], l + ' misses ' + miss.length + ' strings on ' + f + ': ' + miss.slice(0, 3).join(' | ')); }
   }
-  ok('every visible string on the four static pages has a translation in all five languages');
+  ok('every visible string on the four static pages has a translation in Spanish');
   await c.close();
   for (const l of LANGS) for (const w of [1280, 375]) {
     [c, pg] = await mk({ viewport: { width: w, height: 800 } });
@@ -60,7 +60,7 @@ LANGS.forEach(l => {
     }
     assert.deepStrictEqual(pg.errors, [], l + ' script errors'); await c.close();
   }
-  ok('all pages open in all five languages at desktop and phone width with no script errors or sideways scrolling');
+  ok('all pages open in Spanish at desktop and phone width with no script errors or sideways scrolling');
 
   // 4. quiz questions: every question, option and explanation is translated. In a pool (bank.draw) the first `draw` questions
   //    must be translated in every language; the extra ones only where the language is switched on (an untranslated extra question
@@ -83,7 +83,7 @@ LANGS.forEach(l => {
     const eligible = bank.questions.filter((q, i) => d.questions[i] && d.questions[i].q).length;
     assert.ok(eligible >= (bank.draw || bank.questions.length), `${l} ${id}: only ${eligible} translated questions, ${bank.draw} are drawn`);
   }
-  ok(`all ${count / LANGS.length} core questions are translated into all five languages, and the ${extrasChecked / LIVE.filter(l => l !== 'en').length} extra pool questions in the languages that are switched on (${LIVE.join(', ')})`);
+  ok(`all ${count / LANGS.length} core questions are translated into Spanish, and the ${extrasChecked / LIVE.filter(l => l !== 'en').length} extra pool questions in the languages that are switched on (${LIVE.join(', ')})`);
 
   // 5. the practice quiz runs in each language and the right answer is still the one marked right
   for (const l of LANGS) for (const key of ['m01-mkc', 'm06-mkc']) {
@@ -103,7 +103,7 @@ LANGS.forEach(l => {
     }
     assert.deepStrictEqual(pg.errors, [], l + ' ' + key); await c.close();
   }
-  ok('the practice quizzes run in all five languages with translated text and the correct answer still marked correct');
+  ok('the practice quizzes run in Spanish with translated text and the correct answer still marked correct');
 
   await b.close(); server.close(); console.log(n + ' i18n checks passed');
 })().catch(e => { console.error('FAIL', e.message); process.exit(1); });
