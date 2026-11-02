@@ -10,6 +10,18 @@ const server = http.createServer((req, res) => {
 });
 const html = fs.readFileSync(path.join(root, 'assessment-widget.html'), 'utf8');
 const BANK = vm.runInNewContext(fs.readFileSync(path.join(root, 'questions.js'), 'utf8') + '\n;QUIZ_BANK', {});
+// The real marked questions carry no answers (the server marks them). These tests stand in for the server with a made-up key:
+// the right option of pool question i is (3i + 1) mod (number of options). The page must never see it.
+const { fp: keyFp } = require('./answer-key-build.js');
+Object.keys(BANK).filter(k => /-pca$/.test(k)).forEach(k => BANK[k].questions.forEach((q, i) => { q.correct = (3 * i + 1) % q.options.length; }));
+// What the server does with a save: marks the chosen options and refuses a question the key does not match.
+function markPayload(p) {
+  const b = BANK[p.assessmentKey]; assert.ok(b && Array.isArray(p.answers), 'the page sends answers for a known assessment');
+  let score = 0; const missed = [];
+  p.answers.forEach(([i, o, f]) => { assert.strictEqual(f, keyFp(b.questions[i]), 'the page fingerprints the question like the key tool does'); if (o === b.questions[i].correct) score++; else missed.push([i, b.questions[i].correct]); });
+  return { score, total: p.answers.length, percentage: Math.round(score / p.answers.length * 100), missed };
+}
+const markReply = (p, extra) => { const m = markPayload(p); return reply(Object.assign({ wbscSave: true, success: true, submissionId: p.submissionId, attemptNumber: 1, maxAttempts: 2, result: m.score * 100 >= 85 * m.total ? 'PASS' : 'NOT PASSED', score: m.score, total: m.total, percentage: m.percentage }, extra)); };
 const RIGHT = {};   // question text -> right answer text
 Object.values(BANK).forEach(b => b.questions.forEach(q => { RIGHT[q.q] = q.options[q.correct]; }));
 
@@ -38,6 +50,7 @@ async function newPage(b, opts, saveHandler) {
   });
   await pg.route(/script\.google\.com\/macros\/s\/.*\/exec\?action=status/, r => {
     const u = new URL(r.request().url()); certLookups.push(Object.fromEntries(u.searchParams));
+    if (opts.statusFail) return r.abort();
     r.fulfill({ status: 200, contentType: 'application/javascript', body: `${u.searchParams.get('callback')}(${JSON.stringify(opts.certificate || { ok: true, eligible: false })});` });
   });
   await pg.route(POST_URL, async r => {
@@ -61,8 +74,10 @@ async function newPage(b, opts, saveHandler) {
       }
       return r.fulfill(page_(''));
     }
-    const payload = JSON.parse(params.get('payload')); posts.push({ method: r.request().method(), ct: r.request().headers()['content-type'], payload });
-    await (saveHandler || (() => r.fulfill(page_(reply({ wbscSave: true, success: true, submissionId: payload.submissionId, attemptNumber: 1, maxAttempts: 2, result: payload.percentage >= 85 ? 'PASS' : 'NOT PASSED' })))))(r, payload, posts.length);
+    const payload = JSON.parse(params.get('payload')); const sent = Object.keys(payload); const m = markPayload(payload);
+    Object.assign(payload, { score: m.score, totalQuestions: m.total, percentage: m.percentage });   // what the server worked out, for the assertions below
+    posts.push({ method: r.request().method(), ct: r.request().headers()['content-type'], payload, sent, missed: m.missed });
+    await (saveHandler || (() => r.fulfill(page_(markReply(payload, {})))))(r, payload, posts.length);
   });
   await pg.clock.install();
   await pg.goto('http://localhost:' + PORT + '/assessment-widget.html' + (opts.query || ''));
@@ -279,26 +294,34 @@ const verifyText = pg => pg.textContent('#verify-state');
   t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false } });
   await t.pg.click('[data-assessment="m01-pca"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
   {
-    const q = await t.pg.textContent('#quiz-question'); const opts = await t.pg.$$eval('.quiz-option .opt-text', a => a.map(x => x.textContent));
-    const right = opts.indexOf(RIGHT[q]), wrongI = (right + 1) % opts.length;
-    await t.pg.click(`.quiz-option >> nth=${wrongI}`); await t.pg.click('#quiz-submit-btn');
-    assert.strictEqual(await t.pg.locator('.quiz-option.correct').count(), 0, 'the right answer is not highlighted');
-    const fb = await t.pg.textContent('#quiz-feedback'); assert.ok(!fb.includes(RIGHT[q]), 'the answer text is not shown'); assert.ok(/Revisit this section of the manual/.test(fb));
-    assert.ok(BANK['m01-pca'].questions.find(x => x.q === q).ref.length > 5 && fb.includes(BANK['m01-pca'].questions.find(x => x.q === q).ref), 'the manual section is shown');
-    await t.pg.click('#quiz-submit-btn');
-    const q2 = await t.pg.textContent('#quiz-question'), o2 = await t.pg.$$eval('.quiz-option .opt-text', a => a.map(x => x.textContent));
-    await t.pg.click(`.quiz-option >> nth=${o2.indexOf(RIGHT[q2])}`); await t.pg.click('#quiz-submit-btn');
-    assert.ok(/Correct/.test(await t.pg.textContent('#quiz-feedback-head')) && await t.pg.locator('.quiz-option.correct').count() === 1);
+    // The page does not know the answers: it says only that the answer was recorded, for a right and a wrong choice alike.
+    const shown = [];
+    for (const wrongI of [true, false]) {
+      const q = await t.pg.textContent('#quiz-question'); const opts = await t.pg.$$eval('.quiz-option .opt-text', a => a.map(x => x.textContent));
+      const right = opts.indexOf(RIGHT[q]);
+      await t.pg.click(`.quiz-option >> nth=${wrongI ? (right + 1) % opts.length : right}`); await t.pg.click('#quiz-submit-btn');
+      assert.strictEqual(await t.pg.locator('.quiz-option.correct, .quiz-option.incorrect').count(), 0, 'no option is marked right or wrong');
+      const fb = (await t.pg.textContent('#quiz-feedback')).replace(/\s+/g, ' '); shown.push(fb);
+      assert.ok(/Answer recorded/.test(fb) && !/Not quite|Revisit|That’s right/.test(fb), fb);
+      assert.ok(await t.pg.locator('.quiz-option').evaluateAll(a => a.every(x => x.disabled)), 'the choice is locked');
+      await t.pg.click('#quiz-submit-btn');
+    }
+    assert.strictEqual(shown[0], shown[1], 'a right and a wrong answer look the same until the server has marked the attempt');
+    const bank = await t.pg.evaluate(() => JSON.stringify(QUIZ_BANK['m01-pca']));
+    assert.ok(!/"correct"/.test(bank), 'the marked questions in the page carry no answer key');
   }
-  ok('marked assessment: a wrong answer shows the manual section, not the answer; a right one is confirmed');
+  ok('marked assessment: the page does not know the answers; it records the choice and says nothing about right or wrong until the server marks it');
 
-  t = await newPage(b, { attempts: { attempts: 1, remaining: 1, passed: false } }, (r, p) => r.fulfill(page_(reply({ wbscSave: true, success: true, submissionId: p.submissionId, attemptNumber: 2, maxAttempts: 2, result: 'NOT PASSED' }))));
+  t = await newPage(b, { attempts: { attempts: 1, remaining: 1, passed: false } }, (r, p) => r.fulfill(page_(markReply(p, { attemptNumber: 2, review: markPayload(p).missed }))));
   await runQuiz(t.pg, 'm01-pca', 2); await t.pg.waitForFunction(() => /recorded/.test(document.getElementById('quiz-save-state').textContent));
   assert.ok(await t.pg.isVisible('#quiz-review')); assert.strictEqual(await t.pg.locator('#quiz-review li').count(), 2);
   const missed = await t.pg.locator('#quiz-review li').first().textContent(); assert.ok(/Correct answer:/.test(missed));
-  ok('after the last attempt is used without a pass, the missed questions are reviewed with their answers');
+  const rv = t.posts[0].missed[0]; assert.ok(missed.includes(BANK['m01-pca'].questions[rv[0]].options[rv[1]]), 'the right answer comes from the server reply');
+  assert.ok(/8 \/ 10/.test(await t.pg.textContent('#quiz-score-frac')) && /80%/.test(await t.pg.textContent('#quiz-score-pct')), 'the score shown is the server\'s');
+  ok('after the last attempt is used without a pass, the missed questions are reviewed with the right answers the server sends');
 
-  t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false } }, (r, p) => r.fulfill(page_(reply({ wbscSave: true, success: true, submissionId: p.submissionId, attemptNumber: 1, maxAttempts: 2, result: 'NOT PASSED' }))));
+
+  t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false } }, (r, p) => r.fulfill(page_(markReply(p, {}))));
   await runQuiz(t.pg, 'm01-pca', 2); await t.pg.waitForFunction(() => /recorded/.test(document.getElementById('quiz-save-state').textContent));
   assert.ok(!(await t.pg.isVisible('#quiz-review')), 'no answers while an attempt is left');
   ok('with an attempt still left, no answers are revealed');
@@ -307,6 +330,7 @@ const verifyText = pg => pg.textContent('#verify-state');
   await runQuiz(t.pg); await t.pg.waitForFunction(() => /recorded/.test(document.getElementById('quiz-save-state').textContent));
   assert.strictEqual(typeof t.posts[0].payload.elapsedSeconds, 'number'); assert.strictEqual(t.posts[0].payload.website, '');
   assert.strictEqual(t.posts[0].payload.assessmentType, 'Presentation Competency Assessment');
+  assert.ok(!t.posts[0].sent.some(k => /^(score|totalQuestions|percentage)$/.test(k)), 'the page sends its choices, never a score: ' + t.posts[0].sent.join());
   ok('bot check: the save carries the time taken and an empty honeypot');
 
   t = await newPage(b, { unverified: true });
@@ -316,7 +340,7 @@ const verifyText = pg => pg.textContent('#verify-state');
   ok('bot check: the honeypot value is sent with the code request and the field is invisible');
 
   // the optional "why" explanation
-  for (const [key, wrongFirst, expectWhy] of [['m01-mkc', true, true], ['m01-pca', true, false], ['m01-pca', false, true]]) {
+  for (const [key, wrongFirst, expectWhy] of [['m01-mkc', true, true], ['m01-pca', true, false], ['m01-pca', false, false]]) {
     t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false } });
     await t.pg.evaluate(() => { ['m01-mkc', 'm01-pca'].forEach(k => QUIZ_BANK[k].questions.forEach(q => { q.why = 'WHY-' + q.q.slice(0, 12); })); });
     await t.pg.click(`[data-assessment="${key}"]`); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
@@ -325,7 +349,7 @@ const verifyText = pg => pg.textContent('#verify-state');
     assert.strictEqual(await t.pg.isVisible('#quiz-feedback-why'), expectWhy, key + ' wrongFirst=' + wrongFirst);
     if (expectWhy) assert.ok((await t.pg.textContent('#quiz-feedback-why')).startsWith('WHY-'));
   }
-  ok('the optional explanation shows in practice and after a correct marked answer, never after a wrong marked answer');
+  ok('the optional explanation shows in practice; in the marked assessment nothing is explained until the attempt is marked');
 
   // resume where you left off
   async function answerRight(pg, n) { for (let i = 0; i < n; i++) { const q = await pg.textContent('#quiz-question'), o = await pg.$$eval('.quiz-option .opt-text', a => a.map(x => x.textContent)); await pg.click(`.quiz-option >> nth=${o.indexOf(RIGHT[q])}`); await pg.click('#quiz-submit-btn'); await pg.click('#quiz-submit-btn'); } }
@@ -340,7 +364,9 @@ const verifyText = pg => pg.textContent('#verify-state');
   await t.pg.reload(); await t.pg.waitForSelector('#quiz-resume', { state: 'visible' });
   assert.ok(/answered 3 of 10/.test(await t.pg.textContent('#resume-text')), await t.pg.textContent('#resume-text')); assert.ok(!(await t.pg.isVisible('#quiz-question')));
   const stored = await t.pg.evaluate(() => JSON.parse(localStorage.getItem('wbscResume')));
-  assert.strictEqual(stored.index, 3); assert.strictEqual(stored.score, 2); assert.strictEqual(stored.missed.length, 1); assert.strictEqual(stored.email, 'jo@x.com');
+  assert.strictEqual(stored.index, 3); assert.strictEqual(stored.v, 3); assert.strictEqual(stored.answers.length, 3); assert.strictEqual(stored.email, 'jo@x.com');
+  assert.ok(stored.answers[0] === Q[stored.qi[0]].correct && stored.answers[1] === Q[stored.qi[1]].correct && stored.answers[2] !== Q[stored.qi[2]].correct, 'the choices are kept as options of the question as written');
+  assert.ok(stored.score === undefined && stored.missed === undefined, 'no score or missed list is kept on the device');
   await t.pg.click('#resume-go'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
   const Q3 = Q[stored.qi[3]]; assert.strictEqual(await t.pg.textContent('#quiz-question'), Q3.q, 'resumes at the fourth question');
   assert.deepStrictEqual(await t.pg.$$eval('.quiz-option .opt-text', a => a.map(x => x.textContent)), stored.order[3].map(i => Q3.options[i]), 'same option order as stored');
@@ -348,7 +374,7 @@ const verifyText = pg => pg.textContent('#verify-state');
   await answerRight(t.pg, 7); await t.pg.waitForFunction(() => /recorded/.test(document.getElementById('quiz-save-state').textContent));
   assert.strictEqual(t.posts[0].payload.score, 9); assert.strictEqual(t.posts[0].payload.totalQuestions, 10); assert.strictEqual(typeof t.posts[0].payload.elapsedSeconds, 'number');
   assert.strictEqual(await t.pg.evaluate(() => localStorage.getItem('wbscResume')), null, 'cleared once finished');
-  ok('an unfinished marked attempt resumes at the next question with the same options, score and missed questions; finishing clears it');
+  ok('an unfinished marked attempt resumes at the next question with the same options and the answers given so far; finishing clears it');
 
   t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false } });
   await t.pg.click('[data-assessment="m01-pca"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' }); await answerRight(t.pg, 4);
@@ -448,7 +474,7 @@ const verifyText = pg => pg.textContent('#verify-state');
     await startPool(t); const part = await answerPool(t, 4);
     assert.strictEqual(t.progressCalls.filter(c => c.action === 'saveProgress').length, 4); const last = t.progressCalls[3];
     assert.strictEqual(last.key, POOL); assert.strictEqual(last.token, TOKEN);
-    const saved = JSON.parse(last.data); assert.strictEqual(saved.index, 4); assert.strictEqual(saved.score, 4); assert.strictEqual(saved.qi.length, 10); assert.strictEqual(saved.v, 2);
+    const saved = JSON.parse(last.data); assert.strictEqual(saved.index, 4); assert.strictEqual(saved.answers.length, 4); assert.strictEqual(saved.qi.length, 10); assert.strictEqual(saved.v, 3);
     assert.ok(!/@/.test(last.data), 'no email address in the saved progress');
     ok('each answer saves progress to the server against the session (4 saves after 4 answers), without the email address');
     const nextQ = ALL[saved.qi[4]];
@@ -458,8 +484,8 @@ const verifyText = pg => pg.textContent('#verify-state');
     await dev.pg.click('#resume-go'); await dev.pg.waitForSelector('#quiz-question', { state: 'visible' });
     assert.ok(/Question 5 of 10/.test(await dev.pg.textContent('#quiz-progress-label'))); assert.strictEqual(await dev.pg.textContent('#quiz-question'), nextQ);
     const rest = await answerPool(dev, 6); await until(dev);
-    assert.deepStrictEqual(rest.concat([]).every(q => ALL.includes(q)), true); assert.strictEqual(dev.posts[0].payload.totalQuestions, 10); assert.strictEqual(dev.posts[0].payload.score, 10, 'the score carried over from the other device');
-    ok('on another device the saved attempt is offered, resumes at the next question with the same draw, and finishes with the carried-over score');
+    assert.deepStrictEqual(rest.concat([]).every(q => ALL.includes(q)), true); assert.strictEqual(dev.posts[0].payload.totalQuestions, 10); assert.strictEqual(dev.posts[0].payload.score, 10, 'the answers carried over from the other device');
+    ok('on another device the saved attempt is offered, resumes at the next question with the same draw, and finishes with the carried-over answers');
 
     // saved progress for another assessment / too old / questions changed is ignored
     for (const edit of [d => { d.savedAt = Date.now() - 25 * 3600 * 1000; }, d => { d.qs[0] = 'something else'; }, d => { d.qi[1] = d.qi[0]; }, d => { d.v = 1; }]) {
@@ -571,6 +597,39 @@ const verifyText = pg => pg.textContent('#verify-state');
     assert.ok(!(await t.pg.isVisible('.notice-more p')) && await t.pg.isVisible('.notice-more summary')); await t.pg.click('.notice-more summary'); assert.ok(await t.pg.isVisible('.notice-more p'));
     assert.ok(/Pass mark: 85%/.test(await t.pg.textContent('#rules-note')) && /watch the full presentation first/.test(await t.pg.textContent('#rules-note')));
     ok('the preamble is shorter: one visible notice paragraph with "More about this site" folded away, and a single pass-mark note that points to the presentations');
+
+    // ---- quiz progress bar, last-attempt warning, next module, menu chip, loading and error states
+    t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false }, certificate: status });
+    await t.pg.click('[data-assessment="m01-pca"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
+    assert.ok(await t.pg.isHidden('#quiz-last-warn'), 'no warning on the first attempt'); assert.strictEqual(await t.pg.getAttribute('#quiz-bar', 'aria-valuenow'), '0');
+    for (let i = 0; i < 3; i++) { const q = await t.pg.textContent('#quiz-question'); const o = await t.pg.$$eval('.quiz-option .opt-text', a => a.map(x => x.textContent)); await t.pg.click(`.quiz-option >> nth=${o.indexOf(RIGHT[q])}`); await t.pg.click('#quiz-submit-btn'); await t.pg.click('#quiz-submit-btn'); }
+    assert.strictEqual(await t.pg.getAttribute('#quiz-bar', 'aria-valuenow'), '30'); assert.strictEqual(await t.pg.evaluate(() => document.getElementById('quiz-bar-fill').style.width), '30%');
+    t = await newPage(b, { attempts: { attempts: 1, remaining: 1, passed: false } });
+    await t.pg.click('[data-assessment="m01-pca"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
+    assert.ok(await t.pg.isVisible('#quiz-last-warn') && /last attempt this month/.test(await t.pg.textContent('#quiz-last-warn')) && /cannot try this module again until/.test(await t.pg.textContent('#quiz-last-warn')), await t.pg.textContent('#quiz-last-warn'));
+    ok('the quiz shows a progress bar that fills as questions are answered, and a clear warning on the last attempt of the month');
+
+    t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false }, certificate: status });
+    await t.pg.waitForSelector('#progress-strip', { state: 'visible' });
+    await runQuiz(t.pg, 'm01-pca'); await t.pg.waitForFunction(() => /recorded/.test(document.getElementById('quiz-save-state').textContent));
+    await t.pg.waitForSelector('#quiz-next-module', { state: 'visible' });
+    assert.strictEqual((await t.pg.textContent('#quiz-next-module')).trim(), 'Next module: Module 04'); assert.strictEqual(await t.pg.getAttribute('#quiz-next-module', 'href'), '#module-04');
+    ok('after a pass a button leads to the next module that is not yet passed (modules 02 and 03 are already passed here, so Module 04)');
+
+    // the menu chip on the other pages, from what the Assessments page remembered; it goes when the sign-in does
+    const chipData = await t.pg.evaluate(() => JSON.parse(localStorage.getItem('wbscProgressChip')));
+    assert.strictEqual(chipData.n, 3); assert.strictEqual(chipData.total, 8); assert.ok(!('email' in chipData) && !('token' in chipData), 'only a count is kept');
+    await t.pg.goto('http://localhost:' + PORT + '/index.html');
+    assert.strictEqual((await t.pg.textContent('#primary-nav .progress-chip')).trim(), '✓ 3 of 8 passed'); assert.strictEqual(await t.pg.getAttribute('#primary-nav .progress-chip', 'href'), 'assessment-widget.html#progress-strip');
+    await t.pg.evaluate(() => { const d = JSON.parse(localStorage.getItem('wbscProgressChip')); d.exp = Date.now() - 1000; localStorage.setItem('wbscProgressChip', JSON.stringify(d)); });
+    await t.pg.reload(); assert.strictEqual(await t.pg.locator('.progress-chip').count(), 0, 'an expired sign-in shows no chip');
+    ok('every page shows "N of 8 passed" in the menu while signed in (a count only), linking to the progress strip, and not after the sign-in has expired');
+
+    t = await newPage(b, { statusFail: true });
+    await t.pg.waitForSelector('#progress-strip', { state: 'visible' });
+    await t.pg.waitForFunction(() => /could not be checked/.test(document.getElementById('ps-title').textContent), null, { timeout: 15000 });
+    assert.ok(await t.pg.isVisible('#ps-retry') && /Your results are safe/.test(await t.pg.textContent('#ps-note')));
+    ok('if the progress lookup fails the strip says so, reassures that results are safe and offers Try again');
   }
 
   await b.close(); server.close(); console.log(n + ' widget checks passed');

@@ -3,6 +3,26 @@
 // Remembering that it was dismissed uses one setting in localStorage ("wbscNoticeSeen"); the Privacy page says so.
 // If you ever add analytics, embeds or anything that sets cookies, this must become a real consent choice.
 (function(){
+  // "N of 8 passed": a small link in the menu of every page for a learner who is signed in on this device. The Assessments page
+  // stores the count (wbscProgressChip: passed, total, when the sign-in ends); it is removed with the sign-in. Nothing is sent anywhere.
+  function chip(){
+    try {
+      var d = JSON.parse(localStorage.getItem('wbscProgressChip') || 'null'), nav = document.getElementById('primary-nav');
+      if (!d || !nav || !(d.exp > Date.now()) || !(d.total > 0) || nav.querySelector('.progress-chip')) return;
+      var T = window.WBSC_T || function(x, v){ return x.replace(/\{(\w+)\}/g, function(m, k){ return v && k in v ? v[k] : m; }); };
+      var st = document.createElement('style');
+      st.textContent = '#primary-nav a.progress-chip{display:inline-flex;align-items:center;align-self:center;gap:6px;height:auto;min-height:0;line-height:1.2;font-size:.78rem;font-weight:700;border:1px solid #c8a24a;border-radius:999px;padding:6px 14px;margin:0 0 0 6px;color:#fff;text-decoration:none;white-space:nowrap}' +
+        '@media (max-width:900px){#primary-nav a.progress-chip{margin:12px 16px;justify-content:center;width:auto}}' +
+        '#primary-nav a.progress-chip:hover,#primary-nav a.progress-chip:focus-visible{background:#c8a24a;color:#0a1e46}.progress-chip:focus-visible{outline:3px solid #c8a24a;outline-offset:2px}';
+      document.head.appendChild(st);
+      var a = document.createElement('a');
+      a.className = 'progress-chip'; a.href = 'assessment-widget.html#progress-strip';
+      a.textContent = '\u2713 ' + T('{n} of {total} passed', { n: d.n, total: d.total });
+      a.setAttribute('aria-label', T('Your progress: {n} of {total} modules passed', { n: d.n, total: d.total }));
+      nav.appendChild(a);
+    } catch (e) {}
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', chip); else chip();
   var KEY = 'wbscNoticeSeen';
   try { if (localStorage.getItem(KEY)) return; } catch (e) {}
   var css = document.createElement('style');
@@ -28,7 +48,7 @@
   function esc(t){ return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
   box.innerHTML =
     '<strong>' + esc(T('Cookies and privacy')) + '</strong>' +
-    '<p>' + esc(T('This site does not use cookies or tracking. It keeps what you type in your browser for this visit, and your sign-in on this device for up to 14 days after you confirm your email. It contacts Google to email you a login code, to save your marked results and, if you stop a marked assessment part-way, to save your progress so you can resume on any device.')) + '</p>' +
+    '<p>' + esc(T('This site does not use cookies or tracking. It keeps what you type in your browser for this visit, and your sign-in, with how many modules you have passed, on this device for up to 14 days after you confirm your email. It contacts Google to email you a login code, to save your marked results and, if you stop a marked assessment part-way, to save your progress so you can resume on any device.')) + '</p>' +
     '<div class="row"><button type="button">' + esc(T('OK')) + '</button><a href="privacy.html">' + esc(T('Read the privacy page')) + '</a></div>';
   box.querySelector('button').addEventListener('click', function(){
     try { localStorage.setItem(KEY, '1'); } catch (e) {}

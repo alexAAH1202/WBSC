@@ -90,8 +90,18 @@ function login(env, email = 'jo@x.com') {
   return v.token;
 }
 const base = o => Object.assign({ submissionId: uid(), participantName: 'Jo Ump', participantEmail: 'typed-by-learner@x.com', umpireId: '007',
-  association: 'Assoc', module: 'Module 01 — Foundations', assessmentType: 'Presentation Competency Assessment', score: 9, totalQuestions: 10, percentage: 99, completionStatus: 'Complete', elapsedSeconds: 90 }, o);
-const save = (env, token, d) => msgOf(env.ctx.doPost({ parameter: { payload: JSON.stringify(Object.assign(base(), d, { token })) } }));
+  association: 'Assoc', module: 'Module 01 — Foundations', assessmentType: 'Presentation Competency Assessment', score: 9, totalQuestions: 10, completionStatus: 'Complete', elapsedSeconds: 90 }, o);
+// The server marks the answers. A test key: every marked assessment has a pool of 40 questions and asks `draw`; the right option of question i is i % 4.
+const testKey = draw => { const k = {}; for (let m = 1; m <= 8; m++) k['m0' + m + '-pca'] = { draw, f: Array.from({ length: 40 }, (_, i) => 'f' + i), c: Array.from({ length: 40 }, (_, i) => i % 4) }; return JSON.stringify(k); };
+// Builds answers that score exactly `score` of `total` (the first `score` are right) and sets the key to ask `total`.
+const answersFor = (score, total) => Array.from({ length: Math.max(0, total) }, (_, i) => [i, i < score ? i % 4 : (i % 4 + 1) % 4, 'f' + i]);
+const save = (env, token, d) => {
+  const p = Object.assign(base(), d, { token });
+  if (p.answers === undefined) { env.props.set('ANSWER_KEY', testKey(Math.max(1, p.totalQuestions))); p.answers = answersFor(p.score, p.totalQuestions); }
+  if (p.assessmentKey === undefined) p.assessmentKey = 'm0' + (/Module\s*0*(\d+)/i.exec(p.module) || [0, 1])[1] + '-pca';
+  delete p.score; delete p.totalQuestions;
+  return msgOf(env.ctx.doPost({ parameter: { payload: JSON.stringify(p) } }));
+};
 const mod = k => `Module 0${k} — Module name ${k}`;
 
 let n = 0; const ok = (name, fn) => { fn(); console.log('  ok -', name); n++; };
@@ -314,9 +324,12 @@ ok('the bank can grow: 20 and 30 question assessments are scored by percentage',
     const e = makeEnv(); const t = login(e); assert.strictEqual(save(e, t, { score: sc, totalQuestions: tot, elapsedSeconds: 600 }).result, want, sc + '/' + tot);
   }
 });
-ok('invalid scores and names are rejected and nothing is written or emailed', () => {
-  const e = makeEnv(); const t = login(e); const mails = e.mails.length;
-  for (const bad of [{ score: 11 }, { score: -1 }, { totalQuestions: 0 }, { score: 2.5 }, { participantName: '' }, { submissionId: 'x' }]) {
+ok('invalid answers and names are rejected and nothing is written or emailed', () => {
+  const e = makeEnv(); const t = login(e); const mails = e.mails.length; e.props.set('ANSWER_KEY', testKey(10));
+  const good = answersFor(9, 10), mut = f => { const a = good.map(x => x.slice()); f(a); return a; };
+  for (const bad of [{ totalQuestions: 0 }, { answers: 'x' }, { answers: good.slice(1) }, { answers: good.concat([[10, 0, 'f10']]) }, { answers: mut(a => { a[1][0] = 0; }) },
+                     { answers: mut(a => { a[0][0] = 40; }) }, { answers: mut(a => { a[0][1] = 10; }) }, { answers: mut(a => { a[0][1] = 1.5; }) }, { answers: mut(a => { a[0] = [0, 0]; }) },
+                     { assessmentKey: 'm01-mkc' }, { assessmentKey: 'm02-pca' }, { participantName: '' }, { submissionId: 'x' }]) {
     const m = save(e, t, bad); assert.strictEqual(m.success, false, JSON.stringify(bad)); assert.ok(m.error);
   }
   assert.strictEqual(e.rows.length, 0); assert.strictEqual(e.mails.length, mails);
@@ -337,7 +350,8 @@ ok('hostile text cannot break out of the reply page', () => {
 ok('garbage and legacy raw-JSON posts behave', () => {
   const e = makeEnv(); const t = login(e);
   assert.strictEqual(msgOf(e.ctx.doPost({ parameter: { payload: '{not json' } })).error, 'The server could not save the result');
-  const j = JSON.parse(e.ctx.doPost({ postData: { contents: JSON.stringify(Object.assign(base(), { token: t })) } }).text);
+  e.props.set('ANSWER_KEY', testKey(10));
+  const j = JSON.parse(e.ctx.doPost({ postData: { contents: JSON.stringify(Object.assign(base(), { token: t, assessmentKey: 'm01-pca', answers: answersFor(9, 10) })) } }).text);
   assert.strictEqual(j.ok, true); assert.strictEqual(j.success, true);
   const noTok = JSON.parse(e.ctx.doPost({ postData: { contents: JSON.stringify(base()) } }).text);
   assert.strictEqual(noTok.success, false); assert.strictEqual(noTok.code, 'auth');
@@ -460,17 +474,17 @@ ok('every language has every email phrase, and the same {placeholders} as Englis
 });
 
 // =====================================================================  saved progress (resume on another device)
-const prog = (o) => Object.assign({ v: 2, index: 3, score: 2, elapsedMs: 40000, qi: [0, 2, 5, 7, 9], qs: ['a', 'b', 'c', 'd', 'e'],
-  order: [[1, 0, 2, 3], [0, 1, 2, 3], [3, 2, 1, 0], [2, 0, 1, 3], [1, 2, 3, 0]], missed: [{ q: 'Q?', answer: 'A', ref: 'R', why: 'W' }] }, o);
+const prog = (o) => Object.assign({ v: 3, index: 3, answers: [2, 0, 1], elapsedMs: 40000, qi: [0, 2, 5, 7, 9], qs: ['a', 'b', 'c', 'd', 'e'],
+  order: [[1, 0, 2, 3], [0, 1, 2, 3], [3, 2, 1, 0], [2, 0, 1, 3], [1, 2, 3, 0]] }, o);
 const putProg = (e, t, key, o) => act(e, 'saveProgress', { token: t, key, data: JSON.stringify(o) });
 const getProg = (e, t, key) => JSON.parse(e.ctx.attemptsReply_({ token: t, module: 'Module 01', type: 'Presentation Competency Assessment', pkey: key, callback: '' }).text).progress;
 ok('progress: saved against the verified email, returned with the attempts lookup, replaced on the next save, never keyed by the address itself', () => {
   const e = makeEnv(); const t = login(e, 'jo@x.com');
   assert.strictEqual(getProg(e, t, 'm06-pca') == null, true);
   const r = putProg(e, t, 'm06-pca', prog()); assert.strictEqual(r.success, true, r.error);
-  const got = getProg(e, t, 'm06-pca'); assert.strictEqual(got.index, 3); assert.strictEqual(got.score, 2); assert.deepStrictEqual(got.qi, [0, 2, 5, 7, 9]);
+  const got = getProg(e, t, 'm06-pca'); assert.strictEqual(got.index, 3); assert.deepStrictEqual(Array.from(got.answers), [2, 0, 1]); assert.strictEqual(got.score, undefined, 'no score is kept'); assert.deepStrictEqual(got.qi, [0, 2, 5, 7, 9]);
   assert.strictEqual(getProg(e, t, 'm07-pca') == null, true, 'another assessment has none');
-  putProg(e, t, 'm06-pca', prog({ index: 4, score: 3 })); assert.strictEqual(getProg(e, t, 'm06-pca').index, 4); assert.strictEqual(e.progressRows.length, 2, 'header + one row');
+  putProg(e, t, 'm06-pca', prog({ index: 4, answers: [2, 0, 1, 3] })); assert.strictEqual(getProg(e, t, 'm06-pca').index, 4); assert.strictEqual(e.progressRows.length, 2, 'header + one row');
   const t2 = login(e, 'other@x.com'); assert.strictEqual(getProg(e, t2, 'm06-pca') == null, true, 'another learner sees nothing');
   assert.ok(!JSON.stringify(e.progressRows).includes('jo@x.com'), 'the email address is not stored in the Progress sheet');
 });
@@ -490,10 +504,10 @@ ok('progress: needs a verified session; only marked-assessment keys; bad or over
   assert.strictEqual(putProg(e, '', 'm06-pca', prog()).code, 'auth'); assert.strictEqual(putProg(e, 'f'.repeat(64), 'm06-pca', prog()).code, 'auth');
   assert.strictEqual(act(e, 'clearProgress', { token: 'nope', key: 'm06-pca' }).code, 'auth');
   for (const k of ['m06-mkc', '../x', 'm06', 'M06-PCA']) assert.strictEqual(putProg(e, t, k, prog()).success, false, k);
-  for (const bad of [prog({ v: 1 }), prog({ index: 99 }), prog({ score: 9 }), prog({ qs: ['a'] }), prog({ order: [[0, 1]] }), prog({ qi: [0, 1, 2, 3, 4000] }), prog({ missed: new Array(9).fill({ q: 'x' }) })])
+  for (const bad of [prog({ v: 2 }), prog({ index: 99 }), prog({ answers: [1, 1, 1, 1, 1, 1] }), prog({ answers: [9] }), prog({ qs: ['a'] }), prog({ order: [[0, 1]] }), prog({ qi: [0, 1, 2, 3, 4000] })])
     assert.strictEqual(putProg(e, t, 'm06-pca', bad).success, false);
   assert.strictEqual(act(e, 'saveProgress', { token: t, key: 'm06-pca', data: 'not json' }).success, false);
-  const big = putProg(e, t, 'm06-pca', prog({ missed: [{ q: 'x'.repeat(5000), answer: 'y'.repeat(5000), ref: 'r'.repeat(5000), why: 'w'.repeat(5000) }] })); assert.strictEqual(big.success, true);
+  const big = putProg(e, t, 'm06-pca', prog({ qs: ['x'.repeat(5000), 'b', 'c', 'd', 'e'] })); assert.strictEqual(big.success, true);
   assert.ok(e.progressRows[1][3].length < 4000, 'long text is cut to the cap');
   assert.strictEqual(e.progressRows.length, 2);
   let last; for (let i = 0; i < 241; i++) last = putProg(e, t, 'm06-pca', prog()); assert.strictEqual(last.code, 'rate');
@@ -663,6 +677,35 @@ ok('status: once all eight are passed it carries the certificate name and date',
   const e = makeEnv(); const t = login(e, 'all@x.com');
   for (let i = 1; i <= 8; i++) save(e, t, { module: mod(i), score: 9, umpireId: 'all', participantName: 'Alex Ump' });
   const st = statusOf(e, t); assert.deepStrictEqual([st.passedCount, st.eligible, st.name, st.date], [8, true, 'Alex Ump', '2026-10-27']);
+});
+
+// =====================================================================  server-side marking
+ok('marking: the server scores the chosen options from its private key; a claimed score is ignored and the reply carries the score', () => {
+  const e = makeEnv(); const t = login(e); e.props.set('ANSWER_KEY', testKey(10));
+  const m = msgOf(e.ctx.doPost({ parameter: { payload: JSON.stringify(Object.assign(base(), { token: t, assessmentKey: 'm01-pca', answers: answersFor(8, 10), score: 10, percentage: 100 })) } }));
+  assert.strictEqual(m.success, true); assert.strictEqual(m.result, 'NOT PASSED'); assert.strictEqual(m.score, 8); assert.strictEqual(m.total, 10); assert.strictEqual(m.percentage, 80);
+  assert.strictEqual(e.rows[1][7], 8); assert.strictEqual(e.rows[1][8], 10);
+  assert.ok(!JSON.stringify(m).includes('"c"') && m.review == null, 'the first failed attempt reveals no answers');
+});
+ok('marking: the right answers to the missed questions come back only when the last attempt of the month is used', () => {
+  const e = makeEnv(); const t = login(e);
+  save(e, t, { score: 7 });
+  const last = save(e, t, { score: 8 });
+  assert.strictEqual(last.attemptNumber, 2); assert.deepStrictEqual(Array.from(last.review, r => Array.from(r)), [[8, 0], [9, 1]], 'the two missed questions and their right options');
+  const pass = save(e, login(e, 'p@x.com'), { score: 9, umpireId: 'p' }); assert.strictEqual(pass.review, null);
+  const dup = save(e, t, { submissionId: last.submissionId, score: 8 }); assert.strictEqual(dup.duplicate, true); assert.strictEqual(dup.score, 8); assert.strictEqual(dup.review.length, 2, 'a retry of the saved result gets the same reply');
+});
+ok('marking: an old page that still sends a score, a missing key, or a stale question fingerprint is refused and nothing is written', () => {
+  const e = makeEnv(); const t = login(e); const mails = e.mails.length;
+  const legacy = msgOf(e.ctx.doPost({ parameter: { payload: JSON.stringify(Object.assign(base(), { token: t, assessmentKey: 'm01-pca', score: 10, totalQuestions: 10 })) } }));
+  assert.strictEqual(legacy.success, false); assert.ok(/reload the page/.test(legacy.error));
+  e.props.set('ANSWER_KEY', testKey(10));
+  const stale = msgOf(e.ctx.doPost({ parameter: { payload: JSON.stringify(Object.assign(base(), { token: t, assessmentKey: 'm01-pca', answers: answersFor(10, 10).map((a, i) => i === 4 ? [a[0], a[1], 'old'] : a) })) } }));
+  assert.strictEqual(stale.success, false); assert.ok(/was updated/.test(stale.error));
+  e.props.delete('ANSWER_KEY');
+  const none = msgOf(e.ctx.doPost({ parameter: { payload: JSON.stringify(Object.assign(base(), { token: t, assessmentKey: 'm01-pca', answers: answersFor(10, 10) })) } }));
+  assert.strictEqual(none.success, false); assert.ok(e.mails.length > mails, 'the owner is alerted that marking is not set up');
+  assert.strictEqual(e.rows.length, 0);
 });
 
 console.log(n + ' Code.gs checks passed');
