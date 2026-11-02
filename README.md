@@ -87,7 +87,7 @@ Script Web App into a Google Sheet.
 - Name, email, ID and association are remembered for the visit (this tab only) so a refresh does not mean retyping them.
 
 ## Tests
-- `node tests/bank.test.js`: 14 assessments in `questions.js` (Appendix 5 is split into Modules 06, 07 and 08 for Appendix 5a, 5b and 5c; each marked assessment has a pool of 20 questions and asks 10), at least 5 questions per Knowledge Check and 10 per Competency Assessment (more is fine, up to 100), answer keys in range, no duplicate options or questions. Runs in CI.
+- `node tests/bank.test.js`: 16 assessments in `questions.js` (a practice Knowledge Check and a marked assessment for every module) (Appendix 5 is split into Modules 06, 07 and 08 for Appendix 5a, 5b and 5c & d; each marked assessment has a pool of 20 questions and asks 10), at least 5 questions per Knowledge Check and 10 per Competency Assessment (more is fine, up to 100), answer keys in range, no duplicate options or questions. Runs in CI.
 - `node tests/site.test.js`: every local link, script, stylesheet and image on every page exists. Runs in CI.
 - `node tests/code-gs.test.js`: `Code.gs` against a mock of Sheets, Mail and Lock (39 checks, including login, receipts, results password, alerts and the health check). Runs in CI.
 - `node tests/widget.test.js` (needs `npm i -D playwright`): the widget in a real browser with Google's reply simulated (about 40 checks, including the question pool and progress on the server). It takes a few minutes.
@@ -101,8 +101,8 @@ The browser tests do **not** prove the real Apps Script reply reaches the widget
 step 3 under "Deploying" is the check that does.
 
 ## Modules, watch-first and presentations
-- **Eight required modules.** 01-04 Foundations, 05 Appendix 4, 06 Appendix 5a (Key Concepts), 07 Appendix 5b (Three-Umpire System), 08 Appendix 5c (Four, Five and Six-Umpire Systems). Completion means a PASS on the Presentation Competency Assessment for all eight (`TOTAL_MODULES` in `Code.gs`; `TOTAL_MODULES` in the widget is display only).
-- **Watch first.** The Appendix 4, 5a, 5b and 5c assessments set `watchFirst` in `questions.js`; the page asks the learner to confirm they watched the full presentation before the questions appear. This is a confirmation, not proof: Google Drive does not tell us whether a video was watched.
+- **Eight required modules.** 01-04 Foundations, 05 Appendix 4, 06 Appendix 5a (Key Concepts), 07 Appendix 5b (Three-Umpire System), 08 Appendix 5c & d (Four, Five and Six-Umpire Systems). Completion means a PASS on the Presentation Competency Assessment for all eight (`TOTAL_MODULES` in `Code.gs`; `TOTAL_MODULES` in the widget is display only).
+- **Watch first.** The Appendix 4, 5a, 5b and 5c & d assessments set `watchFirst` in `questions.js`; the page asks the learner to confirm they watched the full presentation before the questions appear. This is a confirmation, not proof: Google Drive does not tell us whether a video was watched.
 - **Presentations are MP4 only.** The PowerPoint downloads were removed (animations and sound did not play reliably, and Mac rendering was poor).
 - **Question explanations.** A question may have an optional `why` (see the header of `questions.js`).
 - **Resume.** An unfinished marked attempt is kept in the browser's localStorage (`wbscResume`, one attempt at a time) for 24 hours: question reached, the options chosen so far and the shuffled option order (no score: the server marks the finished attempt). It is tied to the verified email, ignored if the question bank changed, and cleared on finish or "Start again". It does not follow the learner to another device. Practice quizzes are not saved.

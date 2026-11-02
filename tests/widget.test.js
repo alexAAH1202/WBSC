@@ -129,6 +129,17 @@ const verifyText = pg => pg.textContent('#verify-state');
   await t.pg.keyboard.press('Escape');
   ok('pressing "Email me a code" shows a note that the site can send about 100 emails a day, so a late code means trying again later or tomorrow; OK closes it and it is not repeated');
 
+  // practice quizzes for Appendix 5b and 5c & d
+  for (const key of ['m07-mkc', 'm08-mkc']) {
+    t = await newPage(b, { unverified: true });
+    await t.pg.click(`[data-assessment="${key}"]`); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
+    assert.ok(/Practice quiz - not marked, not recorded/.test(await t.pg.textContent('#quiz-mode')));
+    assert.ok(/Question 1 of 8/.test(await t.pg.textContent('#quiz-progress-label')));
+    for (let i = 0; i < 8; i++) { const q = await t.pg.textContent('#quiz-question'), o = await t.pg.$$eval('.quiz-option .opt-text', a => a.map(x => x.textContent)); const r = o.indexOf(RIGHT[q]); assert.ok(r >= 0, 'known question'); await t.pg.click(`.quiz-option >> nth=${r}`); await t.pg.click('#quiz-submit-btn'); assert.ok(/Correct/.test(await t.pg.textContent('#quiz-feedback-head'))); await t.pg.click('#quiz-submit-btn'); }
+    assert.ok(/8 \/ 8/.test(await t.pg.textContent('#quiz-score-frac')) && t.posts.length === 0, 'practice is never saved');
+  }
+  ok('Appendix 5b and 5c & d have 8-question practice quizzes: unmarked, answers shown, nothing is sent to the server');
+
   t = await newPage(b, { unverified: true, sendCode: 'rate' });
   await t.pg.click('#verify-send-btn'); await t.pg.waitForFunction(() => /Too many codes/.test(document.getElementById('verify-state').textContent));
   assert.ok(!(await t.pg.isVisible('#verify-code-row')), 'no code box when the server refused');
@@ -418,7 +429,7 @@ const verifyText = pg => pg.textContent('#verify-state');
   assert.strictEqual(await t.pg.getAttribute('#gate-link', 'href'), 'presentations.html#pres-5b');
   await t.pg.check('#gate-check'); assert.ok(!(await t.pg.isDisabled('#gate-start'))); await t.pg.click('#gate-start');
   await t.pg.waitForSelector('#quiz-question', { state: 'visible' }); assert.ok(!(await t.pg.isVisible('#quiz-gate')));
-  ok('Appendix 4, 5a, 5b and 5c assessments ask the learner to confirm they watched the full presentation before the questions appear');
+  ok('Appendix 4, 5a, 5b and 5c & d assessments ask the learner to confirm they watched the full presentation before the questions appear');
   t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false } });
   await t.pg.click('[data-assessment="m01-pca"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' }); assert.ok(!(await t.pg.isVisible('#quiz-gate')));
   await t.pg.click('[data-assessment="m05-mkc"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' }); assert.ok(!(await t.pg.isVisible('#quiz-gate')));

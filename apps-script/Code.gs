@@ -57,7 +57,7 @@ var MAX_ATTEMPTS = 2;
 
 // A learner has completed the program when they have PASSED this assessment
 // for every one of these modules.
-var TOTAL_MODULES = 8;   // Modules 01-08: the four Foundations modules, Appendix 4 (05) and Appendix 5a, 5b, 5c (06, 07, 08)
+var TOTAL_MODULES = 8;   // Modules 01-08: the four Foundations modules, Appendix 4 (05) and Appendix 5a, 5b, 5c & d (06, 07, 08)
 var COMPLETION_TYPE = 'Presentation Competency Assessment';
 
 // Require a verified email (one-time code) to save a result or look up attempts.

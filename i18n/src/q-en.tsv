@@ -718,7 +718,7 @@ m06-mkc.3.o3	To allow all umpires to officiate exclusively from foul territory
 m06-mkc.4.q	Appendix 5 is divided into four sub-sections (5a-5d). Which sub-section covers the Three-Umpire System mechanics?
 m06-mkc.4.o0	Appendix 5a
 m06-mkc.4.o1	Appendix 5d
-m06-mkc.4.o2	Appendix 5c
+m06-mkc.4.o2	Appendix 5c & d
 m06-mkc.4.o3	Appendix 5b
 m06-pca.title	Appendix 5a: Key Concepts
 m06-pca.nextLabel	Continue to Presentation - Appendix 5b: Three-Umpire System
@@ -842,8 +842,92 @@ m06-pca.19.o1	Time being called by U1 at home plate
 m06-pca.19.o2	A request from the first base coach
 m06-pca.19.o3	PU signalling from the holding position
 m06-pca.19.why	Lead umpires wait to be released so that the incoming umpire has control of the area; leaving too early can leave no umpire in control of a base.
+m07-mkc.title	Appendix 5b: Three-Umpire System
+m07-mkc.nextLabel	Continue to Presentation - Appendix 5b: Three-Umpire System
+m07-mkc.0.q	In the Three-Umpire System with no runners on, where does U3 start?
+m07-mkc.0.o0	About 3.5 m (12 ft) behind 3B, up to 2 m (6 ft) off the line
+m07-mkc.0.o1	About 5.5 m (18 ft) behind 3B, just off the line in foul territory
+m07-mkc.0.o2	About 4.5 m (15 ft) behind 3B, in fair territory
+m07-mkc.0.o3	About 7.5 m (25 ft) behind 3B, well off the line
+m07-mkc.1.q	Between innings in the Three-Umpire System, where does PU stand?
+m07-mkc.1.o0	Halfway from HP to 1B
+m07-mkc.1.o1	Two thirds of the way from HP to 3B
+m07-mkc.1.o2	One third of the way from HP to 3B
+m07-mkc.1.o3	Behind the batter's boxes at the point of the plate
+m07-mkc.2.q	On a pickoff (throw back) at 2B in the Three-Umpire System, how far back does U3 move from the SBDA position?
+m07-mkc.2.o0	Approximately 1 m (3 ft)
+m07-mkc.2.o1	Approximately 6 m (20 ft)
+m07-mkc.2.o2	Approximately 3 m (10 ft)
+m07-mkc.2.o3	They do not move
+m07-mkc.3.q	In the Three-Umpire System, who is responsible for the lead-off call for a runner at 3B?
+m07-mkc.3.o0	U1
+m07-mkc.3.o1	PU
+m07-mkc.3.o2	U3
+m07-mkc.3.o3	Whichever umpire is closest
+m07-mkc.4.q	U1 is at 1B, U3 is at 2B and there is a runner on 1B. Why does the manual have U1 take fly balls to the right-field area, even directly behind U3?
+m07-mkc.4.o0	It keeps U1 out of the runner's base path and lets U3 more easily get inside to cover plays and watch the tag up
+m07-mkc.4.o1	It lets PU stay at home plate for every play
+m07-mkc.4.o2	It is the only way U3 can see the batter
+m07-mkc.4.o3	Because U1 always has the longest run
+m07-mkc.5.q	On a live ball play from the infield, U1 may move into fair territory when the ball is thrown from fair territory. How far?
+m07-mkc.5.o0	As far as needed to see the tag
+m07-mkc.5.o1	No further than the infield grass
+m07-mkc.5.o2	Only to the foul line
+m07-mkc.5.o3	No further than a line at 45 degrees through 1B
+m07-mkc.6.q	U1 is at 1B and U3 is at 3B with a runner on 3B only. A ground ball goes to the outfield. What does PU do?
+m07-mkc.6.o0	Move into a holding position, check that the runner from 3B touches HP (head check) and be ready for the call at 3B on the BR
+m07-mkc.6.o1	Rotate to 1B to cover the throw
+m07-mkc.6.o2	Stay at the plate until the play is over, then move to 3B
+m07-mkc.6.o3	Rotate inside for any call at 2B
+m07-mkc.7.q	In the Three-Umpire System, when either U1 or U3 goes out on a fly ball, who brings the batter runner (BR) all the way to 3B?
+m07-mkc.7.o0	PU
+m07-mkc.7.o1	The remaining base umpire, which allows PU to go home
+m07-mkc.7.o2	The umpire who went out
+m07-mkc.7.o3	The base coach
+m08-mkc.title	Appendix 5c & d: Four, Five and Six-Umpire Systems
+m08-mkc.nextLabel	Continue to Presentation - Appendix 5c & d: Four, Five and Six-Umpire Systems
+m08-mkc.0.q	At the pre-game plate meeting in the Four-Umpire System, where do U2, U1 and U3 line up, and why?
+m08-mkc.0.o0	Behind the catcher, to see the batter's boxes
+m08-mkc.0.o1	Beside the dugouts, to speak to the managers
+m08-mkc.0.o2	In front of the batter's boxes, so they can peel off to their starting positions
+m08-mkc.0.o3	On their starting positions, so no one has to move
+m08-mkc.1.q	Between innings in the Four-Umpire System, where does U1 stand?
+m08-mkc.1.o0	One third of the way from HP to 1B
+m08-mkc.1.o1	Two thirds of the way from HP to 1B
+m08-mkc.1.o2	Halfway from HP to 1B
+m08-mkc.1.o3	Behind 1B
+m08-mkc.2.q	In the Four-Umpire System, where does U1 start with a runner at 1B?
+m08-mkc.2.o0	About 5.5 m (18 ft) behind 1B
+m08-mkc.2.o1	About 3.5 m (12 ft) behind 1B in foul territory
+m08-mkc.2.o2	About 4.5 m (15 ft) behind 1B in fair territory
+m08-mkc.2.o3	On the 1B line, level with the base
+m08-mkc.3.q	In the Four-Umpire System, U2 goes out on a fly ball. Who takes the tag up at 3B?
+m08-mkc.3.o0	U1
+m08-mkc.3.o1	U3
+m08-mkc.3.o2	U2
+m08-mkc.3.o3	PU
+m08-mkc.4.q	On a fly ball that could be taken by either a base umpire or U2, who is given the first option to go out in the Four-Umpire System?
+m08-mkc.4.o0	PU
+m08-mkc.4.o1	U1 or U3, offered by U2
+m08-mkc.4.o2	U2 always has the first option
+m08-mkc.4.o3	The umpire nearest the ball
+m08-mkc.5.q	In the Four-Umpire System with no runners on or a runner on 1B, what does PU do on a live ball play from the infield?
+m08-mkc.5.o0	Stays at home plate
+m08-mkc.5.o1	Moves to 3B to cover the play
+m08-mkc.5.o2	Trails the BR approximately one third of the way to 1B, watching for interference and the fair/foul call
+m08-mkc.5.o3	Rotates inside to cover 2B
+m08-mkc.6.q	In the Five and Six-Umpire Systems, what are ULF and URF responsible for?
+m08-mkc.6.o0	Only fair/foul calls on the lines
+m08-mkc.6.o1	Plays at 1B and 3B
+m08-mkc.6.o2	Tag ups on all bases
+m08-mkc.6.o3	All calls beyond the base umpire and behind the infielders (fair/foul, catch/no catch and the status of a ball leaving the field), whatever the runners
+m08-mkc.7.q	In the Five and Six-Umpire Systems, if LF or RF is fielding in close, where should the outfield umpire be?
+m08-mkc.7.o0	In front of the outfielder, to accurately judge trapped balls
+m08-mkc.7.o1	Behind the outfielder
+m08-mkc.7.o2	On the foul pole
+m08-mkc.7.o3	At the base umpire's starting position
 m07-pca.title	Appendix 5b: Three-Umpire System
-m07-pca.nextLabel	Continue to Presentation - Appendix 5c: Four, Five and Six-Umpire Systems
+m07-pca.nextLabel	Continue to Presentation - Appendix 5c & d: Four, Five and Six-Umpire Systems
 m07-pca.0.q	In the Three-Umpire System (Appendix 5b), where does U1 stand between innings?
 m07-pca.0.o0	Halfway from HP to 1B, off the fair/foul line
 m07-pca.0.o1	Two thirds of the way from HP to 3B
@@ -964,7 +1048,7 @@ m07-pca.19.o1	Rotate to home plate
 m07-pca.19.o2	Stay at 3B
 m07-pca.19.o3	Follow U1 to the outfield
 m07-pca.19.why	The remaining base umpire moves inside and has responsibility for all calls at 1B or 2B, then rotates to 3B ahead of the batter-runner.
-m08-pca.title	Appendix 5c: Four, Five and Six-Umpire Systems
+m08-pca.title	Appendix 5c & d: Four, Five and Six-Umpire Systems
 m08-pca.nextLabel	You've completed all eight required modules - view your full assessment record
 m08-pca.0.q	In the Four-Umpire System (Appendix 5c), where does U2 stand between innings?
 m08-pca.0.o0	One third of the way from HP to 1B

@@ -7,7 +7,7 @@ if (!/<script src="questions\.js"><\/script>/.test(html)) { console.error('asses
 
 const errors = [], warnings = [];
 const modules = ['m01', 'm02', 'm03', 'm04', 'm05', 'm06', 'm07', 'm08'];
-const hasPractice = m => !['m07', 'm08'].includes(m);   // Appendix 5b and 5c have no separate Knowledge Check (Appendix 5 has one, in m06)
+const hasPractice = m => true;   // every module has a practice Knowledge Check
 const minimum = { mkc: 5, pca: 10 };   // more is fine: the pass mark is 85% of however many there are
 const kinds = { mkc: 'Manual Knowledge Check', pca: 'Presentation Competency Assessment' };
 for (const m of modules) for (const t of hasPractice(m) ? ['mkc', 'pca'] : ['pca']) {

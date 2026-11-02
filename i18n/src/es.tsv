@@ -424,3 +424,12 @@
 427	Los resultados se guardan como una fila en una hoja de cálculo de Google gestionada por el administrador del programa, y los correos electrónicos se envían mediante Gmail. El sitio utiliza Google Apps Script, Hojas de cálculo de Google y Gmail, por lo que Google trata esta información por nuestra cuenta y puede hacerlo en servidores situados fuera de tu país. Un código de acceso (10 minutos) se conserva temporalmente en la caché de corta duración de Google Apps Script y después caduca; solo se guarda como un hash unidireccional, no como texto sin cifrar. Cuando confirmas tu dirección de correo electrónico, se guarda en otra pestaña de la misma hoja de cálculo un registro de tu inicio de sesión (un hash unidireccional de un token aleatorio, tu dirección de correo electrónico y una fecha de caducidad 14 días después) para que sigas con la sesión iniciada; los registros caducados se eliminan. Si interrumpes una evaluación calificada a medias, su progreso se guarda en otra pestaña de la misma hoja de cálculo. Se almacena junto con un hash unidireccional de tu dirección de correo electrónico, no con la dirección misma, y contiene solo las preguntas asignadas, la pregunta a la que llegaste, las opciones de respuesta que has elegido hasta ahora y el orden de las opciones de respuesta. No se guarda ninguna puntuación ni clave de respuestas.
 428	Si tu código no llega
 429	Este sitio envía sus correos desde una cuenta gratuita de Gmail, que solo puede enviar unos 100 correos al día en total. En un día de mucha actividad, tu código puede no llegar. Si no ha llegado después de unos minutos (revisa primero la carpeta de correo no deseado), inténtalo de nuevo más tarde o mañana. Tus resultados no se ven afectados y, una vez que hayas iniciado sesión, tu sesión se mantiene en este dispositivo durante 14 días.
+430	Práctica opcional sobre la mecánica de campo de élite en los sistemas de tres a seis árbitros. Las evaluaciones calificadas son la 5a, la 5b y la 5c y d, y cada una se realiza después de ver su presentación.
+431	Módulo 08 · Apéndice 5c y d
+432	Apéndice 5c y d - Sistemas de cuatro, cinco y seis árbitros
+433	Evaluación de competencias de la presentación · Apéndice 5c y d
+434	Empezar la evaluación del Apéndice 5c y d
+435	Apéndice 5c y d: Sistemas de cuatro, cinco y seis árbitros
+436	8 preguntas
+437	Práctica opcional sobre el Apéndice 5b (el Sistema de Tres Árbitros) después de leer el manual.
+438	Práctica opcional sobre el Apéndice 5c y d (los Sistemas de Cuatro, Cinco y Seis Árbitros) después de leer el manual.

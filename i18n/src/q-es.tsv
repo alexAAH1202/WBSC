@@ -418,7 +418,7 @@ m06-mkc.3.o3	Permitir que todos los árbitros actúen exclusivamente desde terri
 m06-mkc.4.q	El Apéndice 5 se divide en cuatro subsecciones (5a-5d). ¿Qué subsección abarca la mecánica del Sistema de Tres Árbitros?
 m06-mkc.4.o0	Apéndice 5a
 m06-mkc.4.o1	Apéndice 5d
-m06-mkc.4.o2	Apéndice 5c
+m06-mkc.4.o2	Apéndice 5c y d
 m06-mkc.4.o3	Apéndice 5b
 m06-pca.title	Apéndice 5a: Conceptos clave
 m06-pca.nextLabel	Continúa con la presentación - Apéndice 5b: Sistema de tres árbitros
@@ -483,7 +483,7 @@ m06-pca.9.o2	Declarar interferencia
 m06-pca.9.o3	No ver la base
 m06-pca.9.why	Una ligera pausa en una jugada ajustada da al cerebro tiempo para procesar todos los datos en el orden correcto, en lugar de basar la decisión en lo último que se vio.
 m07-pca.title	Apéndice 5b: Sistema de tres árbitros
-m07-pca.nextLabel	Continúa con la presentación - Apéndice 5c: Sistemas de cuatro, cinco y seis árbitros
+m07-pca.nextLabel	Continúa con la presentación - Apéndice 5c y d: Sistemas de cuatro, cinco y seis árbitros
 m07-pca.0.q	En el Sistema de Tres Árbitros (Apéndice 5b), ¿dónde se coloca U1 entre entradas?
 m07-pca.0.o0	A mitad de camino de HP a 1B, fuera de la línea de fair/foul
 m07-pca.0.o1	A dos tercios del camino de HP a 3B
@@ -544,7 +544,7 @@ m07-pca.9.o1	Correr de inmediato a 3B
 m07-pca.9.o2	Salir hacia el outfield
 m07-pca.9.o3	Seguir al bateador-corredor aproximadamente un tercio del camino hacia 1B (más si hace falta), vigilar la interferencia y dictaminar fair/foul
 m07-pca.9.why	PU sigue al bateador-corredor por un posible tag, por interferencia del bateador-corredor o para ayudar en 1B, y rota a 3B si el bateador-corredor llega a 1B y avanza hacia 2B.
-m08-pca.title	Apéndice 5c: Sistemas de cuatro, cinco y seis árbitros
+m08-pca.title	Apéndice 5c y d: Sistemas de cuatro, cinco y seis árbitros
 m08-pca.nextLabel	Has completado los ocho módulos obligatorios - consulta tu registro completo de evaluaciones
 m08-pca.0.q	En el Sistema de Cuatro Árbitros (Apéndice 5c), ¿dónde se coloca U2 entre entradas?
 m08-pca.0.o0	A un tercio del camino de HP a 1B
@@ -1086,3 +1086,87 @@ m05-pca.19.o1	U1 se encarga de todo el jardín
 m05-pca.19.o2	El árbitro de home se encarga de todos los fly
 m05-pca.19.o3	Se divide por la mitad: U1 sale del jardín central a la línea de foul del jardín derecho y U3, del jardín central a la línea de foul del jardín izquierdo
 m05-pca.19.why	Si un árbitro empieza en segunda base, la división cambia: el árbitro de home cubre los fly desde el jardinero izquierdo (o el derecho) hasta la línea de foul.
+m07-mkc.title	Apéndice 5b: Sistema de Tres Árbitros
+m07-mkc.nextLabel	Continúa con la presentación - Apéndice 5b: Sistema de Tres Árbitros
+m07-mkc.0.q	En el Sistema de Tres Árbitros sin corredores en base, ¿dónde se coloca U3 al inicio?
+m07-mkc.0.o0	A unos 3,5 m (12 pies) detrás de 3B, hasta 2 m (6 pies) fuera de la línea
+m07-mkc.0.o1	A unos 5,5 m (18 pies) detrás de 3B, justo fuera de la línea en territorio de foul
+m07-mkc.0.o2	A unos 4,5 m (15 pies) detrás de 3B, en territorio fair
+m07-mkc.0.o3	A unos 7,5 m (25 pies) detrás de 3B, bien alejado de la línea
+m07-mkc.1.q	Entre entradas en el Sistema de Tres Árbitros, ¿dónde se coloca PU?
+m07-mkc.1.o0	A mitad de camino de HP a 1B
+m07-mkc.1.o1	A dos tercios del camino de HP a 3B
+m07-mkc.1.o2	A un tercio del camino de HP a 3B
+m07-mkc.1.o3	Detrás de los cajones de bateo, en el punto del plato
+m07-mkc.2.q	En un pickoff (tiro de regreso) en 2B en el Sistema de Tres Árbitros, ¿cuánto retrocede U3 desde la posición SBDA?
+m07-mkc.2.o0	Aproximadamente 1 m (3 pies)
+m07-mkc.2.o1	Aproximadamente 6 m (20 pies)
+m07-mkc.2.o2	Aproximadamente 3 m (10 pies)
+m07-mkc.2.o3	No se mueve
+m07-mkc.3.q	En el Sistema de Tres Árbitros, ¿quién es responsable de la decisión sobre el despegue de un corredor en 3B?
+m07-mkc.3.o0	U1
+m07-mkc.3.o1	PU
+m07-mkc.3.o2	U3
+m07-mkc.3.o3	El árbitro que esté más cerca
+m07-mkc.4.q	U1 está en 1B, U3 en 2B y hay un corredor en 1B. ¿Por qué el manual hace que U1 tome los fly hacia la zona del jardín derecho, incluso directamente detrás de U3?
+m07-mkc.4.o0	Mantiene a U1 fuera del camino del corredor entre bases y permite a U3 entrar más fácilmente en el diamante para cubrir jugadas y vigilar el tag-up
+m07-mkc.4.o1	Permite que PU se quede en home en todas las jugadas
+m07-mkc.4.o2	Es la única forma en que U3 puede ver al bateador
+m07-mkc.4.o3	Porque U1 siempre tiene la carrera más larga
+m07-mkc.5.q	En una jugada con la pelota viva desde el infield, U1 puede entrar en territorio fair cuando la pelota se lanza desde territorio fair. ¿Hasta dónde?
+m07-mkc.5.o0	Hasta donde haga falta para ver el tag
+m07-mkc.5.o1	No más allá del césped del infield
+m07-mkc.5.o2	Solo hasta la línea de foul
+m07-mkc.5.o3	No más allá de una línea de 45 grados que atraviesa 1B
+m07-mkc.6.q	U1 está en 1B y U3 en 3B con un corredor solo en 3B. Se batea un rodado al outfield. ¿Qué hace PU?
+m07-mkc.6.o0	Se mueve a una posición de espera, comprueba que el corredor de 3B toque HP (head check) y se prepara para la decisión en 3B sobre el bateador-corredor
+m07-mkc.6.o1	Rota a 1B para cubrir el tiro
+m07-mkc.6.o2	Se queda en el plato hasta que termina la jugada y luego se mueve a 3B
+m07-mkc.6.o3	Rota hacia dentro para cualquier decisión en 2B
+m07-mkc.7.q	En el Sistema de Tres Árbitros, cuando U1 o U3 sale a un fly, ¿quién lleva al bateador-corredor (BR) hasta 3B?
+m07-mkc.7.o0	PU
+m07-mkc.7.o1	El árbitro de base que queda, lo que permite que PU vaya a home
+m07-mkc.7.o2	El árbitro que salió
+m07-mkc.7.o3	El coach de base
+m08-mkc.title	Apéndice 5c y d: Sistemas de Cuatro, Cinco y Seis Árbitros
+m08-mkc.nextLabel	Continúa con la presentación - Apéndice 5c y d: Sistemas de Cuatro, Cinco y Seis Árbitros
+m08-mkc.0.q	En la reunión previa al partido en el plato en el Sistema de Cuatro Árbitros, ¿dónde se alinean U2, U1 y U3, y por qué?
+m08-mkc.0.o0	Detrás del receptor, para ver los cajones de bateo
+m08-mkc.0.o1	Junto a los dugouts, para hablar con los managers
+m08-mkc.0.o2	Delante de los cajones de bateo, para poder dispersarse hacia sus posiciones iniciales
+m08-mkc.0.o3	En sus posiciones iniciales, para que nadie tenga que moverse
+m08-mkc.1.q	Entre entradas en el Sistema de Cuatro Árbitros, ¿dónde se coloca U1?
+m08-mkc.1.o0	A un tercio del camino de HP a 1B
+m08-mkc.1.o1	A dos tercios del camino de HP a 1B
+m08-mkc.1.o2	A mitad de camino de HP a 1B
+m08-mkc.1.o3	Detrás de 1B
+m08-mkc.2.q	En el Sistema de Cuatro Árbitros, ¿dónde se coloca U1 al inicio con un corredor en 1B?
+m08-mkc.2.o0	A unos 5,5 m (18 pies) detrás de 1B
+m08-mkc.2.o1	A unos 3,5 m (12 pies) detrás de 1B en territorio de foul
+m08-mkc.2.o2	A unos 4,5 m (15 pies) detrás de 1B en territorio fair
+m08-mkc.2.o3	Sobre la línea de 1B, a la altura de la base
+m08-mkc.3.q	En el Sistema de Cuatro Árbitros, U2 sale a un fly. ¿Quién se encarga del tag-up en 3B?
+m08-mkc.3.o0	U1
+m08-mkc.3.o1	U3
+m08-mkc.3.o2	U2
+m08-mkc.3.o3	PU
+m08-mkc.4.q	En un fly que puede tomar un árbitro de base o U2, ¿a quién se da la primera opción de salir en el Sistema de Cuatro Árbitros?
+m08-mkc.4.o0	PU
+m08-mkc.4.o1	U1 o U3, por indicación de U2
+m08-mkc.4.o2	U2 siempre tiene la primera opción
+m08-mkc.4.o3	Al árbitro más cercano a la pelota
+m08-mkc.5.q	En el Sistema de Cuatro Árbitros sin corredores o con un corredor en 1B, ¿qué hace PU en una jugada con la pelota viva desde el infield?
+m08-mkc.5.o0	Se queda en home
+m08-mkc.5.o1	Se mueve a 3B para cubrir la jugada
+m08-mkc.5.o2	Sigue al bateador-corredor aproximadamente un tercio del camino hacia 1B, vigilando la interferencia y la decisión de fair/foul
+m08-mkc.5.o3	Rota hacia dentro para cubrir 2B
+m08-mkc.6.q	En los Sistemas de Cinco y Seis Árbitros, ¿de qué son responsables ULF y URF?
+m08-mkc.6.o0	Solo de las decisiones de fair/foul en las líneas
+m08-mkc.6.o1	De las jugadas en 1B y 3B
+m08-mkc.6.o2	De los tag-ups en todas las bases
+m08-mkc.6.o3	De todas las decisiones más allá del árbitro de base y detrás de los jugadores de cuadro (fair/foul, atrapada o no, y el estado de una pelota que sale del campo), sin importar los corredores
+m08-mkc.7.q	En los Sistemas de Cinco y Seis Árbitros, si LF o RF juega cerca, ¿dónde debe estar el árbitro de outfield?
+m08-mkc.7.o0	Delante del jardinero, para juzgar con precisión las bolas atrapadas a ras de suelo
+m08-mkc.7.o1	Detrás del jardinero
+m08-mkc.7.o2	En el poste de foul
+m08-mkc.7.o3	En la posición inicial del árbitro de base
