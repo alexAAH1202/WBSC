@@ -566,6 +566,8 @@
   .cert-box .cert-state{margin:12px 0 0;font-size:0.9rem;color:var(--ink-soft);}
   .cert-box .cert-state.bad{color:var(--red-600);}
   .cert-inline{margin:18px 0;}
+  .cert-mail{margin-left:10px;}
+  @media (max-width:520px){.cert-mail{margin:10px 0 0;}}
   .verify-box{margin-top:22px;padding-top:20px;border-top:1px solid var(--line);}
   .verify-state{font-size:0.92rem;color:var(--ink-soft);margin-bottom:12px;min-height:1.4em;}
   .verify-state.ok{color:#2f7a3d;font-weight:700;}
@@ -707,6 +709,7 @@
         <h2>Your certificate of completion</h2>
         <p id="cert-text"></p>
         <button class="btn btn-primary" id="cert-btn" type="button">Download your certificate (PDF)</button>
+        <button class="btn btn-outline-navy cert-mail" id="cert-mail-btn" type="button">Email me my certificate</button>
         <p class="cert-state" id="cert-state" role="status" aria-live="polite"></p>
       </div>
       <div class="rules-note" id="rules-note">
@@ -827,6 +830,7 @@
           <div class="quiz-review" id="quiz-review" style="display:none;"></div>
           <div class="cert-inline" id="cert-inline" hidden>
             <button class="btn btn-primary" id="cert-btn2" type="button">Download your certificate (PDF)</button>
+            <button class="btn btn-outline-navy cert-mail" id="cert-mail-btn2" type="button">Email me my certificate</button>
           </div>
           <div class="quiz-next" id="quiz-next-block">
             <p class="label">Next</p>
@@ -1544,7 +1548,8 @@
   // MIT licence) and the template are loaded only when the learner asks for the certificate.
   var cert = null;   // { name, date: 'yyyy-mm-dd' } once the program is complete
   var certEls = { box: document.getElementById('cert-box'), text: document.getElementById('cert-text'), state: document.getElementById('cert-state'),
-                  btn: document.getElementById('cert-btn'), inline: document.getElementById('cert-inline'), btn2: document.getElementById('cert-btn2') };
+                  btn: document.getElementById('cert-btn'), inline: document.getElementById('cert-inline'), btn2: document.getElementById('cert-btn2'),
+                  mail: document.getElementById('cert-mail-btn'), mail2: document.getElementById('cert-mail-btn2') };
   function certDateText(iso){
     var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ''));
     return m ? new Date(+m[1], +m[2] - 1, +m[3]).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : '';   // the certificate is printed in English and Spanish; the date is shown the same way
@@ -1553,7 +1558,7 @@
     cert = c && c.name && /^\d{4}-\d{2}-\d{2}$/.test(c.date || '') ? { name: String(c.name), date: c.date } : null;
     certEls.box.hidden = !cert;
     certEls.inline.hidden = !cert;
-    if (cert) certEls.text.textContent = T('You have passed all {total} modules. Your certificate will show the name {name} and the completion date {date}. If your name is not right, please contact {email}.', { total: TOTAL_MODULES, name: cert.name, date: certDateText(cert.date), email: CONTACT_EMAIL });
+    if (cert) certEls.text.textContent = T('You have completed Appendix 4 and Appendix 5 (5a to 5d). Your certificate will show the name {name} and the completion date {date}. If your name is not right, please contact {email}.', { name: cert.name, date: certDateText(cert.date), email: CONTACT_EMAIL });
   }
   function certState(kind, text){ certEls.state.className = 'cert-state' + (kind ? ' ' + kind : ''); certEls.state.textContent = text; }
   function loadScript(src){
@@ -1585,29 +1590,58 @@
     return doc.save();
   }
   var certBusy = false;
+  // Makes the certificate PDF in the browser from WBSC's template; returns { bytes, filename }.
+  async function prepareCertificate(){
+    if (!window.PDFLib) await loadScript('vendor/pdf-lib.min.js');
+    if (!window.WBSC_CERT_TEMPLATE) await loadScript('certificate/template.js');
+    var bytes = await makeCertificate(cert.name, certDateText(cert.date));
+    return { bytes: bytes, filename: 'WBSC-Umpire-Mechanics-2026-Certificate-' + cert.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^A-Za-z0-9]+/g, '-').replace(/^-|-$/g, '') + '.pdf' };
+  }
+  function certFailText(err){
+    return String(err && err.message) === 'chars'
+      ? T('Your name contains letters that cannot be printed on the certificate. Please contact {email} and they will issue it for you.', { email: CONTACT_EMAIL })
+      : T('The certificate could not be prepared. Please check your connection and try again.');
+  }
+  function certButtons(disabled){ [certEls.btn, certEls.btn2, certEls.mail, certEls.mail2].forEach(function(b){ b.disabled = disabled; }); }
   async function downloadCertificate(){
     if (!cert || certBusy) return;
-    certBusy = true; certEls.btn.disabled = true; certEls.btn2.disabled = true;
+    certBusy = true; certButtons(true);
     certState('', T('Preparing your certificate…'));
     try {
-      if (!window.PDFLib) await loadScript('vendor/pdf-lib.min.js');
-      if (!window.WBSC_CERT_TEMPLATE) await loadScript('certificate/template.js');
-      var bytes = await makeCertificate(cert.name, certDateText(cert.date));
-      var blob = new Blob([bytes], { type: 'application/pdf' });
+      var made = await prepareCertificate();
+      var blob = new Blob([made.bytes], { type: 'application/pdf' });
       var a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = 'WBSC-Umpire-Mechanics-2026-Certificate-' + cert.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^A-Za-z0-9]+/g, '-').replace(/^-|-$/g, '') + '.pdf';
+      a.download = made.filename;
       document.body.appendChild(a); a.click();
       setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
       certState('', T('Your certificate has been saved to your device.'));
-    } catch (err) {
-      certState('bad', String(err && err.message) === 'chars'
-        ? T('Your name contains letters that cannot be printed on the certificate. Please contact {email} and they will issue it for you.', { email: CONTACT_EMAIL })
-        : T('The certificate could not be prepared. Please check your connection and try again.'));
-    }
-    certBusy = false; certEls.btn.disabled = false; certEls.btn2.disabled = false;
+    } catch (err) { certState('bad', certFailText(err)); }
+    certBusy = false; certButtons(false);
+  }
+  // "Email me my certificate": the PDF made above is sent to the server, which checks the sign-in and the results and emails it to the verified address.
+  async function emailCertificate(){
+    if (!cert || certBusy) return;
+    if (!isVerified()) { certState('bad', T('Verify your email address in "Your Details" first, then ask for the certificate again.')); return; }
+    certBusy = true; certButtons(true);
+    certState('', T('Preparing your certificate…'));
+    try {
+      var made = await prepareCertificate(), bin = '', u8 = made.bytes;
+      for (var i = 0; i < u8.length; i += 8192) bin += String.fromCharCode.apply(null, u8.subarray(i, i + 8192));
+      certState('', T('Emailing your certificate…'));
+      callServer('emailCertificate', { token: session.token, lang: LANG, pdf: btoa(bin) }, function(r){
+        if (r && r.success) certState('', T('We have emailed your certificate to {email}. If it does not arrive within a few minutes, check your spam folder.', { email: session.email }));
+        else if (r && r.code === 'auth') { clearSession(); certState('bad', T('Your email verification has expired. Verify your email again in Your Details.')); }
+        else certState('bad', r && r.error ? S(r.error) : T('The certificate could not be emailed. Please try again.'));
+        certBusy = false; certButtons(false);
+      });
+      return;
+    } catch (err) { certState('bad', certFailText(err)); }
+    certBusy = false; certButtons(false);
   }
   certEls.btn.addEventListener('click', downloadCertificate);
+  certEls.mail.addEventListener('click', emailCertificate);
+  certEls.mail2.addEventListener('click', emailCertificate);
   certEls.btn2.addEventListener('click', downloadCertificate);
   // "Your progress": one tile per module, from the server's status lookup (shown only while signed in).
   var lastProgress = null;
@@ -1924,7 +1958,8 @@
       if (m.total) { els.scoreFrac.textContent = m.score + ' / ' + m.total; els.scorePct.textContent = m.percentage + '%'; }   // marked by the server
       if (m.result) showResult(m.result === 'PASS', m.attemptNumber, true);   // the server's decision is final
       if (m.result !== 'PASS' && m.attemptNumber >= max) showReview(m.review);  // all attempts used: now the answers can be shown
-      if (m.completedAll) { els.resultText.textContent += ' ' + T('You have now passed all {total} modules. A summary will be emailed to you.', { total: TOTAL_MODULES }); setCertificate({ name: m.certName, date: m.certDate }); }
+      if (m.completedAll) els.resultText.textContent += ' ' + T('You have now passed all {total} modules. A summary will be emailed to you.', { total: TOTAL_MODULES });
+      if (m.certReady) { els.resultText.textContent += ' ' + T('Your certificate of completion is ready: you have completed Appendix 4 and Appendix 5.'); setCertificate({ name: m.certName, date: m.certDate }); }
       pendingSave = null;
     } else if (m.code === 'auth') {
       // The verification expired (or was never completed). Nothing was saved; the same

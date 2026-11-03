@@ -37,7 +37,7 @@ const ok = m => { console.log('  ok -', m); n++; };
 async function newPage(b, opts, saveHandler) {
   opts = opts || {};
   if (lastCtx) await lastCtx.close().catch(() => {});   // one page at a time keeps the browser light
-  const ctx = lastCtx = await b.newContext(); await ctx.addInitScript(() => { try { localStorage.setItem('wbscNoticeSeen', '1'); } catch (e) {} }); const pg = await ctx.newPage(); const posts = [], progressCalls = [], certLookups = [], fetches = [], lookups = [], calls = [];
+  const ctx = lastCtx = await b.newContext(); await ctx.addInitScript(() => { try { localStorage.setItem('wbscNoticeSeen', '1'); } catch (e) {} }); const pg = await ctx.newPage(); const posts = [], mailCalls = [], progressCalls = [], certLookups = [], fetches = [], lookups = [], calls = [];
   pg.on('pageerror', e => console.log('PAGE ERROR', e.message));
   pg.on('request', r => { if (r.resourceType() === 'fetch' || r.resourceType() === 'xhr') fetches.push(r.url()); });
   await pg.route(/script\.google\.com\/macros\/s\/.*\/exec\?action=attempts/, r => {
@@ -63,6 +63,10 @@ async function newPage(b, opts, saveHandler) {
           ? { wbscAuth: true, id, action, success: false, code: 'rate', error: 'Too many codes have been requested for this address. Please wait a while and try again.' }
           : { wbscAuth: true, id, action, success: true, expiresIn: 600 })));
       }
+      if (action === 'emailCertificate') {
+        mailCalls.push({ token: params.get('token'), pdf: params.get('pdf'), lang: params.get('lang') });
+        return r.fulfill(page_(reply(Object.assign({ wbscAuth: true, id, action, success: true }, opts.emailCert || {}))));
+      }
       if (action === 'saveProgress' || action === 'clearProgress') {
         progressCalls.push({ action, key: params.get('key'), token: params.get('token'), data: params.get('data') });
         return r.fulfill(page_(reply({ wbscAuth: true, id, action, success: true })));
@@ -83,7 +87,7 @@ async function newPage(b, opts, saveHandler) {
   await pg.goto('http://localhost:' + PORT + '/assessment-widget.html' + (opts.query || ''));
   await pg.fill('#inp-name', 'Jo Ump'); await pg.fill('#inp-email', 'Jo@X.com');
   if (!opts.unverified) await verifyEmail(pg);
-  return { pg, posts, fetches, lookups, calls, progressCalls, certLookups, ctx };
+  return { pg, posts, fetches, lookups, calls, progressCalls, certLookups, mailCalls, ctx };
 }
 async function verifyEmail(pg, code = '123456') {
   await pg.click('#verify-send-btn'); await pg.waitForSelector('#verify-code-row', { state: 'visible' });
@@ -559,11 +563,23 @@ const verifyText = pg => pg.textContent('#verify-state');
     await t.pg.waitForFunction(() => /saved to your device/.test(document.getElementById('cert-state').textContent));
     ok('a learner who has passed every module can download the official certificate with their name and completion date filled in' + (txt ? ' (text checked in the PDF)' : ''));
     // the last result: the save reply carries the name and date, and a button appears under the result
-    t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false }, certificate: { ok: true, eligible: true, name: 'Jo Ump', date: '2026-11-02' } }, (r, p) => r.fulfill(page_(reply({ wbscSave: true, success: true, submissionId: p.submissionId, attemptNumber: 1, maxAttempts: 2, result: 'PASS', completedAll: true, certName: 'Jo Ump', certDate: '2026-11-02' }))));
+    t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false }, certificate: { ok: true, eligible: true, name: 'Jo Ump', date: '2026-11-02' } }, (r, p) => r.fulfill(page_(reply({ wbscSave: true, success: true, submissionId: p.submissionId, attemptNumber: 1, maxAttempts: 2, result: 'PASS', completedAll: true, certReady: true, certName: 'Jo Ump', certDate: '2026-11-02' }))));
     await runQuiz(t.pg, 'm01-pca', 0); await t.pg.waitForSelector('#cert-inline', { state: 'visible' });
     assert.ok(await t.pg.isVisible('#cert-box') && /2 November 2026/.test(await t.pg.textContent('#cert-text')));
     const [dl2] = await Promise.all([t.pg.waitForEvent('download'), t.pg.click('#cert-btn2')]); const t2 = pdfText(await dl2.path()); if (t2) assert.ok(/Jo Ump/.test(t2) && /2 November 2026/.test(t2));
     ok('finishing the last module offers the certificate straight away, from the result screen as well');
+    // "Email me my certificate": the browser makes the PDF and the server emails it to the verified address
+    t = await newPage(b, { certificate: { ok: true, eligible: true, name: 'Zoë Ump', date: '2026-10-28' } });
+    await t.pg.waitForSelector('#cert-box', { state: 'visible' });
+    await t.pg.click('#cert-mail-btn'); await t.pg.waitForFunction(() => /emailed your certificate to jo@x\.com/.test(document.getElementById('cert-state').textContent), null, { timeout: 15000 });
+    assert.strictEqual(t.mailCalls.length, 1); assert.strictEqual(t.mailCalls[0].token, TOKEN); assert.strictEqual(t.mailCalls[0].lang, 'en');
+    const sent = Buffer.from(t.mailCalls[0].pdf, 'base64'); assert.strictEqual(sent.slice(0, 4).toString(), '%PDF'); assert.ok(sent.length > 100000 && sent.length < 2000000, 'size ' + sent.length);
+    { const d = await PDFDocument.load(sent); assert.strictEqual(d.getForm().getFields().length, 0, 'the emailed copy is flattened too'); }
+    t.mailCalls.length = 0;
+    t = await newPage(b, { certificate: { ok: true, eligible: true, name: 'Zoë Ump', date: '2026-10-28' }, emailCert: { success: false, code: 'rate', error: 'Too many requests. Please try again later.' } });
+    await t.pg.waitForSelector('#cert-box', { state: 'visible' }); await t.pg.click('#cert-mail-btn');
+    await t.pg.waitForFunction(() => /Too many requests/.test(document.getElementById('cert-state').textContent), null, { timeout: 15000 });
+    ok('"Email me my certificate" sends the flattened PDF with the session token and shows the confirmation, or the server\'s reason when refused');
     // a name the certificate font cannot print gets a clear message instead of a broken file
     t = await newPage(b, { certificate: { ok: true, eligible: true, name: '山田 太郎', date: '2026-10-28' } });
     await t.pg.waitForSelector('#cert-box', { state: 'visible' }); await t.pg.click('#cert-btn');

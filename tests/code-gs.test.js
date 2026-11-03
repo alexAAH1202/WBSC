@@ -45,8 +45,9 @@ function makeEnv({ failMail = null, quota = 100, quiet = true, legacyMail = true
     LockService: { getScriptLock: () => ({ waitLock() {}, releaseLock() {} }) },
     MailApp: {
       sendEmail: (to, subject, body) => {
-        if (failMail && failMail(to, subject)) throw new Error('Service invoked too many times: email');
-        mails.push({ to, subject, body });
+        const o = typeof to === 'object' ? to : { to, subject, body };   // MailApp takes either form; the object form can carry attachments
+        if (failMail && failMail(o.to, o.subject)) throw new Error('Service invoked too many times: email');
+        mails.push({ to: o.to, subject: o.subject, body: o.body, attachments: o.attachments || [] });
       },
       getRemainingDailyQuota: () => env.quota
     },
@@ -67,7 +68,7 @@ function makeEnv({ failMail = null, quota = 100, quiet = true, legacyMail = true
       }
     },
     Session: { getEffectiveUser: () => ({ getEmail: () => 'owner@example.com' }), getScriptTimeZone: () => 'UTC' },
-    Utilities: { formatDate: (d, tz, f) => { assert.ok(f === 'yyyy-MM' || f === 'yyyy-MM-dd'); const x = new Date(d); const ym = x.getUTCFullYear() + '-' + String(x.getUTCMonth() + 1).padStart(2, '0'); return f === 'yyyy-MM' ? ym : ym + '-' + String(x.getUTCDate()).padStart(2, '0'); }, getUuid: () => crypto.randomUUID(), computeDigest: (a, s) => digestBytes(s), DigestAlgorithm: { SHA_256: 'SHA_256' }, Charset: { UTF_8: 'UTF_8' } },
+    Utilities: { formatDate: (d, tz, f) => { assert.ok(f === 'yyyy-MM' || f === 'yyyy-MM-dd'); const x = new Date(d); const ym = x.getUTCFullYear() + '-' + String(x.getUTCMonth() + 1).padStart(2, '0'); return f === 'yyyy-MM' ? ym : ym + '-' + String(x.getUTCDate()).padStart(2, '0'); }, getUuid: () => crypto.randomUUID(), base64Decode: b => Array.from(Buffer.from(b, 'base64')).map(x => x > 127 ? x - 256 : x), newBlob: (bytes, type, name) => ({ bytes, type, name }), computeDigest: (a, s) => digestBytes(s), DigestAlgorithm: { SHA_256: 'SHA_256' }, Charset: { UTF_8: 'UTF_8' } },
     HtmlService: { XFrameOptionsMode: { ALLOWALL: 'ALLOWALL' }, createHtmlOutput: h => ({ html: h, setXFrameOptionsMode(m) { this.mode = m; return this; } }) },
     ContentService: { MimeType: { JSON: 'json', JAVASCRIPT: 'js' }, createTextOutput: t => ({ text: t, setMimeType(m) { this.mime = m; return this; } }) }
   };
@@ -619,11 +620,36 @@ ok('certificate: a verified learner who passed all 8 modules gets their name and
   e.clock.now = Date.UTC(2026, 10, 15); const later = save(e, login(e, 'cert@x.com'), { participantName: 'Jo Ump', module: mod(1), score: 5, umpireId: 'cert' });
   assert.strictEqual(certLook(e, login(e, 'cert@x.com')).date, '2026-10-28', 'a later retake does not move the date');
 });
-ok('certificate: seven modules passed is not enough, and failed attempts do not count', () => {
+ok('certificate: Appendix 4 and 5 (Modules 05-08) are what count; Modules 01-04 alone, or one of 05-08 missing or only failed, is not enough', () => {
   const e = makeEnv(); const t = login(e, 'cert@x.com');
-  for (let i = 1; i <= 7; i++) save(e, t, { module: mod(i), score: 9, umpireId: 'c7' });
+  for (let i = 1; i <= 4; i++) save(e, t, { module: mod(i), score: 9, umpireId: 'c7' });
+  assert.strictEqual(certLook(e, t).eligible, false, 'the Foundations modules alone do not earn it');
+  for (let i = 5; i <= 7; i++) save(e, t, { module: mod(i), score: 9, umpireId: 'c7' });
   save(e, t, { module: mod(8), score: 5, umpireId: 'c7' });
-  assert.strictEqual(certLook(e, t).eligible, false);
+  assert.strictEqual(certLook(e, t).eligible, false, 'a failed attempt does not count');
+});
+ok('certificate: passing only Modules 05-08 earns it (the program is not complete, but the certificate is ready); the receipt says so', () => {
+  const e = makeEnv(); const t = login(e, 'c4@x.com'); let r;
+  for (let i = 5; i <= 8; i++) { e.clock.now = Date.UTC(2026, 10, i, 5, 0, 0); r = save(e, t, { module: mod(i), score: 9, umpireId: 'c4', participantName: 'Pat Ump' }); if (i < 8) assert.strictEqual(r.certReady, false); }
+  assert.strictEqual(r.certReady, true); assert.strictEqual(r.completedAll, false); assert.strictEqual(r.certName, 'Pat Ump'); assert.strictEqual(r.certDate, '2026-11-08');
+  assert.deepStrictEqual(Object.values(Object.assign({}, certLook(e, t))).slice(1, 4), [true, 'Pat Ump', '2026-11-08']);
+  const rcpt = e.mails.filter(m => m.to === 'c4@x.com').pop(); assert.ok(/certificate of completion is ready/.test(rcpt.body) && !/passed all 8 modules/.test(rcpt.body));
+});
+const pdfB64 = (n = 5000) => Buffer.concat([Buffer.from('%PDF-1.7\n'), Buffer.alloc(n, 65)]).toString('base64');
+ok('email my certificate: sent as a PDF attachment to the verified address only, in the learner\'s language; refused when not eligible, not signed in, not a PDF, too big, or too often', () => {
+  const e = makeEnv(); const t = login(e, 'em@x.com');
+  assert.strictEqual(act(e, 'emailCertificate', { token: '', pdf: pdfB64() }).code, 'auth');
+  assert.strictEqual(act(e, 'emailCertificate', { token: t, pdf: pdfB64() }).success, false, 'not eligible yet');
+  for (let i = 5; i <= 8; i++) save(e, t, { module: mod(i), score: 9, umpireId: 'em', participantName: 'Eva Ump' });
+  const before = e.mails.length;
+  for (const bad of ['', 'not base64!!', Buffer.from('hello, this is not a pdf '.repeat(100)).toString('base64'), pdfB64(2100000)]) assert.strictEqual(act(e, 'emailCertificate', { token: t, pdf: bad }).success, false);
+  assert.strictEqual(e.mails.length, before, 'nothing sent for bad files');
+  const ok1 = act(e, 'emailCertificate', { token: t, pdf: pdfB64(), lang: 'es', to: 'someone-else@x.com' });
+  assert.strictEqual(ok1.success, true, ok1.error);
+  const m = e.mails[e.mails.length - 1]; assert.strictEqual(m.to, 'em@x.com', 'always the verified address'); assert.ok(/certificado de finalización/.test(m.subject) && /Eva Ump/.test(m.body));
+  assert.strictEqual(m.attachments.length, 1); assert.strictEqual(m.attachments[0].type, 'application/pdf'); assert.ok(/\.pdf$/.test(m.attachments[0].name));
+  assert.strictEqual(act(e, 'emailCertificate', { token: t, pdf: pdfB64() }).success, true); assert.strictEqual(act(e, 'emailCertificate', { token: t, pdf: pdfB64() }).success, true);
+  assert.strictEqual(act(e, 'emailCertificate', { token: t, pdf: pdfB64() }).code, 'rate', 'a fourth request within 6 hours is refused');
 });
 
 // =====================================================================  fewer emails
