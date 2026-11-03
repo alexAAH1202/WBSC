@@ -749,6 +749,7 @@
           <div class="verify-row" id="verify-send-row">
             <button class="btn btn-outline-navy" id="verify-send-btn" type="button">Email me a code</button>
             <span class="verify-hint">We will send a 6-digit code to the email address above to confirm it is yours.</span>
+            <button class="btn-ghost" id="email-help-btn" type="button">Not getting a code?</button>
           </div>
           <div class="verify-row" id="verify-code-row" style="display:none;">
             <div class="field verify-code-field">
@@ -757,6 +758,7 @@
             </div>
             <button class="btn btn-primary" id="verify-check-btn" type="button">Verify</button>
             <button class="btn-ghost" id="verify-resend-btn" type="button" disabled>Send a new code</button>
+            <button class="btn-ghost" id="email-help-btn2" type="button">Not getting a code?</button>
           </div>
           <div class="verify-row" id="verify-done-row" style="display:none;">
             <button class="btn-ghost" id="verify-change-btn" type="button">Use a different email address</button>
@@ -1833,6 +1835,8 @@
   // A note, not a blocker: the free Gmail account can send about 100 emails a day, so a code may be late on a busy day.
   var emailPopupShown = false;
   function showEmailPopup(){ emailPopupShown = true; document.getElementById('email-popup').hidden = false; }
+  document.getElementById('email-help-btn').addEventListener('click', showEmailPopup);
+  document.getElementById('email-help-btn2').addEventListener('click', showEmailPopup);
   document.getElementById('email-popup-ok').addEventListener('click', function(){ document.getElementById('email-popup').hidden = true; });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape') document.getElementById('email-popup').hidden = true; });
 

@@ -456,5 +456,6 @@ WBSC_DICT["es"] = { t: {
  "<span>Module 02</span> One-Umpire Field Mechanics": "<span>Módulo 02</span> Mecánica de campo con un árbitro",
  "<span>Module 03</span> Two-Umpire Field Mechanics": "<span>Módulo 03</span> Mecánica de campo con dos árbitros",
  "<span>Module 04</span> Three-Umpire Field Mechanics": "<span>Módulo 04</span> Mecánica de campo con tres árbitros",
- "<span>Module 05</span> Appendix 4: Elite Mechanics": "<span>Módulo 05</span> Apéndice 4: Mecánica de élite"
+ "<span>Module 05</span> Appendix 4: Elite Mechanics": "<span>Módulo 05</span> Apéndice 4: Mecánica de élite",
+ "Not getting a code?": "¿No te llega el código?"
 } };
