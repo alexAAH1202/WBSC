@@ -483,6 +483,13 @@
   .quiz-bar{height:6px;background:var(--line);margin:10px 0 0;}
   .quiz-bar i{display:block;height:100%;width:0;background:var(--gold-500);transition:width .25s;}
   @media (prefers-reduced-motion:reduce){.quiz-bar i{transition:none;}}
+  .email-popup{position:fixed;right:16px;bottom:16px;z-index:8000;max-width:400px;background:var(--white);color:var(--ink);border:1px solid var(--line);border-top:4px solid var(--gold-500);padding:16px 18px;box-shadow:0 8px 28px rgba(10,20,45,.28);font-size:0.92rem;line-height:1.5;}
+  .email-popup[hidden]{display:none;}
+  .email-popup h2{font-size:1rem;margin:0 0 6px;color:var(--navy-950);}
+  .email-popup p{margin:0 0 12px;}
+  .email-popup .btn{padding:8px 22px;}
+  @media (max-width:520px){.email-popup{left:8px;right:8px;bottom:8px;max-width:none;}}
+  @media print{.email-popup{display:none;}}
   .last-warn{margin:14px 0 0;padding:14px 22px;background:#fdf2f1;border:1px solid #e3b8b4;border-left:5px solid var(--red-600);font-size:0.95rem;color:var(--navy-950);}
   .last-warn strong{color:var(--red-600);}
   .quiz-next .next-module{margin-top:10px;margin-left:10px;}
@@ -559,6 +566,8 @@
   .cert-box .cert-state{margin:12px 0 0;font-size:0.9rem;color:var(--ink-soft);}
   .cert-box .cert-state.bad{color:var(--red-600);}
   .cert-inline{margin:18px 0;}
+  .cert-mail{margin-left:10px;}
+  @media (max-width:520px){.cert-mail{margin:10px 0 0;}}
   .verify-box{margin-top:22px;padding-top:20px;border-top:1px solid var(--line);}
   .verify-state{font-size:0.92rem;color:var(--ink-soft);margin-bottom:12px;min-height:1.4em;}
   .verify-state.ok{color:#2f7a3d;font-weight:700;}
@@ -700,6 +709,7 @@
         <h2>Your certificate of completion</h2>
         <p id="cert-text"></p>
         <button class="btn btn-primary" id="cert-btn" type="button">Download your certificate (PDF)</button>
+        <button class="btn btn-outline-navy cert-mail" id="cert-mail-btn" type="button">Email me my certificate</button>
         <p class="cert-state" id="cert-state" role="status" aria-live="polite"></p>
       </div>
       <div class="rules-note" id="rules-note">
@@ -731,6 +741,11 @@
         </div>
         <div class="verify-box" id="verify-box">
           <p class="verify-state" id="verify-state" role="status" aria-live="polite"></p>
+          <div class="email-popup" id="email-popup" role="dialog" aria-labelledby="email-popup-title" aria-live="polite" hidden>
+            <h2 id="email-popup-title">If your code does not arrive</h2>
+            <p>This site sends its emails from a free Gmail account, which can send only about 100 emails a day for everyone. On a busy day your code may not arrive. If it has not come after a few minutes (check your spam folder first), please try again later today or tomorrow. Your results are not affected, and once you are signed in you stay signed in on this device for 14 days.</p>
+            <button class="btn btn-primary" id="email-popup-ok" type="button">OK</button>
+          </div>
           <div class="verify-row" id="verify-send-row">
             <button class="btn btn-outline-navy" id="verify-send-btn" type="button">Email me a code</button>
             <span class="verify-hint">We will send a 6-digit code to the email address above to confirm it is yours.</span>
@@ -815,6 +830,7 @@
           <div class="quiz-review" id="quiz-review" style="display:none;"></div>
           <div class="cert-inline" id="cert-inline" hidden>
             <button class="btn btn-primary" id="cert-btn2" type="button">Download your certificate (PDF)</button>
+            <button class="btn btn-outline-navy cert-mail" id="cert-mail-btn2" type="button">Email me my certificate</button>
           </div>
           <div class="quiz-next" id="quiz-next-block">
             <p class="label">Next</p>
@@ -1017,6 +1033,15 @@
           <h2>Appendix 5b: Three-Umpire System</h2>
         </div>
         <div class="assess-body">
+          <div class="assess-card mkc">
+            <span class="mode-badge practice">Practice</span>
+            <span class="assess-kind">Manual Knowledge Check</span>
+            <span class="assess-qcount">8 Questions</span>
+            <p class="assess-desc">Optional practice on Appendix 5b (the Three-Umpire System) after reading the manual.</p>
+            <p class="mode-note practice">Not marked and not recorded. Try it as often as you like.</p>
+            <a class="btn btn-outline-navy assess-start-link" href="#assessment-m07-mkc" data-assessment="m07-mkc">Start Practice Quiz</a>
+            <div class="assess-status live"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="6"/></svg>Available now</div>
+          </div>
           <div class="assess-card pca">
             <span class="mode-badge marked">Marked assessment</span>
             <span class="assess-kind">Presentation Competency Assessment</span>
@@ -1033,9 +1058,18 @@
       <article class="assess-block" id="module-08">
         <div class="assess-head">
           <span class="assess-eyebrow">Module 08</span>
-          <h2>Appendix 5c: Four, Five &amp; Six-Umpire Systems</h2>
+          <h2>Appendix 5c &amp; d: Four, Five &amp; Six-Umpire Systems</h2>
         </div>
         <div class="assess-body">
+          <div class="assess-card mkc">
+            <span class="mode-badge practice">Practice</span>
+            <span class="assess-kind">Manual Knowledge Check</span>
+            <span class="assess-qcount">8 Questions</span>
+            <p class="assess-desc">Optional practice on Appendix 5c &amp; d (the Four, Five and Six-Umpire Systems) after reading the manual.</p>
+            <p class="mode-note practice">Not marked and not recorded. Try it as often as you like.</p>
+            <a class="btn btn-outline-navy assess-start-link" href="#assessment-m08-mkc" data-assessment="m08-mkc">Start Practice Quiz</a>
+            <div class="assess-status live"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="6"/></svg>Available now</div>
+          </div>
           <div class="assess-card pca">
             <span class="mode-badge marked">Marked assessment</span>
             <span class="assess-kind">Presentation Competency Assessment</span>
@@ -1514,7 +1548,8 @@
   // MIT licence) and the template are loaded only when the learner asks for the certificate.
   var cert = null;   // { name, date: 'yyyy-mm-dd' } once the program is complete
   var certEls = { box: document.getElementById('cert-box'), text: document.getElementById('cert-text'), state: document.getElementById('cert-state'),
-                  btn: document.getElementById('cert-btn'), inline: document.getElementById('cert-inline'), btn2: document.getElementById('cert-btn2') };
+                  btn: document.getElementById('cert-btn'), inline: document.getElementById('cert-inline'), btn2: document.getElementById('cert-btn2'),
+                  mail: document.getElementById('cert-mail-btn'), mail2: document.getElementById('cert-mail-btn2') };
   function certDateText(iso){
     var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ''));
     return m ? new Date(+m[1], +m[2] - 1, +m[3]).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : '';   // the certificate is printed in English and Spanish; the date is shown the same way
@@ -1523,7 +1558,7 @@
     cert = c && c.name && /^\d{4}-\d{2}-\d{2}$/.test(c.date || '') ? { name: String(c.name), date: c.date } : null;
     certEls.box.hidden = !cert;
     certEls.inline.hidden = !cert;
-    if (cert) certEls.text.textContent = T('You have passed all {total} modules. Your certificate will show the name {name} and the completion date {date}. If your name is not right, please contact {email}.', { total: TOTAL_MODULES, name: cert.name, date: certDateText(cert.date), email: CONTACT_EMAIL });
+    if (cert) certEls.text.textContent = T('You have completed Appendix 4 and Appendix 5 (5a to 5d). Your certificate will show the name {name} and the completion date {date}. If your name is not right, please contact {email}.', { name: cert.name, date: certDateText(cert.date), email: CONTACT_EMAIL });
   }
   function certState(kind, text){ certEls.state.className = 'cert-state' + (kind ? ' ' + kind : ''); certEls.state.textContent = text; }
   function loadScript(src){
@@ -1555,29 +1590,58 @@
     return doc.save();
   }
   var certBusy = false;
+  // Makes the certificate PDF in the browser from WBSC's template; returns { bytes, filename }.
+  async function prepareCertificate(){
+    if (!window.PDFLib) await loadScript('vendor/pdf-lib.min.js');
+    if (!window.WBSC_CERT_TEMPLATE) await loadScript('certificate/template.js');
+    var bytes = await makeCertificate(cert.name, certDateText(cert.date));
+    return { bytes: bytes, filename: 'WBSC-Umpire-Mechanics-2026-Certificate-' + cert.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^A-Za-z0-9]+/g, '-').replace(/^-|-$/g, '') + '.pdf' };
+  }
+  function certFailText(err){
+    return String(err && err.message) === 'chars'
+      ? T('Your name contains letters that cannot be printed on the certificate. Please contact {email} and they will issue it for you.', { email: CONTACT_EMAIL })
+      : T('The certificate could not be prepared. Please check your connection and try again.');
+  }
+  function certButtons(disabled){ [certEls.btn, certEls.btn2, certEls.mail, certEls.mail2].forEach(function(b){ b.disabled = disabled; }); }
   async function downloadCertificate(){
     if (!cert || certBusy) return;
-    certBusy = true; certEls.btn.disabled = true; certEls.btn2.disabled = true;
+    certBusy = true; certButtons(true);
     certState('', T('Preparing your certificate…'));
     try {
-      if (!window.PDFLib) await loadScript('vendor/pdf-lib.min.js');
-      if (!window.WBSC_CERT_TEMPLATE) await loadScript('certificate/template.js');
-      var bytes = await makeCertificate(cert.name, certDateText(cert.date));
-      var blob = new Blob([bytes], { type: 'application/pdf' });
+      var made = await prepareCertificate();
+      var blob = new Blob([made.bytes], { type: 'application/pdf' });
       var a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = 'WBSC-Umpire-Mechanics-2026-Certificate-' + cert.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^A-Za-z0-9]+/g, '-').replace(/^-|-$/g, '') + '.pdf';
+      a.download = made.filename;
       document.body.appendChild(a); a.click();
       setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
       certState('', T('Your certificate has been saved to your device.'));
-    } catch (err) {
-      certState('bad', String(err && err.message) === 'chars'
-        ? T('Your name contains letters that cannot be printed on the certificate. Please contact {email} and they will issue it for you.', { email: CONTACT_EMAIL })
-        : T('The certificate could not be prepared. Please check your connection and try again.'));
-    }
-    certBusy = false; certEls.btn.disabled = false; certEls.btn2.disabled = false;
+    } catch (err) { certState('bad', certFailText(err)); }
+    certBusy = false; certButtons(false);
+  }
+  // "Email me my certificate": the PDF made above is sent to the server, which checks the sign-in and the results and emails it to the verified address.
+  async function emailCertificate(){
+    if (!cert || certBusy) return;
+    if (!isVerified()) { certState('bad', T('Verify your email address in "Your Details" first, then ask for the certificate again.')); return; }
+    certBusy = true; certButtons(true);
+    certState('', T('Preparing your certificate…'));
+    try {
+      var made = await prepareCertificate(), bin = '', u8 = made.bytes;
+      for (var i = 0; i < u8.length; i += 8192) bin += String.fromCharCode.apply(null, u8.subarray(i, i + 8192));
+      certState('', T('Emailing your certificate…'));
+      callServer('emailCertificate', { token: session.token, lang: LANG, pdf: btoa(bin) }, function(r){
+        if (r && r.success) certState('', T('We have emailed your certificate to {email}. If it does not arrive within a few minutes, check your spam folder.', { email: session.email }));
+        else if (r && r.code === 'auth') { clearSession(); certState('bad', T('Your email verification has expired. Verify your email again in Your Details.')); }
+        else certState('bad', r && r.error ? S(r.error) : T('The certificate could not be emailed. Please try again.'));
+        certBusy = false; certButtons(false);
+      });
+      return;
+    } catch (err) { certState('bad', certFailText(err)); }
+    certBusy = false; certButtons(false);
   }
   certEls.btn.addEventListener('click', downloadCertificate);
+  certEls.mail.addEventListener('click', emailCertificate);
+  certEls.mail2.addEventListener('click', emailCertificate);
   certEls.btn2.addEventListener('click', downloadCertificate);
   // "Your progress": one tile per module, from the server's status lookup (shown only while signed in).
   var lastProgress = null;
@@ -1748,6 +1812,7 @@
     }
     document.getElementById('field-email').classList.remove('invalid');
     verifyEls.sendBtn.disabled = true; verifyEls.resendBtn.disabled = true;
+    if (!emailPopupShown) showEmailPopup();   // once per visit; it is shown again if the server says it is busy
     setVerifyState('', T('Sending a code to {email}\u2026', { email: email }));
     callServer('sendCode', { email: email, lang: LANG, website: document.getElementById('inp-website').value }, function(r){
       verifyEls.sendBtn.disabled = false;
@@ -1761,9 +1826,15 @@
         verifyEls.resendBtn.disabled = false;
         refreshVerifyUI();
         setVerifyState('bad', r.error ? S(r.error) : T('We could not send the code. Please try again.'));
+        if (r.code === 'rate' || r.code === 'busy' || /busy|Too many codes/i.test(r.error || '')) showEmailPopup();
       }
     });
   }
+  // A note, not a blocker: the free Gmail account can send about 100 emails a day, so a code may be late on a busy day.
+  var emailPopupShown = false;
+  function showEmailPopup(){ emailPopupShown = true; document.getElementById('email-popup').hidden = false; }
+  document.getElementById('email-popup-ok').addEventListener('click', function(){ document.getElementById('email-popup').hidden = true; });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') document.getElementById('email-popup').hidden = true; });
 
   function checkCode(){
     var email = document.getElementById('inp-email').value.trim();
@@ -1887,7 +1958,8 @@
       if (m.total) { els.scoreFrac.textContent = m.score + ' / ' + m.total; els.scorePct.textContent = m.percentage + '%'; }   // marked by the server
       if (m.result) showResult(m.result === 'PASS', m.attemptNumber, true);   // the server's decision is final
       if (m.result !== 'PASS' && m.attemptNumber >= max) showReview(m.review);  // all attempts used: now the answers can be shown
-      if (m.completedAll) { els.resultText.textContent += ' ' + T('You have now passed all {total} modules. A summary will be emailed to you.', { total: TOTAL_MODULES }); setCertificate({ name: m.certName, date: m.certDate }); }
+      if (m.completedAll) els.resultText.textContent += ' ' + T('You have now passed all {total} modules. A summary will be emailed to you.', { total: TOTAL_MODULES });
+      if (m.certReady) { els.resultText.textContent += ' ' + T('Your certificate of completion is ready: you have completed Appendix 4 and Appendix 5.'); setCertificate({ name: m.certName, date: m.certDate }); }
       pendingSave = null;
     } else if (m.code === 'auth') {
       // The verification expired (or was never completed). Nothing was saved; the same

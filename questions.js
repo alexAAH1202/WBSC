@@ -1504,7 +1504,7 @@ var QUIZ_BANK = {
         "options": [
           "Appendix 5a",
           "Appendix 5d",
-          "Appendix 5c",
+          "Appendix 5c & d",
           "Appendix 5b"
         ],
         "correct": 3,
@@ -1744,12 +1744,208 @@ var QUIZ_BANK = {
     ],
     "draw": 10
   },
+  "m07-mkc": {
+    "module": "Module 07 — Appendix 5b: Three-Umpire System",
+    "moduleShort": "Module 07",
+    "kind": "Manual Knowledge Check",
+    "title": "Appendix 5b: Three-Umpire System",
+    "nextLabel": "Continue to Presentation - Appendix 5b: Three-Umpire System",
+    "nextHref": "presentations.html#pres-5b",
+    "questions": [
+      {
+        "q": "In the Three-Umpire System with no runners on, where does U3 start?",
+        "options": [
+          "About 3.5 m (12 ft) behind 3B, up to 2 m (6 ft) off the line",
+          "About 5.5 m (18 ft) behind 3B, just off the line in foul territory",
+          "About 4.5 m (15 ft) behind 3B, in fair territory",
+          "About 7.5 m (25 ft) behind 3B, well off the line"
+        ],
+        "correct": 1,
+        "ref": "Appendix 5b, U3 Starting Position."
+      },
+      {
+        "q": "Between innings in the Three-Umpire System, where does PU stand?",
+        "options": [
+          "Halfway from HP to 1B",
+          "Two thirds of the way from HP to 3B",
+          "One third of the way from HP to 3B",
+          "Behind the batter's boxes at the point of the plate"
+        ],
+        "correct": 2,
+        "ref": "Appendix 5b, Pre-Game Plate Meeting and Between Innings Positions."
+      },
+      {
+        "q": "On a pickoff (throw back) at 2B in the Three-Umpire System, how far back does U3 move from the SBDA position?",
+        "options": [
+          "Approximately 1 m (3 ft)",
+          "Approximately 6 m (20 ft)",
+          "Approximately 3 m (10 ft)",
+          "They do not move"
+        ],
+        "correct": 2,
+        "ref": "Appendix 5b, Pickoff Plays."
+      },
+      {
+        "q": "In the Three-Umpire System, who is responsible for the lead-off call for a runner at 3B?",
+        "options": [
+          "U1",
+          "PU",
+          "U3",
+          "Whichever umpire is closest"
+        ],
+        "correct": 2,
+        "ref": "Appendix 5b, Leadoffs."
+      },
+      {
+        "q": "U1 is at 1B, U3 is at 2B and there is a runner on 1B. Why does the manual have U1 take fly balls to the right-field area, even directly behind U3?",
+        "options": [
+          "It keeps U1 out of the runner's base path and lets U3 more easily get inside to cover plays and watch the tag up",
+          "It lets PU stay at home plate for every play",
+          "It is the only way U3 can see the batter",
+          "Because U1 always has the longest run"
+        ],
+        "correct": 0,
+        "ref": "Appendix 5b, Outfield Fly-Ball Coverage Area (U1 at 1B; U3 at 2B)."
+      },
+      {
+        "q": "On a live ball play from the infield, U1 may move into fair territory when the ball is thrown from fair territory. How far?",
+        "options": [
+          "As far as needed to see the tag",
+          "No further than the infield grass",
+          "Only to the foul line",
+          "No further than a line at 45 degrees through 1B"
+        ],
+        "correct": 3,
+        "ref": "Appendix 5b, Live Ball Play from Infield."
+      },
+      {
+        "q": "U1 is at 1B and U3 is at 3B with a runner on 3B only. A ground ball goes to the outfield. What does PU do?",
+        "options": [
+          "Move into a holding position, check that the runner from 3B touches HP (head check) and be ready for the call at 3B on the BR",
+          "Rotate to 1B to cover the throw",
+          "Stay at the plate until the play is over, then move to 3B",
+          "Rotate inside for any call at 2B"
+        ],
+        "correct": 0,
+        "ref": "Appendix 5b, Ground Ball to Outfield."
+      },
+      {
+        "q": "In the Three-Umpire System, when either U1 or U3 goes out on a fly ball, who brings the batter runner (BR) all the way to 3B?",
+        "options": [
+          "PU",
+          "The remaining base umpire, which allows PU to go home",
+          "The umpire who went out",
+          "The base coach"
+        ],
+        "correct": 1,
+        "ref": "Appendix 5b, Batter Runner or Last Runner to third base."
+      }
+    ]
+  },
+  "m08-mkc": {
+    "module": "Module 08 — Appendix 5c & d: Four, Five and Six-Umpire Systems",
+    "moduleShort": "Module 08",
+    "kind": "Manual Knowledge Check",
+    "title": "Appendix 5c & d: Four, Five and Six-Umpire Systems",
+    "nextLabel": "Continue to Presentation - Appendix 5c & d: Four, Five and Six-Umpire Systems",
+    "nextHref": "presentations.html#pres-5c",
+    "questions": [
+      {
+        "q": "At the pre-game plate meeting in the Four-Umpire System, where do U2, U1 and U3 line up, and why?",
+        "options": [
+          "Behind the catcher, to see the batter's boxes",
+          "Beside the dugouts, to speak to the managers",
+          "In front of the batter's boxes, so they can peel off to their starting positions",
+          "On their starting positions, so no one has to move"
+        ],
+        "correct": 2,
+        "ref": "Appendix 5c, Pre-Game Plate Meeting and Between Innings Positions."
+      },
+      {
+        "q": "Between innings in the Four-Umpire System, where does U1 stand?",
+        "options": [
+          "One third of the way from HP to 1B",
+          "Two thirds of the way from HP to 1B",
+          "Halfway from HP to 1B",
+          "Behind 1B"
+        ],
+        "correct": 0,
+        "ref": "Appendix 5c, Pre-Game Plate Meeting and Between Innings Positions."
+      },
+      {
+        "q": "In the Four-Umpire System, where does U1 start with a runner at 1B?",
+        "options": [
+          "About 5.5 m (18 ft) behind 1B",
+          "About 3.5 m (12 ft) behind 1B in foul territory",
+          "About 4.5 m (15 ft) behind 1B in fair territory",
+          "On the 1B line, level with the base"
+        ],
+        "correct": 1,
+        "ref": "Appendix 5c, Starting position: U1."
+      },
+      {
+        "q": "In the Four-Umpire System, U2 goes out on a fly ball. Who takes the tag up at 3B?",
+        "options": [
+          "U1",
+          "U3",
+          "U2",
+          "PU"
+        ],
+        "correct": 3,
+        "ref": "Appendix 5c, Tag-ups - When U2 goes out on a fly ball."
+      },
+      {
+        "q": "On a fly ball that could be taken by either a base umpire or U2, who is given the first option to go out in the Four-Umpire System?",
+        "options": [
+          "PU",
+          "U1 or U3, offered by U2",
+          "U2 always has the first option",
+          "The umpire nearest the ball"
+        ],
+        "correct": 1,
+        "ref": "Appendix 5c, Outfield Fly-Ball Coverage Area."
+      },
+      {
+        "q": "In the Four-Umpire System with no runners on or a runner on 1B, what does PU do on a live ball play from the infield?",
+        "options": [
+          "Stays at home plate",
+          "Moves to 3B to cover the play",
+          "Trails the BR approximately one third of the way to 1B, watching for interference and the fair/foul call",
+          "Rotates inside to cover 2B"
+        ],
+        "correct": 2,
+        "ref": "Appendix 5c, Live Ball Play from Infield."
+      },
+      {
+        "q": "In the Five and Six-Umpire Systems, what are ULF and URF responsible for?",
+        "options": [
+          "Only fair/foul calls on the lines",
+          "Plays at 1B and 3B",
+          "Tag ups on all bases",
+          "All calls beyond the base umpire and behind the infielders (fair/foul, catch/no catch and the status of a ball leaving the field), whatever the runners"
+        ],
+        "correct": 3,
+        "ref": "Appendix 5d, Fly-ball Coverage."
+      },
+      {
+        "q": "In the Five and Six-Umpire Systems, if LF or RF is fielding in close, where should the outfield umpire be?",
+        "options": [
+          "In front of the outfielder, to accurately judge trapped balls",
+          "Behind the outfielder",
+          "On the foul pole",
+          "At the base umpire's starting position"
+        ],
+        "correct": 0,
+        "ref": "Appendix 5d, Starting Positions - Base and Outfield Umpires."
+      }
+    ]
+  },
   "m07-pca": {
     "module": "Module 07 — Appendix 5b: Three-Umpire System",
     "moduleShort": "Module 07",
     "kind": "Presentation Competency Assessment",
     "title": "Appendix 5b: Three-Umpire System",
-    "nextLabel": "Continue to Presentation - Appendix 5c: Four, Five and Six-Umpire Systems",
+    "nextLabel": "Continue to Presentation - Appendix 5c & d: Four, Five and Six-Umpire Systems",
     "nextHref": "presentations.html#pres-5c",
     "watchFirst": "presentations.html#pres-5b",
     "questions": [
@@ -1977,10 +2173,10 @@ var QUIZ_BANK = {
     "draw": 10
   },
   "m08-pca": {
-    "module": "Module 08 — Appendix 5c: Four, Five and Six-Umpire Systems",
+    "module": "Module 08 — Appendix 5c & d: Four, Five and Six-Umpire Systems",
     "moduleShort": "Module 08",
     "kind": "Presentation Competency Assessment",
-    "title": "Appendix 5c: Four, Five and Six-Umpire Systems",
+    "title": "Appendix 5c & d: Four, Five and Six-Umpire Systems",
     "nextLabel": "You've completed all eight required modules - view your full assessment record",
     "nextHref": "#top",
     "watchFirst": "presentations.html#pres-5c",
@@ -1993,7 +2189,7 @@ var QUIZ_BANK = {
           "Next to PU",
           "Two thirds of the way from HP to 1B"
         ],
-        "ref": "Appendix 5c, Pre-Game Plate Meeting and Between Innings Positions.",
+        "ref": "Appendix 5c & d, Pre-Game Plate Meeting and Between Innings Positions.",
         "why": "Between innings PU stands one third of the way from HP to 3B, U1 one third of the way from HP to 1B, U2 two thirds of the way from HP to 1B and U3 two thirds of the way from HP to 3B."
       },
       {
@@ -2004,7 +2200,7 @@ var QUIZ_BANK = {
           "About 5.5 m (18 ft)",
           "About 2 m (6 ft)"
         ],
-        "ref": "Appendix 5c, Starting Positions - U2.",
+        "ref": "Appendix 5c & d, Starting Positions - U2.",
         "why": "Without a runner the Second Base Diagonal Angle starting position is about 4.5 m (15 ft) back; with a runner on any base it is about 3.5 m (12 ft)."
       },
       {
@@ -2015,7 +2211,7 @@ var QUIZ_BANK = {
           "U2",
           "U3"
         ],
-        "ref": "Appendix 5c, Outfield Fly-Ball Coverage Area.",
+        "ref": "Appendix 5c & d, Outfield Fly-Ball Coverage Area.",
         "why": "U1 goes out for fly balls to right field and F8 running to right; U3 for left field and F8 running to left. U1 or U3 should be given the first option by U2."
       },
       {
@@ -2026,7 +2222,7 @@ var QUIZ_BANK = {
           "U3",
           "Nobody"
         ],
-        "ref": "Appendix 5c, Tag-ups - When U1 goes out on a fly ball.",
+        "ref": "Appendix 5c & d, Tag-ups - When U1 goes out on a fly ball.",
         "why": "PU takes the tag up at 1B because PU has the Four Essential Elements in front of them at all times. U2 takes 2B and U3 takes 3B."
       },
       {
@@ -2037,7 +2233,7 @@ var QUIZ_BANK = {
           "U3",
           "U2, from the outfield"
         ],
-        "ref": "Appendix 5c, Tag-ups - When U2 goes out on a fly ball.",
+        "ref": "Appendix 5c & d, Tag-ups - When U2 goes out on a fly ball.",
         "why": "U1 keeps 1B, U3 takes 2B including the tag up, and PU takes the tag up at 3B."
       },
       {
@@ -2048,7 +2244,7 @@ var QUIZ_BANK = {
           "U1 stays at 1B for the whole play",
           "U1 covers 3B on every fly ball"
         ],
-        "ref": "Appendix 5c, Four-Umpire System Rotation Memory Map - U1.",
+        "ref": "Appendix 5c & d, Four-Umpire System Rotation Memory Map - U1.",
         "why": "U1 also communicates with PU when coming to HP and pushes PU up to 3B, and clears away from HP when PU indicates a back-fill situation."
       },
       {
@@ -2059,7 +2255,7 @@ var QUIZ_BANK = {
           "Move to the POP area to assist PU",
           "Rotate to 3B"
         ],
-        "ref": "Appendix 5c, Ground Ball to Outfield - U2, Hit to LF.",
+        "ref": "Appendix 5c & d, Ground Ball to Outfield - U2, Hit to LF.",
         "why": "On a hit to RF or CF U2 button hooks inside for any call at 2B; on a hit to LF the acute angle on the throw is better from outside."
       },
       {
@@ -2103,7 +2299,7 @@ var QUIZ_BANK = {
           "About 3.5 m (12 ft) back at the Second Base Diagonal Angle",
           "About 5.5 m (18 ft) behind 3B, just off the line in foul territory"
         ],
-        "ref": "Appendix 5c, Starting Positions - U3.",
+        "ref": "Appendix 5c & d, Starting Positions - U3.",
         "why": "With no runners on, U3 starts about 5.5 m (18 ft) behind 3B; with a runner at 3B it is about 3.5 m (12 ft) in foul territory."
       },
       {
@@ -2114,7 +2310,7 @@ var QUIZ_BANK = {
           "U2",
           "U3, from the outfield"
         ],
-        "ref": "Appendix 5c, Tag-ups - When U3 goes out on a fly ball.",
+        "ref": "Appendix 5c & d, Tag-ups - When U3 goes out on a fly ball.",
         "why": "When U3 goes out, U1 takes the tag up at 1B and U2 takes the tag up at 2B. Each umpire has the tag up at their base after any initial rotation."
       },
       {
@@ -2125,7 +2321,7 @@ var QUIZ_BANK = {
           "Seek help from U3 on the tag up at 2B",
           "Ask PU to take the tag up at 2B"
         ],
-        "ref": "Appendix 5c, Tag-ups.",
+        "ref": "Appendix 5c & d, Tag-ups.",
         "why": "When umpires rotate inside using the Inside/Outside Theory they may not see both the first touch of the ball and the runner's lead, so they rotate quickly, glance over the shoulder and seek assistance."
       },
       {
@@ -2136,7 +2332,7 @@ var QUIZ_BANK = {
           "U1, for runners at every base",
           "Each umpire, for a runner at their own base"
         ],
-        "ref": "Appendix 5c, Leadoffs.",
+        "ref": "Appendix 5c & d, Leadoffs.",
         "why": "In the Three-Umpire System U1 has the lead-offs at 1B and 2B; in the Four-Umpire System each umpire has the lead-off at their base."
       },
       {
@@ -2147,7 +2343,7 @@ var QUIZ_BANK = {
           "Directly in line with the throw",
           "Behind the fielder, at 180 degrees to the throw"
         ],
-        "ref": "Appendix 5c, Live Ball Play from Infield.",
+        "ref": "Appendix 5c & d, Live Ball Play from Infield.",
         "why": "On tag plays they use Dynamic Movement to keep the Four Essential Elements in view on the leading edge or as the play dictates."
       },
       {
@@ -2158,7 +2354,7 @@ var QUIZ_BANK = {
           "Rotate immediately to 3B",
           "Stay at home plate in the stance"
         ],
-        "ref": "Appendix 5c, Four-Umpire System Rotation Memory Map - PU.",
+        "ref": "Appendix 5c & d, Four-Umpire System Rotation Memory Map - PU.",
         "why": "With a runner at 2B or 3B PU uses the holding position instead, and anticipates plays at the plate."
       },
       {
@@ -2169,7 +2365,7 @@ var QUIZ_BANK = {
           "Whenever the hit is to the infield",
           "When there is a runner on 3B and the hit is to right field"
         ],
-        "ref": "Appendix 5c, Four-Umpire System Rotation Memory Map - U2.",
+        "ref": "Appendix 5c & d, Four-Umpire System Rotation Memory Map - U2.",
         "why": "U2 must rotate inside the diamond in all other situations where U1 or U3 goes out, and cover 1B when U1 goes out."
       },
       {

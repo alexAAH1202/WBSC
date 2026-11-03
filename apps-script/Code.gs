@@ -57,8 +57,13 @@ var MAX_ATTEMPTS = 2;
 
 // A learner has completed the program when they have PASSED this assessment
 // for every one of these modules.
-var TOTAL_MODULES = 8;   // Modules 01-08: the four Foundations modules, Appendix 4 (05) and Appendix 5a, 5b, 5c (06, 07, 08)
+var TOTAL_MODULES = 8;   // Modules 01-08: the four Foundations modules, Appendix 4 (05) and Appendix 5a, 5b, 5c & d (06, 07, 08)
 var COMPLETION_TYPE = 'Presentation Competency Assessment';
+// The certificate of completion is awarded for Appendix 4 and Appendix 5 (5a, 5b, 5c & d) = Modules 05-08. (The program as a whole,
+// for the Director's completion notice, is still all TOTAL_MODULES.)
+var CERT_MODULES = [5, 6, 7, 8];
+var CERT_EMAILS_PER_6H = 3;          // "email me my certificate" requests per learner per 6 hours
+var CERT_MAX_BYTES = 2000000;        // the PDF the page sends must be smaller than this
 
 // Require a verified email (one-time code) to save a result or look up attempts.
 var REQUIRE_VERIFIED = true;
@@ -150,6 +155,7 @@ function doPost(e) {
   if (p.action === 'verifyCode') return handleVerifyCode_(p);
   if (p.action === 'saveProgress') return handleSaveProgress_(p);
   if (p.action === 'clearProgress') return handleClearProgress_(p);
+  if (p.action === 'emailCertificate') return handleEmailCertificate_(p);
   if (p.action === 'results') return handleResults_(p);
   return handleSave_(e);
 }
@@ -178,7 +184,10 @@ var EMAIL_TEXT = {
     nextPass: 'You have passed this assessment.',
     nextLeft: 'You did not reach the pass mark. Attempts left for this assessment: {n}. Revisit the manual and presentation before trying again.',
     nextNone: 'You did not reach the pass mark and have used all {max} attempts for this month. Your attempts are available again on {date}. If you need help before then, please contact {email}.',
-    complete: 'You have now passed all {n} modules. Congratulations! You can download your certificate of completion from the Assessments page after confirming this email address.',
+    complete: 'You have now passed all {n} modules. Congratulations!',
+    certReady: 'You have completed Appendix 4 and Appendix 5 (5a to 5d), so your certificate of completion is ready: open the Assessments page, confirm this email address and download it, or ask for it to be emailed to you.',
+    certSubject: 'Your WBSC Umpire Mechanics certificate of completion',
+    certBody: 'Your certificate of completion for WBSC Umpire Mechanics 2026 (Appendix 4 and Appendix 5, 5a to 5d) is attached as a PDF.\n\nName on the certificate: {name}\nCompletion date: {date}\n\nIf your name is not right, please contact {email}.\n\nThis email was sent from a temporary training site that is not the official WBSC website.',
     progress: 'Your progress so far:',
     modNone: 'Module {nn}: not attempted yet',
     modPass: 'Module {nn}: PASSED ({best}%, attempts used: {a})',
@@ -201,7 +210,10 @@ var EMAIL_TEXT = {
     nextPass: 'Has aprobado esta evaluación.',
     nextLeft: 'No has alcanzado la nota mínima para aprobar. Intentos restantes en esta evaluación: {n}. Repasa el manual y la presentación antes de volver a intentarlo.',
     nextNone: 'No has alcanzado la nota mínima para aprobar y has usado los {max} intentos de este mes. Tus intentos estarán disponibles de nuevo el {date}. Si necesitas ayuda antes, ponte en contacto con {email}.',
-    complete: 'Has aprobado ya los {n} módulos. ¡Enhorabuena! Puedes descargar tu certificado de finalización desde la página de Evaluaciones después de confirmar esta dirección de correo electrónico.',
+    complete: 'Has aprobado ya los {n} módulos. ¡Enhorabuena!',
+    certReady: 'Has completado el Apéndice 4 y el Apéndice 5 (5a a 5d), por lo que tu certificado de finalización está listo: abre la página de Evaluaciones, confirma esta dirección de correo electrónico y descárgalo, o pide que te lo enviemos por correo.',
+    certSubject: 'Tu certificado de finalización de Mecánica Arbitral de la WBSC',
+    certBody: 'Adjuntamos en PDF tu certificado de finalización de la Mecánica Arbitral WBSC 2026 (Apéndice 4 y Apéndice 5, 5a a 5d).\n\nNombre en el certificado: {name}\nFecha de finalización: {date}\n\nSi tu nombre no es correcto, ponte en contacto con {email}.\n\nEste correo se envió desde un sitio de formación temporal que no es el sitio web oficial de la WBSC.',
     progress: 'Tu progreso hasta ahora:',
     modNone: 'Módulo {nn}: aún sin intentar',
     modPass: 'Módulo {nn}: APROBADO ({best}%, intentos usados: {a})',
@@ -250,6 +262,7 @@ function saveMessage_(result) {
     result: result.result || '',
     passed: !!result.passed,
     completedAll: !!result.completedAll,
+    certReady: !!result.certReady,
     maxAttempts: result.maxAttempts || MAX_ATTEMPTS,
     code: result.code || '',
     resetsOn: result.resetsOn || '',
@@ -335,6 +348,20 @@ function completionDay_(summary) {
 
 // Whether a verified email has passed every module, with the name and date to print on the certificate. The name is the
 // one the learner entered on their most recent result. The certificate itself is made in the learner's browser.
+// Whether every certificate module is passed in a summary, and the day the last of them was passed.
+function certModulesPassed_(summary) {
+  for (var i = 0; i < CERT_MODULES.length; i++) { var m = summary.modules[CERT_MODULES[i]]; if (!m || !m.passed) return false; }
+  return true;
+}
+function certDay_(summary) {
+  var latest = 0;
+  CERT_MODULES.forEach(function (n) {
+    var m = summary.modules[n];
+    if (m && m.passed && m.passedAt) { var t = new Date(m.passedAt).getTime(); if (!isNaN(t) && t > latest) latest = t; }
+  });
+  return latest ? dayKey_(latest) : '';
+}
+
 function certificateInfo_(email) {
   var sheet = getSheet_(), last = sheet.getLastRow(), name = '', id = '';
   if (last >= 2) {
@@ -344,8 +371,8 @@ function certificateInfo_(email) {
     }
   }
   var summary = completionSummary_(sheet, { email: email, umpireId: id });
-  var done = summary.passedCount >= TOTAL_MODULES;
-  return { eligible: done, name: done ? name : '', date: done ? completionDay_(summary) : '' };
+  var done = certModulesPassed_(summary);
+  return { eligible: done, name: done ? name : '', date: done ? certDay_(summary) : '' };
 }
 
 // Looked up with a <script> tag (JSONP) like the attempts lookup; needs a verified session.
@@ -362,6 +389,37 @@ function certificateReply_(p) {
   var cb = String(p.callback || ''), json = JSON.stringify(out);
   if (/^[A-Za-z_$][A-Za-z0-9_$]{0,40}$/.test(cb)) return ContentService.createTextOutput(cb + '(' + json + ');').setMimeType(ContentService.MimeType.JAVASCRIPT);
   return ContentService.createTextOutput(json).setMimeType(ContentService.MimeType.JSON);
+}
+
+// "Email me my certificate": the page makes the PDF in the learner's browser (from WBSC's template) and sends it here; the server
+// checks the learner has passed Modules 05-08, then emails it as an attachment to their VERIFIED address only. Rate limited.
+function handleEmailCertificate_(p) {
+  var msg = { wbscAuth: true, id: String(p.id || '').slice(0, 64), action: 'emailCertificate', success: false };
+  try {
+    var email = sessionEmail_(p.token);
+    if (!email) { msg.code = 'auth'; msg.error = 'Please verify your email address first.'; return messagePage_(msg); }
+    var info = certificateInfo_(email);
+    if (!info.eligible) throw new Error('Invalid request: the certificate is not available yet');
+    var b64 = String(p.pdf || '');
+    if (!b64 || b64.length > CERT_MAX_BYTES * 4 / 3 + 8 || !/^[A-Za-z0-9+\/]+={0,2}$/.test(b64)) throw new Error('Invalid certificate file');
+    var bytes = Utilities.base64Decode(b64);
+    if (bytes.length > CERT_MAX_BYTES || bytes.length < 1000 || bytes[0] !== 37 || bytes[1] !== 80 || bytes[2] !== 68 || bytes[3] !== 70) throw new Error('Invalid certificate file');
+    if (!rateHit_('certmail:' + sha_(email), CERT_EMAILS_PER_6H, 21600)) { msg.code = 'rate'; msg.error = 'Too many requests. Please try again later.'; return messagePage_(msg); }
+    var lg = lang_(p.lang);
+    var blob = Utilities.newBlob(bytes, 'application/pdf', 'WBSC-Umpire-Mechanics-2026-Certificate.pdf');
+    MailApp.sendEmail({
+      to: email,
+      subject: et_(lg, 'certSubject'),
+      body: et_(lg, 'certBody', { name: info.name, date: info.date, email: CONTACT_EMAIL }),
+      attachments: [blob]
+    });
+    msg.success = true;
+  } catch (err) {
+    var m = String(err && err.message ? err.message : err);
+    if (/^Invalid/.test(m)) msg.error = m;
+    else { logError_('emailCertificate', err); msg.error = 'The certificate could not be emailed.'; }
+  }
+  return messagePage_(msg);
 }
 
 // Where a verified learner stands: for each module whether it is passed, their best score, how many attempts they have
@@ -720,7 +778,8 @@ function handleSave_(e) {
         result.receipt = receiptWanted_(result.passed, Number(result.attemptNumber));
         var dsum = completionSummary_(sheet, clean);
         result.completedAll = dsum.passedCount >= TOTAL_MODULES;
-        if (result.completedAll) { result.certName = clean.name; result.certDate = completionDay_(dsum); }
+        result.certReady = certModulesPassed_(dsum);
+        if (result.certReady) { result.certName = clean.name; result.certDate = certDay_(dsum); }
       } else if (attemptInfo_(sheet, clean).count >= MAX_ATTEMPTS) {
         // Hard limit: nothing is saved or emailed.
         var lim = attemptInfo_(sheet, clean);
@@ -754,7 +813,8 @@ function handleSave_(e) {
         result.resetsOn = clean.passed ? '' : nextResetDate_();   // when this month's attempts are renewed
         result.receipt = receiptWanted_(clean.passed, attemptNumber);
         result.completedAll = after.passedCount >= TOTAL_MODULES;
-        if (result.completedAll) { result.certName = clean.name; result.certDate = completionDay_(after); }
+        result.certReady = certModulesPassed_(after);
+        if (result.certReady) { result.certName = clean.name; result.certDate = certDay_(after); }
         post = {
           clean: clean, attemptNumber: attemptNumber, rowIndex: rowIndex, summary: after,
           completedNow: after.passedCount >= TOTAL_MODULES && before.passedCount < TOTAL_MODULES
@@ -1077,6 +1137,7 @@ function sendReceipt_(c, attemptNumber, summary) {
     et_(lg, 'lRef') + ': ' + c.submissionId.slice(0, 8).toUpperCase() + '\n\n' +
     next + '\n\n' +
     (complete ? et_(lg, 'complete', { n: TOTAL_MODULES }) + '\n\n' : '') +
+    (certModulesPassed_(summary) ? et_(lg, 'certReady') + '\n\n' : '') +
     et_(lg, 'progress') + '\n' + summaryLines_(summary, lg) + '\n\n' +
     et_(lg, 'footer', { email: CONTACT_EMAIL });
   MailApp.sendEmail(c.email, et_(lg, 'receiptSubject', { module: c.module, result: result }), body);

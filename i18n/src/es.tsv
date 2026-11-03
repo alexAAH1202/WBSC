@@ -422,3 +422,35 @@
 425	{n} de {total} aprobados
 426	Cuando terminas una evaluación calificada, este sitio registra tu nombre, tu dirección de correo electrónico verificada, tu ID de árbitro y tu asociación (si los indicaste), el módulo y la evaluación, tu puntuación y el resultado de aprobado o no aprobado, el número de intento, la fecha y la hora, y la versión del programa. No se registra ningún resultado mientras sigues respondiendo preguntas. Si interrumpes una evaluación calificada a medias, se guardan la pregunta a la que llegaste, las opciones de respuesta que has elegido hasta ahora, las preguntas que se te asignaron y el orden de las opciones de respuesta, para que puedas continuar, también desde otro dispositivo (consulta «Adónde va y quién puede verlo» y «Cuánto tiempo se conserva»).
 427	Los resultados se guardan como una fila en una hoja de cálculo de Google gestionada por el administrador del programa, y los correos electrónicos se envían mediante Gmail. El sitio utiliza Google Apps Script, Hojas de cálculo de Google y Gmail, por lo que Google trata esta información por nuestra cuenta y puede hacerlo en servidores situados fuera de tu país. Un código de acceso (10 minutos) se conserva temporalmente en la caché de corta duración de Google Apps Script y después caduca; solo se guarda como un hash unidireccional, no como texto sin cifrar. Cuando confirmas tu dirección de correo electrónico, se guarda en otra pestaña de la misma hoja de cálculo un registro de tu inicio de sesión (un hash unidireccional de un token aleatorio, tu dirección de correo electrónico y una fecha de caducidad 14 días después) para que sigas con la sesión iniciada; los registros caducados se eliminan. Si interrumpes una evaluación calificada a medias, su progreso se guarda en otra pestaña de la misma hoja de cálculo. Se almacena junto con un hash unidireccional de tu dirección de correo electrónico, no con la dirección misma, y contiene solo las preguntas asignadas, la pregunta a la que llegaste, las opciones de respuesta que has elegido hasta ahora y el orden de las opciones de respuesta. No se guarda ninguna puntuación ni clave de respuestas.
+428	Si tu código no llega
+429	Este sitio envía sus correos desde una cuenta gratuita de Gmail, que solo puede enviar unos 100 correos al día en total. En un día de mucha actividad, tu código puede no llegar. Si no ha llegado después de unos minutos (revisa primero la carpeta de correo no deseado), inténtalo de nuevo más tarde o mañana. Tus resultados no se ven afectados y, una vez que hayas iniciado sesión, tu sesión se mantiene en este dispositivo durante 14 días.
+430	Práctica opcional sobre la mecánica de campo de élite en los sistemas de tres a seis árbitros. Las evaluaciones calificadas son la 5a, la 5b y la 5c y d, y cada una se realiza después de ver su presentación.
+431	Módulo 08 · Apéndice 5c y d
+432	Apéndice 5c y d - Sistemas de cuatro, cinco y seis árbitros
+433	Evaluación de competencias de la presentación · Apéndice 5c y d
+434	Empezar la evaluación del Apéndice 5c y d
+435	Apéndice 5c y d: Sistemas de cuatro, cinco y seis árbitros
+436	8 preguntas
+437	Práctica opcional sobre el Apéndice 5b (el Sistema de Tres Árbitros) después de leer el manual.
+438	Práctica opcional sobre el Apéndice 5c y d (los Sistemas de Cuatro, Cinco y Seis Árbitros) después de leer el manual.
+439	Has completado el Apéndice 4 y el Apéndice 5 (5a a 5d). Tu certificado mostrará el nombre {name} y la fecha de finalización {date}. Si tu nombre no es correcto, ponte en contacto con {email}.
+440	Primero verifica tu dirección de correo electrónico en «Tus datos» y luego vuelve a pedir el certificado.
+441	Enviando tu certificado por correo…
+442	Te hemos enviado el certificado por correo a {email}. Si no llega en unos minutos, revisa la carpeta de correo no deseado.
+443	Tu verificación de correo electrónico ha caducado. Verifica tu correo de nuevo en «Tus datos».
+444	No se pudo enviar el certificado por correo. Inténtalo de nuevo.
+445	Tu certificado de finalización está listo: has completado el Apéndice 4 y el Apéndice 5.
+446	Envíame mi certificado por correo
+447	Solicitud no válida: el certificado aún no está disponible
+448	Archivo de certificado no válido
+449	Demasiadas solicitudes. Inténtalo de nuevo más tarde.
+450	No se pudo enviar el certificado por correo.
+451	Te enviamos un código de acceso y un recibo con tu resultado y el número de intento cuando apruebas una evaluación o usas tu último intento del mes (después de los demás intentos, tu resultado se muestra en pantalla), en el idioma que mostraba el sitio cuando lo pediste. Si pides que te enviemos por correo tu certificado de finalización, se envía a tu dirección confirmada como archivo PDF adjunto. El Director de Árbitros recibe un aviso cuando alguien ha aprobado los ocho módulos y, cada lunes, un resumen del avance: quién completó el programa esa semana, quién ha usado todos los intentos de un módulo sin aprobar, quién empezó pero no ha tenido actividad en 14 días y los totales por asociación o federación. Son correos de servicio sobre tu registro de formación. No enviamos publicidad ni boletines, y no enviamos recordatorios por correo a los participantes.
+452	Evaluaciones calificadas · Módulos 01 a 05
+453	Cada módulo tiene su propia evaluación calificada. Realiza la del módulo que acabas de ver.
+454	<strong>El Apéndice 4 (Módulo 05)</strong> se basa en toda la presentación, así que míratela completa antes de empezar.
+455	<span>Módulo 01</span> Guía de aprendizaje de Fundamentos
+456	<span>Módulo 02</span> Mecánica de campo con un árbitro
+457	<span>Módulo 03</span> Mecánica de campo con dos árbitros
+458	<span>Módulo 04</span> Mecánica de campo con tres árbitros
+459	<span>Módulo 05</span> Apéndice 4: Mecánica de élite

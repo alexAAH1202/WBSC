@@ -18,7 +18,7 @@ function messages() {
   // server messages that a learner can see (translated through S() in the widget)
   ['Please verify your email address first.', 'Too many codes have been requested for this address. Please wait a while and try again.', 'The service is busy. Please try again in a few minutes.',
    'We could not send the email. Please check the address and try again.', 'That code has expired or was not requested. Please ask for a new one.', 'Too many wrong codes. Please ask for a new one.',
-   'Something went wrong. Please try again.', 'Invalid email address', 'Invalid session. Please verify your email address with a code first.', 'The server could not save the result', 'Invalid submission: the assessment was completed too quickly to be a real attempt', 'Invalid submission: this assessment was updated. Please reload the page and start again.', 'Invalid request: please reload the page and try again'].forEach(s => out.add(s));
+   'Something went wrong. Please try again.', 'Invalid email address', 'Invalid session. Please verify your email address with a code first.', 'The server could not save the result', 'Invalid submission: the assessment was completed too quickly to be a real attempt', 'Invalid submission: this assessment was updated. Please reload the page and start again.', 'Invalid request: please reload the page and try again', 'Invalid request: the certificate is not available yet', 'Invalid certificate file', 'Too many requests. Please try again later.', 'The certificate could not be emailed.'].forEach(s => out.add(s));
   return [...out];
 }
 (async () => {

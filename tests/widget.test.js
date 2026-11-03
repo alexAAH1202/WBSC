@@ -37,7 +37,7 @@ const ok = m => { console.log('  ok -', m); n++; };
 async function newPage(b, opts, saveHandler) {
   opts = opts || {};
   if (lastCtx) await lastCtx.close().catch(() => {});   // one page at a time keeps the browser light
-  const ctx = lastCtx = await b.newContext(); await ctx.addInitScript(() => { try { localStorage.setItem('wbscNoticeSeen', '1'); } catch (e) {} }); const pg = await ctx.newPage(); const posts = [], progressCalls = [], certLookups = [], fetches = [], lookups = [], calls = [];
+  const ctx = lastCtx = await b.newContext(); await ctx.addInitScript(() => { try { localStorage.setItem('wbscNoticeSeen', '1'); } catch (e) {} }); const pg = await ctx.newPage(); const posts = [], mailCalls = [], progressCalls = [], certLookups = [], fetches = [], lookups = [], calls = [];
   pg.on('pageerror', e => console.log('PAGE ERROR', e.message));
   pg.on('request', r => { if (r.resourceType() === 'fetch' || r.resourceType() === 'xhr') fetches.push(r.url()); });
   await pg.route(/script\.google\.com\/macros\/s\/.*\/exec\?action=attempts/, r => {
@@ -63,6 +63,10 @@ async function newPage(b, opts, saveHandler) {
           ? { wbscAuth: true, id, action, success: false, code: 'rate', error: 'Too many codes have been requested for this address. Please wait a while and try again.' }
           : { wbscAuth: true, id, action, success: true, expiresIn: 600 })));
       }
+      if (action === 'emailCertificate') {
+        mailCalls.push({ token: params.get('token'), pdf: params.get('pdf'), lang: params.get('lang') });
+        return r.fulfill(page_(reply(Object.assign({ wbscAuth: true, id, action, success: true }, opts.emailCert || {}))));
+      }
       if (action === 'saveProgress' || action === 'clearProgress') {
         progressCalls.push({ action, key: params.get('key'), token: params.get('token'), data: params.get('data') });
         return r.fulfill(page_(reply({ wbscAuth: true, id, action, success: true })));
@@ -83,7 +87,7 @@ async function newPage(b, opts, saveHandler) {
   await pg.goto('http://localhost:' + PORT + '/assessment-widget.html' + (opts.query || ''));
   await pg.fill('#inp-name', 'Jo Ump'); await pg.fill('#inp-email', 'Jo@X.com');
   if (!opts.unverified) await verifyEmail(pg);
-  return { pg, posts, fetches, lookups, calls, progressCalls, certLookups, ctx };
+  return { pg, posts, fetches, lookups, calls, progressCalls, certLookups, mailCalls, ctx };
 }
 async function verifyEmail(pg, code = '123456') {
   await pg.click('#verify-send-btn'); await pg.waitForSelector('#verify-code-row', { state: 'visible' });
@@ -117,6 +121,28 @@ const verifyText = pg => pg.textContent('#verify-state');
   assert.ok(/Confirm your email address first/.test(await t.pg.textContent('#validation-banner')));
   assert.ok(!(await t.pg.isVisible('#quiz'))); assert.strictEqual(t.lookups.length, 0, 'no lookup before verification');
   ok('Start is blocked until the email is verified (no lookup, quiz hidden)');
+
+  t = await newPage(b, { unverified: true });
+  assert.ok(await t.pg.isHidden('#email-popup'), 'not shown on arrival');
+  await t.pg.click('#verify-send-btn'); await t.pg.waitForSelector('#verify-code-row', { state: 'visible' });
+  assert.ok(await t.pg.isVisible('#email-popup'));
+  { const txt = await t.pg.textContent('#email-popup'); assert.ok(/100 emails a day/.test(txt) && /try again later today or tomorrow/.test(txt) && /spam/.test(txt), txt); }
+  assert.ok(await t.pg.isEnabled('#inp-code') && await t.pg.evaluate(() => document.activeElement.id) === 'inp-code', 'the popup does not take focus from the code box');
+  await t.pg.click('#email-popup-ok'); assert.ok(await t.pg.isHidden('#email-popup'));
+  await t.pg.click('#verify-resend-btn').catch(() => {}); assert.ok(await t.pg.isHidden('#email-popup'), 'shown once per visit');
+  await t.pg.keyboard.press('Escape');
+  ok('pressing "Email me a code" shows a note that the site can send about 100 emails a day, so a late code means trying again later or tomorrow; OK closes it and it is not repeated');
+
+  // practice quizzes for Appendix 5b and 5c & d
+  for (const key of ['m07-mkc', 'm08-mkc']) {
+    t = await newPage(b, { unverified: true });
+    await t.pg.click(`[data-assessment="${key}"]`); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
+    assert.ok(/Practice quiz - not marked, not recorded/.test(await t.pg.textContent('#quiz-mode')));
+    assert.ok(/Question 1 of 8/.test(await t.pg.textContent('#quiz-progress-label')));
+    for (let i = 0; i < 8; i++) { const q = await t.pg.textContent('#quiz-question'), o = await t.pg.$$eval('.quiz-option .opt-text', a => a.map(x => x.textContent)); const r = o.indexOf(RIGHT[q]); assert.ok(r >= 0, 'known question'); await t.pg.click(`.quiz-option >> nth=${r}`); await t.pg.click('#quiz-submit-btn'); assert.ok(/Correct/.test(await t.pg.textContent('#quiz-feedback-head'))); await t.pg.click('#quiz-submit-btn'); }
+    assert.ok(/8 \/ 8/.test(await t.pg.textContent('#quiz-score-frac')) && t.posts.length === 0, 'practice is never saved');
+  }
+  ok('Appendix 5b and 5c & d have 8-question practice quizzes: unmarked, answers shown, nothing is sent to the server');
 
   t = await newPage(b, { unverified: true, sendCode: 'rate' });
   await t.pg.click('#verify-send-btn'); await t.pg.waitForFunction(() => /Too many codes/.test(document.getElementById('verify-state').textContent));
@@ -407,7 +433,7 @@ const verifyText = pg => pg.textContent('#verify-state');
   assert.strictEqual(await t.pg.getAttribute('#gate-link', 'href'), 'presentations.html#pres-5b');
   await t.pg.check('#gate-check'); assert.ok(!(await t.pg.isDisabled('#gate-start'))); await t.pg.click('#gate-start');
   await t.pg.waitForSelector('#quiz-question', { state: 'visible' }); assert.ok(!(await t.pg.isVisible('#quiz-gate')));
-  ok('Appendix 4, 5a, 5b and 5c assessments ask the learner to confirm they watched the full presentation before the questions appear');
+  ok('Appendix 4, 5a, 5b and 5c & d assessments ask the learner to confirm they watched the full presentation before the questions appear');
   t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false } });
   await t.pg.click('[data-assessment="m01-pca"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' }); assert.ok(!(await t.pg.isVisible('#quiz-gate')));
   await t.pg.click('[data-assessment="m05-mkc"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' }); assert.ok(!(await t.pg.isVisible('#quiz-gate')));
@@ -537,11 +563,23 @@ const verifyText = pg => pg.textContent('#verify-state');
     await t.pg.waitForFunction(() => /saved to your device/.test(document.getElementById('cert-state').textContent));
     ok('a learner who has passed every module can download the official certificate with their name and completion date filled in' + (txt ? ' (text checked in the PDF)' : ''));
     // the last result: the save reply carries the name and date, and a button appears under the result
-    t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false }, certificate: { ok: true, eligible: true, name: 'Jo Ump', date: '2026-11-02' } }, (r, p) => r.fulfill(page_(reply({ wbscSave: true, success: true, submissionId: p.submissionId, attemptNumber: 1, maxAttempts: 2, result: 'PASS', completedAll: true, certName: 'Jo Ump', certDate: '2026-11-02' }))));
+    t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false }, certificate: { ok: true, eligible: true, name: 'Jo Ump', date: '2026-11-02' } }, (r, p) => r.fulfill(page_(reply({ wbscSave: true, success: true, submissionId: p.submissionId, attemptNumber: 1, maxAttempts: 2, result: 'PASS', completedAll: true, certReady: true, certName: 'Jo Ump', certDate: '2026-11-02' }))));
     await runQuiz(t.pg, 'm01-pca', 0); await t.pg.waitForSelector('#cert-inline', { state: 'visible' });
     assert.ok(await t.pg.isVisible('#cert-box') && /2 November 2026/.test(await t.pg.textContent('#cert-text')));
     const [dl2] = await Promise.all([t.pg.waitForEvent('download'), t.pg.click('#cert-btn2')]); const t2 = pdfText(await dl2.path()); if (t2) assert.ok(/Jo Ump/.test(t2) && /2 November 2026/.test(t2));
     ok('finishing the last module offers the certificate straight away, from the result screen as well');
+    // "Email me my certificate": the browser makes the PDF and the server emails it to the verified address
+    t = await newPage(b, { certificate: { ok: true, eligible: true, name: 'Zoë Ump', date: '2026-10-28' } });
+    await t.pg.waitForSelector('#cert-box', { state: 'visible' });
+    await t.pg.click('#cert-mail-btn'); await t.pg.waitForFunction(() => /emailed your certificate to jo@x\.com/.test(document.getElementById('cert-state').textContent), null, { timeout: 15000 });
+    assert.strictEqual(t.mailCalls.length, 1); assert.strictEqual(t.mailCalls[0].token, TOKEN); assert.strictEqual(t.mailCalls[0].lang, 'en');
+    const sent = Buffer.from(t.mailCalls[0].pdf, 'base64'); assert.strictEqual(sent.slice(0, 4).toString(), '%PDF'); assert.ok(sent.length > 100000 && sent.length < 2000000, 'size ' + sent.length);
+    { const d = await PDFDocument.load(sent); assert.strictEqual(d.getForm().getFields().length, 0, 'the emailed copy is flattened too'); }
+    t.mailCalls.length = 0;
+    t = await newPage(b, { certificate: { ok: true, eligible: true, name: 'Zoë Ump', date: '2026-10-28' }, emailCert: { success: false, code: 'rate', error: 'Too many requests. Please try again later.' } });
+    await t.pg.waitForSelector('#cert-box', { state: 'visible' }); await t.pg.click('#cert-mail-btn');
+    await t.pg.waitForFunction(() => /Too many requests/.test(document.getElementById('cert-state').textContent), null, { timeout: 15000 });
+    ok('"Email me my certificate" sends the flattened PDF with the session token and shows the confirmation, or the server\'s reason when refused');
     // a name the certificate font cannot print gets a clear message instead of a broken file
     t = await newPage(b, { certificate: { ok: true, eligible: true, name: '山田 太郎', date: '2026-10-28' } });
     await t.pg.waitForSelector('#cert-box', { state: 'visible' }); await t.pg.click('#cert-btn');

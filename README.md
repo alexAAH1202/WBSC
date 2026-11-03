@@ -87,7 +87,7 @@ Script Web App into a Google Sheet.
 - Name, email, ID and association are remembered for the visit (this tab only) so a refresh does not mean retyping them.
 
 ## Tests
-- `node tests/bank.test.js`: 14 assessments in `questions.js` (Appendix 5 is split into Modules 06, 07 and 08 for Appendix 5a, 5b and 5c; each marked assessment has a pool of 20 questions and asks 10), at least 5 questions per Knowledge Check and 10 per Competency Assessment (more is fine, up to 100), answer keys in range, no duplicate options or questions. Runs in CI.
+- `node tests/bank.test.js`: 16 assessments in `questions.js` (a practice Knowledge Check and a marked assessment for every module) (Appendix 5 is split into Modules 06, 07 and 08 for Appendix 5a, 5b and 5c & d; each marked assessment has a pool of 20 questions and asks 10), at least 5 questions per Knowledge Check and 10 per Competency Assessment (more is fine, up to 100), answer keys in range, no duplicate options or questions. Runs in CI.
 - `node tests/site.test.js`: every local link, script, stylesheet and image on every page exists. Runs in CI.
 - `node tests/code-gs.test.js`: `Code.gs` against a mock of Sheets, Mail and Lock (39 checks, including login, receipts, results password, alerts and the health check). Runs in CI.
 - `node tests/widget.test.js` (needs `npm i -D playwright`): the widget in a real browser with Google's reply simulated (about 40 checks, including the question pool and progress on the server). It takes a few minutes.
@@ -101,8 +101,8 @@ The browser tests do **not** prove the real Apps Script reply reaches the widget
 step 3 under "Deploying" is the check that does.
 
 ## Modules, watch-first and presentations
-- **Eight required modules.** 01-04 Foundations, 05 Appendix 4, 06 Appendix 5a (Key Concepts), 07 Appendix 5b (Three-Umpire System), 08 Appendix 5c (Four, Five and Six-Umpire Systems). Completion means a PASS on the Presentation Competency Assessment for all eight (`TOTAL_MODULES` in `Code.gs`; `TOTAL_MODULES` in the widget is display only).
-- **Watch first.** The Appendix 4, 5a, 5b and 5c assessments set `watchFirst` in `questions.js`; the page asks the learner to confirm they watched the full presentation before the questions appear. This is a confirmation, not proof: Google Drive does not tell us whether a video was watched.
+- **Eight required modules.** 01-04 Foundations, 05 Appendix 4, 06 Appendix 5a (Key Concepts), 07 Appendix 5b (Three-Umpire System), 08 Appendix 5c & d (Four, Five and Six-Umpire Systems). Completion means a PASS on the Presentation Competency Assessment for all eight (`TOTAL_MODULES` in `Code.gs`; `TOTAL_MODULES` in the widget is display only).
+- **Watch first.** The Appendix 4, 5a, 5b and 5c & d assessments set `watchFirst` in `questions.js`; the page asks the learner to confirm they watched the full presentation before the questions appear. This is a confirmation, not proof: Google Drive does not tell us whether a video was watched.
 - **Presentations are MP4 only.** The PowerPoint downloads were removed (animations and sound did not play reliably, and Mac rendering was poor).
 - **Question explanations.** A question may have an optional `why` (see the header of `questions.js`).
 - **Resume.** An unfinished marked attempt is kept in the browser's localStorage (`wbscResume`, one attempt at a time) for 24 hours: question reached, the options chosen so far and the shuffled option order (no score: the server marks the finished attempt). It is tied to the verified email, ignored if the question bank changed, and cleared on finish or "Start again". It does not follow the learner to another device. Practice quizzes are not saved.
@@ -141,15 +141,15 @@ and when the result is recorded. The page asks for it with the attempts lookup (
 - `results.html` gained an association/federation filter, a "Went quiet" filter and tile, a by-association table and a "Went quiet" column in the summary CSV.
 
 ## Certificate of completion
-A learner who has passed all eight modules can download the official WBSC certificate of completion (the PDF supplied by WBSC,
+A learner who has passed Appendix 4 and Appendix 5 (Modules 05, 06, 07 and 08; `CERT_MODULES` in `Code.gs`) can download or be emailed the official WBSC certificate of completion (the PDF supplied by WBSC,
 `certificate/certificate-template.pdf`, with two fill-in fields `umpire_name` and `completion_date`) with their name and completion date filled in.
 - **Who and when.** The server decides: `certificateReply_` in `Code.gs` (looked up with the verified session token) returns the name from the learner's
   most recent result and the date they first passed the last required module (script time zone). The final save reply carries the same data, so the button
   appears on the result screen straight after the last pass. A later retake does not move the date.
 - **How.** The certificate is made in the learner's browser: `vendor/pdf-lib.min.js` (MIT, licence in `vendor/`) fills the two fields, flattens the form and saves the PDF.
-  The library and `certificate/template.js` (the template as base64, built by `node tests/certificate-build.js`) are loaded only when the button is pressed. Nothing is stored or sent.
+  The library and `certificate/template.js` (the template as base64, built by `node tests/certificate-build.js`) are loaded only when a certificate is requested. Downloading stores and sends nothing. **"Email me my certificate"** sends the PDF the browser made to the server (`handleEmailCertificate_`), which checks the verified session and that Modules 05-08 are passed, then emails it to the verified address only (3 requests per 6 hours; uses one of the ~100 emails a day).
 - **Names.** Latin letters and accents print. Anything the certificate font cannot print (for example Japanese or Chinese names) shows a message to contact the Director.
-- **Changing the template.** Replace `certificate/certificate-template.pdf` (keep the two field names), run `node tests/certificate-build.js`, then `node tests/certificate.test.js`.
+- **Changing the template.** Replace `certificate/certificate-template-unsigned.pdf` (keep the two field names), run `node tests/certificate-sign.js && node tests/certificate-build.js` (the first adds the Chair's signature image), then `node tests/certificate.test.js`.
 - The certificate wording lists Appendix 4 and 5a to 5d, as supplied by WBSC. `node tests/certificate.test.js` checks the template and its base64 copy.
 
 ## Fewer emails
