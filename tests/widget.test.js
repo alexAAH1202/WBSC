@@ -131,6 +131,10 @@ const verifyText = pg => pg.textContent('#verify-state');
   await t.pg.click('#email-popup-ok'); assert.ok(await t.pg.isHidden('#email-popup'));
   await t.pg.click('#verify-resend-btn').catch(() => {}); assert.ok(await t.pg.isHidden('#email-popup'), 'shown once per visit');
   await t.pg.keyboard.press('Escape');
+  t = await newPage(b, { unverified: true });
+  assert.ok(await t.pg.isVisible('#email-help-btn') && await t.pg.isHidden('#email-popup'), 'a "Not getting a code?" button is always there before signing in');
+  await t.pg.click('#email-help-btn'); assert.ok(await t.pg.isVisible('#email-popup') && /100 emails a day/.test(await t.pg.textContent('#email-popup')));
+  await t.pg.click('#email-popup-ok'); assert.ok(await t.pg.isHidden('#email-popup'));
   ok('pressing "Email me a code" shows a note that the site can send about 100 emails a day, so a late code means trying again later or tomorrow; OK closes it and it is not repeated');
 
   // practice quizzes for Appendix 5b and 5c & d

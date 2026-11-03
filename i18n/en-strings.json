@@ -305,6 +305,7 @@
    "OK",
    "Email me a code",
    "We will send a 6-digit code to the email address above to confirm it is yours.",
+   "Not getting a code?",
    "6-digit code",
    "Verify",
    "Send a new code",
@@ -1077,6 +1078,7 @@
   "<span>Module 02</span> One-Umpire Field Mechanics",
   "<span>Module 03</span> Two-Umpire Field Mechanics",
   "<span>Module 04</span> Three-Umpire Field Mechanics",
-  "<span>Module 05</span> Appendix 4: Elite Mechanics"
+  "<span>Module 05</span> Appendix 4: Elite Mechanics",
+  "Not getting a code?"
  ]
 }
