@@ -18,6 +18,12 @@ for (const m of modules) for (const t of hasPractice(m) ? ['mkc', 'pca'] : ['pca
   if (bank.draw !== undefined && (!Number.isInteger(bank.draw) || bank.draw < minimum[t] || bank.draw > bank.questions.length)) errors.push(`${key}: draw must be a whole number from ${minimum[t]} up to the number of questions`);
   if (bank.draw !== undefined && t === 'mkc') errors.push(`${key}: practice quizzes do not use a draw`);
   const asked = bank.draw || bank.questions.length;
+  if (bank.drawGroups) {
+    let sum = 0;
+    for (const [g, n] of Object.entries(bank.drawGroups)) { const have = bank.questions.filter(q => q.group === g).length; sum += n; if (!(Number.isInteger(n) && n >= 1 && n <= have)) errors.push(`${key}: drawGroups ${g} asks ${n} but has ${have}`); }
+    const rest = bank.questions.filter(q => !q.group).length;
+    if (sum >= asked || rest < asked - sum) errors.push(`${key}: drawGroups leave ${asked - sum} to draw from ${rest} ungrouped questions`);
+  }
   if (asked < minimum[t]) errors.push(`${key}: ${asked} questions asked, at least ${minimum[t]} needed`);
   if (asked > 100) errors.push(`${key}: more than 100 questions asked (Code.gs MAX_QUESTIONS)`);
   if (bank.questions.length > 200) errors.push(`${key}: more than 200 questions in the pool`);

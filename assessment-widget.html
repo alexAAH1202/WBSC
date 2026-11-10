@@ -1071,7 +1071,7 @@
           <div class="assess-card mkc">
             <span class="mode-badge practice">Practice</span>
             <span class="assess-kind">Manual Knowledge Check</span>
-            <span class="assess-qcount">8 Questions</span>
+            <span class="assess-qcount">5 Questions</span>
             <p class="assess-desc">Optional practice on Appendix 5c &amp; d (the Four, Five and Six-Umpire Systems) after reading the manual.</p>
             <p class="mode-note practice">Not marked and not recorded. Try it as often as you like.</p>
             <a class="btn btn-outline-navy assess-start-link" href="#assessment-m08-mkc" data-assessment="m08-mkc">Start Practice Quiz</a>
@@ -1240,9 +1240,21 @@
     var last = [];
     try { var sv = JSON.parse(localStorage.getItem('wbscSeen:' + key) || 'null'); if (sv && session && sv.email === session.email) last = sv.qi || []; } catch (e) {}
     function shuffled(a){ a = a.slice(); for (var x = a.length - 1; x > 0; x--) { var y = Math.floor(Math.random() * (x + 1)); var t = a[x]; a[x] = a[y]; a[y] = t; } return a; }
-    var fresh = shuffled(eligible.filter(function(k){ return last.indexOf(k) < 0; }));
-    var old = shuffled(eligible.filter(function(k){ return last.indexOf(k) >= 0; }));
-    var chosen = fresh.concat(old).slice(0, want).sort(function(a, b){ return a - b; });
+    function take(list, n){
+      var fresh = shuffled(list.filter(function(k){ return last.indexOf(k) < 0; }));
+      var old = shuffled(list.filter(function(k){ return last.indexOf(k) >= 0; }));
+      return fresh.concat(old).slice(0, n);
+    }
+    var chosen = [];
+    if (bank.drawGroups) {
+      // e.g. Appendix 5c & d: { '5d': 1 } asks 1 question marked group '5d' and the rest from the ungrouped questions.
+      var used = 0;
+      Object.keys(bank.drawGroups).forEach(function(g){
+        chosen = chosen.concat(take(eligible.filter(function(k){ return bank.questions[k].group === g; }), bank.drawGroups[g])); used += bank.drawGroups[g];
+      });
+      chosen = chosen.concat(take(eligible.filter(function(k){ return !bank.questions[k].group; }), want - used));
+    } else chosen = take(eligible, want);
+    chosen.sort(function(a, b){ return a - b; });
     try { localStorage.setItem('wbscSeen:' + key, JSON.stringify({ email: session ? session.email : '', qi: chosen })); } catch (e) {}
     return chosen;
   }

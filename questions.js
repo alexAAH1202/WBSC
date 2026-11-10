@@ -561,10 +561,10 @@ var QUIZ_BANK = {
         "why": "On every hit the umpire moves out from behind the plate into the infield for the best view of the play that develops."
       },
       {
-        "q": "What does the One-Umpire System manual say about making a call?",
+        "q": "What does the One-Umpire System manual say about making a call other than calling balls and strikes?",
         "options": [
           "Wait for the coach to ask",
-          "You should never make a call without moving out from behind the plate",
+          "You should never make a call without moving out from behind the plate unless at home",
           "Make calls from behind the plate to stay out of the way",
           "Make the call before the ball arrives"
         ],
@@ -1877,92 +1877,64 @@ var QUIZ_BANK = {
     "nextHref": "presentations.html#pres-5c",
     "questions": [
       {
-        "q": "At the pre-game plate meeting in the Four-Umpire System, where do U2, U1 and U3 line up, and why?",
+        "q": "Which plate-meeting arrangement follows the Four-Umpire System?",
         "options": [
-          "Behind the catcher, to see the batter's boxes",
-          "Beside the dugouts, to speak to the managers",
-          "In front of the batter's boxes, so they can peel off to their starting positions",
-          "On their starting positions, so no one has to move"
+          "PU behind the boxes, with the Base Umpires arranged U1, U2, U3 from the first-base line toward third.",
+          "PU behind the boxes, with the Base Umpires behind PU in the order they will rotate around the bases.",
+          "PU behind the boxes at the point of the plate, with U2, U1 and U3 in front of the boxes from the first-base side toward third.",
+          "PU in front of the boxes facing the catcher, with all Base Umpires on the third-base side."
         ],
         "correct": 2,
-        "ref": "Appendix 5c, Pre-Game Plate Meeting and Between Innings Positions."
+        "ref": "Appendix 5c, PDF page 40.",
+        "why": "The stated U2, U1, U3 arrangement in front of the boxes allows the crew to peel off to their assigned starting positions. PU remains behind the boxes at the point of the plate."
       },
       {
-        "q": "Between innings in the Four-Umpire System, where does U1 stand?",
+        "q": "With a runner at first, which U1 start follows the four-umpire guidance?",
         "options": [
-          "One third of the way from HP to 1B",
-          "Two thirds of the way from HP to 1B",
-          "Halfway from HP to 1B",
-          "Behind 1B"
-        ],
-        "correct": 0,
-        "ref": "Appendix 5c, Pre-Game Plate Meeting and Between Innings Positions."
-      },
-      {
-        "q": "In the Four-Umpire System, where does U1 start with a runner at 1B?",
-        "options": [
-          "About 5.5 m (18 ft) behind 1B",
-          "About 3.5 m (12 ft) behind 1B in foul territory",
-          "About 4.5 m (15 ft) behind 1B in fair territory",
-          "On the 1B line, level with the base"
+          "About 5.5 meters behind first, using the no-runner depth for every runner configuration.",
+          "About 3.5 meters behind first in foul territory, maintaining a view of the pitcher, runner, batter and home.",
+          "About 4.5 meters behind first in fair territory, aligned with the second baseman.",
+          "About 3.5 meters back at 2BDA, allowing U2 to take the first-base playback."
         ],
         "correct": 1,
-        "ref": "Appendix 5c, Starting position: U1."
+        "ref": "Appendix 5c, PDF page 40; presentation slides 3, 4.",
+        "why": "The runner-at-first reference is approximately 3.5 meters behind the base in foul territory. Keep the home-plate view clear and remain ready to adjust for the runner's return or a developing tag."
       },
       {
-        "q": "In the Four-Umpire System, U2 goes out on a fly ball. Who takes the tag up at 3B?",
+        "q": "U2 goes out on a fly ball. Which crew allocation includes the correct third-base tag-up responsibility?",
         "options": [
-          "U1",
-          "U3",
-          "U2",
-          "PU"
+          "U1 watches first and third while PU watches the catch only.",
+          "U3 keeps third while U1 watches first and second.",
+          "U2 watches third from the outfield while U3 moves inside.",
+          "PU watches third, U3 watches second and U1 watches first."
         ],
         "correct": 3,
-        "ref": "Appendix 5c, Tag-ups - When U2 goes out on a fly ball."
+        "ref": "Appendix 5c, PDF page 41; presentation slide 9.",
+        "why": "U3 rotates to second, including its tag-up. PU has the third-base tag-up while U1 retains first. The movement and tag-up responsibilities must be coordinated."
       },
       {
-        "q": "On a fly ball that could be taken by either a base umpire or U2, who is given the first option to go out in the Four-Umpire System?",
+        "q": "A fly ball could be taken by U2 or the appropriate corner umpire. Which approach follows the four-umpire coverage priority?",
         "options": [
-          "PU",
-          "U1 or U3, offered by U2",
-          "U2 always has the first option",
-          "The umpire nearest the ball"
+          "U2 commits first because the central starting position gives U2 priority over either corner.",
+          "U2 reads the ball and allows U1 or U3 the first option within their coverage, then communicates and goes if the corner umpire does not take it.",
+          "PU selects the going-out umpire after the ball reaches the outfielder.",
+          "Both umpires go out initially and the one farther from the ball returns to the bases."
         ],
         "correct": 1,
-        "ref": "Appendix 5c, Outfield Fly-Ball Coverage Area."
+        "ref": "Appendix 5c, PDF page 43; presentation slide 7.",
+        "why": "Corner priority combines useful line and pole angles with efficient base coverage. Reading the ball and partners before committing helps avoid overlapping coverage and unnecessary rotation."
       },
       {
-        "q": "In the Four-Umpire System with no runners on or a runner on 1B, what does PU do on a live ball play from the infield?",
+        "q": "With no runners or only a runner on first, which PU movement follows an infield hit in the four-umpire system?",
         "options": [
-          "Stays at home plate",
-          "Moves to 3B to cover the play",
-          "Trails the BR approximately one third of the way to 1B, watching for interference and the fair/foul call",
-          "Rotates inside to cover 2B"
+          "Rotate immediately to third as soon as the batter-runner leaves the box.",
+          "Stay fixed at POP and transfer all first-base-area interference observations to U1.",
+          "Trail about one-third toward first for the required observations and fair/foul decision, then return home when the batter-runner reaches first.",
+          "Trail the batter-runner through first and second before releasing home coverage to U3."
         ],
         "correct": 2,
-        "ref": "Appendix 5c, Live Ball Play from Infield."
-      },
-      {
-        "q": "In the Five and Six-Umpire Systems, what are ULF and URF responsible for?",
-        "options": [
-          "Only fair/foul calls on the lines",
-          "Plays at 1B and 3B",
-          "Tag ups on all bases",
-          "All calls beyond the base umpire and behind the infielders (fair/foul, catch/no catch and the status of a ball leaving the field), whatever the runners"
-        ],
-        "correct": 3,
-        "ref": "Appendix 5d, Fly-ball Coverage."
-      },
-      {
-        "q": "In the Five and Six-Umpire Systems, if LF or RF is fielding in close, where should the outfield umpire be?",
-        "options": [
-          "In front of the outfielder, to accurately judge trapped balls",
-          "Behind the outfielder",
-          "On the foul pole",
-          "At the base umpire's starting position"
-        ],
-        "correct": 0,
-        "ref": "Appendix 5d, Starting Positions - Base and Outfield Umpires."
+        "ref": "Appendix 5c, PDF page 42.",
+        "why": "The infield-play instruction is to trail for possible interference, tag or assistance, while retaining fair/foul responsibility, then return home as the batter-runner reaches first. Other runner configurations use POP."
       }
     ]
   },
@@ -2220,226 +2192,265 @@ var QUIZ_BANK = {
     "watchFirst": "presentations.html#pres-5c",
     "questions": [
       {
-        "q": "In the Four-Umpire System (Appendix 5c), where does U2 stand between innings?",
+        "q": "Which U2 between-inning position is specified for the four-umpire system?",
         "options": [
-          "One third of the way from HP to 1B",
-          "Behind 2B",
-          "Next to PU",
-          "Two thirds of the way from HP to 1B"
+          "One-third of the way from home to first, off the line.",
+          "Two-thirds of the way from home to third, off the line.",
+          "One-third of the way from home to third, off the line.",
+          "Two-thirds of the way from home to first, off the line."
         ],
-        "ref": "Appendix 5c & d, Pre-Game Plate Meeting and Between Innings Positions.",
-        "why": "Between innings PU stands one third of the way from HP to 3B, U1 one third of the way from HP to 1B, U2 two thirds of the way from HP to 1B and U3 two thirds of the way from HP to 3B."
+        "ref": "Appendix 5c, PDF page 40.",
+        "why": "U2 uses the first-base side about two-thirds of the way from home to first. U1 is one-third up the same side; PU and U3 use the corresponding thirds on the third-base side."
       },
       {
-        "q": "In the Four-Umpire System, approximately how far behind 2B does U2 start when there is a runner on any base?",
+        "q": "With a runner on any base, which U2 starting approach follows the four-umpire guidance?",
         "options": [
-          "About 3.5 m (12 ft)",
-          "About 4.5 m (15 ft)",
-          "About 5.5 m (18 ft)",
-          "About 2 m (6 ft)"
+          "Use approximately 3.5 meters behind second as the reference, adjusting within the approved area for the whole-pitch view and timely access to the required play.",
+          "Keep the no-runner reference of approximately 4.5 meters for every pitch, using the extra depth to see over fielders even when it delays the required inside rotation.",
+          "Use approximately 5.5 meters behind second to match both corner umpires' no-runner depth and preserve the same movement arc.",
+          "Use the third-base-side alternate automatically whenever a runner is on any base, even if the pitcher screens home."
         ],
-        "ref": "Appendix 5c & d, Starting Positions - U2.",
-        "why": "Without a runner the Second Base Diagonal Angle starting position is about 4.5 m (15 ft) back; with a runner on any base it is about 3.5 m (12 ft)."
+        "ref": "Appendix 5c, PDF page 40; presentation slides 3, 5, 6.",
+        "why": "The guide reduces U2's reference depth from about 4.5 meters with no runners to about 3.5 meters with a runner. These are approximate starts, selected to preserve sightlines and the ability to move inside or adjust to a play. The alternate is conditional, not automatic."
       },
       {
-        "q": "In the Four-Umpire System, who goes out on a fly ball to centre field?",
+        "q": "A fly ball goes directly into the normal central-field sector. Neither corner umpire has taken it, and it is not carrying toward a corner's line sector. Who takes the outfield call?",
         "options": [
-          "U1",
-          "PU",
-          "U2",
-          "U3"
+          "U1, because corner priority gives U1 every fly ball regardless of its final coverage sector.",
+          "PU, because a central-field call should be kept with the umpire behind home.",
+          "U2, after reading the flight and partners and clearly communicating the decision to go out.",
+          "U3, because U2 must remain at second whenever runners are on base."
         ],
-        "ref": "Appendix 5c & d, Outfield Fly-Ball Coverage Area.",
-        "why": "U1 goes out for fly balls to right field and F8 running to right; U3 for left field and F8 running to left. U1 or U3 should be given the first option by U2."
+        "ref": "Appendix 5c, PDF page 43; presentation slide 7.",
+        "why": "U2 has the central sector. U1 and U3 have first option on appropriate overlapping balls, but that does not transfer every central ball to a corner. Read the actual flight and partners and then be decisive."
       },
       {
-        "q": "In the Four-Umpire System, U1 goes out on a fly ball. Who takes the tag up at 1B?",
+        "q": "U1 goes out on a fly ball with a runner at first. Which tag-up assignment and reasoning follow the four-umpire system?",
         "options": [
-          "U2",
-          "PU",
-          "U3",
-          "Nobody"
+          "U2 takes the first-base tag-up because U2 will cover first and second after coming inside, combining both tag-up observations with the subsequent calls at those bases.",
+          "PU takes the first-base tag-up, retaining the required view of the runner and first touch while U2 rotates inside for base coverage.",
+          "U3 takes the first-base tag-up from third because the corner-to-corner angle replaces PU's observation.",
+          "U1 takes the first-base tag-up while continuing into the outfield, leaving PU responsible only for home."
         ],
-        "ref": "Appendix 5c & d, Tag-ups - When U1 goes out on a fly ball.",
-        "why": "PU takes the tag up at 1B because PU has the Four Essential Elements in front of them at all times. U2 takes 2B and U3 takes 3B."
+        "ref": "Appendix 5c, PDF page 41; presentation slide 8.",
+        "why": "PU has the first-base tag-up when U1 goes out. U2 takes second and U3 takes third. A future base-call responsibility does not automatically assign an earlier tag-up when the rotation limits the umpire's view."
       },
       {
-        "q": "In the Four-Umpire System, U2 goes out on a fly ball. Who takes the tag up at 2B?",
+        "q": "With runners on base, U2 goes out. Which remaining-crew tag-up allocation follows Appendix 5c?",
         "options": [
-          "U1",
-          "PU",
-          "U3",
-          "U2, from the outfield"
+          "U1 watches first and second while U3 retains third and PU stays solely at home.",
+          "PU watches first and second while U1 moves home and U3 retains third.",
+          "U1 watches first, U3 rotates to second and watches its tag-up, and PU watches third.",
+          "U3 watches first, U1 watches second and PU watches third, regardless of the initial rotation."
         ],
-        "ref": "Appendix 5c & d, Tag-ups - When U2 goes out on a fly ball.",
-        "why": "U1 keeps 1B, U3 takes 2B including the tag up, and PU takes the tag up at 3B."
+        "ref": "Appendix 5c, PDF page 41; presentation slide 9.",
+        "why": "When U2 goes out, U3 takes second including the tag-up there. U1 retains first and PU takes third. The umpire going out does not continue to judge the infield tag-ups from the outfield."
       },
       {
-        "q": "Which statement about U1 in the Four-Umpire System is correct, according to the Rotation Memory Map?",
+        "q": "Which statement accurately describes U1's normal route and the response to a backfill in the four-umpire system?",
         "options": [
-          "U1 always button hooks inside",
-          "U1 uses 1B foul territory or goes out, and never needs to button hook",
-          "U1 stays at 1B for the whole play",
-          "U1 covers 3B on every fly ball"
+          "Button-hook inside on every outfield ball before deciding whether to retain first or rotate home, keeping responsibility for first and second even when U2 has already moved inside to cover those bases.",
+          "Normally use first-base foul territory or go out, communicate when rotating home and pushing PU toward third; if PU retains home for a quick play, adjust to support the required first/second coverage without interfering.",
+          "Stay at first until all runners stop, because U2's presence removes the need for a home rotation.",
+          "Rotate immediately home whenever U2 or U3 starts out, transferring any first-base touch to PU without communication."
         ],
-        "ref": "Appendix 5c & d, Four-Umpire System Rotation Memory Map - U1.",
-        "why": "U1 also communicates with PU when coming to HP and pushes PU up to 3B, and clears away from HP when PU indicates a back-fill situation."
+        "ref": "Appendix 5c, PDF pages 46, 47; presentation slides 9, 10.",
+        "why": "The memory map says U1 does not need a button hook for the normal four-umpire route. That is not an absolute ban on adjusting or working inside during an exceptional backfill. Read PU, communicate and protect the next required coverage without crowding the home play."
       },
       {
-        "q": "Four-Umpire System. A ground ball is hit to left field and no base umpire goes out. What should U2 do?",
+        "q": "With no runners and no umpire going out, a ground ball reaches left field. Which U2 approach follows the stated left-field case?",
         "options": [
-          "Stay out for an acute angle on the throw from left field for any call at 2B",
-          "Button hook inside immediately for any call at 2B",
-          "Move to the POP area to assist PU",
-          "Rotate to 3B"
+          "Stay outside for the useful angle on the return throw from left, adjusting for a possible play at second while keeping all four of the elements in view.",
+          "Button-hook immediately to the same inside position used for every right-field return, keeping the second-base-side angle unchanged even when the left-field throw produces a less open view.",
+          "Rotate to third so U3 can take the return throw at second and PU can cover home and first.",
+          "Move toward first to take its playback and require U1 to take every subsequent second-base call."
         ],
-        "ref": "Appendix 5c & d, Ground Ball to Outfield - U2, Hit to LF.",
-        "why": "On a hit to RF or CF U2 button hooks inside for any call at 2B; on a hit to LF the acute angle on the throw is better from outside."
+        "ref": "Appendix 5c, PDF pages 42, 47.",
+        "why": "The detailed ground-ball section specifies staying outside for the left-field return angle. Stating no runners also matches the memory-map example. This does not override the inside rotation required when a Base Umpire goes out."
       },
       {
-        "q": "In the Five and Six-Umpire Systems (Appendix 5d), where do ULF and URF take their preliminary starting position?",
+        "q": "U1 goes out toward right with runners on second and third. Which remaining-crew coverage best follows Appendix 5c?",
         "options": [
-          "Behind the outfield fence",
-          "On the foul line level with 2B",
-          "Next to PU behind home plate",
-          "In front of the outfielder, halfway between the outfielder and the base umpire, up to one metre off the line in fair territory"
+          "U2 keeps second only, U3 takes first and third by following the batter-runner around the bases, and PU moves toward first to assist while leaving the early home play to U3.",
+          "U3 rotates to second, U2 follows the lead runner to home, and PU takes first and third.",
+          "U2 rotates to third, U3 covers home, and PU takes first and second until the fly ball ends.",
+          "U2 button-hooks inside for first and second, U3 moves to the 3BLE in foul territory and then maintains third-base coverage and adjusts for the play, and PU remains available for the home play from the POP area."
         ],
-        "ref": "Appendix 5d, Starting Positions - Base and Outfield Umpires.",
-        "why": "If LF or RF is fielding in close, the outfield umpire should always be in front of the outfielder to accurately judge trapped balls."
+        "ref": "Appendix 5c, PDF page 44; presentation slides 7, 8.",
+        "why": "When U1 goes out, U2 covers first and second and U3 retains third. With the scoring threat from second/third, PU prioritizes home and POP rather than initiating the U2/U3-going-out rotation. This is one reason U1 going out supports efficient coverage."
       },
       {
-        "q": "How is fair/foul responsibility divided in the Five and Six-Umpire Systems, per Appendix 5d?",
+        "q": "U2 goes out. Which comparison correctly distinguishes U1's home-rotation timing with no original runners from the runners-on case?",
         "options": [
-          "PU takes all fair/foul balls up to the starting position of U1 or U3, and ULF and URF take all other calls",
-          "ULF and URF take all fair/foul calls",
-          "The nearest base umpire takes every call",
-          "PU takes none"
+          "With no runners, protect the possible first-base play and start to rotate as the lead runner or batter-runner passes second toward third; with runners on, observe the touch at first and prioritize the earlier home rotation as the lead-runner threat develops.",
+          "In both cases, wait until the batter-runner passes second before rotating home, retaining first-base responsibility for possible return throws while PU divides third and home; the lead runner does not change that release trigger.",
+          "In both cases, rotate home at contact before checking a possible first-base play or the batter-runner's touch.",
+          "In both cases, remain at first until the defense throws to third, then react toward home after PU makes the third-base call."
         ],
-        "ref": "Appendix 5d, Fair/Foul Responsibility.",
-        "why": "When tracking a ball near the foul pole, the outfield umpire stays well back on the foul line to have the right depth to judge the flight over the pole or fence."
+        "ref": "Appendix 5c, PDF pages 45, 46; presentation slide 9.",
+        "why": "The detailed PDF distinguishes the no-runner trigger from runners-on timing. The presentation emphasizes not waiting unnecessarily at first when the lead runner can threaten home; use the shoulder check, communicate, and trust the inside umpire's subsequent first-base coverage."
       },
       {
-        "q": "On a fly ball to the outfield in the Five and Six-Umpire Systems, how do the outfield umpires decide who takes the call?",
+        "q": "U2 has gone out. PU reads a quick play at home before U1 can arrive and communicates that PU is returning home. What coordinated response is required?",
         "options": [
-          "The umpire further from the ball always takes it",
-          "PU decides from the plate",
-          "The call is made by the base umpire",
-          "Both run into fair territory parallel to the flight of the ball until they have an angle, then the one taking the call indicates with a hand on the chest and/or verbalises"
+          "U3 stays at second until PU completes the home call and can return to third, while U1 retains the home rotation because the original assignment remains in force until the play ends.",
+          "U1 continues to POP and shares the home call with PU while U3 waits for the next throw.",
+          "The outfield umpire immediately abandons the fly-ball judgment and takes third without informing the crew.",
+          "U3 backfills third for a subsequent play, while U1 adjusts to support first/second coverage and avoids interfering with the home play; the crew communicates the changed responsibilities."
         ],
-        "ref": "Appendix 5d, Fly-ball Coverage.",
-        "why": "ULF and URF are responsible for all calls beyond the base umpire and behind the infielders: fair/foul, catch/no catch and the status of a ball leaving the field of play."
+        "ref": "Appendix 5c, PDF pages 45, 46, 47; presentation slide 10.",
+        "why": "The first home play remains the priority. PU's decision triggers the backfill: the remaining U3 fills third, with U1 adjusting as needed for first/second. Do not force a completed home rotation when PU has already taken the call."
       },
       {
-        "q": "In the Four-Umpire System, where does U3 start with a runner on 2B?",
+        "q": "Compare U1 with a runner on first and U3 with a runner on third. Which starting-position approach preserves the view of home and access to the developing tag?",
         "options": [
-          "About 3.5 m (12 ft) behind 3B, in foul territory",
-          "About 4.5 m (15 ft) behind 3B, just off the line in foul territory",
-          "About 3.5 m (12 ft) back at the Second Base Diagonal Angle",
-          "About 5.5 m (18 ft) behind 3B, just off the line in foul territory"
+          "Both start about 3.5 meters behind their base and 2-3 meters into foul territory, using the same lateral offset because both may face a return throw and tag.",
+          "Both start about 3.5 meters behind their base; U1 stays just off the fair/foul line, while U3 may need more foul-territory offset because the runner leads off in front of U3 rather than away as at first.",
+          "Both start about 3.5 meters behind their base; U1 takes the greater foul-territory offset to look across the returning runner, while U3 stays close to the line to preserve access to the leading edge.",
+          "Both start about 3.5 meters behind their base and use the same lateral offset selected before the pitch, keeping that reference through a return throw so the original observation angle remains consistent."
         ],
-        "ref": "Appendix 5c & d, Starting Positions - U3.",
-        "why": "With no runners on, U3 starts about 5.5 m (18 ft) behind 3B; with a runner at 3B it is about 3.5 m (12 ft) in foul territory."
+        "ref": "Appendix 5c, PDF pages 40, 41; presentation slides 3, 4, 11, 15.",
+        "why": "The corners are not mirror-image starts. At first, the runner leads away from U1, so U1 starts just off the line in foul territory with an unobstructed view of home. Starting 2-3 meters off the line unnecessarily lengthens the route inside if the tag requires it. At third, the runner can lead in front of U3, so U3 may need a greater foul-territory offset to retain the view of the pitcher, runner, batter and plate. Both read the actual tag and adjust; neither offset is a fixed calling position. The former runner-on-second U3 reference remains approximately 4.5 meters behind third, just off the line."
       },
       {
-        "q": "U3 goes out on a fly ball in the Four-Umpire System. Who takes the tag up at 2B?",
+        "q": "U3 goes out on a fly ball with runners on base. Which tag-up allocation follows Appendix 5c?",
         "options": [
-          "U1",
-          "PU",
-          "U2",
-          "U3, from the outfield"
+          "U1 watches first and second, U2 watches third, and PU takes no tag-up observation.",
+          "PU watches first and second while U1 retains first-base calls and U2 moves toward home.",
+          "U1 watches first, U2 watches second and PU watches third, with assistance sought if rotation blocks a required observation.",
+          "U2 watches first, PU watches second and U1 watches third, exchanging observations before any appeal while retaining those assignments regardless of the initial inside rotation."
         ],
-        "ref": "Appendix 5c & d, Tag-ups - When U3 goes out on a fly ball.",
-        "why": "When U3 goes out, U1 takes the tag up at 1B and U2 takes the tag up at 2B. Each umpire has the tag up at their base after any initial rotation."
+        "ref": "Appendix 5c, PDF page 41; presentation slides 9, 14.",
+        "why": "The remaining crew covers the tag-ups at first, second and third through U1, U2 and PU respectively. Rotating inside does not permit guessing a first-touch or base-contact relationship that was not actually seen."
       },
       {
-        "q": "U1 goes out on a hard, flat hit caught in right field. U2 may not get inside in time to see the catch and the runner tagging up at 2B. What may U2 do?",
+        "q": "R on 2B, U1 goes out on a hard, line drive caught in rightfield. U2 cannot get inside in time to see both first touch and the runner's tag-up at second. What should U2 do?",
         "options": [
-          "Go out to the outfield as well",
-          "Ignore the tag up",
-          "Seek help from U3 on the tag up at 2B",
-          "Ask PU to take the tag up at 2B"
+          "Infer the tag-up from the runner's position after the catch and rule without seeking another view.",
+          "Use the sound of the catch while watching the runner and treat that sound alone as proof of the exact first-touch timing.",
+          "Seek U3's observation of the second-base tag-up and communicate the information and action needed before deciding any appeal.",
+          "Keep sole control of the observation even if U3 has a complete view, because assigned coverage prevents crew assistance."
         ],
-        "ref": "Appendix 5c & d, Tag-ups.",
-        "why": "When umpires rotate inside using the Inside/Outside Theory they may not see both the first touch of the ball and the runner's lead, so they rotate quickly, glance over the shoulder and seek assistance."
+        "ref": "Appendix 5c, PDF page 41.",
+        "why": "The guide expressly allows U2 to seek U3's help in this hard-flat-catch case. Rotate promptly and use a shoulder glance when possible, but if the timing relationship was missed, ask for the actual observation rather than reconstructing it from assumptions."
       },
       {
-        "q": "In the Four-Umpire System, who is responsible for the lead-off call for a runner?",
+        "q": "In a four umpire system, which allocation applies to a runner leaving the base on the pitch in the four-umpire system?",
         "options": [
-          "PU, for all runners",
-          "U2, for runners at 1B and 2B, and U1 for the rest",
-          "U1, for runners at every base",
-          "Each umpire, for a runner at their own base"
+          "PU judges every leadoff because PU has the direct view of the pitcher's delivery.",
+          "U1 judges first and second while U3 judges third, using the three-umpire allocation so U2 can focus entirely on the central-field sector.",
+          "U2 judges first and second while U1 and U3 concentrate on their fly-ball sectors.",
+          "Each Base Umpire judges the leadoff at their own base, distinct from any later fly-ball tag-up rotation."
         ],
-        "ref": "Appendix 5c & d, Leadoffs.",
-        "why": "In the Three-Umpire System U1 has the lead-offs at 1B and 2B; in the Four-Umpire System each umpire has the lead-off at their base."
+        "ref": "Appendix 5c, PDF page 41.",
+        "why": "Four-umpire leadoffs are assigned to the umpire at each base. Do not carry across the three-umpire first/second allocation or confuse a leadoff on the pitch with the separately assigned tag-up on a caught fly ball."
       },
       {
-        "q": "What angle should U2 and U3 aim for on force plays in the Four-Umpire System?",
+        "q": "U2 starts on the first-base side of 2BDA, closer to second. An infield throw creates a force play at second. Which movement applies the force-play guidance?",
         "options": [
-          "About 90 degrees to the throw and no more than 45 degrees off the leading edge",
-          "Directly over the base",
-          "Directly in line with the throw",
-          "Behind the fielder, at 180 degrees to the throw"
+          "Read the throw and move left toward the leading edge, seeking about 90 degrees to the throw and no more than 45 degrees off the leading edge, while keeping all four elements visible.",
+          "Move right toward 2BDA as the routine response to every play at second, using the steal-tag adjustment for the force play as well and treating the diagonal as the final calling reference.",
+          "Move closer to second along the starting alignment, using the shorter distance to judge possession and base contact while keeping the same lateral angle throughout the force play and any developing tag.",
+          "Move right toward the extension of the line from first through second to bring the base into the center of the view, then judge the force from that alignment before adjusting for a later tag."
         ],
-        "ref": "Appendix 5c & d, Live Ball Play from Infield.",
-        "why": "On tag plays they use Dynamic Movement to keep the Four Essential Elements in view on the leading edge or as the play dictates."
+        "ref": "Appendix 5c, PDF page 42; presentation slides 12, 13.",
+        "why": "Being closer does not correct a poor angle. From the standard first-base-side start, the presentation shows a move left toward the leading edge for a force play, aiming for about 90 degrees to the throw and no more than 45 degrees off the leading edge. Do not make a routine rightward movement merely because the start is closer to second. A rightward adjustment toward 2BDA may suit an actual steal tag; it is not the default force-play movement. Read the throw, fielder, runner and base contact, and adjust again if a tag develops or the view becomes obstructed."
       },
       {
-        "q": "In the Four-Umpire System with no runners on or a runner on 1B only, what does PU do on a hit to the outfield?",
+        "q": "A runner starts on second and U1 goes out to rightfield. PU has home coverage and is observing from POP, but the throw and tag have not yet developed. Which approach preserves the required home view?",
         "options": [
-          "Run out to the outfield with the ball",
-          "Track the hit and trail the batter-runner one third of the way to 1B, further if required",
-          "Rotate immediately to 3B",
-          "Stay at home plate in the stance"
+          "Move early toward the third-base-line extension to prepare for a swipe tag, then use that position for the first home play before considering whether the leading edge would provide a clearer view.",
+          "Use POP to track the ball, runner and fielder; read the timing of the throw and runner then the potential developing tag before adjusting, preserving access to the leading edge rather than committing early toward the third base line extension(3BLE).",
+          "Choose the leading edge as the final calling position before the throw develops, then hold that spot through the play because reaching the leading edge removes the need for further lateral adjustment.",
+          "Use POP until the throw starts, then follow the ball toward the third-base-line extension regardless of the runner and catcher, using the incoming throw as the sole reference for the final tag angle."
         ],
-        "ref": "Appendix 5c & d, Four-Umpire System Rotation Memory Map - PU.",
-        "why": "With a runner at 2B or 3B PU uses the holding position instead, and anticipates plays at the plate."
+        "ref": "Appendix 5c, PDF page 44; presentation slides 8, 16, 17.",
+        "why": "With U1 out, PU retains home while U2 covers first/second and U3 covers third. POP is an observation area, not a commitment to a predetermined tag angle. Track the runner for possible obstruction or interference and read the throw and fielder. Moving prematurely toward 3BLE can put the plate between the umpire and runner, obscure the tag or touch, and make a return to the leading edge difficult. Move left toward the leading edge or make another necessary adjustment as the actual play develops. A small rightward adjustment may reveal a swipe tag; it does not justify an early move all the way toward 3BLE."
       },
       {
-        "q": "According to the Four-Umpire Rotation Memory Map, in which situation can U2 stay out?",
+        "q": "U3 goes out. Before U1 reaches home, PU returns from the holding zone for the first play at the plate and communicates the backfill. Who takes the subsequent third-base coverage?",
         "options": [
-          "Whenever U3 goes out",
-          "When no runners are on and the hit is to left field",
-          "Whenever the hit is to the infield",
-          "When there is a runner on 3B and the hit is to right field"
+          "U1 must leave the first-base side and cross directly to third, while U2 retains only second.",
+          "U2 backfills third, while U1 adjusts to support first/second coverage without crowding PU's home play.",
+          "PU must finish the home call and then sprint to third, because U2 can never leave second.",
+          "U3 must return from the outfield for every third-base play, regardless of whether the crew can communicate a safe handoff."
         ],
-        "ref": "Appendix 5c & d, Four-Umpire System Rotation Memory Map - U2.",
-        "why": "U2 must rotate inside the diamond in all other situations where U1 or U3 goes out, and cover 1B when U1 goes out."
+        "ref": "Appendix 5c, PDF pages 46, 47; presentation slides 10, 14.",
+        "why": "When U3 is out, U2 is the remaining inside Base Umpire who can backfill third after PU takes home. U1 reads the changed coverage and avoids unnecessary movement into the play. Crew awareness and communication protect both the first and next play."
       },
       {
-        "q": "In the Five-Umpire System (Appendix 5d), what do PU and the two base umpires do?",
-        "options": [
-          "Go out to the outfield on every fly ball",
-          "Stay at their starting positions for the whole play",
-          "Leave all calls to the two outfield umpires",
-          "Stay in the infield and rotate as in the Three-Umpire System, while two outfield umpires on the fair/foul lines judge fly balls, trapped balls and home runs"
+        "q": "Which statements correctly describe U2's starting choices and movement from the third-base-side alternate?",
+        "statements": [
+          "The preferred standard start is on the first-base side between 2BDA and the third base line extension, with depth adjusted to the runners.",
+          "The third-base-side alternate is conditional, with a runner on first or runners on first and third; check batter handedness and the pitcher's landing/exit, keeping home unobstructed and the required first-base route available.",
+          "When adjustment is needed from the alternate, move toward 1B and 2BDA first rather than farther toward the first base line extension (1BLE), which can put the base between the umpire and the runner/tag and obscure base contact.",
+          "For a force play, continue toward the required leading-edge angle, crossing 2BDA if needed; if all elements are already clear, movement to the leading edge is not required merely for its own sake."
         ],
-        "ref": "Appendix 5d, Five Umpire System.",
-        "why": "This leaves the remaining umpires to take care of plays at the bases."
+        "options": [
+          "Statements 1 and 2 only.",
+          "Statements 2 and 3 only.",
+          "Statements 1, 3 and 4 only.",
+          "All four statements."
+        ],
+        "ref": "Appendix 5c, PDF pages 40, 42; presentation slides 5, 6, 12, 13.",
+        "why": "All four are correct. The standard first-base-side position remains preferred; the alternate is conditional. From the alternate, do not move farther toward 1BLE. That can put the base between the umpire and the runner/tag, increasing parallax and obscuring contact with the base. When an adjustment is required, move toward 2BDA first and continue toward the required leading-edge view as the play dictates. On a force play this may require crossing 2BDA to gain about 90 degrees to the throw and no more than 45 degrees off the leading edge. An existing clear view does not require movement for its own sake."
       },
       {
-        "q": "Between innings in the Five and Six-Umpire Systems, where do ULF and URF go?",
+        "q": "A free runner advances from second toward third and the fielder prepares a tag. Which U3 approach follows the guide and presentation?",
         "options": [
-          "To the pitcher's circle",
-          "Behind home plate beside PU",
-          "Down the line to where the U3 and U1 starting positions are",
-          "Behind the outfield fence"
+          "Commit to the third-base-line (3BLE) extension before the runner arrives, treating that as the final position for every swipe tag.",
+          "Move straight to the leading edge before reading the runner's slide or fielder's receiving position, then hold that angle through the tag because reaching the leading edge completes the required positioning.",
+          "Read the runner's path and fielder, use a foul-territory observation position when it gives the view, and adjust toward the leading edge or other required tag angle as the play develops.",
+          "Judge the tag from the original starting depth and use the timing of the ball entering the glove as the deciding event."
         ],
-        "ref": "Appendix 5d, Five Umpire System / Six-Umpire System.",
-        "why": "The other umpires use the same between-innings positions as the Three-Umpire or Four-Umpire System."
+        "ref": "Appendix 5c, PDF pages 41, 42; presentation slides 15, 17.",
+        "why": "The guide permits foul territory when it provides an unobstructed look into the tag. It is an observation choice, not a fixed destination. Retain access to the leading edge and adjust to the actual point of contact and base touch."
       },
       {
-        "q": "According to Appendix 5, why are the Five and Six-Umpire Systems useful?",
+        "q": "U2 has gone out, runners were already on base, and U1 releases first to rotate home while PU prepares third. Which coverage must U3 now maintain?",
         "options": [
-          "They let the base umpires stay in the infield, so all bases are covered at all times and each call can be made from an advantageous position",
-          "They make games shorter",
-          "They remove the need for PU to be at home plate",
-          "They remove the need for fair/foul calls"
+          "Inside coverage of second and the runner released at first, with readiness to backfill third if PU instead returns home for a quick play.",
+          "Second only, because U1 retains first-base responsibility even while working home; U3 should delay any first-base adjustment until U1 completes the home call and signals a transfer.",
+          "Third only, because first and second transfer to PU once U1 starts toward home.",
+          "Home alongside U1, leaving the next first/second play until U2 returns from the outfield."
         ],
-        "ref": "Appendix 5a, Key Concepts - Purpose of the Five and Six-Umpire Systems.",
-        "why": "Plays closer to home affect the overall game result, so having 3B and home plate covered matters; the systems suit finals and games of a high standard."
+        "ref": "Appendix 5c, PDF pages 46, 47; presentation slides 9, 10, 14.",
+        "why": "U3 rotates inside when U2 goes out and picks up the runner released by U1 at first as well as second-base coverage. Watch PU and U1: a quick home play taken by PU changes the required third-base coverage and triggers backfill."
+      },
+      {
+        "q": "In a six-umpire crew, a deep fly ball is followed by a potential play at a base. Which complete allocation follows Appendix 5d?",
+        "options": [
+          "The appropriate Base Umpire goes out, ULF/URF remain on the lines and the remaining infield crew carries out the full four-umpire rotation.",
+          "ULF/URF take the fly ball and PU plus two Base Umpires rotate using the three-umpire pattern, leaving the fourth infield umpire as a reserve.",
+          "ULF/URF take the outfield judgments, no Base Umpire goes out and the infield crew retains its assigned bases without inter-base rotation, while still adjusting position for the view of each play.",
+          "ULF/URF take the fly ball and all infield umpires hold their exact starting spots because no rotations also prohibits dynamic movement."
+        ],
+        "ref": "Appendix 5d, PDF pages 49, 50; presentation slides 19, 21, 22.",
+        "why": "The six-umpire system has PU plus three Base Umpires and two outfield umpires. The outfield pair handles the stated outfield judgments, and there are no base rotations. Each infield umpire still reads and adjusts for angle, separation and the tag at their assigned responsibility.",
+        "group": "5d"
+      },
+      {
+        "q": "In the six-umpire system, which statements correctly describe the outfield/infield division and ULF/URF technique?",
+        "statements": [
+          "No Base Umpire goes out, and there are no inter-base rotations; infield umpires still adjust their angles and working positions.",
+          "ULF/URF start in front of the outfielders, approximately midway between the Base Umpire and outfielder, up to about one meter inside fair territory near the line with home visible.",
+          "If an outfielder runs toward the foul pole, the nearest Base Umpire replaces the outfield umpire and starts the normal four-umpire rotation.",
+          "The outfield umpires establish their viewing angle and clearly claim the call; for fair/foul or a pole judgment, use the line and adequate depth, with PU taking fair/foul up to the corner Base Umpire's starting position."
+        ],
+        "options": [
+          "Statements 1 and 3 only.",
+          "Statements 1, 2 and 4 only.",
+          "Statements 2, 3 and 4 only.",
+          "All four statements."
+        ],
+        "ref": "Appendix 5d, PDF pages 49, 50; presentation slides 20, 21.",
+        "why": "Statements 1, 2 and 4 are correct. Dedicated outfield umpires keep Base Umpires on their assigned infield duties. The outfield start protects the batter view and trap angle; claim the call clearly and use the line and suitable depth for line/pole judgments. A going-out trigger for the Base Umpires is not part of this six-umpire allocation.",
+        "group": "5d"
       }
     ],
-    "draw": 10
+    "draw": 10,
+    "drawGroups": {
+      "5d": 1
+    }
   }
 };

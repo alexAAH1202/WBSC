@@ -176,126 +176,6 @@ m07-pca.title	Apéndice 5b: Sistema de tres árbitros
 m07-pca.nextLabel	Continúa con la presentación - Apéndice 5c y d: Sistemas de cuatro, cinco y seis árbitros
 m08-pca.title	Apéndice 5c y d: Sistemas de cuatro, cinco y seis árbitros
 m08-pca.nextLabel	Has completado los ocho módulos obligatorios - consulta tu registro completo de evaluaciones
-m08-pca.0.q	En el Sistema de Cuatro Árbitros (Apéndice 5c), ¿dónde se coloca U2 entre entradas?
-m08-pca.0.o0	A un tercio del camino de HP a 1B
-m08-pca.0.o1	Detrás de 2B
-m08-pca.0.o2	Junto a PU
-m08-pca.0.o3	A dos tercios del camino de HP a 1B
-m08-pca.0.why	Entre entradas, PU se coloca a un tercio del camino de HP a 3B, U1 a un tercio del camino de HP a 1B, U2 a dos tercios del camino de HP a 1B y U3 a dos tercios del camino de HP a 3B.
-m08-pca.1.q	En el Sistema de Cuatro Árbitros, ¿a qué distancia aproximada detrás de 2B empieza U2 cuando hay un corredor en cualquier base?
-m08-pca.1.o0	A unos 3,5 m (12 pies)
-m08-pca.1.o1	A unos 4,5 m (15 pies)
-m08-pca.1.o2	A unos 5,5 m (18 pies)
-m08-pca.1.o3	A unos 2 m (6 pies)
-m08-pca.1.why	Sin corredor, la posición inicial del Ángulo Diagonal de Segunda Base está a unos 4,5 m (15 pies) atrás; con un corredor en cualquier base, a unos 3,5 m (12 pies).
-m08-pca.2.q	En el Sistema de Cuatro Árbitros, ¿quién sale a un fly al jardín central?
-m08-pca.2.o0	U1
-m08-pca.2.o1	PU
-m08-pca.2.o2	U2
-m08-pca.2.o3	U3
-m08-pca.2.why	U1 sale a los fly al jardín derecho y a F8 que corre hacia la derecha; U3, al jardín izquierdo y a F8 que corre hacia la izquierda. U2 debe dar a U1 o a U3 la primera opción.
-m08-pca.3.q	En el Sistema de Cuatro Árbitros, U1 sale a un fly. ¿Quién se encarga del tag-up en 1B?
-m08-pca.3.o0	U2
-m08-pca.3.o1	PU
-m08-pca.3.o2	U3
-m08-pca.3.o3	Nadie
-m08-pca.3.why	PU se encarga del tag-up en 1B porque PU tiene los Cuatro Elementos Esenciales frente a él en todo momento. U2 se encarga de 2B y U3 de 3B.
-m08-pca.4.q	En el Sistema de Cuatro Árbitros, U2 sale a un fly. ¿Quién se encarga del tag-up en 2B?
-m08-pca.4.o0	U1
-m08-pca.4.o1	PU
-m08-pca.4.o2	U3
-m08-pca.4.o3	U2, desde el outfield
-m08-pca.4.why	U1 conserva 1B, U3 se encarga de 2B, incluido el tag-up, y PU se encarga del tag-up en 3B.
-m08-pca.5.q	¿Qué afirmación sobre U1 en el Sistema de Cuatro Árbitros es correcta, según el Mapa Mnemotécnico de Rotaciones?
-m08-pca.5.o0	U1 siempre hace un button hook hacia el interior
-m08-pca.5.o1	U1 usa el territorio de foul de 1B o sale, y nunca necesita hacer un button hook
-m08-pca.5.o2	U1 se queda en 1B durante toda la jugada
-m08-pca.5.o3	U1 cubre 3B en cada fly
-m08-pca.5.why	U1 también se comunica con PU cuando llega a HP y empuja a PU hacia 3B, y se aparta de HP cuando PU indica una situación de backfill.
-m08-pca.6.q	Sistema de Cuatro Árbitros. Se batea un rodado al jardín izquierdo y ningún árbitro de base sale. ¿Qué debe hacer U2?
-m08-pca.6.o0	Quedarse fuera para tener un ángulo agudo sobre el tiro desde el jardín izquierdo para cualquier decisión en 2B
-m08-pca.6.o1	Hacer de inmediato un button hook hacia el interior para cualquier decisión en 2B
-m08-pca.6.o2	Moverse a la zona POP para ayudar a PU
-m08-pca.6.o3	Rotar a 3B
-m08-pca.6.why	En un batazo a RF o CF, U2 hace un button hook hacia el interior para cualquier decisión en 2B; en un batazo a LF, el ángulo agudo sobre el tiro es mejor desde fuera.
-m08-pca.7.q	En los Sistemas de Cinco y Seis Árbitros (Apéndice 5d), ¿dónde toman ULF y URF su posición inicial preliminar?
-m08-pca.7.o0	Detrás de la cerca del outfield
-m08-pca.7.o1	En la línea de foul a la altura de 2B
-m08-pca.7.o2	Junto a PU, detrás de home
-m08-pca.7.o3	Delante del jardinero, a mitad de camino entre el jardinero y el árbitro de base, hasta un metro fuera de la línea en territorio fair
-m08-pca.7.why	Si LF o RF juega cerca, el árbitro de outfield debe estar siempre delante del jardinero para juzgar con precisión las bolas atrapadas a ras de suelo.
-m08-pca.8.q	¿Cómo se reparte la responsabilidad de fair/foul en los Sistemas de Cinco y Seis Árbitros, según el Apéndice 5d?
-m08-pca.8.o0	PU toma todas las bolas fair/foul hasta la posición inicial de U1 o U3, y ULF y URF toman todas las demás decisiones
-m08-pca.8.o1	ULF y URF toman todas las decisiones de fair/foul
-m08-pca.8.o2	El árbitro de base más cercano toma todas las decisiones
-m08-pca.8.o3	PU no toma ninguna
-m08-pca.8.why	Al seguir una pelota cerca del poste de foul, el árbitro de outfield se mantiene bien atrás sobre la línea de foul para tener la profundidad adecuada y juzgar la trayectoria sobre el poste o la cerca.
-m08-pca.9.q	En un fly al outfield en los Sistemas de Cinco y Seis Árbitros, ¿cómo deciden los árbitros de outfield quién toma la decisión?
-m08-pca.9.o0	Siempre la toma el árbitro más lejano a la pelota
-m08-pca.9.o1	PU decide desde el plato
-m08-pca.9.o2	La decisión la toma el árbitro de base
-m08-pca.9.o3	Ambos corren hacia territorio fair en paralelo a la trayectoria de la pelota hasta tener un ángulo, y quien toma la decisión lo indica con una mano en el pecho o verbalmente
-m08-pca.9.why	ULF y URF son responsables de todas las decisiones más allá del árbitro de base y detrás de los jugadores de cuadro: fair/foul, atrapada o no, y el estado de una pelota que sale del campo de juego.
-m08-pca.10.q	En el Sistema de Cuatro Árbitros, ¿dónde empieza U3 con un corredor en 2B?
-m08-pca.10.o0	A unos 3,5 m (12 pies) detrás de 3B, en territorio de foul
-m08-pca.10.o1	A unos 4,5 m (15 pies) detrás de 3B, justo al lado de la línea en territorio de foul
-m08-pca.10.o2	A unos 3,5 m (12 pies) atrás, en el Ángulo Diagonal de Segunda Base
-m08-pca.10.o3	A unos 5,5 m (18 pies) detrás de 3B, justo al lado de la línea en territorio de foul
-m08-pca.10.why	Sin corredores, U3 empieza a unos 5,5 m (18 pies) detrás de 3B; con un corredor en 3B está a unos 3,5 m (12 pies) en territorio de foul.
-m08-pca.11.q	U3 sale a un fly en el Sistema de Cuatro Árbitros. ¿Quién se encarga del tag-up en 2B?
-m08-pca.11.o0	U1
-m08-pca.11.o1	PU
-m08-pca.11.o2	U2
-m08-pca.11.o3	U3, desde el jardín
-m08-pca.11.why	Cuando U3 sale, U1 se encarga del tag-up en 1B y U2 del tag-up en 2B. Cada árbitro tiene el tag-up de su base después de la rotación inicial.
-m08-pca.12.q	U1 sale a un batazo fuerte y plano que es atrapado en el jardín derecho. Puede que U2 no llegue al interior a tiempo para ver la atrapada y el tag-up del corredor en 2B. ¿Qué puede hacer U2?
-m08-pca.12.o0	Salir también al jardín
-m08-pca.12.o1	Ignorar el tag-up
-m08-pca.12.o2	Pedir ayuda a U3 con el tag-up en 2B
-m08-pca.12.o3	Pedir a PU que se encargue del tag-up en 2B
-m08-pca.12.why	Cuando los árbitros rotan hacia el interior con la Teoría Interior/Exterior, puede que no vean a la vez el primer contacto con la pelota y el despegue del corredor, así que rotan rápido, miran por encima del hombro y piden ayuda.
-m08-pca.13.q	En el Sistema de Cuatro Árbitros, ¿quién es responsable de decidir si un corredor sale antes de tiempo?
-m08-pca.13.o0	PU, para todos los corredores
-m08-pca.13.o1	U2, para los corredores en 1B y 2B, y U1 para los demás
-m08-pca.13.o2	U1, para los corredores de todas las bases
-m08-pca.13.o3	Cada árbitro, para el corredor de su propia base
-m08-pca.13.why	En el Sistema de Tres Árbitros U1 tiene las salidas anticipadas en 1B y 2B; en el Sistema de Cuatro Árbitros cada árbitro tiene la de su base.
-m08-pca.14.q	¿Qué ángulo deben buscar U2 y U3 en las jugadas forzadas en el Sistema de Cuatro Árbitros?
-m08-pca.14.o0	Unos 90 grados respecto al tiro y no más de 45 grados respecto al borde de entrada
-m08-pca.14.o1	Directamente sobre la base
-m08-pca.14.o2	Justo en línea con el tiro
-m08-pca.14.o3	Detrás del fildeador, a 180 grados del tiro
-m08-pca.14.why	En las jugadas de tag usan el movimiento dinámico para mantener a la vista los Cuatro Elementos Esenciales en el borde de entrada o donde lo exija la jugada.
-m08-pca.15.q	En el Sistema de Cuatro Árbitros sin corredores o con un corredor solo en 1B, ¿qué hace PU en un batazo al jardín?
-m08-pca.15.o0	Correr al jardín con la pelota
-m08-pca.15.o1	Seguir el batazo y acompañar al bateador-corredor un tercio del camino hacia 1B, más lejos si hace falta
-m08-pca.15.o2	Rotar de inmediato a 3B
-m08-pca.15.o3	Quedarse en home en su posición
-m08-pca.15.why	Con un corredor en 2B o 3B, PU usa en cambio la posición de espera y anticipa las jugadas en el plato.
-m08-pca.16.q	Según el Mapa Mnemotécnico de Rotaciones del Sistema de Cuatro Árbitros, ¿en qué situación puede quedarse afuera U2?
-m08-pca.16.o0	Siempre que U3 sale
-m08-pca.16.o1	Cuando no hay corredores y el batazo va al jardín izquierdo
-m08-pca.16.o2	Siempre que el batazo va al cuadro interior
-m08-pca.16.o3	Cuando hay un corredor en 3B y el batazo va al jardín derecho
-m08-pca.16.why	U2 debe rotar hacia el interior del cuadro en todas las demás situaciones en que U1 o U3 salen, y cubrir 1B cuando U1 sale.
-m08-pca.17.q	En el Sistema de Cinco Árbitros (Apéndice 5d), ¿qué hacen PU y los dos árbitros de base?
-m08-pca.17.o0	Salir al jardín en cada fly
-m08-pca.17.o1	Quedarse en sus posiciones iniciales durante toda la jugada
-m08-pca.17.o2	Dejar todas las decisiones a los dos árbitros de jardín
-m08-pca.17.o3	Quedarse en el cuadro interior y rotar como en el Sistema de Tres Árbitros, mientras dos árbitros de jardín situados en las líneas de fair/foul juzgan los fly, las bolas atrapadas a ras de suelo y los jonrones
-m08-pca.17.why	Esto deja a los demás árbitros libres para atender las jugadas en las bases.
-m08-pca.18.q	Entre entradas en los Sistemas de Cinco y Seis Árbitros, ¿adónde van ULF y URF?
-m08-pca.18.o0	Al círculo del lanzador
-m08-pca.18.o1	Detrás de home, al lado de PU
-m08-pca.18.o2	Por la línea hasta donde están las posiciones iniciales de U3 y U1
-m08-pca.18.o3	Detrás de la cerca del jardín
-m08-pca.18.why	Los demás árbitros usan las mismas posiciones entre entradas que en el Sistema de Tres o de Cuatro Árbitros.
-m08-pca.19.q	Según el Apéndice 5, ¿por qué son útiles los Sistemas de Cinco y Seis Árbitros?
-m08-pca.19.o0	Permiten que los árbitros de base se queden en el cuadro interior, de modo que todas las bases estén cubiertas en todo momento y cada decisión se tome desde una posición ventajosa
-m08-pca.19.o1	Hacen que los partidos sean más cortos
-m08-pca.19.o2	Eliminan la necesidad de que PU esté en home
-m08-pca.19.o3	Eliminan la necesidad de decidir si la bola es fair o foul
-m08-pca.19.why	Las jugadas cercanas a home afectan el resultado general del partido, por lo que importa tener cubiertos 3B y home; los sistemas son adecuados para finales y partidos de alto nivel.
 m02-pca.10.q	En el Sistema de Un Árbitro, ¿dónde se coloca el árbitro de home entre entradas?
 m02-pca.10.o0	En la placa del lanzador, mirando hacia home
 m02-pca.10.o1	Detrás del receptor en todo momento
@@ -332,9 +212,9 @@ m02-pca.15.o1	Al corredor de adelante
 m02-pca.15.o2	Al jugador de campo que tiene la pelota
 m02-pca.15.o3	Al bateador-corredor
 m02-pca.15.why	En cada batazo el árbitro sale de detrás del plato hacia el cuadro para tener la mejor vista de la jugada que se desarrolla.
-m02-pca.16.q	¿Qué dice el manual del Sistema de Un Árbitro sobre cantar una jugada?
+m02-pca.16.q	¿Qué dice el manual del Sistema de Un Árbitro sobre cantar una jugada que no sea cantar bolas y strikes?
 m02-pca.16.o0	Esperar a que el entrenador pregunte
-m02-pca.16.o1	Nunca se debe cantar una jugada sin salir de detrás del plato
+m02-pca.16.o1	Nunca se debe cantar una jugada sin salir de detrás del plato, salvo en home
 m02-pca.16.o2	Cantar las jugadas desde detrás del plato para no estorbar
 m02-pca.16.o3	Cantar la jugada antes de que llegue la pelota
 m02-pca.16.why	El árbitro único no tiene compañero que le ayude, así que debe moverse con determinación para obtener la mejor posición posible, detenerse y cantar la jugada.
@@ -420,46 +300,6 @@ m07-mkc.title	Apéndice 5b: Sistema de Tres Árbitros
 m07-mkc.nextLabel	Continúa con la presentación - Apéndice 5b: Sistema de Tres Árbitros
 m08-mkc.title	Apéndice 5c y d: Sistemas de Cuatro, Cinco y Seis Árbitros
 m08-mkc.nextLabel	Continúa con la presentación - Apéndice 5c y d: Sistemas de Cuatro, Cinco y Seis Árbitros
-m08-mkc.0.q	En la reunión previa al partido en el plato en el Sistema de Cuatro Árbitros, ¿dónde se alinean U2, U1 y U3, y por qué?
-m08-mkc.0.o0	Detrás del receptor, para ver los cajones de bateo
-m08-mkc.0.o1	Junto a los dugouts, para hablar con los managers
-m08-mkc.0.o2	Delante de los cajones de bateo, para poder dispersarse hacia sus posiciones iniciales
-m08-mkc.0.o3	En sus posiciones iniciales, para que nadie tenga que moverse
-m08-mkc.1.q	Entre entradas en el Sistema de Cuatro Árbitros, ¿dónde se coloca U1?
-m08-mkc.1.o0	A un tercio del camino de HP a 1B
-m08-mkc.1.o1	A dos tercios del camino de HP a 1B
-m08-mkc.1.o2	A mitad de camino de HP a 1B
-m08-mkc.1.o3	Detrás de 1B
-m08-mkc.2.q	En el Sistema de Cuatro Árbitros, ¿dónde se coloca U1 al inicio con un corredor en 1B?
-m08-mkc.2.o0	A unos 5,5 m (18 pies) detrás de 1B
-m08-mkc.2.o1	A unos 3,5 m (12 pies) detrás de 1B en territorio de foul
-m08-mkc.2.o2	A unos 4,5 m (15 pies) detrás de 1B en territorio fair
-m08-mkc.2.o3	Sobre la línea de 1B, a la altura de la base
-m08-mkc.3.q	En el Sistema de Cuatro Árbitros, U2 sale a un fly. ¿Quién se encarga del tag-up en 3B?
-m08-mkc.3.o0	U1
-m08-mkc.3.o1	U3
-m08-mkc.3.o2	U2
-m08-mkc.3.o3	PU
-m08-mkc.4.q	En un fly que puede tomar un árbitro de base o U2, ¿a quién se da la primera opción de salir en el Sistema de Cuatro Árbitros?
-m08-mkc.4.o0	PU
-m08-mkc.4.o1	U1 o U3, por indicación de U2
-m08-mkc.4.o2	U2 siempre tiene la primera opción
-m08-mkc.4.o3	Al árbitro más cercano a la pelota
-m08-mkc.5.q	En el Sistema de Cuatro Árbitros sin corredores o con un corredor en 1B, ¿qué hace PU en una jugada con la pelota viva desde el infield?
-m08-mkc.5.o0	Se queda en home
-m08-mkc.5.o1	Se mueve a 3B para cubrir la jugada
-m08-mkc.5.o2	Sigue al bateador-corredor aproximadamente un tercio del camino hacia 1B, vigilando la interferencia y la decisión de fair/foul
-m08-mkc.5.o3	Rota hacia dentro para cubrir 2B
-m08-mkc.6.q	En los Sistemas de Cinco y Seis Árbitros, ¿de qué son responsables ULF y URF?
-m08-mkc.6.o0	Solo de las decisiones de fair/foul en las líneas
-m08-mkc.6.o1	De las jugadas en 1B y 3B
-m08-mkc.6.o2	De los tag-ups en todas las bases
-m08-mkc.6.o3	De todas las decisiones más allá del árbitro de base y detrás de los jugadores de cuadro (fair/foul, atrapada o no, y el estado de una pelota que sale del campo), sin importar los corredores
-m08-mkc.7.q	En los Sistemas de Cinco y Seis Árbitros, si LF o RF juega cerca, ¿dónde debe estar el árbitro de outfield?
-m08-mkc.7.o0	Delante del jardinero, para juzgar con precisión las bolas atrapadas a ras de suelo
-m08-mkc.7.o1	Detrás del jardinero
-m08-mkc.7.o2	En el poste de foul
-m08-mkc.7.o3	En la posición inicial del árbitro de base
 m01-mkc.0.q	¿Qué afirmaciones describen la colocación en el plato que enseña la Guía de Aprendizaje de Fundamentos de enero de 2026?
 m01-mkc.0.o0	Situar los ojos justo por dentro del borde interior del plato, en lugar de usar la oreja interior como referencia de alineación.
 m01-mkc.0.o1	Usar una Buena Alineación Pélvica (GPA), con el ombligo apuntando entre el centro de la parte delantera del plato y no más allá de la esquina delantera exterior.
@@ -1218,3 +1058,173 @@ m07-pca.19.o1	Quedarse fuera cerca de la 2BDA y cubrir primera y segunda desde a
 m07-pca.19.o2	Ir a la zona de espera de tercera y transferir primera y segunda a PU hasta que la pelota del outfield haya vuelto.
 m07-pca.19.o3	Mantener el borde de entrada de tercera para el siguiente tiro y dejar primera sin cubrir hasta que U1 vuelva del outfield.
 m07-pca.19.why	El mapa de memoria sitúa a U3 por dentro, pasada la línea del lanzador a segunda, para primera y segunda cuando U1 sale. Lee al corredor y comunica la cobertura continuada de tercera. Sin corredores originales, el caso detallado con U1 fuera da a PU la jugada inicial en primera antes de que U3 la asuma cuando el bateador-corredor pasa primera.
+m08-mkc.0.q	¿Qué colocación en la reunión del plato sigue el Sistema de Cuatro Árbitros?
+m08-mkc.0.o0	PU detrás de los cajones de bateo, con los árbitros de base colocados U1, U2, U3 desde la línea de primera hacia tercera.
+m08-mkc.0.o1	PU detrás de los cajones de bateo, con los árbitros de base detrás de PU en el orden en que rotarán por las bases.
+m08-mkc.0.o2	PU detrás de los cajones de bateo, en el punto del plato, con U2, U1 y U3 delante de los cajones desde el lado de primera hacia tercera.
+m08-mkc.0.o3	PU delante de los cajones de bateo mirando al receptor, con todos los árbitros de base en el lado de tercera.
+m08-mkc.0.why	La colocación indicada, U2, U1 y U3 delante de los cajones de bateo, permite que el equipo arbitral se disperse hacia sus posiciones iniciales asignadas. PU se queda detrás de los cajones, en el punto del plato.
+m08-mkc.1.q	Con un corredor en primera, ¿qué posición inicial de U1 sigue la indicación para cuatro árbitros?
+m08-mkc.1.o0	Unos 5,5 metros detrás de primera, usando la profundidad sin corredores en todas las configuraciones.
+m08-mkc.1.o1	Unos 3,5 metros detrás de primera en territorio foul, manteniendo la visión del lanzador, el corredor, el bateador y home.
+m08-mkc.1.o2	Unos 4,5 metros detrás de primera en territorio fair, alineado con el segunda base.
+m08-mkc.1.o3	Unos 3,5 metros atrás en la 2BDA, para que U2 se encargue del tiro de vuelta a primera.
+m08-mkc.1.why	La referencia con corredor en primera es aproximadamente 3,5 metros detrás de la base en territorio foul. Mantén despejada la visión de home y prepárate para ajustarte al regreso del corredor o a un tag que se desarrolle.
+m08-mkc.2.q	U2 sale a un fly. ¿Qué reparto del equipo arbitral incluye la responsabilidad correcta del tag-up en tercera?
+m08-mkc.2.o0	U1 vigila primera y tercera mientras PU solo mira la atrapada.
+m08-mkc.2.o1	U3 se queda en tercera mientras U1 vigila primera y segunda.
+m08-mkc.2.o2	U2 vigila tercera desde el outfield mientras U3 entra en el diamante.
+m08-mkc.2.o3	PU vigila tercera, U3 vigila segunda y U1 vigila primera.
+m08-mkc.2.why	U3 rota a segunda, incluido su tag-up. PU tiene el tag-up de tercera y U1 se queda con primera. Los movimientos y las responsabilidades de tag-up deben coordinarse.
+m08-mkc.3.q	Un fly podría tomarlo U2 o el árbitro de esquina correspondiente. ¿Qué enfoque sigue la prioridad de cobertura con cuatro árbitros?
+m08-mkc.3.o0	U2 se compromete primero, porque la posición central de U2 le da prioridad sobre cualquiera de las esquinas.
+m08-mkc.3.o1	U2 lee la pelota y deja a U1 o U3 la primera opción dentro de su cobertura, y luego comunica y sale si el árbitro de esquina no la toma.
+m08-mkc.3.o2	PU elige qué árbitro sale cuando la pelota llega al jardinero.
+m08-mkc.3.o3	Los dos árbitros salen al principio y el que está más lejos de la pelota vuelve a las bases.
+m08-mkc.3.why	La prioridad de las esquinas combina buenos ángulos sobre la línea y el poste con una cobertura eficaz de las bases. Leer la pelota y a los compañeros antes de comprometerse ayuda a evitar coberturas duplicadas y rotaciones innecesarias.
+m08-mkc.4.q	Sin corredores o con un corredor solo en primera, ¿qué movimiento de PU sigue un batazo al infield en el sistema de cuatro árbitros?
+m08-mkc.4.o0	Rotar de inmediato a tercera en cuanto el bateador-corredor sale del cajón.
+m08-mkc.4.o1	Quedarse fijo en el POP y transferir a U1 todas las observaciones de interferencia en la zona de primera.
+m08-mkc.4.o2	Seguir aproximadamente un tercio del camino hacia primera para las observaciones necesarias y la decisión de fair/foul, y volver a home cuando el bateador-corredor llega a primera.
+m08-mkc.4.o3	Seguir al bateador-corredor por primera y segunda antes de ceder la cobertura de home a U3.
+m08-mkc.4.why	La instrucción para jugadas del infield es seguir al bateador-corredor por una posible interferencia, un tag o para ayudar, conservando la responsabilidad de fair/foul, y volver a home cuando el bateador-corredor llega a primera. Las demás configuraciones de corredores usan el POP.
+m08-pca.0.q	¿Qué posición entre entradas de U2 se indica para el sistema de cuatro árbitros?
+m08-pca.0.o0	A un tercio del camino de home a primera, fuera de la línea.
+m08-pca.0.o1	A dos tercios del camino de home a tercera, fuera de la línea.
+m08-pca.0.o2	A un tercio del camino de home a tercera, fuera de la línea.
+m08-pca.0.o3	A dos tercios del camino de home a primera, fuera de la línea.
+m08-pca.0.why	U2 usa el lado de primera, a unos dos tercios del camino de home a primera. U1 está a un tercio en ese mismo lado; PU y U3 usan los tercios equivalentes en el lado de tercera.
+m08-pca.1.q	Con un corredor en cualquier base, ¿qué forma de empezar de U2 sigue la indicación para cuatro árbitros?
+m08-pca.1.o0	Usar como referencia aproximadamente 3,5 metros detrás de segunda, ajustándose dentro de la zona aprobada para ver todo el lanzamiento y llegar a tiempo a la jugada necesaria.
+m08-pca.1.o1	Mantener en todos los lanzamientos la referencia sin corredores de aproximadamente 4,5 metros, usando la profundidad extra para ver por encima de los fildeadores aunque retrase la rotación interior necesaria.
+m08-pca.1.o2	Usar aproximadamente 5,5 metros detrás de segunda para igualar la profundidad sin corredores de los dos árbitros de esquina y conservar el mismo arco de movimiento.
+m08-pca.1.o3	Usar automáticamente la alternativa del lado de tercera siempre que haya un corredor en cualquier base, aunque el lanzador tape home.
+m08-pca.1.why	La guía reduce la profundidad de referencia de U2 de unos 4,5 metros sin corredores a unos 3,5 metros con corredor. Son posiciones iniciales aproximadas, elegidas para conservar las líneas de visión y la capacidad de entrar en el diamante o ajustarse a una jugada. La alternativa es condicional, no automática.
+m08-pca.2.q	Un fly va directamente al sector central normal del campo. Ningún árbitro de esquina lo ha tomado y no se desplaza hacia el sector de la línea de una esquina. ¿Quién toma la decisión del outfield?
+m08-pca.2.o0	U1, porque la prioridad de las esquinas da a U1 todos los fly sea cual sea su sector final.
+m08-pca.2.o1	PU, porque una decisión en el centro del campo debe quedarse con el árbitro de detrás de home.
+m08-pca.2.o2	U2, después de leer la trayectoria y a los compañeros y comunicar con claridad su decisión de salir.
+m08-pca.2.o3	U3, porque U2 debe quedarse en segunda siempre que haya corredores en base.
+m08-pca.2.why	U2 tiene el sector central. U1 y U3 tienen la primera opción en las pelotas que se solapan con su zona, pero eso no transfiere todas las pelotas centrales a una esquina. Lee la trayectoria real y a los compañeros y después sé decidido.
+m08-pca.3.q	U1 sale a un fly con un corredor en primera. ¿Qué asignación del tag-up y qué razonamiento siguen el sistema de cuatro árbitros?
+m08-pca.3.o0	U2 se encarga del tag-up de primera porque U2 cubrirá primera y segunda al entrar, combinando las dos observaciones de tag-up con las decisiones posteriores en esas bases.
+m08-pca.3.o1	PU se encarga del tag-up de primera, conservando la visión necesaria del corredor y del primer toque mientras U2 rota hacia dentro para cubrir las bases.
+m08-pca.3.o2	U3 se encarga del tag-up de primera desde tercera, porque el ángulo de esquina a esquina sustituye la observación de PU.
+m08-pca.3.o3	U1 se encarga del tag-up de primera mientras sigue hacia el outfield, dejando a PU responsable solo de home.
+m08-pca.3.why	PU tiene el tag-up de primera cuando U1 sale. U2 se encarga de segunda y U3 de tercera. Una responsabilidad futura de decidir en una base no asigna automáticamente un tag-up anterior cuando la rotación limita la visión del árbitro.
+m08-pca.4.q	Con corredores en base, U2 sale. ¿Qué reparto de los tag-ups entre los demás árbitros sigue el Apéndice 5c?
+m08-pca.4.o0	U1 vigila primera y segunda mientras U3 se queda con tercera y PU solo en home.
+m08-pca.4.o1	PU vigila primera y segunda mientras U1 va a home y U3 se queda con tercera.
+m08-pca.4.o2	U1 vigila primera, U3 rota a segunda y vigila su tag-up, y PU vigila tercera.
+m08-pca.4.o3	U3 vigila primera, U1 vigila segunda y PU vigila tercera, sea cual sea la rotación inicial.
+m08-pca.4.why	Cuando U2 sale, U3 se encarga de segunda, incluido su tag-up. U1 se queda con primera y PU se encarga de tercera. El árbitro que sale no sigue juzgando los tag-ups del infield desde el outfield.
+m08-pca.5.q	¿Qué afirmación describe con precisión la ruta normal de U1 y la respuesta a un backfill en el sistema de cuatro árbitros?
+m08-pca.5.o0	Hacer el button-hook hacia dentro en todas las pelotas al outfield antes de decidir si quedarse en primera o rotar a home, manteniendo la responsabilidad de primera y segunda aunque U2 ya haya entrado para cubrir esas bases.
+m08-pca.5.o1	Usar normalmente el territorio foul de primera o salir, comunicar al rotar a home empujando a PU hacia tercera; si PU se queda con home para una jugada rápida, ajustarse para apoyar la cobertura necesaria de primera y segunda sin interferir.
+m08-pca.5.o2	Quedarse en primera hasta que se detengan todos los corredores, porque la presencia de U2 hace innecesaria la rotación a home.
+m08-pca.5.o3	Rotar de inmediato a home siempre que U2 o U3 empiecen a salir, transfiriendo a PU cualquier toque de primera sin comunicarlo.
+m08-pca.5.why	El mapa de memoria indica que U1 no necesita hacer el button-hook en la ruta normal con cuatro árbitros. No es una prohibición absoluta de ajustarse o trabajar por dentro en un backfill excepcional. Lee a PU, comunícate y protege la siguiente cobertura necesaria sin agolparte en la jugada de home.
+m08-pca.6.q	Sin corredores y sin que ningún árbitro salga, un rodado llega al jardín izquierdo. ¿Qué forma de actuar de U2 sigue el caso indicado para el jardín izquierdo?
+m08-pca.6.o0	Quedarse fuera para tener un buen ángulo sobre el tiro de vuelta desde la izquierda, ajustándose para una posible jugada en segunda y manteniendo a la vista los cuatro elementos.
+m08-pca.6.o1	Hacer de inmediato el button-hook a la misma posición interior que se usa en cualquier tiro de vuelta desde la derecha, sin cambiar el ángulo del lado de segunda aunque el tiro desde la izquierda dé una visión menos abierta.
+m08-pca.6.o2	Rotar a tercera para que U3 se encargue del tiro de vuelta en segunda y PU cubra home y primera.
+m08-pca.6.o3	Moverse hacia primera para encargarse del tiro de vuelta y obligar a U1 a decidir todas las jugadas posteriores en segunda.
+m08-pca.6.why	La sección detallada de rodados indica quedarse fuera para tener el ángulo del tiro de vuelta desde la izquierda. Indicar que no hay corredores también coincide con el ejemplo del mapa de memoria. Esto no anula la rotación interior obligatoria cuando sale un árbitro de base.
+m08-pca.7.q	U1 sale hacia la derecha con corredores en segunda y tercera. ¿Qué cobertura de los demás árbitros sigue mejor el Apéndice 5c?
+m08-pca.7.o0	U2 se queda solo con segunda, U3 se encarga de primera y tercera siguiendo al bateador-corredor por las bases, y PU va hacia primera para ayudar dejando a U3 la jugada temprana en home.
+m08-pca.7.o1	U3 rota a segunda, U2 sigue al corredor adelantado hasta home y PU se encarga de primera y tercera.
+m08-pca.7.o2	U2 rota a tercera, U3 cubre home y PU se encarga de primera y segunda hasta que termina el fly.
+m08-pca.7.o3	U2 hace el button-hook hacia dentro para primera y segunda, U3 se mueve a la 3BLE en territorio foul, mantiene después la cobertura de tercera y se ajusta a la jugada, y PU sigue disponible para la jugada en home desde la zona del POP.
+m08-pca.7.why	Cuando U1 sale, U2 cubre primera y segunda y U3 se queda con tercera. Con la amenaza de anotación desde segunda o tercera, PU da prioridad a home y al POP en lugar de iniciar la rotación de U2/U3 que salen. Es una de las razones por las que la salida de U1 favorece una cobertura eficaz.
+m08-pca.8.q	U2 sale. ¿Qué comparación distingue correctamente el momento de la rotación de U1 a home sin corredores originales del caso con corredores?
+m08-pca.8.o0	Sin corredores, proteger la posible jugada en primera y empezar a rotar cuando el corredor adelantado o el bateador-corredor pasa segunda hacia tercera; con corredores, observar el toque de primera y dar prioridad a una rotación más temprana a home a medida que se desarrolla la amenaza del corredor adelantado.
+m08-pca.8.o1	En ambos casos, esperar a que el bateador-corredor pase segunda antes de rotar a home, manteniendo la responsabilidad de primera por posibles tiros de vuelta mientras PU reparte tercera y home; el corredor adelantado no cambia ese momento.
+m08-pca.8.o2	En ambos casos, rotar a home en el contacto antes de comprobar una posible jugada en primera o el toque del bateador-corredor.
+m08-pca.8.o3	En ambos casos, quedarse en primera hasta que la defensa tire a tercera y reaccionar hacia home después de que PU decida en tercera.
+m08-pca.8.why	El PDF detallado distingue el momento sin corredores del momento con corredores. La presentación insiste en no esperar sin necesidad en primera cuando el corredor adelantado puede amenazar home; mira por encima del hombro, comunícate y confía en la cobertura posterior de primera del árbitro que está dentro.
+m08-pca.9.q	U2 ha salido. PU lee una jugada rápida en home antes de que pueda llegar U1 y comunica que vuelve a home. ¿Qué respuesta coordinada se exige?
+m08-pca.9.o0	U3 se queda en segunda hasta que PU termina la decisión en home y puede volver a tercera, mientras U1 mantiene la rotación a home porque la asignación original sigue vigente hasta que termina la jugada.
+m08-pca.9.o1	U1 sigue hasta el POP y comparte con PU la decisión en home mientras U3 espera el siguiente tiro.
+m08-pca.9.o2	El árbitro del outfield abandona de inmediato la decisión del fly y se encarga de tercera sin avisar al equipo arbitral.
+m08-pca.9.o3	U3 hace el backfill a tercera para una jugada posterior, mientras U1 se ajusta para apoyar la cobertura de primera y segunda y evita interferir en la jugada de home; el equipo arbitral comunica los cambios de responsabilidad.
+m08-pca.9.why	La primera jugada en home sigue siendo la prioridad. La decisión de PU activa el backfill: U3, que queda dentro, ocupa tercera y U1 se ajusta según haga falta para primera y segunda. No fuerces una rotación completa a home cuando PU ya se ha hecho cargo de la decisión.
+m08-pca.10.q	Compara a U1 con un corredor en primera y a U3 con un corredor en tercera. ¿Qué forma de colocarse al inicio conserva la visión de home y el acceso al tag que se desarrolla?
+m08-pca.10.o0	Los dos empiezan unos 3,5 metros detrás de su base y 2-3 metros dentro del territorio foul, con la misma separación lateral, porque ambos pueden afrontar un tiro de vuelta y un tag.
+m08-pca.10.o1	Los dos empiezan unos 3,5 metros detrás de su base; U1 se queda justo fuera de la línea de fair/foul, mientras que U3 puede necesitar más separación en territorio foul porque el corredor despega delante de U3 y no alejándose de él como en primera.
+m08-pca.10.o2	Los dos empiezan unos 3,5 metros detrás de su base; U1 toma la mayor separación en territorio foul para ver a través del corredor que vuelve, mientras que U3 se queda cerca de la línea para conservar el acceso al borde de entrada.
+m08-pca.10.o3	Los dos empiezan unos 3,5 metros detrás de su base y usan la misma separación lateral elegida antes del lanzamiento, manteniendo esa referencia durante un tiro de vuelta para que el ángulo de observación original siga siendo el mismo.
+m08-pca.10.why	Las esquinas no son posiciones simétricas. En primera, el corredor despega alejándose de U1, así que U1 empieza justo fuera de la línea en territorio foul con una visión sin obstáculos de home. Empezar a 2-3 metros de la línea alarga sin necesidad la ruta hacia dentro si el tag lo exige. En tercera, el corredor puede despegar delante de U3, así que U3 puede necesitar más separación en territorio foul para mantener la visión del lanzador, el corredor, el bateador y el plato. Los dos leen el tag real y se ajustan; ninguna de las separaciones es una posición fija de decisión. La referencia anterior de U3 con corredor en segunda sigue siendo aproximadamente 4,5 metros detrás de tercera, justo fuera de la línea.
+m08-pca.11.q	U3 sale a un fly con corredores en base. ¿Qué reparto de los tag-ups sigue el Apéndice 5c?
+m08-pca.11.o0	U1 vigila primera y segunda, U2 vigila tercera y PU no observa ningún tag-up.
+m08-pca.11.o1	PU vigila primera y segunda mientras U1 se queda con las decisiones en primera y U2 va hacia home.
+m08-pca.11.o2	U1 vigila primera, U2 vigila segunda y PU vigila tercera, pidiendo ayuda si la rotación bloquea una observación necesaria.
+m08-pca.11.o3	U2 vigila primera, PU vigila segunda y U1 vigila tercera, intercambiando observaciones antes de cualquier apelación y manteniendo esas asignaciones sea cual sea la rotación interior inicial.
+m08-pca.11.why	El resto del equipo arbitral cubre los tag-ups de primera, segunda y tercera con U1, U2 y PU, respectivamente. Rotar hacia dentro no permite adivinar una relación entre el primer toque y el contacto con la base que no se vio realmente.
+m08-pca.12.q	Con corredor en 2B, U1 sale a un batazo fuerte en línea atrapado en el jardín derecho. U2 no puede entrar a tiempo para ver a la vez el primer toque y el tag-up del corredor en segunda. ¿Qué debe hacer U2?
+m08-pca.12.o0	Deducir el tag-up por la posición del corredor después de la atrapada y decidir sin buscar otra visión.
+m08-pca.12.o1	Usar el sonido de la atrapada mientras mira al corredor y tomar solo ese sonido como prueba del momento exacto del primer toque.
+m08-pca.12.o2	Pedir a U3 su observación del tag-up en segunda y comunicar la información y la acción necesarias antes de decidir cualquier apelación.
+m08-pca.12.o3	Mantener el control exclusivo de la observación aunque U3 tenga una visión completa, porque la cobertura asignada impide la ayuda del equipo arbitral.
+m08-pca.12.why	La guía permite expresamente a U2 pedir ayuda a U3 en este caso de atrapada de un batazo fuerte y plano. Rota rápidamente y mira por encima del hombro cuando puedas, pero si te perdiste la relación de tiempos, pide la observación real en lugar de reconstruirla a partir de suposiciones.
+m08-pca.13.q	En un sistema de cuatro árbitros, ¿qué reparto se aplica a un corredor que deja la base en el lanzamiento?
+m08-pca.13.o0	PU juzga todos los despegues porque tiene la visión directa del lanzamiento.
+m08-pca.13.o1	U1 juzga primera y segunda y U3 juzga tercera, usando el reparto de tres árbitros para que U2 se centre por completo en el sector central del campo.
+m08-pca.13.o2	U2 juzga primera y segunda mientras U1 y U3 se concentran en sus sectores de fly.
+m08-pca.13.o3	Cada árbitro de base juzga el despegue en su propia base, de forma distinta de cualquier rotación posterior para el tag-up de un fly.
+m08-pca.13.why	Con cuatro árbitros, los despegues se asignan al árbitro de cada base. No traslades el reparto de primera y segunda del sistema de tres árbitros ni confundas un despegue en el lanzamiento con el tag-up asignado por separado en un fly atrapado.
+m08-pca.14.q	U2 empieza en el lado de primera de la 2BDA, más cerca de segunda. Un tiro del infield da lugar a una jugada forzada en segunda. ¿Qué movimiento aplica la indicación para jugadas forzadas?
+m08-pca.14.o0	Leer el tiro y moverse a la izquierda hacia el borde de entrada, buscando unos 90 grados respecto al tiro y no más de 45 grados respecto al borde de entrada, con los cuatro elementos a la vista.
+m08-pca.14.o1	Moverse a la derecha hacia la 2BDA como respuesta rutinaria a cualquier jugada en segunda, usando también para la jugada forzada el ajuste del tag en un robo y tomando la diagonal como referencia final de decisión.
+m08-pca.14.o2	Acercarse a segunda siguiendo la alineación inicial, usando la menor distancia para juzgar la posesión y el contacto con la base y manteniendo el mismo ángulo lateral durante la jugada forzada y cualquier tag que se desarrolle.
+m08-pca.14.o3	Moverse a la derecha hacia la prolongación de la línea de primera a segunda para centrar la base en la visión, y juzgar el forzado desde esa alineación antes de ajustarse para un tag posterior.
+m08-pca.14.why	Estar más cerca no corrige un mal ángulo. Desde la posición estándar en el lado de primera, la presentación muestra un movimiento a la izquierda hacia el borde de entrada para una jugada forzada, buscando unos 90 grados respecto al tiro y no más de 45 grados respecto al borde de entrada. No hagas un movimiento rutinario a la derecha solo porque empiezas más cerca de segunda. Un ajuste a la derecha hacia la 2BDA puede servir para un tag en un robo real; no es el movimiento por defecto en una jugada forzada. Lee el tiro, al fildeador, al corredor y el contacto con la base, y vuelve a ajustarte si se desarrolla un tag o la visión queda bloqueada.
+m08-pca.15.q	Hay un corredor en segunda y U1 sale al jardín derecho. PU tiene la cobertura de home y observa desde el POP, pero el tiro y el tag aún no se han desarrollado. ¿Qué enfoque conserva la visión necesaria de home?
+m08-pca.15.o0	Moverse pronto hacia la prolongación de la línea de tercera para prepararse para un tag de barrido y usar esa posición en la primera jugada en home antes de plantearse si el borde de entrada daría una visión más clara.
+m08-pca.15.o1	Usar el POP para seguir la pelota, al corredor y al fildeador; leer el momento del tiro y del corredor y después el posible tag antes de ajustarse, conservando el acceso al borde de entrada en lugar de comprometerse pronto hacia la prolongación de la línea de tercera (3BLE).
+m08-pca.15.o2	Elegir el borde de entrada como posición final de decisión antes de que se desarrolle el tiro y mantenerse ahí durante la jugada, porque llegar al borde de entrada elimina la necesidad de más ajustes laterales.
+m08-pca.15.o3	Usar el POP hasta que empiece el tiro y seguir luego la pelota hacia la prolongación de la línea de tercera sin tener en cuenta al corredor ni al receptor, usando el tiro como única referencia para el ángulo final del tag.
+m08-pca.15.why	Con U1 fuera, PU mantiene home mientras U2 cubre primera y segunda y U3 cubre tercera. El POP es una zona de observación, no un compromiso con un ángulo de tag predeterminado. Sigue al corredor por una posible obstrucción o interferencia y lee el tiro y al fildeador. Moverse antes de tiempo hacia la 3BLE puede dejar el plato entre el árbitro y el corredor, ocultar el tag o el toque y dificultar la vuelta al borde de entrada. Muévete a la izquierda hacia el borde de entrada o haz otro ajuste necesario a medida que se desarrolla la jugada real. Un pequeño ajuste a la derecha puede revelar un tag de barrido; no justifica un movimiento temprano hasta la 3BLE.
+m08-pca.16.q	U3 sale. Antes de que U1 llegue a home, PU vuelve desde la zona de espera para la primera jugada en el plato y comunica el backfill. ¿Quién se encarga de la cobertura posterior de tercera?
+m08-pca.16.o0	U1 debe dejar el lado de primera y cruzar directamente a tercera, mientras U2 se queda solo con segunda.
+m08-pca.16.o1	U2 hace el backfill a tercera, mientras U1 se ajusta para apoyar la cobertura de primera y segunda sin agolparse en la jugada de home de PU.
+m08-pca.16.o2	PU debe terminar la decisión en home y luego correr a tercera, porque U2 nunca puede dejar segunda.
+m08-pca.16.o3	U3 debe volver del outfield para todas las jugadas en tercera, pueda o no el equipo arbitral comunicar un traspaso seguro.
+m08-pca.16.why	Cuando U3 está fuera, U2 es el árbitro de base que queda dentro y puede hacer el backfill a tercera después de que PU se encargue de home. U1 lee el cambio de cobertura y evita moverse sin necesidad hacia la jugada. La atención y la comunicación del equipo arbitral protegen la primera jugada y la siguiente.
+m08-pca.17.q	¿Qué afirmaciones describen correctamente las opciones de posición inicial de U2 y su movimiento desde la alternativa del lado de tercera?
+m08-pca.17.s0	La posición estándar preferida está en el lado de primera, entre la 2BDA y la prolongación de la línea de tercera, con la profundidad ajustada a los corredores.
+m08-pca.17.s1	La alternativa del lado de tercera es condicional, con un corredor en primera o corredores en primera y tercera; comprueba si el bateador es diestro o zurdo y la caída y salida del lanzador, manteniendo home sin obstáculos y disponible la ruta necesaria hacia primera.
+m08-pca.17.s2	Cuando haga falta ajustarse desde la alternativa, moverse primero hacia 1B y la 2BDA, en lugar de más hacia la prolongación de la línea de primera (1BLE), que puede dejar la base entre el árbitro y el corredor o el tag y ocultar el contacto con la base.
+m08-pca.17.s3	En una jugada forzada, seguir hacia el ángulo necesario del borde de entrada, cruzando la 2BDA si hace falta; si todos los elementos ya se ven con claridad, no hace falta moverse al borde de entrada solo por hacerlo.
+m08-pca.17.o0	Solo las afirmaciones 1 y 2.
+m08-pca.17.o1	Solo las afirmaciones 2 y 3.
+m08-pca.17.o2	Solo las afirmaciones 1, 3 y 4.
+m08-pca.17.o3	Las cuatro afirmaciones.
+m08-pca.17.why	Las cuatro son correctas. La posición estándar del lado de primera sigue siendo la preferida; la alternativa es condicional. Desde la alternativa, no te desplaces más hacia la 1BLE. Eso puede dejar la base entre el árbitro y el corredor o el tag, aumentando el paralaje y ocultando el contacto con la base. Cuando haga falta ajustarse, muévete primero hacia la 2BDA y sigue hacia la visión necesaria del borde de entrada según lo exija la jugada. En una jugada forzada esto puede exigir cruzar la 2BDA para tener unos 90 grados respecto al tiro y no más de 45 grados respecto al borde de entrada. Una visión que ya es clara no exige moverse solo por hacerlo.
+m08-pca.18.q	Un corredor libre avanza de segunda hacia tercera y el fildeador se prepara para el tag. ¿Qué forma de actuar de U3 sigue la guía y la presentación?
+m08-pca.18.o0	Comprometerse con la prolongación de la línea de tercera (3BLE) antes de que llegue el corredor, tomándola como posición final en todos los tags de barrido.
+m08-pca.18.o1	Ir directamente al borde de entrada antes de leer el deslizamiento del corredor o la posición de recepción del fildeador, y mantener ese ángulo durante el tag porque llegar al borde de entrada completa la colocación necesaria.
+m08-pca.18.o2	Leer la trayectoria del corredor y al fildeador, usar una posición de observación en territorio foul cuando dé la visión, y ajustarse hacia el borde de entrada u otro ángulo de tag necesario a medida que se desarrolla la jugada.
+m08-pca.18.o3	Juzgar el tag desde la profundidad inicial y usar como dato decisivo el momento en que la pelota entra en el guante.
+m08-pca.18.why	La guía permite el territorio foul cuando da una visión sin obstáculos del tag. Es una opción de observación, no un destino fijo. Conserva el acceso al borde de entrada y ajústate al punto real de contacto y al toque de la base.
+m08-pca.19.q	U2 ha salido, ya había corredores en base y U1 suelta primera para rotar a home mientras PU se prepara para tercera. ¿Qué cobertura debe mantener ahora U3?
+m08-pca.19.o0	La cobertura interior de segunda y del corredor que U1 soltó en primera, preparado para hacer el backfill a tercera si PU vuelve en cambio a home para una jugada rápida.
+m08-pca.19.o1	Solo segunda, porque U1 mantiene la responsabilidad de primera incluso mientras va hacia home; U3 debe retrasar cualquier ajuste hacia primera hasta que U1 termine la decisión en home y señale un traspaso.
+m08-pca.19.o2	Solo tercera, porque primera y segunda pasan a PU en cuanto U1 se dirige a home.
+m08-pca.19.o3	Home junto a U1, dejando la siguiente jugada en primera o segunda hasta que U2 vuelva del outfield.
+m08-pca.19.why	U3 rota hacia dentro cuando U2 sale y se hace cargo del corredor que U1 soltó en primera, además de la cobertura de segunda. Observa a PU y a U1: una jugada rápida en home de la que se encarga PU cambia la cobertura necesaria de tercera y activa el backfill.
+m08-pca.20.q	En un equipo de seis árbitros, a un fly profundo le sigue una posible jugada en una base. ¿Qué reparto completo sigue el Apéndice 5d?
+m08-pca.20.o0	Sale el árbitro de base correspondiente, ULF y URF se quedan en las líneas y el resto del equipo del infield hace la rotación completa de cuatro árbitros.
+m08-pca.20.o1	ULF y URF se encargan del fly y PU y dos árbitros de base rotan con el patrón de tres árbitros, dejando al cuarto árbitro del infield como reserva.
+m08-pca.20.o2	ULF y URF se encargan de las decisiones del outfield, ningún árbitro de base sale y el equipo del infield mantiene sus bases asignadas sin rotaciones entre bases, aunque sigue ajustando su posición para ver cada jugada.
+m08-pca.20.o3	ULF y URF se encargan del fly y todos los árbitros del infield se quedan en sus puntos iniciales exactos, porque no haber rotaciones también prohíbe el movimiento dinámico.
+m08-pca.20.why	El sistema de seis árbitros tiene a PU, tres árbitros de base y dos árbitros de outfield. La pareja del outfield se encarga de las decisiones del outfield indicadas y no hay rotaciones entre bases. Cada árbitro del infield sigue leyendo la jugada y ajustándose para el ángulo, la separación y el tag dentro de su responsabilidad asignada.
+m08-pca.21.q	En el sistema de seis árbitros, ¿qué afirmaciones describen correctamente el reparto entre outfield e infield y la técnica de ULF y URF?
+m08-pca.21.s0	Ningún árbitro de base sale y no hay rotaciones entre bases; los árbitros del infield siguen ajustando sus ángulos y posiciones de trabajo.
+m08-pca.21.s1	ULF y URF empiezan delante de los jardineros, aproximadamente a medio camino entre el árbitro de base y el jardinero, hasta un metro dentro del territorio fair cerca de la línea y con home a la vista.
+m08-pca.21.s2	Si un jardinero corre hacia el poste de foul, el árbitro de base más cercano sustituye al árbitro de outfield e inicia la rotación normal de cuatro árbitros.
+m08-pca.21.s3	Los árbitros de outfield establecen su ángulo de visión y reclaman con claridad la decisión; para el fair/foul o una decisión sobre el poste, usan la línea y una profundidad adecuada, y PU decide el fair/foul hasta la posición inicial del árbitro de base de esquina.
+m08-pca.21.o0	Solo las afirmaciones 1 y 3.
+m08-pca.21.o1	Solo las afirmaciones 1, 2 y 4.
+m08-pca.21.o2	Solo las afirmaciones 2, 3 y 4.
+m08-pca.21.o3	Las cuatro afirmaciones.
+m08-pca.21.why	Las afirmaciones 1, 2 y 4 son correctas. Los árbitros de outfield dedicados mantienen a los árbitros de base en sus funciones asignadas del infield. La posición inicial en el outfield protege la visión del bateador y el ángulo para las pelotas atrapadas a ras de suelo; reclama con claridad la decisión y usa la línea y una profundidad adecuada para las decisiones sobre la línea o el poste. Una señal de salida para los árbitros de base no forma parte de este reparto con seis árbitros.
