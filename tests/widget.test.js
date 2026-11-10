@@ -206,7 +206,7 @@ const verifyText = pg => pg.textContent('#verify-state');
   await runQuiz(t.pg, 'm01-pca', 3); await t.pg.waitForFunction(() => /available again on 1 December 2026/.test(document.getElementById('quiz-result-text') ? document.getElementById('quiz-result-text').textContent : document.body.textContent)); ok('after the second failed attempt the result says attempts are renewed on the 1st');
   t = await newPage(b, { attempts: { attempts: 2, remaining: 0, passed: false } });
   await t.pg.click('[data-assessment="m01-pca"]'); await t.pg.waitForFunction(() => /maximum of 2 attempts/.test(document.getElementById('validation-banner').textContent));
-  assert.ok(!(await t.pg.isVisible('#quiz')) && /umpiredirector@wbscoceania\.org/.test(await t.pg.textContent('#validation-banner')));
+  assert.ok(!(await t.pg.isVisible('#quiz')) && /wbsc\.fp\.umpire\.mechanics@gmail\.com/.test(await t.pg.textContent('#validation-banner')));
   ok('with 2 attempts used, starting is blocked and shows the contact address');
 
   t = await newPage(b, { lookup: 'fail' });
@@ -241,11 +241,11 @@ const verifyText = pg => pg.textContent('#verify-state');
 
   t = await newPage(b, { attempts: { attempts: 1, remaining: 1, passed: false } }, (r, p) => r.fulfill(page_(reply({ wbscSave: true, success: true, submissionId: p.submissionId, attemptNumber: 2, maxAttempts: 2, result: 'NOT PASSED' }))));
   await runQuiz(t.pg, 'm01-pca', 2); await t.pg.waitForFunction(() => /recorded/.test(document.getElementById('quiz-save-state').textContent));
-  assert.ok(/used all 2 attempts/.test(await t.pg.textContent('#quiz-result-text')) && /umpiredirector@wbscoceania\.org/.test(await t.pg.textContent('#quiz-result-text')));
+  assert.ok(/used all 2 attempts/.test(await t.pg.textContent('#quiz-result-text')) && /wbsc\.fp\.umpire\.mechanics@gmail\.com/.test(await t.pg.textContent('#quiz-result-text')));
   assert.ok(!(await t.pg.isVisible('#quiz-try-again')));
   ok('failing attempt 2 of 2 shows no Try again and the contact address');
 
-  t = await newPage(b, { lookup: 'fail' }, (r, p) => r.fulfill(page_(reply({ wbscSave: true, success: false, code: 'max_attempts', submissionId: p.submissionId, maxAttempts: 2, error: 'You have already used the maximum of 2 attempts for this assessment. Please contact umpiredirector@wbscoceania.org.' }))));
+  t = await newPage(b, { lookup: 'fail' }, (r, p) => r.fulfill(page_(reply({ wbscSave: true, success: false, code: 'max_attempts', submissionId: p.submissionId, maxAttempts: 2, error: 'You have already used the maximum of 2 attempts for this assessment. Please contact wbsc.fp.umpire.mechanics@gmail.com.' }))));
   await runQuiz(t.pg); await t.pg.waitForFunction(() => /maximum of 2/.test(document.getElementById('quiz-save-state').textContent));
   assert.ok(!(await t.pg.isVisible('#quiz-retry-save')) && !(await t.pg.isVisible('#quiz-try-again')));
   assert.strictEqual((await t.pg.textContent('#quiz-result-pill')).trim(), 'Not recorded');
@@ -587,7 +587,7 @@ const verifyText = pg => pg.textContent('#verify-state');
     // a name the certificate font cannot print gets a clear message instead of a broken file
     t = await newPage(b, { certificate: { ok: true, eligible: true, name: '山田 太郎', date: '2026-10-28' } });
     await t.pg.waitForSelector('#cert-box', { state: 'visible' }); await t.pg.click('#cert-btn');
-    await t.pg.waitForFunction(() => /cannot be printed on the certificate/.test(document.getElementById('cert-state').textContent)); assert.ok(/umpiredirector@wbscoceania\.org/.test(await t.pg.textContent('#cert-state')));
+    await t.pg.waitForFunction(() => /cannot be printed on the certificate/.test(document.getElementById('cert-state').textContent)); assert.ok(/wbsc\.fp\.umpire\.mechanics@gmail\.com/.test(await t.pg.textContent('#cert-state')));
     ok('a name with letters the certificate cannot print gets a message to contact the Director');
     // a long name is shrunk to fit; a lookup that fails shows nothing
     t = await newPage(b, { certificate: { ok: true, eligible: true, name: 'Maria de los Angeles Fernandez-Rodriguez de la Torre y Montenegro-Alvarez', date: '2026-10-28' } });

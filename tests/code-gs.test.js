@@ -204,7 +204,7 @@ ok('a result emails the Director and a receipt to the learner; statuses recorded
   const sent = e.mails.slice(before);
   assert.strictEqual(sent.length, 2);
   const [dir, rec] = sent;
-  assert.strictEqual(dir.to, 'umpiredirector@wbscoceania.org'); assert.ok(/NOT PASSED: Jo Ump/.test(dir.subject));
+  assert.strictEqual(dir.to, 'wbsc.fp.umpire.mechanics@gmail.com'); assert.ok(/NOT PASSED: Jo Ump/.test(dir.subject));
   assert.strictEqual(rec.to, 'jo@x.com'); assert.ok(/receipt/i.test(rec.subject) && /NOT PASSED/.test(rec.subject));
   for (const need of ['Hello Jo Ump', 'Score: 8 / 10 (80%)', 'Result: NOT PASSED (pass mark 85%)', 'Attempt: 1 of 2', 'Attempts left for this assessment: 1', 'not an official WBSC certificate', 'Module 02: not passed yet (best 80%, attempts used this month: 1 of 2)', 'Module 01: not attempted yet']) {
     assert.ok(rec.body.includes(need), 'receipt contains: ' + need);
@@ -216,7 +216,7 @@ ok('the final failed attempt tells the learner who to contact', () => {
   const e = makeEnv(); const t = login(e);
   save(e, t, { score: 5 }); const before = e.mails.length; save(e, t, { score: 6 });
   const rec = e.mails.slice(before).find(m => m.to === 'jo@x.com');
-  assert.ok(/used all 2 attempts/.test(rec.body) && /umpiredirector@wbscoceania\.org/.test(rec.body));
+  assert.ok(/used all 2 attempts/.test(rec.body) && /wbsc\.fp\.umpire\.mechanics@gmail\.com/.test(rec.body));
 });
 ok('a receipt failure never undoes the save; the owner is alerted (once an hour) and the status says FAILED', () => {
   const e = makeEnv({ failMail: (to, subject) => to === 'jo@x.com' && /receipt/i.test(subject) });
@@ -230,7 +230,7 @@ ok('a receipt failure never undoes the save; the owner is alerted (once an hour)
   assert.strictEqual(alerts().length, 2, 'alerts again after the hour');
 });
 ok("a failed Director email alerts the owner and is recorded; the learner still gets a receipt", () => {
-  const e = makeEnv({ failMail: (to) => to === 'umpiredirector@wbscoceania.org' });
+  const e = makeEnv({ failMail: (to) => to === 'wbsc.fp.umpire.mechanics@gmail.com' });
   const t = login(e); const m = save(e, t, {});
   assert.strictEqual(m.success, true); assert.ok(/^FAILED/.test(e.rows[1][15])); assert.strictEqual(e.rows[1][17], 'sent');
   assert.ok(e.mails.some(x => x.to === 'owner@example.com' && /Director/.test(x.subject)));
@@ -246,7 +246,7 @@ ok('passing the sixth module: completion notice to the Director once, summary in
   assert.strictEqual(m6.completedAll, true);
   const sent = e.mails.slice(before);
   const done = sent.filter(m => /PROGRAM COMPLETED: Jo Ump/.test(m.subject));
-  assert.strictEqual(done.length, 1); assert.strictEqual(done[0].to, 'umpiredirector@wbscoceania.org');
+  assert.strictEqual(done.length, 1); assert.strictEqual(done[0].to, 'wbsc.fp.umpire.mechanics@gmail.com');
   for (let i = 1; i <= 8; i++) assert.ok(done[0].body.includes(`Module 0${i}: PASSED (90%, attempts used: 1)`), 'summary line ' + i);
   const rec = sent.find(m => m.to === 'jo@x.com'); assert.ok(/passed all 8 modules/.test(rec.body));
   const b2 = e.mails.length; save(e, t, { module: mod(8), score: 10 });
@@ -277,7 +277,7 @@ ok('attempt counting is case/space-insensitive across the verified address and t
   const mailsAfterLogin = e.mails.length;
   const r = save(e, t2, { score: 10, umpireId: '007' });
   assert.strictEqual(r.success, false); assert.strictEqual(r.code, 'max_attempts');
-  assert.ok(/maximum of 2 attempts/.test(r.error) && /umpiredirector@wbscoceania\.org/.test(r.error));
+  assert.ok(/maximum of 2 attempts/.test(r.error) && /wbsc\.fp\.umpire\.mechanics@gmail\.com/.test(r.error));
   assert.strictEqual(e.rows.length, rows); assert.strictEqual(e.mails.length, mailsAfterLogin, 'no result or receipt email for a refused attempt');
   assert.ok(mails <= mailsAfterLogin);
 });
@@ -532,7 +532,7 @@ ok('weekly summary: who finished this week, who needs attention, who went quiet,
   T('done@x.com', 'Done Dee', 'Assoc B', [1, 2, 3, 4, 5, 6, 7, 8]);
   e.clock.now = Date.UTC(2026, 9, 27);
   const before = e.mails.length; const r = e.ctx.weeklySummary(); assert.strictEqual(r.sent, true);
-  const m = e.mails.slice(before); assert.strictEqual(m.length, 1); assert.strictEqual(m[0].to, 'umpiredirector@wbscoceania.org');
+  const m = e.mails.slice(before); assert.strictEqual(m.length, 1); assert.strictEqual(m[0].to, 'wbsc.fp.umpire.mechanics@gmail.com');
   assert.ok(/1 completed this week, 1 need attention/.test(m[0].subject), m[0].subject);
   const b = m[0].body;
   assert.ok(/COMPLETED THIS WEEK \(1\)\n- Done Dee \(Assoc B\), 8 of 8/.test(b), b);
@@ -540,7 +540,7 @@ ok('weekly summary: who finished this week, who needs attention, who went quiet,
   assert.ok(/WENT QUIET[^\n]*\(1\)\n- Quiet Qi \(Assoc A\), 2 of 8[^\n]*last active 26 days ago, quiet@x\.com/.test(b), b);
   assert.ok(/- Assoc A: 2 umpires, 0 completed, 1 in progress, 1 need attention/.test(b) && /- Assoc B: 1 umpire, 1 completed, 0 in progress, 0 need attention/.test(b), b);
   assert.ok(/does not hold a list of everyone/.test(b));
-  assert.deepStrictEqual(e.mails.slice(before).map(x => x.to), ['umpiredirector@wbscoceania.org'], 'no learner is emailed');
+  assert.deepStrictEqual(e.mails.slice(before).map(x => x.to), ['wbsc.fp.umpire.mechanics@gmail.com'], 'no learner is emailed');
 });
 ok('weekly summary: nothing is sent while there are no results', () => {
   const e = makeEnv(); const r = e.ctx.weeklySummary(); assert.strictEqual(r.sent, false); assert.strictEqual(e.mails.length, 0);
@@ -669,10 +669,10 @@ ok('by default the Director is not emailed for each result, and a receipt goes o
 ok('the Director still gets the program-completed notice; the properties switch the old behaviour back on', () => {
   const e = makeEnv({ legacyMail: false }); let t;
   t = login(e, 'all@x.com');   // one sign-in is enough: it lasts 14 days
-  for (let i = 1; i <= 8; i++) { const b = e.mails.length; const r = save(e, t, { module: mod(i), score: 9, umpireId: 'all' }); if (i < 8) assert.ok(!e.mails.slice(b).some(m => m.to === 'umpiredirector@wbscoceania.org')); else assert.ok(e.mails.slice(b).some(m => /PROGRAM COMPLETED/.test(m.subject) && m.to === 'umpiredirector@wbscoceania.org')); }
+  for (let i = 1; i <= 8; i++) { const b = e.mails.length; const r = save(e, t, { module: mod(i), score: 9, umpireId: 'all' }); if (i < 8) assert.ok(!e.mails.slice(b).some(m => m.to === 'wbsc.fp.umpire.mechanics@gmail.com')); else assert.ok(e.mails.slice(b).some(m => /PROGRAM COMPLETED/.test(m.subject) && m.to === 'wbsc.fp.umpire.mechanics@gmail.com')); }
   const f = makeEnv({ legacyMail: false }); f.props.set('DIRECTOR_RESULT_EMAILS', 'on'); f.props.set('RECEIPT_EMAILS', 'all');
   const t3 = login(f, 'jo@x.com'); const b3 = f.mails.length; save(f, t3, { score: 5 });
-  assert.deepStrictEqual(f.mails.slice(b3).map(m => m.to).sort(), ['jo@x.com', 'umpiredirector@wbscoceania.org']);
+  assert.deepStrictEqual(f.mails.slice(b3).map(m => m.to).sort(), ['jo@x.com', 'wbsc.fp.umpire.mechanics@gmail.com']);
 });
 ok('the daily health check is emailed only when something is wrong (HEALTH_REPORT=daily brings back the daily email)', () => {
   const e = makeEnv({ legacyMail: false }); const t = login(e, 'jo@x.com'); save(e, t, { score: 9 });
