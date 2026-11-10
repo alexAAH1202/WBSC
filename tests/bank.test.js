@@ -18,6 +18,12 @@ for (const m of modules) for (const t of hasPractice(m) ? ['mkc', 'pca'] : ['pca
   if (bank.draw !== undefined && (!Number.isInteger(bank.draw) || bank.draw < minimum[t] || bank.draw > bank.questions.length)) errors.push(`${key}: draw must be a whole number from ${minimum[t]} up to the number of questions`);
   if (bank.draw !== undefined && t === 'mkc') errors.push(`${key}: practice quizzes do not use a draw`);
   const asked = bank.draw || bank.questions.length;
+  if (bank.drawGroups) {
+    let sum = 0;
+    for (const [g, n] of Object.entries(bank.drawGroups)) { const have = bank.questions.filter(q => q.group === g).length; sum += n; if (!(Number.isInteger(n) && n >= 1 && n <= have)) errors.push(`${key}: drawGroups ${g} asks ${n} but has ${have}`); }
+    const rest = bank.questions.filter(q => !q.group).length;
+    if (sum >= asked || rest < asked - sum) errors.push(`${key}: drawGroups leave ${asked - sum} to draw from ${rest} ungrouped questions`);
+  }
   if (asked < minimum[t]) errors.push(`${key}: ${asked} questions asked, at least ${minimum[t]} needed`);
   if (asked > 100) errors.push(`${key}: more than 100 questions asked (Code.gs MAX_QUESTIONS)`);
   if (bank.questions.length > 200) errors.push(`${key}: more than 200 questions in the pool`);
@@ -35,7 +41,9 @@ for (const m of modules) for (const t of hasPractice(m) ? ['mkc', 'pca'] : ['pca
     if (new Set(q.options).size !== q.options.length) errors.push(`${at}: duplicate options`);
     if (t === 'pca') { if (q.correct !== undefined) errors.push(`${at}: a marked question must not carry its answer (the site is public; the server holds the key)`); }
     else if (!Number.isInteger(q.correct) || q.correct < 0 || q.correct >= q.options.length) errors.push(`${at}: correct out of range`);
-    if (q.options.some(o => /\b(all|none) of the above\b/i.test(o))) errors.push(`${at}: option depends on position, which breaks shuffling`);
+    if (q.shuffle !== undefined && q.shuffle !== false) errors.push(`${at}: shuffle may only be false`);
+    if (q.options.some(o => /\b(all|none) of the above\b/i.test(o)) && q.shuffle !== false) errors.push(`${at}: option depends on position: add shuffle: false`);
+    if (q.statements !== undefined && (!Array.isArray(q.statements) || q.statements.length < 2 || q.statements.some(t => typeof t !== 'string' || !t.trim()))) errors.push(`${at}: statements must be a list of 2 or more`);
   });
 }
 // The private answer key (not in the repo): present on the owner's machine, absent in CI. When present it must fit the questions exactly.
@@ -68,8 +76,15 @@ for (const f of ['assessment-widget.html', 'index.html', 'privacy.html', 'presen
 }
 const extra = Object.keys(BANK).filter(k => !modules.some(m => k.startsWith(m)));
 if (extra.length) errors.push('unexpected assessments: ' + extra.join(', '));
-const dups = {}; Object.values(BANK).forEach(x => x.questions.forEach(q => { dups[q.q] = (dups[q.q] || 0) + 1; }));
-Object.entries(dups).filter(([, n]) => n > 1).forEach(([q]) => errors.push('duplicate question text: ' + q.slice(0, 60)));
+// A question may appear twice only as the same question in a module's practice quiz and its marked pool (the reviewers chose
+// this for Module 01); that question then shows its answer in practice. Anywhere else a repeat is an error.
+const seenQ = {};
+Object.keys(BANK).forEach(k => BANK[k].questions.forEach(q => { (seenQ[q.q] = seenQ[q.q] || []).push({ k, q }); }));
+Object.entries(seenQ).filter(([, l]) => l.length > 1).forEach(([t, l]) => {
+  const ok = l.length === 2 && l[0].k.slice(0, 3) === l[1].k.slice(0, 3) && l[0].k !== l[1].k;
+  if (!ok) errors.push('duplicate question text: ' + t.slice(0, 60));
+  else warnings.push(`${l[0].k.slice(0, 3)}: practice question also in the marked pool (its answer is shown in practice): ${t.slice(0, 50)}`);
+});
 
 warnings.forEach(w => console.warn('warning: ' + w));
 errors.forEach(e => console.error('error: ' + e));

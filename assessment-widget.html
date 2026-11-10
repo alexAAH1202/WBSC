@@ -501,6 +501,10 @@
   .quiz-dot.done{background:var(--navy-950);border-color:var(--navy-950);}
   .quiz-dot.current{background:var(--gold-500);border-color:var(--gold-500);}
   .quiz-body{padding:26px 30px 32px;}
+  .quiz-statements{margin:-10px 0 22px;padding-left:1.4em;color:var(--navy-950);line-height:1.45;}
+  .quiz-statements li{margin:0 0 6px;padding-left:4px;}
+  .quiz-statements[hidden]{display:none;}
+  .quiz-review ol.stm{margin:4px 0 4px 1.2em;}
   .quiz-question{font-family:var(--font-display);font-weight:700;font-size:1.15rem;color:var(--navy-950);margin-bottom:22px;line-height:1.35;}
   .quiz-question:focus{outline:none;}   /* focus is moved here for screen readers; it is not a control */
   .quiz-options{display:flex;flex-direction:column;gap:12px;margin-bottom:24px;}
@@ -805,6 +809,7 @@
           </div>
           <div class="quiz-body">
             <p class="quiz-question" id="quiz-question"></p>
+            <ol class="quiz-statements" id="quiz-statements" hidden></ol>
             <div class="quiz-options" id="quiz-options"></div>
             <div class="quiz-feedback" id="quiz-feedback" style="display:none;" aria-live="polite">
               <div class="quiz-feedback-head" id="quiz-feedback-head"></div>
@@ -1038,7 +1043,7 @@
           <div class="assess-card mkc">
             <span class="mode-badge practice">Practice</span>
             <span class="assess-kind">Manual Knowledge Check</span>
-            <span class="assess-qcount">8 Questions</span>
+            <span class="assess-qcount">5 Questions</span>
             <p class="assess-desc">Optional practice on Appendix 5b (the Three-Umpire System) after reading the manual.</p>
             <p class="mode-note practice">Not marked and not recorded. Try it as often as you like.</p>
             <a class="btn btn-outline-navy assess-start-link" href="#assessment-m07-mkc" data-assessment="m07-mkc">Start Practice Quiz</a>
@@ -1066,7 +1071,7 @@
           <div class="assess-card mkc">
             <span class="mode-badge practice">Practice</span>
             <span class="assess-kind">Manual Knowledge Check</span>
-            <span class="assess-qcount">8 Questions</span>
+            <span class="assess-qcount">5 Questions</span>
             <p class="assess-desc">Optional practice on Appendix 5c &amp; d (the Four, Five and Six-Umpire Systems) after reading the manual.</p>
             <p class="mode-note practice">Not marked and not recorded. Try it as often as you like.</p>
             <a class="btn btn-outline-navy assess-start-link" href="#assessment-m08-mkc" data-assessment="m08-mkc">Start Practice Quiz</a>
@@ -1148,12 +1153,13 @@
   function shuffleOptions(q, idx){
     var v = qview(currentKey, idx);
     var order = q.options.map(function(_, i){ return i; });
-    for (var i = order.length - 1; i > 0; i--) {
+    // shuffle: false keeps the written order (for options such as "All of the above").
+    for (var i = q.shuffle === false ? 0 : order.length - 1; i > 0; i--) {
       var j = Math.floor(Math.random() * (i + 1));
       var t = order[i]; order[i] = order[j]; order[j] = t;
     }
     return {
-      q: v.q, ref: v.ref, why: v.why, base: q.q,
+      q: v.q, statements: v.statements, ref: v.ref, why: v.why, base: q.q,
       options: order.map(function(i){ return v.options[i]; }),
       correct: order.indexOf(q.correct),   // marked assessments have no answer key in the page: this is -1 there, and the server marks
       order: order, fp: fingerprint(q)
@@ -1163,7 +1169,7 @@
   // Rebuilds a question with a stored option order (used when resuming an unfinished attempt).
   function applyOrder(q, order, idx){
     var v = qview(currentKey, idx);
-    return { q: v.q, ref: v.ref, why: v.why, base: q.q, options: order.map(function(i){ return v.options[i]; }), correct: order.indexOf(q.correct), order: order, fp: fingerprint(q) };
+    return { q: v.q, statements: v.statements, ref: v.ref, why: v.why, base: q.q, options: order.map(function(i){ return v.options[i]; }), correct: order.indexOf(q.correct), order: order, fp: fingerprint(q) };
   }
 
   // RESUME: a marked attempt that is stopped part-way is saved so it can be continued: the questions drawn, the question
@@ -1234,9 +1240,21 @@
     var last = [];
     try { var sv = JSON.parse(localStorage.getItem('wbscSeen:' + key) || 'null'); if (sv && session && sv.email === session.email) last = sv.qi || []; } catch (e) {}
     function shuffled(a){ a = a.slice(); for (var x = a.length - 1; x > 0; x--) { var y = Math.floor(Math.random() * (x + 1)); var t = a[x]; a[x] = a[y]; a[y] = t; } return a; }
-    var fresh = shuffled(eligible.filter(function(k){ return last.indexOf(k) < 0; }));
-    var old = shuffled(eligible.filter(function(k){ return last.indexOf(k) >= 0; }));
-    var chosen = fresh.concat(old).slice(0, want).sort(function(a, b){ return a - b; });
+    function take(list, n){
+      var fresh = shuffled(list.filter(function(k){ return last.indexOf(k) < 0; }));
+      var old = shuffled(list.filter(function(k){ return last.indexOf(k) >= 0; }));
+      return fresh.concat(old).slice(0, n);
+    }
+    var chosen = [];
+    if (bank.drawGroups) {
+      // e.g. Appendix 5c & d: { '5d': 1 } asks 1 question marked group '5d' and the rest from the ungrouped questions.
+      var used = 0;
+      Object.keys(bank.drawGroups).forEach(function(g){
+        chosen = chosen.concat(take(eligible.filter(function(k){ return bank.questions[k].group === g; }), bank.drawGroups[g])); used += bank.drawGroups[g];
+      });
+      chosen = chosen.concat(take(eligible.filter(function(k){ return !bank.questions[k].group; }), want - used));
+    } else chosen = take(eligible, want);
+    chosen.sort(function(a, b){ return a - b; });
     try { localStorage.setItem('wbscSeen:' + key, JSON.stringify({ email: session ? session.email : '', qi: chosen })); } catch (e) {}
     return chosen;
   }
@@ -1258,6 +1276,7 @@
     progressLabel: document.getElementById('quiz-progress-label'),
     dots: document.getElementById('quiz-dots'),
     question: document.getElementById('quiz-question'),
+    statements: document.getElementById('quiz-statements'),
     options: document.getElementById('quiz-options'),
     feedback: document.getElementById('quiz-feedback'),
     feedbackHead: document.getElementById('quiz-feedback-head'),
@@ -1302,6 +1321,10 @@
     els.progressLabel.textContent = T('Question {n} of {total}', { n: state.index + 1, total: QUESTIONS.length });
     buildDots();
     els.question.textContent = q.q;
+    // "Which statements…" questions list numbered statements under the question; the answer options refer to them by number.
+    els.statements.innerHTML = '';
+    (q.statements || []).forEach(function(t){ var li = document.createElement('li'); li.textContent = t; els.statements.appendChild(li); });
+    els.statements.hidden = !(q.statements && q.statements.length);
     if (state.index > 0) { els.question.tabIndex = -1; els.question.focus({ preventScroll: false }); }   // a new question: announce it and keep the keyboard place
     els.options.innerHTML = '';
     els.options.setAttribute('role', 'radiogroup');
@@ -1458,7 +1481,8 @@
     missed.forEach(function(m){
       var q = qview(currentKey, m[0]), ans = q.options && q.options[m[1]];
       if (ans === undefined) return;
-      h += '<li>' + escHtml(q.q) + '<br><span class="ans">' + escHtml(T('Correct answer: {answer}', { answer: ans })) + '</span><br><span class="rf">' + escHtml(q.ref) + '</span>' + (q.why ? '<br>' + escHtml(q.why) : '') + '</li>';
+      var stm = q.statements && q.statements.length ? '<ol class="stm">' + q.statements.map(function(t){ return '<li>' + escHtml(t) + '</li>'; }).join('') + '</ol>' : '<br>';
+      h += '<li>' + escHtml(q.q) + stm + '<span class="ans">' + escHtml(T('Correct answer: {answer}', { answer: ans })) + '</span><br><span class="rf">' + escHtml(q.ref) + '</span>' + (q.why ? '<br>' + escHtml(q.why) : '') + '</li>';
     });
     els.review.innerHTML = h + '</ol>';
     els.review.style.display = '';
@@ -1503,14 +1527,16 @@
     var base = QUIZ_BANK[key].questions[i];
     var tr = LANG !== 'en' && window.WBSC_QDICT && WBSC_QDICT[LANG] && WBSC_QDICT[LANG][key] && WBSC_QDICT[LANG][key].questions && WBSC_QDICT[LANG][key].questions[i];
     if (!tr || !tr.options || tr.options.length !== base.options.length) return base;
-    return { q: tr.q || base.q, options: tr.options, ref: tr.ref || base.ref, why: tr.why || base.why, correct: base.correct };
+    var st = base.statements && tr.statements && tr.statements.length === base.statements.length ? tr.statements : base.statements;
+    return { q: tr.q || base.q, statements: st, options: tr.options, ref: tr.ref || base.ref, why: tr.why || base.why, correct: base.correct, shuffle: base.shuffle };
   }
   // True if question i of `key` can be shown in the current language (English always can).
   function hasTranslation(key, i){
     if (LANG === 'en') return true;
     var base = QUIZ_BANK[key].questions[i];
     var tr = window.WBSC_QDICT && WBSC_QDICT[LANG] && WBSC_QDICT[LANG][key] && WBSC_QDICT[LANG][key].questions && WBSC_QDICT[LANG][key].questions[i];
-    return !!(tr && tr.q && tr.options && tr.options.length === base.options.length && (!base.why || tr.why));
+    return !!(tr && tr.q && tr.options && tr.options.length === base.options.length && (!base.why || tr.why) &&
+      (!base.statements || (tr.statements && tr.statements.length === base.statements.length)));
   }
   function assessmentMeta(key){
     var b = QUIZ_BANK[key], tr = LANG !== 'en' && window.WBSC_QDICT && WBSC_QDICT[LANG] && WBSC_QDICT[LANG][key];
@@ -1537,7 +1563,7 @@
     if (!m) return '';
     try { return new Date(+m[1], +m[2] - 1, +m[3]).toLocaleDateString(LANG === 'en' ? 'en-GB' : LANG, { day: 'numeric', month: 'long', year: 'numeric' }); } catch (e) { return iso; }
   }
-  var CONTACT_EMAIL = 'umpiredirector@wbscoceania.org';
+  var CONTACT_EMAIL = 'wbsc.fp.umpire.mechanics@gmail.com';
   var LOOKUP_TIMEOUT_MS = 8000;
 
   var AUTH_TIMEOUT_MS = 20000;

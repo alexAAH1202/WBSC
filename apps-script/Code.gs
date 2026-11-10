@@ -41,9 +41,14 @@
 // ------------------------------------------------------------------ settings
 
 // Who is notified of every completed assessment and of program completions.
-var DIRECTOR_EMAIL = 'umpiredirector@wbscoceania.org';
+var DIRECTOR_EMAIL = 'wbsc.fp.umpire.mechanics@gmail.com';
 // Shown to a learner who has used all their attempts.
-var CONTACT_EMAIL = 'umpiredirector@wbscoceania.org';
+var CONTACT_EMAIL = 'wbsc.fp.umpire.mechanics@gmail.com';
+// Emails are sent by the Google account that owns and deploys this script. To have them come FROM the address above, the
+// script (and its Sheet) must belong to that account; otherwise learners' replies still go to it (reply-to) and the sender
+// name shown is MAIL_FROM_NAME.
+var MAIL_FROM_NAME = 'WBSC FP Umpire Mechanics';
+function mailOptions_() { return { name: MAIL_FROM_NAME, replyTo: CONTACT_EMAIL }; }
 
 var SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/158AIqlbHMG7E55nMTk5r8wtZ2ujpYZpybIOmL95tCwI/edit';
 
@@ -408,6 +413,7 @@ function handleEmailCertificate_(p) {
     var lg = lang_(p.lang);
     var blob = Utilities.newBlob(bytes, 'application/pdf', 'WBSC-Umpire-Mechanics-2026-Certificate.pdf');
     MailApp.sendEmail({
+      name: MAIL_FROM_NAME, replyTo: CONTACT_EMAIL,
       to: email,
       subject: et_(lg, 'certSubject'),
       body: et_(lg, 'certBody', { name: info.name, date: info.date, email: CONTACT_EMAIL }),
@@ -482,7 +488,7 @@ function handleSendCode_(p) {
     cachePutJson_('code:' + sha_(email), { h: sha_(code + ':' + email), tries: 0 }, CODE_TTL_S);
     var lg = lang_(p.lang);
     MailApp.sendEmail(email, et_(lg, 'codeSubject', { code: code }),
-      et_(lg, 'codeBody', { code: code, min: Math.round(CODE_TTL_S / 60) }));
+      et_(lg, 'codeBody', { code: code, min: Math.round(CODE_TTL_S / 60) }), mailOptions_());
     msg.success = true;
     msg.expiresIn = CODE_TTL_S;
   } catch (err) {
@@ -1140,7 +1146,7 @@ function sendReceipt_(c, attemptNumber, summary) {
     (certModulesPassed_(summary) ? et_(lg, 'certReady') + '\n\n' : '') +
     et_(lg, 'progress') + '\n' + summaryLines_(summary, lg) + '\n\n' +
     et_(lg, 'footer', { email: CONTACT_EMAIL });
-  MailApp.sendEmail(c.email, et_(lg, 'receiptSubject', { module: c.module, result: result }), body);
+  MailApp.sendEmail(c.email, et_(lg, 'receiptSubject', { module: c.module, result: result }), body, mailOptions_());
 }
 
 // To the Director, once, when a learner passes the last required module.

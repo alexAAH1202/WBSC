@@ -27,7 +27,7 @@ for (const lang of all) {
     const a = out[p[0]] = out[p[0]] || { questions: [] };
     if (p[1] === 'title' || p[1] === 'nextLabel') { a[p[1]] = t; continue; }
     const q = a.questions[+p[1]] = a.questions[+p[1]] || { options: [] };
-    if (p[2] === 'q') q.q = t; else if (p[2] === 'why') q.why = t; else q.options[+p[2].slice(1)] = t;
+    if (p[2] === 'q') q.q = t; else if (p[2] === 'why') q.why = t; else if (p[2][0] === 's') (q.statements = q.statements || [])[+p[2].slice(1)] = t; else q.options[+p[2].slice(1)] = t;
   }
   for (const id of tr.keys()) if (!EN.has(id)) errors.push('unknown id ' + id);
   fs.writeFileSync(path.join(root, 'i18n', 'q-' + lang + '.js'),
