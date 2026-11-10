@@ -1,82 +1,7 @@
 m01-mkc.title	Guía de Aprendizaje de Fundamentos
 m01-mkc.nextLabel	Continúa con las presentaciones - De los Fundamentos al Apéndice 4
-m01-mkc.0.q	En el acrónimo del árbitro de la Guía de Aprendizaje de Fundamentos («So, you want to be an umpire…»), ¿qué significa la letra M?
-m01-mkc.0.o0	Motivated (motivado) - mantener el entusiasmo en cada partido
-m01-mkc.0.o1	Methodical (metódico) - seguir la misma rutina en cada partido
-m01-mkc.0.o2	Managed (dirigido) - aceptar la corrección de los entrenadores sin cuestionarla
-m01-mkc.0.o3	Mobile (móvil) - mantener el dinamismo y estar en posición
-m01-mkc.1.q	El Módulo 1 describe varias funciones que desempeña un árbitro competente. ¿Cuál de las siguientes es una de ellas?
-m01-mkc.1.o0	Estadístico - llevar el recuento de lanzamientos de ambos equipos
-m01-mkc.1.o1	Entrenador - aconsejar a los jugadores cómo jugar su posición
-m01-mkc.1.o2	Comunicador - hablar y escuchar de forma eficaz con los compañeros, los jugadores y los entrenadores
-m01-mkc.1.o3	Enlace con patrocinadores - gestionar los acuerdos de patrocinio
-m01-mkc.2.q	Según el Código Ético del Árbitro de la WBSC, ¿con cuánta antelación respecto a la hora programada del partido debe un árbitro cumplir su designación y presentarse en la sede?
-m01-mkc.2.o0	60 minutos
-m01-mkc.2.o1	45 minutos
-m01-mkc.2.o2	30 minutos
-m01-mkc.2.o3	90 minutos
-m01-mkc.3.q	El Código Ético establece que los árbitros deben ser justos e imparciales en sus decisiones. ¿Qué dice concretamente que significa esto?
-m01-mkc.3.o0	Dar el beneficio de la duda al equipo local
-m01-mkc.3.o1	Decidir sin tener en cuenta el marcador
-m01-mkc.3.o2	Consultar a ambos entrenadores principales antes de las jugadas dudosas
-m01-mkc.3.o3	Favorecer al equipo al que le quedan menos desafíos
-m01-mkc.4.q	La Teoría de los Cuatro Elementos Esenciales (FEET) del Módulo 3 enumera cuatro cosas que todo árbitro debe mantener a la vista. ¿Cuál de las siguientes es una de ellas?
-m01-mkc.4.o0	El marcador
-m01-mkc.4.o1	El dugout
-m01-mkc.4.o2	El círculo de espera
-m01-mkc.4.o3	La base o la zona de la jugada
 m01-pca.title	Guía de Aprendizaje de Fundamentos
 m01-pca.nextLabel	Continúa con el Módulo 02 - Mecánica de campo de un árbitro
-m01-pca.0.q	Durante la entrada del Equipo A, el entrenador principal va al montículo para una cuarta conferencia defensiva en un único partido de 7 entradas para hablar de la estrategia de lanzamiento. Según la guía, ¿cuál es el resultado correcto?
-m01-pca.0.o0	Se declara ilegal al lanzador porque el equipo ha superado las tres conferencias defensivas permitidas por partido.
-m01-pca.0.o1	No ocurre nada: las conferencias defensivas son ilimitadas siempre que no sean para comprobar una lesión.
-m01-pca.0.o2	El entrenador principal es expulsado automáticamente por superar el límite de conferencias.
-m01-pca.0.o3	La conferencia simplemente no se contabiliza por ser la cuarta del partido.
-m01-pca.1.q	Después del partido, un árbitro de base que falló una jugada ajustada en segunda quiere revisarla con el equipo arbitral. Según el enfoque de la guía para las reuniones posteriores, ¿cuál es la forma correcta de abordarlo?
-m01-pca.1.o0	Evitar mencionar la jugada para no avergonzar al árbitro que la falló.
-m01-pca.1.o1	Informar de la jugada fallada directamente al UIC sin hablarlo antes con el equipo arbitral.
-m01-pca.1.o2	Confrontar de inmediato al árbitro por el error en el campo antes de irse.
-m01-pca.1.o3	Hablar de la jugada con honestidad y respeto en la reunión posterior, centrarse en aprender en lugar de culpar y pedir permiso antes de cuestionar la decisión de otro árbitro.
-m01-pca.2.q	Durante un partido se oyen truenos, pero no se ha visto ningún relámpago. Según el protocolo de seguridad ante tormentas de la guía, ¿qué debe hacer el árbitro?
-m01-pca.2.o0	Continuar el juego, ya que solo ver un relámpago, y no solo oír truenos, exige suspenderlo.
-m01-pca.2.o1	Pedir de inmediato «Time», suspender el juego y ordenar que todos los jugadores abandonen el campo.
-m01-pca.2.o2	Esperar y vigilar unos minutos más antes de decidir.
-m01-pca.2.o3	Continuar el juego, pero alejar del campo todo el equipamiento metálico.
-m01-pca.3.q	Un bateador está muy dentro del cajón de bateo, encimado al plato, y es golpeado por un lanzamiento que estaba realmente dentro de la zona de strike. Según la guía, ¿cuál es el fallo correcto?
-m01-pca.3.o0	Se concede la primera base al bateador, ya que cualquier bateador golpeado por un lanzamiento va a primera.
-m01-pca.3.o1	El árbitro debe preguntar al bateador si intentó esquivar el lanzamiento antes de dictaminar nada.
-m01-pca.3.o2	No se concede la primera base al bateador, porque no se puede conceder una base a un bateador golpeado por un lanzamiento que estaba en la zona de strike.
-m01-pca.3.o3	Se dictamina balk en el lanzamiento y todos los corredores avanzan una base.
-m01-pca.4.q	En una jugada forzada en segunda base, el árbitro de base queda de pie justo encima de la base cuando llegan el tiro y el corredor. Según los principios de posicionamiento de la guía, ¿cuál es el problema y desde dónde debió trabajar el árbitro?
-m01-pca.4.o0	No hay problema: justo encima de la base se obtiene la visión más clara de una jugada forzada.
-m01-pca.4.o1	El árbitro debió usar la Teoría Dentro-Fuera, ya que esa solo se aplica a los fly.
-m01-pca.4.o2	El árbitro debió salir hacia el outfield en lugar de quedarse en el infield.
-m01-pca.4.o3	Desde justo encima de la base, la pelota, el fildeador, el corredor y el borde de entrada pueden parecer alineados, lo que dificulta juzgar el momento; el árbitro debe trabajar justo antes del borde de entrada y con un ligero ángulo.
-m01-pca.5.q	Se batea con fuerza una pelota hacia el hueco del outfield. Según la Teoría Dentro-Fuera, ¿hacia dónde debe moverse el árbitro de base para mantener los Cuatro Elementos Esenciales frente a él?
-m01-pca.5.o0	Quedarse fuera del diamante, más allá de las líneas de base.
-m01-pca.5.o1	Moverse directamente hacia el plato, sin importar dónde esté la pelota.
-m01-pca.5.o2	Moverse dentro del diamante, entre las líneas de base.
-m01-pca.5.o3	Permanecer en la zona de espera hasta que se fildee la pelota.
-m01-pca.6.q	Un árbitro de base ha salido al outfield para dictaminar sobre un fly. Cuando el tiro regresa y se desarrolla una jugada en segunda base, que ya cubre otro árbitro, ¿qué debe hacer el árbitro que salió?
-m01-pca.6.o0	Volver hacia el infield para ayudar a cubrir la jugada en segunda base.
-m01-pca.6.o1	Quedarse fuera y dejar que terminen todas las jugadas, ya que regresar podría provocar que dos árbitros dictaminen la misma jugada.
-m01-pca.6.o2	Regresar de inmediato a su posición inicial sin importar las demás jugadas.
-m01-pca.6.o3	Pedir tiempo para reordenar las posiciones de los árbitros.
-m01-pca.7.q	Un entrenador principal ya ha recibido una advertencia por protestar una decisión de swing a medias, pero sigue protestando bolas y strikes y dirige un insulto personal al árbitro. Según la guía, ¿cuál es la respuesta adecuada?
-m01-pca.7.o0	Expulsar al entrenador siguiendo el procedimiento de expulsión: esperar a que se detenga el juego, ser decidido y usar la señal de expulsión.
-m01-pca.7.o1	Ignorar los comentarios y continuar el partido para evitar que se agrave.
-m01-pca.7.o2	Dar una segunda advertencia antes de tomar cualquier otra medida.
-m01-pca.7.o3	Declarar de inmediato el partido perdido por incomparecencia.
-m01-pca.8.q	Un entrenador quiere presentar una protesta porque los árbitros aplicaron mal una regla de sustitución en la media entrada anterior, pero no lo plantea hasta que ya se ha lanzado una pelota en la media entrada siguiente. Según la guía, ¿es válida esta protesta?
-m01-pca.8.o0	Sí: la aplicación errónea de una regla es siempre un motivo válido de protesta, sin importar el momento.
-m01-pca.8.o1	No: aunque aplicar mal una regla es un motivo válido de protesta, no se dio aviso antes del siguiente lanzamiento como se exige.
-m01-pca.8.o2	Sí, pero solo si el entrenador la presenta por escrito en un plazo de 48 horas.
-m01-pca.8.o3	No: las disputas sobre las reglas de sustitución nunca pueden protestarse en ninguna circunstancia.
-m01-pca.9.q	Con un corredor en primera y un out, el bateador hace swing y falla un tercer strike que el receptor no atrapa limpiamente. Según la guía, ¿qué debe hacer el árbitro de home?
-m01-pca.9.o0	Decir con claridad «Strike three... Out!», porque el bateador queda automáticamente fuera por regla en esta situación, y reforzar la decisión si el bateador echa a correr hacia primera.
-m01-pca.9.o1	Señalar de inmediato safe, ya que la pelota no fue atrapada.
-m01-pca.9.o2	No decir nada, ya que se espera que el bateador sepa que la pelota no fue atrapada.
-m01-pca.9.o3	Esperar a que el equipo a la defensiva apele antes de dictaminar nada.
 m02-mkc.title	Fundamentos - Mecánica de campo de un árbitro
 m02-mkc.nextLabel	Continúa con las presentaciones - De los Fundamentos al Apéndice 4
 m02-mkc.0.q	Según la descripción general del Sistema de Un Árbitro, ¿cuáles son los «Cuatro Elementos Esenciales» que el árbitro debe intentar mantener siempre a la vista?
@@ -158,162 +83,12 @@ m02-pca.9.o2	Mirar siempre al lanzador, sin importar dónde se desarrolle la jug
 m02-pca.9.o3	Mantener siempre una distancia fija respecto a la base
 m03-mkc.title	Fundamentos - Mecánica de campo de dos árbitros
 m03-mkc.nextLabel	Continúa con las presentaciones - De los Fundamentos al Apéndice 4
-m03-mkc.0.q	Según el manual del Sistema de Dos Árbitros, ¿cuál de los siguientes NO es uno de los «Cuatro Elementos Esenciales» que un árbitro debe mantener sin obstrucciones a la vista?
-m03-mkc.0.o0	La pelota
-m03-mkc.0.o1	El marcador
-m03-mkc.0.o2	Los jugadores a la ofensiva
-m03-mkc.0.o3	Los jugadores a la defensiva
-m03-mkc.1.q	Según el Principio de División del Sistema de Dos Árbitros, ¿qué árbitro es responsable de las decisiones en home y en tercera base en circunstancias normales?
-m03-mkc.1.o0	Ambos árbitros conjuntamente
-m03-mkc.1.o1	El árbitro de base
-m03-mkc.1.o2	El árbitro que llegue primero
-m03-mkc.1.o3	El árbitro de home
-m03-mkc.2.q	Según el Principio Infield/Outfield, ¿hacia dónde se mueve el árbitro de base cuando la pelota se batea al outfield?
-m03-mkc.2.o0	Hacia el infield
-m03-mkc.2.o1	Más adentro del outfield, hacia la pelota
-m03-mkc.2.o2	A una posición sobre la línea de foul
-m03-mkc.2.o3	Detrás del plato
-m03-mkc.3.q	¿Cuál es la razón de ser del Principio del Corredor Adelantado en el Sistema de Dos Árbitros?
-m03-mkc.3.o0	El corredor adelantado es siempre el más rápido en base y necesita una supervisión más cercana
-m03-mkc.3.o1	El árbitro de base siempre debe colocarse más cerca de segunda base, sin importar los corredores
-m03-mkc.3.o2	El árbitro de base se coloca con el corredor adelantado porque se espera que el receptor intente una jugada de pickoff sobre ese corredor
-m03-mkc.3.o3	El árbitro de home delega la cobertura del corredor adelantado para evitar la fatiga
-m03-mkc.4.q	Sin corredores en base, ¿cuál es la posición inicial del árbitro de base según el manual?
-m03-mkc.4.o0	4-5 metros (15 pies) detrás de la línea de base, en territorio fair
-m03-mkc.4.o1	Directamente detrás de la placa del lanzador, de cara al plato
-m03-mkc.4.o2	3,5 metros (10-12 pies) detrás de primera base, sobre la línea de foul
-m03-mkc.4.o3	5,5 metros (18 pies) detrás de primera base en territorio de foul, a 150 mm (6 pulgadas) de la línea
 m03-pca.title	Fundamentos - Mecánica de campo de dos árbitros
 m03-pca.nextLabel	Continúa con el Módulo 04 - Mecánica de campo de tres árbitros
-m03-pca.0.q	Sin corredores en base, el bateador batea un rodado rutinario al shortstop, que tira a primera base. ¿Qué árbitro es responsable de la decisión en primera base?
-m03-pca.0.o0	El árbitro de home, porque es una jugada forzada
-m03-pca.0.o1	El árbitro que esté físicamente más cerca de la base
-m03-pca.0.o2	El árbitro de base, que dictamina todas las jugadas del primer tiro en las jugadas de base
-m03-pca.0.o3	El árbitro de home, porque la bola bateada cayó en territorio fair
-m03-pca.1.q	Con un corredor en primera base, el bateador batea un rodado que se convierte en un posible doble play. Según el manual, ¿qué debe hacer el árbitro de base?
-m03-pca.1.o0	Anticipar el doble play, moverse rápidamente hacia la base donde se hará la primera jugada y dictaminar todas las jugadas del primer tiro
-m03-pca.1.o1	Permanecer en la posición de espera en primera base hasta que termine el tiro
-m03-pca.1.o2	Moverse de inmediato a tercera base para cubrir el avance de R1
-m03-pca.1.o3	Ceder la cobertura de primera base al árbitro de home
-m03-pca.2.q	Con un corredor en primera base, el bateador batea un fly al outfield que es atrapado. ¿Qué árbitro es responsable de la decisión del tag-up en primera base?
-m03-pca.2.o0	El árbitro de home
-m03-pca.2.o1	El árbitro de base
-m03-pca.2.o2	Ambos árbitros conjuntamente
-m03-pca.2.o3	Ninguno: en los fly atrapados no se juzgan los tag-ups
-m03-pca.3.q	Con corredores en primera y segunda base, R2 intenta robar tercera base en el lanzamiento. Según las excepciones al Principio de División, ¿qué árbitro tiene la decisión en tercera base?
-m03-pca.3.o0	El árbitro de home, según la regla general del Principio de División para tercera base
-m03-pca.3.o1	El árbitro situado más cerca del plato
-m03-pca.3.o2	El árbitro que tenga el ángulo más claro en ese momento
-m03-pca.3.o3	El árbitro de base
-m03-pca.4.q	Con corredores en segunda y tercera base, el bateador batea un fly profundo al outfield. Según el manual, ¿qué corredor lleva el árbitro de base hasta tercera base en esta jugada?
-m03-pca.4.o0	R2, el corredor que estaba originalmente en segunda base
-m03-pca.4.o1	El bateador-corredor
-m03-pca.4.o2	R3, el corredor que estaba originalmente en tercera base
-m03-pca.4.o3	Ninguno: el árbitro de home lleva a todos los corredores hasta tercera base en los batazos al outfield
-m03-pca.5.q	Con las bases llenas, el bateador batea un rodado a un jugador de cuadro. Según la nota del manual para esta situación, ¿cómo debe tratarse una jugada en cualquier base?
-m03-pca.5.o0	Como una jugada de tag que obliga al árbitro a moverse a 3,5 metros
-m03-pca.5.o1	Solo como un juicio de fair/foul
-m03-pca.5.o2	Como algo que requiere una apelación defensiva
-m03-pca.5.o3	Como una jugada forzada
-m03-pca.6.q	El bateador batea una pelota al outfield y, como bateador-corredor, avanza hasta tercera base. Según las excepciones al Principio de División, ¿quién dictamina sobre el bateador-corredor en tercera base?
-m03-pca.6.o0	El árbitro de home, ya que las decisiones en tercera base siempre corresponden al árbitro de home según el Principio de División
-m03-pca.6.o1	El árbitro de base
-m03-pca.6.o2	El árbitro que haya iniciado la jugada más cerca de tercera base
-m03-pca.6.o3	El árbitro de home, porque el árbitro de base solo cubre las decisiones de primera y segunda base
-m03-pca.7.q	Con un corredor solo en segunda base y antes del lanzamiento, ¿dónde debe colocarse el árbitro de base?
-m03-pca.7.o0	5,5 metros (18 pies) detrás de primera base, en territorio de foul
-m03-pca.7.o1	Detrás y al lado del jugador de segunda base, inclinado hacia primera base
-m03-pca.7.o2	Detrás y al lado del shortstop, inclinado hacia el corredor de segunda base, con vista del lanzador, del corredor y de la zona del plato
-m03-pca.7.o3	En el césped del outfield, detrás de segunda base
-m03-pca.8.q	El árbitro de base está colocado para una posible jugada en primera base y queda claro que el tiro requerirá un tag en lugar de un force. Según el manual, ¿qué ajuste debe hacer el árbitro de base?
-m03-pca.8.o0	Acercarse a unos 3,5 metros (10-12 pies) para ver y dictaminar la jugada
-m03-pca.8.o1	Permanecer a 5,5 metros (18 pies), ya que esa distancia se aplica a todas las decisiones
-m03-pca.8.o2	Moverse a 4-5 metros (15 pies) detrás de la línea de base
-m03-pca.8.o3	Retroceder más hacia el territorio de foul para obtener un ángulo más amplio
-m03-pca.9.q	Con corredores en primera y tercera base, se batea un rodado al infield. La defensa hace la primera jugada (un force en segunda base) y luego tira a home intentando sacar al corredor de tercera. ¿Qué árbitro es responsable de dictaminar esta segunda jugada posterior en home?
-m03-pca.9.o0	El árbitro de base, ya que dictamina todas las jugadas, incluidos los tiros siguientes
-m03-pca.9.o1	Ambos árbitros deben dictaminarla simultáneamente
-m03-pca.9.o2	El árbitro que esté colocado en territorio fair
-m03-pca.9.o3	El árbitro de home, que es responsable de las jugadas sucesivas en tercera base o en home tras la primera jugada del infield
 m04-mkc.title	Fundamentos - Mecánica de campo de tres árbitros
 m04-mkc.nextLabel	Continúa con las presentaciones - De los Fundamentos al Apéndice 4
-m04-mkc.0.q	Según los «Cuatro Elementos Esenciales» del manual del Sistema de Tres Árbitros, ¿cuáles son las cuatro cosas que un árbitro debe mantener sin obstrucciones a la vista para tener la jugada frente a él?
-m04-mkc.0.o0	La pelota, los jugadores a la defensiva, los jugadores a la ofensiva y la base o la zona de la jugada
-m04-mkc.0.o1	La pelota, el lanzador, el receptor y la base
-m04-mkc.0.o2	La pelota, el corredor, el entrenador y el marcador
-m04-mkc.0.o3	La pelota, el fildeador, el dugout y la línea de foul
-m04-mkc.1.q	Según el Principio de División de los «Dos Principios Básicos de Cobertura» del Sistema de Tres Árbitros, cuando un árbitro de base sale a un fly, ¿qué árbitro dictamina todas las jugadas en home y en tercera base?
-m04-mkc.1.o0	El árbitro de base que permanece
-m04-mkc.1.o1	El árbitro de home
-m04-mkc.1.o2	El árbitro que esté más cerca de tercera base
-m04-mkc.1.o3	Ambos árbitros conjuntamente
-m04-mkc.2.q	¿Qué significa «despejar al receptor» (clearing the catcher) para el árbitro de home, según el manual del Sistema de Tres Árbitros?
-m04-mkc.2.o0	Correr hasta la malla de fondo para comprobar si hay interferencia
-m04-mkc.2.o1	Indicar al receptor que se levante antes de cada lanzamiento
-m04-mkc.2.o2	Dar un pequeño paso a la izquierda del árbitro de home para salir de detrás del receptor
-m04-mkc.2.o3	Colocarse directamente detrás del receptor para obtener el mejor ángulo
-m04-mkc.3.q	En la Posición de Espera del Árbitro de Base descrita en este manual, ¿cuándo debe adoptar el árbitro la posición de «listo», flexionando ligeramente las rodillas y apoyando el peso en la parte delantera de los pies?
-m04-mkc.3.o0	En cuanto el lanzador adopta la posición de set
-m04-mkc.3.o1	Durante la reunión previa al partido
-m04-mkc.3.o2	Solo después de que la pelota esté en juego
-m04-mkc.3.o3	Cuando el lanzador inicia el lanzamiento
-m04-mkc.4.q	Según el Principio Infield/Outfield del Sistema de Tres Árbitros, ¿qué debe hacer un árbitro de base que NO sale a un fly una vez que la pelota está en el outfield?
-m04-mkc.4.o0	Moverse más allá de la línea de base para respaldar la jugada
-m04-mkc.4.o1	Permanecer en la posición de espera en su base original
-m04-mkc.4.o2	Rotar hacia el interior del diamante
-m04-mkc.4.o3	Seguir la pelota hacia la cerca del outfield
 m04-pca.title	Fundamentos - Mecánica de campo de tres árbitros
 m04-pca.nextLabel	Continúa con el Módulo 05 - Apéndice 4: Filosofías de posicionamiento de élite
-m04-pca.0.q	Sin corredores en base, se batea un rodado al infield que produce una posible jugada forzada en primera base. Si el bateador-corredor es declarado safe en primera y continúa hacia segunda base, ¿qué árbitro ha rotado a la posición para dictaminar esa jugada, según el manual del Sistema de Tres Árbitros?
-m04-pca.0.o0	El árbitro de home, siguiendo al corredor hacia segunda base
-m04-pca.0.o1	U1, que se queda en primera base y cubre también segunda
-m04-pca.0.o2	U3, que rota a segunda base alineado con el árbitro de home
-m04-pca.0.o3	U3 permanece en tercera base y no rota
-m04-pca.1.q	Sin corredores en base, U1 sale a un fly al outfield. Si la pelota no es atrapada, ¿qué árbitro es responsable de llevar al bateador-corredor hasta segunda base y rodear hasta tercera?
-m04-pca.1.o0	El árbitro de home
-m04-pca.1.o1	U3
-m04-pca.1.o2	U1 regresa del outfield para llevar al corredor
-m04-pca.1.o3	La cobertura se reparte por igual entre el árbitro de home y U3
-m04-pca.2.q	Con un corredor en primera base, se batea un rodado al infield que presenta un posible doble play. ¿Qué hace U3 en previsión del tiro a segunda base?
-m04-pca.2.o0	Da un paso hacia segunda base para obtener un ángulo sobre el tiro
-m04-pca.2.o1	Se mueve a tercera base para cubrir un posible avance
-m04-pca.2.o2	Permanece en la posición de espera original, fuera de la línea de tercera base
-m04-pca.2.o3	Sale hacia el outfield para respaldar el tiro
-m04-pca.3.q	Con un corredor solo en segunda base, se batea un rodado al infield. ¿Qué árbitro es responsable de las decisiones tanto en primera como en segunda base en esta situación?
-m04-pca.3.o0	U3
-m04-pca.3.o1	El árbitro de home
-m04-pca.3.o2	U1 y U3 se reparten las decisiones
-m04-pca.3.o3	U1
-m04-pca.4.q	Con un corredor solo en tercera base, se batea un rodado al infield. Si U3 no puede liberar a R1 en tercera base (R1 no avanza a home), ¿qué árbitro puede tener que llevar al bateador-corredor a segunda base y dictaminar la jugada?
-m04-pca.4.o0	U1
-m04-pca.4.o1	U3, después de liberar tercera base
-m04-pca.4.o2	El árbitro de home, subiendo por la línea de primera base
-m04-pca.4.o3	Ningún árbitro: la jugada es de pelota muerta
-m04-pca.5.q	Con un corredor en tercera base, U1 sale a un fly. ¿Qué árbitro se mueve a la zona de espera entre home y tercera base para vigilar el tag-up de R1, preparándose a la vez para una posible decisión en home?
-m04-pca.5.o0	U3
-m04-pca.5.o1	El árbitro de home
-m04-pca.5.o2	U1, antes de salir hacia el outfield
-m04-pca.5.o3	Ningún árbitro vigila el tag-up en esta situación
-m04-pca.6.q	Con corredores en primera y segunda base, se batea un rodado al infield que presenta un posible doble play. ¿Qué hace U3 en previsión de que el corredor adelantado (R1) avance desde segunda base?
-m04-pca.6.o0	Se queda en territorio de foul detrás de tercera base
-m04-pca.6.o1	Rota de inmediato hasta tercera base
-m04-pca.6.o2	Se mueve hacia territorio fair aproximadamente un paso, en previsión de una jugada sobre R1
-m04-pca.6.o3	Sale al outfield para respaldar un posible tiro desviado
-m04-pca.7.q	Con corredores en segunda y tercera base, se batea un rodado al infield. Si R1 (el corredor de tercera) avanza hacia home, ¿qué hace U3, según el manual?
-m04-pca.7.o0	Permanece en tercera base sin importar el avance de R1
-m04-pca.7.o1	Sigue a R1 hacia home
-m04-pca.7.o2	Rota de inmediato a primera base
-m04-pca.7.o3	Se mueve hacia territorio fair aproximadamente un paso, en previsión de una jugada sobre R2 que avanza desde segunda base
-m04-pca.8.q	Con un corredor en primera base, la pelota atraviesa el infield hacia el outfield y ningún árbitro sale. Mientras R1 avanza hacia segunda base, ¿hacia dónde rota el árbitro de home en preparación de una posible decisión?
-m04-pca.8.o0	Primera base
-m04-pca.8.o1	Tercera base
-m04-pca.8.o2	El árbitro de home permanece en home
-m04-pca.8.o3	Segunda base, junto a U3
-m04-pca.9.q	Con un corredor en segunda base, la pelota se batea a través del infield hacia el jardín derecho. Según la nota del manual, si existe la posibilidad de una jugada en tercera base con el tiro de regreso, ¿qué debe hacer U3?
-m04-pca.9.o0	Liberarse para cubrir home
-m04-pca.9.o1	Volver a salir más allá de la línea de base, en territorio fair
-m04-pca.9.o2	Permanecer en la línea de foul a la altura de la base
-m04-pca.9.o3	Rotar hacia el interior del diamante
 m05-mkc.title	Apéndice 4: Filosofías de posicionamiento de élite
 m05-mkc.nextLabel	Continúa con las presentaciones - De los Fundamentos al Apéndice 4
 m05-mkc.0.q	Según los Conceptos Clave y el Glosario del Apéndice 4, ¿cuáles son los «Cuatro Elementos Esenciales» que un árbitro debe observar juntos para tomar una decisión precisa?
@@ -395,155 +170,10 @@ m05-pca.9.o2	La Preparación Previa al Lanzamiento y la Cobertura del Outfield, 
 m05-pca.9.o3	El Error de Paralaje, porque el árbitro estaba alineado con el plano equivocado
 m06-mkc.title	Apéndice 5: Mecánica de campo de élite
 m06-mkc.nextLabel	Continúa con las presentaciones - Apéndice 5, Parte A: Conceptos clave
-m06-mkc.0.q	En la Teoría de los Cuatro Elementos Esenciales (FEET) del Apéndice 5a, ¿cuáles son los cuatro elementos que los árbitros deben observar juntos para dictaminar correctamente?
-m06-mkc.0.o0	El lanzador, el receptor, el bateador y el árbitro de base
-m06-mkc.0.o1	La pelota, el jugador defensivo, los jugadores ofensivos y la base o la zona de la jugada
-m06-mkc.0.o2	La zona de strike, el despegue del corredor, el tag y el guante del fildeador
-m06-mkc.0.o3	La posición inicial, la posición de observación, la posición de decisión y la base
-m06-mkc.1.q	Según el Apéndice 5a, ¿a qué distancia aproximada detrás de home se encuentra la posición del Punto del Plato (POP)?
-m06-mkc.1.o0	1-2 metros (3-6 pies)
-m06-mkc.1.o1	6-12 metros (20-40 pies)
-m06-mkc.1.o2	3-5 metros (9-15 pies)
-m06-mkc.1.o3	2-4 metros (6-12 pies)
-m06-mkc.2.q	Según el Apéndice 5a, ¿a qué se refiere el «Backfilling»?
-m06-mkc.2.o0	A un árbitro que despeja al receptor para obtener una vista sin obstrucciones del campo
-m06-mkc.2.o1	A un árbitro que se mueve al borde de entrada de una base para juzgar una jugada de tag
-m06-mkc.2.o2	A un árbitro que rota en sentido contrario para cubrir una posición que no ocupa otro árbitro obligado a cubrir una jugada en otro lugar
-m06-mkc.2.o3	A un árbitro que vuelve a su posición entre entradas cuando termina una jugada
-m06-mkc.3.q	¿Qué finalidad asigna el Apéndice 5a a los Sistemas de Cinco y Seis Árbitros?
-m06-mkc.3.o0	Permitir que dos árbitros dedicados al outfield cubran las responsabilidades de los fly, de modo que los demás árbitros puedan permanecer en el infield y cubrir las bases en todo momento
-m06-mkc.3.o1	Sustituir al árbitro de home por dos árbitros adicionales de outfield
-m06-mkc.3.o2	Eliminar la necesidad de cualquier rotación entre bases
-m06-mkc.3.o3	Permitir que todos los árbitros actúen exclusivamente desde territorio de foul
-m06-mkc.4.q	El Apéndice 5 se divide en cuatro subsecciones (5a-5d). ¿Qué subsección abarca la mecánica del Sistema de Tres Árbitros?
-m06-mkc.4.o0	Apéndice 5a
-m06-mkc.4.o1	Apéndice 5d
-m06-mkc.4.o2	Apéndice 5c y d
-m06-mkc.4.o3	Apéndice 5b
 m06-pca.title	Apéndice 5a: Conceptos clave
 m06-pca.nextLabel	Continúa con la presentación - Apéndice 5b: Sistema de tres árbitros
-m06-pca.0.q	Según el Apéndice 5a, ¿qué cuatro cosas componen los Cuatro Elementos Esenciales (FEET) que el árbitro debe ver juntos en cada jugada?
-m06-pca.0.o0	La pelota, el lanzador, el receptor y la base
-m06-pca.0.o1	El corredor, el fildeador, el entrenador y el marcador
-m06-pca.0.o2	La pelota, el jugador defensivo, los jugadores ofensivos y la base o la zona de la jugada
-m06-pca.0.o3	La pelota, el fildeador, el dugout y la línea de foul
-m06-pca.0.why	Los elementos deben observarse juntos, sobre todo el control de la pelota y los intentos de tag, porque la decisión correcta depende de ver cómo se combinan.
-m06-pca.1.q	Según el Apéndice 5a, ¿cuándo se produce con más frecuencia el error de paralaje?
-m06-pca.1.o0	Cuando el árbitro está demasiado lejos de la base para oír la jugada
-m06-pca.1.o1	Cuando el árbitro queda alineado en línea recta con el corredor, el fildeador, la pelota y la base o el punto del tag
-m06-pca.1.o2	Cuando el árbitro se mueve con pies activos durante la jugada
-m06-pca.1.o3	Cuando el árbitro está de pie en el borde de entrada de la base
-m06-pca.1.why	Alinearse en línea recta reduce la percepción de profundidad y puede distorsionar la secuencia de los hechos. Los árbitros reducen el paralaje ajustando su posición para mantener el ángulo y la separación entre los elementos.
-m06-pca.2.q	Un árbitro quiere eliminar el error de paralaje en una decisión de fair/foul. ¿Qué dice el Apéndice 5a que debe hacer?
-m06-pca.2.o0	Colocarse lo más atrás posible para ver todo el campo
-m06-pca.2.o1	Confiar en que el árbitro de base tome la decisión
-m06-pca.2.o2	Esperar a que la pelota se detenga antes de decidir
-m06-pca.2.o3	Colocarse en el plano de la decisión, por ejemplo sobre la línea de fair/foul
-m06-pca.2.why	Moverse al plano que forma la decisión convierte ese plano en una línea en la vista del árbitro, de modo que se puede juzgar directamente la posición de la pelota respecto a él.
-m06-pca.3.q	Sin corredores en base, ¿a qué distancia aproximada de la base debe empezar un árbitro de base en 1B o 3B, según el Apéndice 5a?
-m06-pca.3.o0	5,5 m (18 pies)
-m06-pca.3.o1	3,5 m (12 pies)
-m06-pca.3.o2	4,5 m (15 pies)
-m06-pca.3.o3	7 m (23 pies)
-m06-pca.3.why	Sin corredores, la posición inicial es de 5,5 m (18 pies) en 1B y 3B, y de 4,5 m (15 pies) en 2B. Se reduce a unos 3,5 m (12 pies) cuando hay un corredor en la base del propio árbitro.
-m06-pca.4.q	En una jugada, ¿qué distancia a la base indica el Apéndice 5a para una jugada forzada y para una jugada de tag?
-m06-pca.4.o0	Unos 3 m (10 pies) para una jugada forzada y 5 m (16 pies) para una de tag
-m06-pca.4.o1	Unos 5 m (16 pies) para una jugada forzada y 3 m (10 pies) para una de tag
-m06-pca.4.o2	Unos 5 m (16 pies) para ambas
-m06-pca.4.o3	Unos 3 m (10 pies) para ambas
-m06-pca.4.why	En una jugada de tag, el árbitro debe estar lo bastante cerca para ajustarse a izquierda o derecha y llegar al borde de entrada manteniendo todos los elementos frente a él.
-m06-pca.5.q	Cuando el ángulo y la distancia no pueden ser ambos perfectos, ¿cuál tiene prioridad según el Apéndice 5a?
-m06-pca.5.o0	El ángulo
-m06-pca.5.o1	La distancia
-m06-pca.5.o2	El que esté más cerca de la base
-m06-pca.5.o3	Ninguno; el árbitro debe quedarse quieto
-m06-pca.5.why	Estar más cerca puede ayudar igualmente al árbitro a hacer movimientos controlados hacia un mejor ángulo, y el error de paralaje aumenta tanto con la distancia como con el ángulo.
-m06-pca.6.q	¿Por qué dice el Apéndice 5a que un árbitro nunca debe colocarse directamente sobre una base al hacer una decisión?
-m06-pca.6.o0	Es peligroso por los corredores que se deslizan
-m06-pca.6.o1	Le tapa la vista del dugout
-m06-pca.6.o2	Le impide usar la decisión verbal
-m06-pca.6.o3	Los ojos del árbitro quedan alineados verticalmente con la base, de modo que la pelota, el tag y el borde de entrada se reducen a una vista en línea recta sin percepción de profundidad
-m06-pca.6.why	A velocidades de élite, la diferencia entre un tag en el borde de entrada y uno más allá puede ser de unos pocos centímetros. Una posición de decisión justo antes del borde de entrada mantiene los elementos visualmente separados.
-m06-pca.7.q	Según la Teoría Dentro/Fuera del Apéndice 5a, ¿dónde deben estar los árbitros de base que no han salido cuando la pelota está en el outfield?
-m06-pca.7.o0	Fuera del diamante
-m06-pca.7.o1	Detrás de home
-m06-pca.7.o2	Dentro del diamante
-m06-pca.7.o3	En la línea de foul
-m06-pca.7.why	Cuando la pelota está en el outfield, los árbitros de base entran; cuando está en el infield, están fuera del diamante. Si algún árbitro sale, todos los demás deben entrar para cubrir las bases y hacer el backfill.
-m06-pca.8.q	Según el Apéndice 5a, ¿qué desencadena una situación de backfill?
-m06-pca.8.o0	Que PU comunique que se queda en HP para la jugada
-m06-pca.8.o1	Que el árbitro de base decida salir a un fly
-m06-pca.8.o2	Que un entrenador pida una conferencia
-m06-pca.8.o3	Que la pelota se devuelva al lanzador
-m06-pca.8.why	Después de que PU comunica que se queda en HP, los árbitros de base se ajustan: el árbitro que no ha salido cubre 3B y U1 rota hacia el interior para cubrir 1B y 2B si es posible.
-m06-pca.9.q	En una jugada forzada en la que el corredor llega a la base y después el fildeador recibe el tiro, ¿qué error es más probable que cometa un árbitro que precipita la decisión, según el Apéndice 5a?
-m06-pca.9.o0	Declarar safe al corredor
-m06-pca.9.o1	Declarar out al corredor, porque todavía está procesando que el tiro fue atrapado
-m06-pca.9.o2	Declarar interferencia
-m06-pca.9.o3	No ver la base
-m06-pca.9.why	Una ligera pausa en una jugada ajustada da al cerebro tiempo para procesar todos los datos en el orden correcto, en lugar de basar la decisión en lo último que se vio.
 m07-pca.title	Apéndice 5b: Sistema de tres árbitros
 m07-pca.nextLabel	Continúa con la presentación - Apéndice 5c y d: Sistemas de cuatro, cinco y seis árbitros
-m07-pca.0.q	En el Sistema de Tres Árbitros (Apéndice 5b), ¿dónde se coloca U1 entre entradas?
-m07-pca.0.o0	A mitad de camino de HP a 1B, fuera de la línea de fair/foul
-m07-pca.0.o1	A dos tercios del camino de HP a 3B
-m07-pca.0.o2	A un tercio del camino de HP a 3B
-m07-pca.0.o3	Detrás de los cajones de bateo, en el punto del plato
-m07-pca.0.why	Entre entradas, PU se coloca a un tercio del camino de HP a 3B, U1 a mitad de camino de HP a 1B y U3 a dos tercios del camino de HP a 3B, todos fuera de las líneas.
-m07-pca.1.q	En el Sistema de Tres Árbitros, ¿dónde empieza U1 con un corredor solo en 1B?
-m07-pca.1.o0	A unos 3,5 m (12 pies) atrás, a dos tercios del camino de 1B a 2B
-m07-pca.1.o1	A unos 5,5 m (18 pies) detrás de 1B
-m07-pca.1.o2	A unos 3,5 m (12 pies) detrás de 1B, en territorio de foul
-m07-pca.1.o3	En el lado de 3B de 2B
-m07-pca.1.why	Sin corredores o con un corredor solo en 3B, la posición inicial es de unos 5,5 m (18 pies) detrás de 1B; con un corredor en 1B es más cercana para que el árbitro pueda mantenerse en territorio de foul con una vista clara.
-m07-pca.2.q	¿Por qué coloca el Apéndice 5b a U3 a unos 3,5 m (12 pies) detrás de 3B, hasta a 2 m (6 pies) de la línea, cuando hay un corredor en 3B?
-m07-pca.2.o0	Para no estorbar al bateador en el círculo de espera
-m07-pca.2.o1	Para que el entrenador de tercera base pueda moverse libremente
-m07-pca.2.o2	Para estar listo para rotar a primera base
-m07-pca.2.o3	Para mantener una vista sin obstrucciones del lanzador, el corredor, el bateador y home, y que no le afecte el despegue del corredor cuando se suelta el lanzamiento
-m07-pca.2.why	La posición inicial se elige para que el árbitro pueda ver todo el lanzamiento y el despegue del corredor sin que el corredor le tape la vista.
-m07-pca.3.q	En un pickoff (tiro de regreso) en 1B, ¿hasta dónde puede moverse U1, según el Apéndice 5b?
-m07-pca.3.o0	Hasta donde haga falta, incluso hacia el césped del infield
-m07-pca.3.o1	A unos 3 m (10 pies) de la base en territorio de foul, pero sin pasar de una línea de 45 grados que atraviesa 1B
-m07-pca.3.o2	Directamente al borde de entrada de 1B
-m07-pca.3.o3	Debe permanecer en la posición inicial
-m07-pca.3.why	Si U1 lee que la jugada será en el borde de entrada, puede entrar hacia territorio fair, manteniendo siempre los Cuatro Elementos Esenciales frente a él.
-m07-pca.4.q	En el Sistema de Tres Árbitros, cuando un árbitro de base sale a un fly, ¿quién asume la responsabilidad del tag-up en 3B?
-m07-pca.4.o0	El árbitro de base que permanece en el infield
-m07-pca.4.o1	El árbitro que salió
-m07-pca.4.o2	Nadie; no se vigila al corredor
-m07-pca.4.o3	PU
-m07-pca.4.why	El árbitro de base que permanece en el infield se encarga de los tag-ups en 1B y 2B, y PU se encarga del tag-up en 3B.
-m07-pca.5.q	En el Sistema de Tres Árbitros, ¿quién es responsable de la decisión del despegue (lead-off) de un corredor en 2B?
-m07-pca.5.o0	U1
-m07-pca.5.o1	U3
-m07-pca.5.o2	PU
-m07-pca.5.o3	El árbitro más cercano al corredor
-m07-pca.5.why	U1 es responsable de las decisiones de despegue de los corredores en 1B y 2B, y U3 de las de un corredor en 3B.
-m07-pca.6.q	U1 está en 1B y U3 en 3B sin corredores en base. Se batea un fly al jardinero central (F8, en su posición normal) que se desplaza hacia el jardín derecho. ¿Quién es responsable de la decisión?
-m07-pca.6.o0	U3
-m07-pca.6.o1	U1
-m07-pca.6.o2	PU
-m07-pca.6.o3	U1 y U3 la comparten por igual
-m07-pca.6.why	U1 toma los fly a F8 que se desplazan hacia RF y foul; U3 toma los fly a F8 que se desplazan hacia LF y foul.
-m07-pca.7.q	U1 está en 1B, U3 está en 2B y hay un corredor en 1B. ¿Quién toma un fly al jardinero izquierdo (F7)?
-m07-pca.7.o0	U3
-m07-pca.7.o1	U1
-m07-pca.7.o2	PU
-m07-pca.7.o3	ULF
-m07-pca.7.why	PU toma los fly a F7 y foul, U1 toma la zona del jardín derecho y foul, y U3 toma F8 y F7 desplazándose hacia CF. Que U1 tome los fly a F9 mantiene a U1 fuera de la trayectoria del corredor y deja a U3 entrar con más facilidad.
-m07-pca.8.q	Cuando U1 o U3 sale a un fly en el Sistema de Tres Árbitros, ¿qué debe hacer el árbitro de base que queda?
-m07-pca.8.o0	Quedarse en su base
-m07-pca.8.o1	Entrar en el diamante, cubrir todas las decisiones en 1B o 2B y rotar a 3B por delante del bateador-corredor
-m07-pca.8.o2	Correr a home
-m07-pca.8.o3	Salir también al outfield
-m07-pca.8.why	Si la pelota es atrapada y el árbitro que queda puede llevar al último corredor a 3B y comunicarse con PU, debe hacerlo, lo que mantiene a PU en home para las jugadas importantes.
-m07-pca.9.q	U1 está en 1B y U3 en 3B sin corredores en base y se batea un rodado al infield. Según el Apéndice 5b, ¿cuál es la tarea de PU?
-m07-pca.9.o0	Quedarse detrás del plato
-m07-pca.9.o1	Correr de inmediato a 3B
-m07-pca.9.o2	Salir hacia el outfield
-m07-pca.9.o3	Seguir al bateador-corredor aproximadamente un tercio del camino hacia 1B (más si hace falta), vigilar la interferencia y dictaminar fair/foul
-m07-pca.9.why	PU sigue al bateador-corredor por un posible tag, por interferencia del bateador-corredor o para ayudar en 1B, y rota a 3B si el bateador-corredor llega a 1B y avanza hacia 2B.
 m08-pca.title	Apéndice 5c y d: Sistemas de cuatro, cinco y seis árbitros
 m08-pca.nextLabel	Has completado los ocho módulos obligatorios - consulta tu registro completo de evaluaciones
 m08-pca.0.q	En el Sistema de Cuatro Árbitros (Apéndice 5c), ¿dónde se coloca U2 entre entradas?
@@ -606,126 +236,6 @@ m08-pca.9.o1	PU decide desde el plato
 m08-pca.9.o2	La decisión la toma el árbitro de base
 m08-pca.9.o3	Ambos corren hacia territorio fair en paralelo a la trayectoria de la pelota hasta tener un ángulo, y quien toma la decisión lo indica con una mano en el pecho o verbalmente
 m08-pca.9.why	ULF y URF son responsables de todas las decisiones más allá del árbitro de base y detrás de los jugadores de cuadro: fair/foul, atrapada o no, y el estado de una pelota que sale del campo de juego.
-m06-pca.10.q	Según el Apéndice 5a, ¿dónde está la mejor Posición de Observación en home cuando PU no tiene que ir a la posición de espera, rotar a 3B ni cubrir el cuadro interior?
-m06-pca.10.o0	En la extensión de la línea de tercera base, a unos 5 m detrás del plato
-m06-pca.10.o1	Justo al lado del receptor, del lado de 3B del plato
-m06-pca.10.o2	Dentro de la caja del receptor, alineado con el lanzamiento
-m06-pca.10.o3	A 2-4 m (6-12 pies) directamente detrás del plato, en el Punto del Plato (POP), hasta la extensión de la línea de primera base
-m06-pca.10.why	Desde el POP el árbitro puede observar las jugadas en home y el resto del campo, y luego ajustarse a la posición de decisión que exija la jugada.
-m06-pca.11.q	¿Qué significa «pies activos» en el Apéndice 5a?
-m06-pca.11.o0	El árbitro trota en el lugar entre lanzamientos para mantenerse en calor
-m06-pca.11.o1	El árbitro da pasos pequeños y rápidos solo mientras la pelota está en el aire
-m06-pca.11.o2	El árbitro mueve ambos pies al ajustar su posición, de modo que se mantiene equilibrado sobre la parte delantera de los pies y listo para moverse
-m06-pca.11.o3	El árbitro mantiene un pie fijo hasta que se canta la jugada
-m06-pca.11.why	Los árbitros nunca deben quedarse clavados en una posición. Mover ambos pies los mantiene estables y listos para moverse.
-m06-pca.12.q	Con un corredor solo en 1B, ¿dónde puede usar el árbitro que trabaja en el Ángulo Diagonal de Segunda Base la Posición Inicial Alternativa?
-m06-pca.12.o0	Delante del jugador de segunda base, a la altura de la base
-m06-pca.12.o1	A unos 6 m (20 pies) directamente detrás de 2B
-m06-pca.12.o2	A unos 3,5 m (12 pies) detrás de 2B y a 1-2 m (3-6 pies) hacia el lado de 3B de 2B, si home y el bateador siguen bien a la vista
-m06-pca.12.o3	A unos 3,5 m (12 pies) detrás de 2B, del lado de 1B del Ángulo Diagonal de Segunda Base
-m06-pca.12.why	La Posición Inicial Alternativa da una posición de observación proactiva ante un posible robo, siempre que la vista de home y del bateador no tenga obstáculos.
-m06-pca.13.q	¿Por qué dice el Apéndice 5a que los árbitros no deben moverse más hacia la Extensión de la Línea de Primera Base (1BLE) que la Posición Inicial Alternativa en 2B?
-m06-pca.13.o0	Porque pone la base entre el árbitro y la jugada y crea un error de paralaje al juzgar si el corredor está en contacto con la base
-m06-pca.13.o1	Porque deja al árbitro demasiado lejos del lanzador
-m06-pca.13.o2	Porque estorba el brazo de lanzamiento del jardinero central
-m06-pca.13.o3	Porque tapa la vista del receptor hacia home
-m06-pca.13.why	Alejarse del Ángulo Diagonal de Segunda Base hacia la 1BLE aumenta el error de paralaje y reduce la capacidad del árbitro para juzgar con precisión.
-m06-pca.14.q	Cuando PU no rota, ¿en qué situación NO hace su primer movimiento habitual de despejar al receptor hacia la izquierda?
-m06-pca.14.o0	En cada fly al jardín
-m06-pca.14.o1	Siempre que hay un corredor en 3B
-m06-pca.14.o2	En cada roletazo al cuadro interior
-m06-pca.14.o3	En un batazo fuerte o un fly de foul donde PU tiene una mejor posición para cantar la jugada desde detrás del plato o moviéndose con la trayectoria de la pelota
-m06-pca.14.why	PU normalmente despeja primero al receptor hacia la izquierda. Las excepciones son un batazo fuerte o un fly de foul donde existe una mejor posición, y una bola pasada o un wild pitch cuando no tiene que rotar hacia 3B.
-m06-pca.15.q	¿Qué información dice el Apéndice 5a que los árbitros deben repasar antes de cada lanzamiento (Preparación Previa al Lanzamiento)?
-m06-pca.15.o0	El pronóstico del tiempo, la cantidad de público y el tiempo que queda de partido
-m06-pca.15.o1	La cuenta, el número de outs, el marcador, los corredores en base y su velocidad, y la profundidad y la fuerza de brazo de los jardineros
-m06-pca.15.o2	Solo la cuenta y el número de outs
-m06-pca.15.o3	La clasificación de los equipos y los resultados anteriores de cada bateador
-m06-pca.15.why	La preparación mental evita que el árbitro quede desprevenido o mal ubicado en situaciones inusuales.
-m06-pca.16.q	Según el Apéndice 5a, ¿qué debe hacer un árbitro de base antes de decidir salir a un fly?
-m06-pca.16.o0	Salir de inmediato en cada pelota bateada más allá del cuadro interior
-m06-pca.16.o1	Salir solo en las pelotas bateadas hacia su propio lado del campo
-m06-pca.16.o2	Esperar a que el árbitro de home indique quién sale
-m06-pca.16.o3	Mirar la trayectoria de la pelota, luego mirar a sus compañeros y comunicarse antes de decidir si sale
-m06-pca.16.why	Cada vez que el árbitro de 2B sale sin necesidad, puede comprometerse la cobertura en home, por lo que la decisión no debe precipitarse.
-m06-pca.17.q	Según el Apéndice 5a, ¿qué debe hacer un árbitro ante un fly que realmente no tiene posibilidad de ser atrapado?
-m06-pca.17.o0	Dejar la decisión al entrenador de primera base
-m06-pca.17.o1	Salir siempre, para juzgar si es fair o foul
-m06-pca.17.o2	No salir, para mantener la cobertura de las bases, sobre todo con varios corredores o con un corredor que va a home
-m06-pca.17.o3	Salir, pero volver antes de que la pelota caiga
-m06-pca.17.why	Los árbitros deben conocer la profundidad, las posiciones iniciales y la capacidad de los jardineros. Deben salir en cualquier pelota que razonablemente pueda ser atrapada, pero no en las que no lo serán.
-m06-pca.18.q	Un árbitro que ha salido a un fly se vuelve y ve en el cuadro interior una base sin cubrir por una rotación omitida. Según el Apéndice 5a, ¿qué puede hacer?
-m06-pca.18.o0	Volver al cuadro interior y cantar la jugada, comunicándose con claridad con el equipo, o dar su opinión si se la piden
-m06-pca.18.o1	Correr directamente a home
-m06-pca.18.o2	Cantar la jugada sin avisar al equipo
-m06-pca.18.o3	Quedarse en el jardín sin decir nada
-m06-pca.18.why	El árbitro que sale debe girarse y mirar hacia el cuadro interior. Decir «I'm here» y su nombre le indica al equipo que ha cubierto el lugar vacío.
-m06-pca.19.q	Cuando U1 está en home al terminar una jugada, ¿qué libera a todos los árbitros para hacer la contrarrotación a sus nuevas posiciones para el siguiente lanzamiento?
-m06-pca.19.o0	Que la pelota vuelva al círculo del lanzador
-m06-pca.19.o1	Que U1 pida tiempo en home
-m06-pca.19.o2	Una petición del entrenador de primera base
-m06-pca.19.o3	Que PU haga una señal desde la posición de espera
-m06-pca.19.why	Los árbitros que llevan la jugada esperan a ser liberados para que el árbitro entrante tenga el control de la zona; si se van demasiado pronto, puede quedar una base sin ningún árbitro al mando.
-m07-pca.10.q	¿Dónde se coloca PU en la reunión previa al partido en el plato en el Sistema de Tres Árbitros (Apéndice 5b)?
-m07-pca.10.o0	Detrás de las cajas de bateo, en la punta del plato, con U1 y U3 a cada lado, delante de las cajas de bateo
-m07-pca.10.o1	En la línea de tercera base, con U1 y U3 detrás de PU
-m07-pca.10.o2	En la placa del lanzador, con los árbitros de base a su lado
-m07-pca.10.o3	Detrás de la caja del receptor, con los árbitros de base en sus bases
-m07-pca.10.why	Después de la reunión los árbitros van a sus posiciones iniciales; entre entradas todos los árbitros se colocan fuera de las líneas de fair/foul.
-m07-pca.11.q	En el Sistema de Tres Árbitros, con un corredor en 2B pero no en 3B, ¿dónde empieza U3?
-m07-pca.11.o0	A unos 5,5 m (18 pies) detrás de 3B, justo al lado de la línea en territorio de foul
-m07-pca.11.o1	A unos 3,5 m (12 pies) atrás, en el Ángulo Diagonal de Segunda Base
-m07-pca.11.o2	A unos 4,5 m (15 pies) detrás de 3B, justo al lado de la línea en territorio de foul
-m07-pca.11.o3	A unos 3,5 m (12 pies) detrás de 3B, hasta 2 m (6 pies) fuera de la línea
-m07-pca.11.why	Sin corredores, la posición inicial está a unos 5,5 m (18 pies) detrás de 3B; con un corredor en 3B es más cercana, a unos 3,5 m (12 pies).
-m07-pca.12.q	En el Sistema de Tres Árbitros, con un corredor en 1B, ¿dónde puede empezar U3?
-m07-pca.12.o0	A unos 5,5 m (18 pies) detrás de 3B en territorio de foul
-m07-pca.12.o1	A unos 3,5 m (12 pies) atrás, en el Ángulo Diagonal de Segunda Base, o hasta la 3BLE del lado de 1B, con una vista sin obstáculos del bateador y de home
-m07-pca.12.o2	Del lado de 1B de la placa del lanzador
-m07-pca.12.o3	Al lado de PU, detrás de home
-m07-pca.12.why	Tanto la posición inicial estándar como la alternativa en el Ángulo Diagonal de Segunda Base ponen al árbitro cerca del ángulo, con un movimiento mínimo para una jugada de tag.
-m07-pca.13.q	U3 empieza en 2B y U1 en 1B. Ningún árbitro de base sale a un fly. ¿Quién asume la responsabilidad del tag-up en 3B?
-m07-pca.13.o0	PU
-m07-pca.13.o1	Nadie; no se vigila al corredor
-m07-pca.13.o2	U1
-m07-pca.13.o3	U3
-m07-pca.13.why	Cuando ningún árbitro de base sale, cada uno se encarga del corredor de su propia base, y PU se encarga de 3B cuando U3 empieza en 2B o rota a 2B.
-m07-pca.14.q	U1 está en 1B y U3 en 3B con un corredor en 3B. Se batea un roletazo al cuadro interior. ¿Qué hace U3?
-m07-pca.14.o0	Rotar de inmediato hacia el interior para cualquier decisión en 2B
-m07-pca.14.o1	Moverse a 1B
-m07-pca.14.o2	Quedarse en 3B hasta que el corredor se compromete a home y luego rotar hacia el interior para cualquier decisión en 2B
-m07-pca.14.o3	Rotar a home
-m07-pca.14.why	Si U3 se queda o se retrasa en 3B, U1 es responsable de las decisiones en 1B y 2B.
-m07-pca.15.q	U1 está en 1B y U3 en 3B sin corredores. Se batea un roletazo al jardín. ¿Qué hace U1?
-m07-pca.15.o0	Rotar directamente a home de inmediato
-m07-pca.15.o1	Quedarse en la posición inicial
-m07-pca.15.o2	Salir al jardín
-m07-pca.15.o3	Bajar por la línea de foul para posibles jugadas forzadas en 1B desde el jardín y rotar a la zona del POP solo si el bateador-corredor avanza de 2B a 3B, empujando a PU a 3B
-m07-pca.15.why	U1 usa el movimiento dinámico para establecer una posición para cualquier decisión en 1B y solo rota a home cuando es posible una jugada en el plato.
-m07-pca.16.q	En el Sistema de Tres Árbitros, U3 empieza a salir a un fly que al principio creyó atrapable, pero luego juzga que no será atrapado. ¿Qué puede hacer U3?
-m07-pca.16.o0	Rotar a home
-m07-pca.16.o1	Quedarse donde está y dejar que PU cubra 2B
-m07-pca.16.o2	Seguir hasta la cerca sin decir nada
-m07-pca.16.o3	Avisar a U1, con una señal y de viva voz, de que U3 tiene 2B y rotar de nuevo hacia el interior hasta 2B, mientras U1 acorta su rotación o hace un button hook hacia la línea de foul de 1B
-m07-pca.16.why	La corrección permite una mejor cobertura del bateador-corredor alrededor del cuadro.
-m07-pca.17.q	¿Qué significa «button hook» en el Apéndice 5?
-m07-pca.17.o0	Retroceder hacia territorio de foul y girar sobre el hombro derecho
-m07-pca.17.o1	Entrar en el cuadro y luego girar sobre el hombro izquierdo, para poder cubrir varias bases
-m07-pca.17.o2	Correr en línea recta hasta home
-m07-pca.17.o3	La señal con la mano para una bola foul
-m07-pca.17.why	El button hook se usa siempre que U1 entra en el cuadro en un Sistema de Tres Árbitros, y le da a U1 la capacidad de adaptarse a una situación distinta.
-m07-pca.18.q	En un pickoff (tiro de regreso) en 3B en el Sistema de Tres Árbitros, ¿hasta dónde puede moverse U3 en territorio de foul?
-m07-pca.18.o0	A unos 5,5 m (18 pies) atrás, en cualquier lugar del territorio de foul
-m07-pca.18.o1	Solo hasta el borde de entrada de la base
-m07-pca.18.o2	A unos 3 m (10 pies) de la base, pero sin pasar de una línea de 45 grados que atraviesa 3B
-m07-pca.18.o3	Debe quedarse en su posición inicial
-m07-pca.18.why	Observar la trayectoria de regreso del corredor ayuda al árbitro a llegar a la mejor posición para ver el tag o el borde de entrada.
-m07-pca.19.q	Según el Mapa Mnemotécnico de Rotaciones del Sistema de Tres Árbitros, ¿qué debe hacer U3 siempre que U1 sale?
-m07-pca.19.o0	Rotar hacia el interior del cuadro para asumir la responsabilidad de 1B y 2B, moviéndose a un punto pasada la línea de la placa del lanzador a 2B
-m07-pca.19.o1	Rotar a home
-m07-pca.19.o2	Quedarse en 3B
-m07-pca.19.o3	Seguir a U1 al jardín
-m07-pca.19.why	El árbitro de base que queda se mueve hacia el interior y es responsable de todas las decisiones en 1B o 2B, y luego rota a 3B antes que el bateador-corredor.
 m08-pca.10.q	En el Sistema de Cuatro Árbitros, ¿dónde empieza U3 con un corredor en 2B?
 m08-pca.10.o0	A unos 3,5 m (12 pies) detrás de 3B, en territorio de foul
 m08-pca.10.o1	A unos 4,5 m (15 pies) detrás de 3B, justo al lado de la línea en territorio de foul
@@ -786,66 +296,6 @@ m08-pca.19.o1	Hacen que los partidos sean más cortos
 m08-pca.19.o2	Eliminan la necesidad de que PU esté en home
 m08-pca.19.o3	Eliminan la necesidad de decidir si la bola es fair o foul
 m08-pca.19.why	Las jugadas cercanas a home afectan el resultado general del partido, por lo que importa tener cubiertos 3B y home; los sistemas son adecuados para finales y partidos de alto nivel.
-m01-pca.10.q	¿Cuánto tiempo antes de la hora programada del partido dice la Guía de Aprendizaje de Fundamentos que los árbitros deben celebrar su reunión de compañeros?
-m01-pca.10.o0	60 minutos antes
-m01-pca.10.o1	5 minutos antes
-m01-pca.10.o2	20 minutos antes
-m01-pca.10.o3	45 minutos antes
-m01-pca.10.why	La guía establece la preparación personal a los 60 minutos, la reunión de compañeros a los 45, la inspección del campo a los 20 y la reunión en el plato a los 5 minutos antes del partido.
-m01-pca.11.q	Según la Ética de Comportamiento de la Guía de Aprendizaje de Fundamentos, ¿con cuánta antelación debe presentarse un árbitro en el recinto?
-m01-pca.11.o0	Al menos 15 minutos antes del primer lanzamiento
-m01-pca.11.o1	En cuanto llegue el primer equipo
-m01-pca.11.o2	Al menos 60 minutos antes de la hora programada del partido
-m01-pca.11.o3	Al menos 3 horas antes del partido
-m01-pca.11.why	Los árbitros cumplen todas sus designaciones y se presentan en el recinto al menos 60 minutos antes de la hora programada del partido.
-m01-pca.12.q	La guía dice que el juego no debe reanudarse tras una suspensión por rayos hasta que pase cuánto tiempo desde el último rayo visto o el último trueno oído.
-m01-pca.12.o0	60 minutos
-m01-pca.12.o1	15 minutos
-m01-pca.12.o2	10 minutos
-m01-pca.12.o3	30 minutos
-m01-pca.12.why	Ningún partido vale la vida de nadie: los jugadores abandonan el campo de inmediato y se refugian, y el juego no se reanuda hasta 30 minutos después del último rayo o trueno.
-m01-pca.13.q	Para mantener el ritmo del juego, ¿en cuántos segundos debe lanzar el lanzador y con qué rapidez debe estar el bateador en la caja?
-m01-pca.13.o0	El lanzador en 10 segundos y el bateador en 20 segundos
-m01-pca.13.o1	El lanzador en 25 segundos y el bateador en 5 segundos
-m01-pca.13.o2	El lanzador en 20 segundos y el bateador en 10 segundos
-m01-pca.13.o3	El lanzador en 30 segundos y el bateador en 15 segundos
-m01-pca.13.why	La guía añade que un pie debe permanecer en la caja de bateo y que no se deben permitir conferencias largas.
-m01-pca.14.q	Un equipo se niega a seguir jugando cuando se le ordena. Según la guía, ¿cuál es el resultado de un forfeit?
-m01-pca.14.o0	El partido se suspende y se completa al día siguiente
-m01-pca.14.o1	El partido termina con un marcador de 7-0 (o según las normas locales) a favor del equipo que no tiene la culpa
-m01-pca.14.o2	El partido termina con el marcador del momento de la negativa
-m01-pca.14.o3	El partido se repite desde el principio
-m01-pca.14.why	Los árbitros consultan al equipo arbitral y al UIC si lo hay, se aseguran de que se dieron y documentaron las advertencias debidas e informan con todos los detalles a la autoridad correspondiente.
-m01-pca.15.q	Según la guía, ¿cuál de las siguientes puede ser objeto de una protesta válida?
-m01-pca.15.o0	Una mala aplicación de una regla
-m01-pca.15.o1	Una decisión de bola o strike
-m01-pca.15.o2	Una decisión de quieto o out
-m01-pca.15.o3	Una decisión de fair o foul
-m01-pca.15.why	Una protesta cuestiona la aplicación o interpretación de una regla, no el criterio del árbitro. Quieto/out, fair/foul, bola/strike, si hubo atrapada y si hubo interferencia u obstrucción son decisiones de criterio.
-m01-pca.16.q	¿En cuánto tiempo debe presentarse una protesta por escrito, salvo que las normas del torneo digan otra cosa?
-m01-pca.16.o0	48 horas
-m01-pca.16.o1	24 horas
-m01-pca.16.o2	Antes del siguiente lanzamiento
-m01-pca.16.o3	7 días
-m01-pca.16.why	El aviso de la protesta en sí debe darse al árbitro de home antes del siguiente lanzamiento, antes de que los jugadores de campo abandonen el territorio fair o antes de que los árbitros abandonen el campo tras la última jugada del partido.
-m01-pca.17.q	Según la guía, ¿cuál es la diferencia entre una expulsión y una retirada?
-m01-pca.17.o0	Una expulsión dura una entrada; una retirada dura todo el partido
-m01-pca.17.o1	No hay ninguna diferencia
-m01-pca.17.o2	La expulsión se aplica solo a jugadores; la retirada, solo a entrenadores
-m01-pca.17.o3	Una persona expulsada debe abandonar el recinto por completo; una persona retirada por una infracción de las reglas puede quedarse en el dugout y seguir dirigiendo
-m01-pca.17.why	Tras una expulsión el árbitro señala, dice en voz alta «[Nombre/Número] está expulsado», se aleja y deja que sus compañeros se encarguen de la retirada.
-m01-pca.18.q	En la reunión en el plato, el árbitro de home pregunta si hay cambios en las alineaciones. ¿Por qué motivos pueden cambiarse las alineaciones en ese momento?
-m01-pca.18.o0	Por cualquier motivo táctico
-m01-pca.18.o1	Solo si el entrenador contrario está de acuerdo
-m01-pca.18.o2	Solo por lesión o enfermedad
-m01-pca.18.o3	Solo por el clima
-m01-pca.18.why	Una vez oficializadas las alineaciones, los cambios deben seguir las reglas de sustitución. En los Campeonatos Mundiales las alineaciones son oficiales cuando se presentan en el intercambio de alineaciones.
-m01-pca.19.q	¿Qué comprueba la prueba del anillo del bate?
-m01-pca.19.o0	Que el bate tiene el peso adecuado
-m01-pca.19.o1	Que el anillo se desliza libremente por el cuerpo del bate
-m01-pca.19.o2	Que el bate tiene una marca de certificación vigente
-m01-pca.19.o3	Que el agarre tiene la longitud adecuada
-m01-pca.19.why	Si un bate es dudoso, el árbitro lo prueba con el anillo, consulta a sus compañeros, informa al entrenador y retira del juego los bates ilegales.
 m02-pca.10.q	En el Sistema de Un Árbitro, ¿dónde se coloca el árbitro de home entre entradas?
 m02-pca.10.o0	En la placa del lanzador, mirando hacia home
 m02-pca.10.o1	Detrás del receptor en todo momento
@@ -906,126 +356,6 @@ m02-pca.19.o1	Solo de bolas y strikes
 m02-pca.19.o2	Solo de las decisiones en home
 m02-pca.19.o3	Solo de las bolas fair/foul
 m02-pca.19.why	Es evidente que no se verá todo lo que ocurra, por lo que el árbitro único debe moverse con determinación por el cuadro y dentro de él para obtener la mejor posición.
-m03-pca.10.q	Según el Principio de División del Sistema de Dos Árbitros, ¿qué bases se encarga normalmente el árbitro de base?
-m03-pca.10.o0	Segunda y tercera base
-m03-pca.10.o1	Primera y segunda base
-m03-pca.10.o2	Home y primera base
-m03-pca.10.o3	Tercera base y home
-m03-pca.10.why	El árbitro de home se encarga de todas las decisiones en home y en tercera base.
-m03-pca.11.q	¿Qué dice el Principio Infield/Outfield en el Sistema de Dos Árbitros?
-m03-pca.11.o0	El árbitro de home sale en cada fly
-m03-pca.11.o1	Los dos árbitros se quedan detrás de las bases
-m03-pca.11.o2	Cuando la pelota está en el cuadro interior, el árbitro de base se mueve o se queda en el jardín; cuando está en el jardín, se mueve a una posición en el cuadro
-m03-pca.11.o3	El árbitro de base siempre se queda en primera base
-m03-pca.11.why	Así los árbitros no estorban la jugada y quedan en posición para ver la siguiente.
-m03-pca.12.q	¿Qué pide el Principio del Corredor de Adelante al árbitro de base?
-m03-pca.12.o0	Empezar siempre detrás del corredor de atrás
-m03-pca.12.o1	Empezar en la base donde no hay corredor
-m03-pca.12.o2	Empezar en una posición a la altura del corredor de adelante, porque se espera que el receptor juegue contra el corredor de adelante en un pickoff
-m03-pca.12.o3	Empezar junto al árbitro de home
-m03-pca.12.why	El árbitro de base necesita estar en posición de cantar un pickoff del corredor de adelante.
-m03-pca.13.q	Cuando el lanzador adopta la posición de set, ¿cómo debe colocar los pies el árbitro de base?
-m03-pca.13.o0	Un pie muy por delante del otro
-m03-pca.13.o1	Juntos, con el peso sobre los talones
-m03-pca.13.o2	Lo más separados posible
-m03-pca.13.o3	A una distancia cómoda, al menos el ancho de los hombros, relajado pero quieto
-m03-pca.13.why	Al soltar el lanzamiento, el árbitro afloja ligeramente las rodillas, con el peso ligeramente sobre la parte delantera de los pies y las manos recogidas cerca de la línea del cinturón.
-m03-pca.14.q	Sin corredores en base, ¿dónde empieza el árbitro de base en el Sistema de Dos Árbitros?
-m03-pca.14.o0	A unos 5,5 m (18 pies) detrás de primera base en territorio de foul, a 150 mm (6 pulgadas) de la línea
-m03-pca.14.o1	Junto al jugador de primera base, en territorio fair
-m03-pca.14.o2	A unos 10 m detrás de segunda base
-m03-pca.14.o3	A unos 3,5 m (12 pies) detrás de primera base en territorio fair
-m03-pca.14.why	El árbitro de base mira hacia home con los hombros cuadrados al plato.
-m03-pca.15.q	¿A qué distancia aproximada se acerca el árbitro de base para ver y cantar una jugada de tag?
-m03-pca.15.o0	A unos 10 m (33 pies)
-m03-pca.15.o1	A unos 3,5 m (10-12 pies)
-m03-pca.15.o2	A unos 5,5 m (18 pies)
-m03-pca.15.o3	Justo encima de la base
-m03-pca.15.why	En las jugadas forzadas el árbitro canta desde unos 5,5 m (18 pies). Durante una decisión es importante estar quieto y mantener a la vista los Cuatro Elementos Esenciales.
-m03-pca.16.q	¿Qué NO debe hacer el árbitro de base al colocarse antes del lanzamiento?
-m03-pca.16.o0	Estar relajado
-m03-pca.16.o1	Mirar hacia home
-m03-pca.16.o2	Mantener una vista despejada de home
-m03-pca.16.o3	Colocarse por delante de cualquier jugador del cuadro antes de que el receptor reciba el lanzamiento o se batee la pelota
-m03-pca.16.why	El árbitro de base debe mantener una vista clara y sin obstáculos de home.
-m03-pca.17.q	En un batazo al cuadro interior sin corredores en base, ¿qué hace el árbitro de home?
-m03-pca.17.o0	Ir a segunda base
-m03-pca.17.o1	Seguir al bateador-corredor aproximadamente un tercio del camino hacia primera base, atento a una posible interferencia u obstrucción
-m03-pca.17.o2	Ir directamente a tercera base
-m03-pca.17.o3	Quedarse detrás del plato
-m03-pca.17.why	Con un corredor solo en primera base, el árbitro de home sigue al corredor y luego se mueve a territorio de foul del lado de tercera base para una posible decisión sobre ese corredor en tercera.
-m03-pca.18.q	Entre entradas en el Sistema de Dos Árbitros, ¿dónde se coloca el árbitro de home?
-m03-pca.18.o0	Justo al lado de la línea de tercera base, en territorio de foul, a aproximadamente un tercio del camino hacia tercera base
-m03-pca.18.o1	Justo al lado de la línea de primera base, a aproximadamente un tercio del camino hacia primera base
-m03-pca.18.o2	Detrás del receptor
-m03-pca.18.o3	En la placa del lanzador
-m03-pca.18.why	El árbitro de base se coloca justo al lado de la línea de primera base, en territorio de foul, a aproximadamente un tercio del camino hacia primera base.
-m03-pca.19.q	En el Sistema de Dos Árbitros, ¿quién es responsable de cantar los lanzamientos ilegales?
-m03-pca.19.o0	Solo el árbitro de home
-m03-pca.19.o1	El árbitro que esté más cerca de la placa del lanzador
-m03-pca.19.o2	Los dos árbitros comparten la responsabilidad
-m03-pca.19.o3	Solo el árbitro de base
-m03-pca.19.why	El árbitro de home también es responsable de las bolas fair/foul y de las infracciones de bateo.
-m04-pca.10.q	Cuando un árbitro de base sale a un fly en el Sistema de Tres Árbitros, ¿cómo se divide el cuadro?
-m04-pca.10.o0	El árbitro de base que queda se encarga de todo
-m04-pca.10.o1	El árbitro de home se encarga de todo
-m04-pca.10.o2	El árbitro de home se encarga de todas las decisiones en home y en tercera base, y el árbitro de base que queda, de todas las decisiones en primera y segunda base
-m04-pca.10.o3	El árbitro que salió conserva todas las decisiones
-m04-pca.10.why	Cuando el bateador-corredor llega a tercera base, el árbitro de base lo acompaña hasta allí.
-m04-pca.11.q	Antes de darse la vuelta para salir a un fly, ¿qué debe hacer el árbitro?
-m04-pca.11.o0	Mirar a sus compañeros y luego indicar y decir en voz alta «going»
-m04-pca.11.o1	Esperar a que el árbitro de home cante la pelota
-m04-pca.11.o2	Preguntar al entrenador
-m04-pca.11.o3	Salir corriendo sin hacer ninguna señal
-m04-pca.11.why	El buen momento y el contacto visual entre árbitros son esenciales para una buena cobertura de los fly y para asegurarse de que sale el árbitro correcto.
-m04-pca.12.q	¿En qué dirección señalan los árbitros un out en un fly atrapado en el jardín?
-m04-pca.12.o0	Hacia el anotador
-m04-pca.12.o1	Hacia home
-m04-pca.12.o2	Hacia la pelota, después de detenerse, decidir y comunicar
-m04-pca.12.o3	Hacia el dugout
-m04-pca.12.why	Los árbitros señalan que no hay atrapada si la pelota se juzga atrapada a ras de suelo; no hace falta señalar quieto si es evidente que no hubo atrapada.
-m04-pca.13.q	Una vez que un árbitro ha salido al jardín, ¿qué debe hacer?
-m04-pca.13.o0	Quedarse en el jardín hasta que cese todo el juego, pero seguir observando las jugadas del cuadro para poder ayudar
-m04-pca.13.o1	Volver al cuadro de inmediato
-m04-pca.13.o2	Ir a segunda base
-m04-pca.13.o3	Quedarse y mirar solo el jardín
-m04-pca.13.why	Los demás árbitros vuelven al Sistema de Dos Árbitros.
-m04-pca.14.q	¿Quién señala un jonrón en el Sistema de Tres Árbitros?
-m04-pca.14.o0	Siempre el árbitro de primera base
-m04-pca.14.o1	El árbitro más cercano al dugout
-m04-pca.14.o2	Siempre el árbitro de home
-m04-pca.14.o3	El árbitro que está en el jardín; si ningún árbitro de base salió al jardín, el árbitro de home
-m04-pca.14.why	Un árbitro de base que empieza en su línea de fair/foul y sale es responsable de las decisiones de atrapada/no atrapada, fair/foul y jonrón.
-m04-pca.15.q	Un árbitro de base no sale por error a un fly. ¿Quién canta la jugada?
-m04-pca.15.o0	El árbitro de segunda base, si lo hay
-m04-pca.15.o1	El árbitro de home
-m04-pca.15.o2	El entrenador
-m04-pca.15.o3	El jardinero más cercano
-m04-pca.15.why	La única vez prevista en que el árbitro de home canta fair/foul y atrapada en un fly al jardín es cuando el árbitro que normalmente empieza en esa línea de fair/foul empieza en segunda base.
-m04-pca.16.q	¿Qué significa «despejar al receptor» en el Sistema de Tres Árbitros?
-m04-pca.16.o0	Pedirle al receptor que se aparte
-m04-pca.16.o1	Moverse detrás del bateador
-m04-pca.16.o2	Caminar hasta la placa del lanzador
-m04-pca.16.o3	Dar un pequeño paso a la izquierda del árbitro de home para salir de detrás del receptor, creando espacio y abriendo la vista del campo
-m04-pca.16.why	Es la primera prioridad del árbitro de home tras cada lanzamiento o pelota bateada en la zona del plato, y debe ocurrir antes de que se desarrolle la jugada, no después.
-m04-pca.17.q	En la reunión previa al partido en el Sistema de Tres Árbitros, ¿dónde se coloca U1?
-m04-pca.17.o0	Detrás del receptor
-m04-pca.17.o1	En el extremo del lado del cuadro de la caja de bateo de los bateadores derechos
-m04-pca.17.o2	En el extremo del lado del cuadro de la caja de bateo de los bateadores zurdos, mirando hacia la red del fondo
-m04-pca.17.o3	En primera base
-m04-pca.17.why	U3 se coloca en el extremo del lado del cuadro de la caja de bateo de los bateadores derechos. Inmediatamente después de la reunión, los árbitros de base pasan a las posiciones de entre entradas.
-m04-pca.18.q	Tras el tercer out sin corredores en base, ¿quién limpia la placa del lanzador de camino a las líneas de base?
-m04-pca.18.o0	U3
-m04-pca.18.o1	Quien esté más cerca del dugout
-m04-pca.18.o2	El árbitro de home
-m04-pca.18.o3	U1
-m04-pca.18.why	Limpia la placa el árbitro de base más cercano a ella; si no hay corredores en base o ambos están a la misma distancia, se encarga U3.
-m04-pca.19.q	Según el manual del Sistema de Tres Árbitros, ¿qué información deben conocer los árbitros antes de cada lanzamiento (Preparación Previa al Lanzamiento)?
-m04-pca.19.o0	Solo la cuenta
-m04-pca.19.o1	El número de outs, la cuenta de bolas y strikes, la posición de los corredores y la posición de los jugadores de campo
-m04-pca.19.o2	Los nombres de los bateadores
-m04-pca.19.o3	El clima, el marcador y la hora
-m04-pca.19.why	Conocer esto antes de cada lanzamiento ayuda al árbitro a anticipar las jugadas probables.
 m05-pca.10.q	¿Qué es la técnica de la «fotografía mental» que describe el Apéndice 4?
 m05-pca.10.o0	Contar los lanzamientos de cada turno al bate
 m05-pca.10.o1	Memorizar la postura del bateador antes de cada lanzamiento
@@ -1088,46 +418,6 @@ m05-pca.19.o3	Se divide por la mitad: U1 sale del jardín central a la línea de
 m05-pca.19.why	Si un árbitro empieza en segunda base, la división cambia: el árbitro de home cubre los fly desde el jardinero izquierdo (o el derecho) hasta la línea de foul.
 m07-mkc.title	Apéndice 5b: Sistema de Tres Árbitros
 m07-mkc.nextLabel	Continúa con la presentación - Apéndice 5b: Sistema de Tres Árbitros
-m07-mkc.0.q	En el Sistema de Tres Árbitros sin corredores en base, ¿dónde se coloca U3 al inicio?
-m07-mkc.0.o0	A unos 3,5 m (12 pies) detrás de 3B, hasta 2 m (6 pies) fuera de la línea
-m07-mkc.0.o1	A unos 5,5 m (18 pies) detrás de 3B, justo fuera de la línea en territorio de foul
-m07-mkc.0.o2	A unos 4,5 m (15 pies) detrás de 3B, en territorio fair
-m07-mkc.0.o3	A unos 7,5 m (25 pies) detrás de 3B, bien alejado de la línea
-m07-mkc.1.q	Entre entradas en el Sistema de Tres Árbitros, ¿dónde se coloca PU?
-m07-mkc.1.o0	A mitad de camino de HP a 1B
-m07-mkc.1.o1	A dos tercios del camino de HP a 3B
-m07-mkc.1.o2	A un tercio del camino de HP a 3B
-m07-mkc.1.o3	Detrás de los cajones de bateo, en el punto del plato
-m07-mkc.2.q	En un pickoff (tiro de regreso) en 2B en el Sistema de Tres Árbitros, ¿cuánto retrocede U3 desde la posición SBDA?
-m07-mkc.2.o0	Aproximadamente 1 m (3 pies)
-m07-mkc.2.o1	Aproximadamente 6 m (20 pies)
-m07-mkc.2.o2	Aproximadamente 3 m (10 pies)
-m07-mkc.2.o3	No se mueve
-m07-mkc.3.q	En el Sistema de Tres Árbitros, ¿quién es responsable de la decisión sobre el despegue de un corredor en 3B?
-m07-mkc.3.o0	U1
-m07-mkc.3.o1	PU
-m07-mkc.3.o2	U3
-m07-mkc.3.o3	El árbitro que esté más cerca
-m07-mkc.4.q	U1 está en 1B, U3 en 2B y hay un corredor en 1B. ¿Por qué el manual hace que U1 tome los fly hacia la zona del jardín derecho, incluso directamente detrás de U3?
-m07-mkc.4.o0	Mantiene a U1 fuera del camino del corredor entre bases y permite a U3 entrar más fácilmente en el diamante para cubrir jugadas y vigilar el tag-up
-m07-mkc.4.o1	Permite que PU se quede en home en todas las jugadas
-m07-mkc.4.o2	Es la única forma en que U3 puede ver al bateador
-m07-mkc.4.o3	Porque U1 siempre tiene la carrera más larga
-m07-mkc.5.q	En una jugada con la pelota viva desde el infield, U1 puede entrar en territorio fair cuando la pelota se lanza desde territorio fair. ¿Hasta dónde?
-m07-mkc.5.o0	Hasta donde haga falta para ver el tag
-m07-mkc.5.o1	No más allá del césped del infield
-m07-mkc.5.o2	Solo hasta la línea de foul
-m07-mkc.5.o3	No más allá de una línea de 45 grados que atraviesa 1B
-m07-mkc.6.q	U1 está en 1B y U3 en 3B con un corredor solo en 3B. Se batea un rodado al outfield. ¿Qué hace PU?
-m07-mkc.6.o0	Se mueve a una posición de espera, comprueba que el corredor de 3B toque HP (head check) y se prepara para la decisión en 3B sobre el bateador-corredor
-m07-mkc.6.o1	Rota a 1B para cubrir el tiro
-m07-mkc.6.o2	Se queda en el plato hasta que termina la jugada y luego se mueve a 3B
-m07-mkc.6.o3	Rota hacia dentro para cualquier decisión en 2B
-m07-mkc.7.q	En el Sistema de Tres Árbitros, cuando U1 o U3 sale a un fly, ¿quién lleva al bateador-corredor (BR) hasta 3B?
-m07-mkc.7.o0	PU
-m07-mkc.7.o1	El árbitro de base que queda, lo que permite que PU vaya a home
-m07-mkc.7.o2	El árbitro que salió
-m07-mkc.7.o3	El coach de base
 m08-mkc.title	Apéndice 5c y d: Sistemas de Cuatro, Cinco y Seis Árbitros
 m08-mkc.nextLabel	Continúa con la presentación - Apéndice 5c y d: Sistemas de Cuatro, Cinco y Seis Árbitros
 m08-mkc.0.q	En la reunión previa al partido en el plato en el Sistema de Cuatro Árbitros, ¿dónde se alinean U2, U1 y U3, y por qué?
@@ -1170,3 +460,761 @@ m08-mkc.7.o0	Delante del jardinero, para juzgar con precisión las bolas atrapad
 m08-mkc.7.o1	Detrás del jardinero
 m08-mkc.7.o2	En el poste de foul
 m08-mkc.7.o3	En la posición inicial del árbitro de base
+m01-mkc.0.q	¿Qué afirmaciones describen la colocación en el plato que enseña la Guía de Aprendizaje de Fundamentos de enero de 2026?
+m01-mkc.0.o0	Situar los ojos justo por dentro del borde interior del plato, en lugar de usar la oreja interior como referencia de alineación.
+m01-mkc.0.o1	Usar una Buena Alineación Pélvica (GPA), con el ombligo apuntando entre el centro de la parte delantera del plato y no más allá de la esquina delantera exterior.
+m01-mkc.0.o2	Usar una postura equilibrada con los pies separados aproximadamente al ancho de los hombros o más, ajustando la anchura para que el árbitro vea la zona de strike desde el esternón y la rodilla del bateador y los bordes interior y exterior.
+m01-mkc.0.o3	Todas las anteriores.
+m01-mkc.0.why	La guía cambia la referencia de alineación en el slot, de la oreja interior a los ojos justo por dentro del borde del plato, enseña de forma explícita la GPA y revisa la recomendación sobre la anchura de la postura. La alineación pélvica ya se describía en el manual anterior; la denominación GPA y la instrucción más completa son novedades.
+m01-mkc.1.q	Estás trabajando desde una posición inicial cercana con corredor en base cuando se desarrolla una jugada forzada. ¿Qué primer movimiento sigue mejor la nueva indicación de la Guía de Aprendizaje de Fundamentos de enero de 2026?
+m01-mkc.1.o0	Moverte en diagonal hacia la base para mantener la misma distancia de trabajo cercana.
+m01-mkc.1.o1	Moverte en ángulo recto o más respecto a la línea de base para crear distancia de trabajo y abrir el ángulo de visión según sea necesario, manteniendo a la vista los cuatro elementos esenciales.
+m01-mkc.1.o2	Quedarte en la posición inicial, porque una jugada forzada debe juzgarse desde la misma distancia que una jugada de tag.
+m01-mkc.1.o3	Acercarte hasta que la base ocupe todo tu campo visual.
+m01-mkc.1.why	La nueva instrucción se centra en la trayectoria del movimiento. Un primer movimiento en ángulo recto o más respecto a la línea de base crea distancia y mejora la separación visual. Moverse en diagonal hacia la base mantiene en gran medida la distancia corta propia de una jugada de tag.
+m01-mkc.2.q	Un tiro desviado lleva al primera base hacia home para un posible tag de barrido. Eres el árbitro de base responsable, pero tienes bloqueada la visión del tag. ¿Qué procedimiento sigue la Guía de Aprendizaje de Fundamentos de enero de 2026?
+m01-mkc.2.o0	Pedir ayuda antes de decidir y transferir automáticamente la decisión al árbitro de home.
+m01-mkc.2.o1	Cantar out al corredor porque la pelota llegó al fildeador antes de que el corredor llegara a la base.
+m01-mkc.2.o2	Moverte de forma dinámica para mantener a la vista los cuatro elementos esenciales siempre que sea posible. Tomar una decisión sobre la jugada y luego consultar a todo el equipo arbitral si hace falta ayuda; no pasar la decisión a otro árbitro salvo que estés seguro de que tiene toda la información necesaria para decidir la jugada completa.
+m01-mkc.2.o3	Dejar la jugada sin decidir hasta que un entrenador pida una reunión.
+m01-mkc.2.why	El árbitro responsable debe tomar una decisión y después consultar al equipo arbitral si es necesario. Un compañero puede haber visto el tag pero haberse perdido otra parte de la jugada, así que la decisión no debe transferirse sin más. Nunca adivines un out.
+m01-mkc.3.q	Un tercer strike cantado no es atrapado. La primera base está ocupada y hay un out. ¿Qué comunicación sigue la indicación explícita sobre el tercer strike de la Guía de Aprendizaje de Fundamentos de enero de 2026?
+m01-mkc.3.o0	Cantar con claridad "Strike tres... ¡Out!" y reforzar el out si el bateador empieza a correr hacia primera.
+m01-mkc.3.o1	Hacer solo la señal de strike y dejar que los jugadores determinen si el bateador está out.
+m01-mkc.3.o2	Cantar "No atrapada" y enviar al bateador a primera base.
+m01-mkc.3.o3	Esperar a que la defensa apele antes de declarar out al bateador.
+m01-mkc.3.why	Con la primera base ocupada y menos de dos outs, el bateador queda out automáticamente en el tercer strike aunque no sea atrapado. La guía exige expresamente comunicar con claridad el strike y el out, incluido reforzarlo si el bateador empieza a correr hacia primera.
+m01-mkc.4.q	Hay dos outs. Un corredor se acerca a home mientras otro corredor afronta una jugada de tag en otra base. ¿Qué comunicación verbal adicional recomienda preferentemente la Guía de Aprendizaje de Fundamentos de enero de 2026 al árbitro de base?
+m01-mkc.4.o0	Retrasar toda comunicación verbal hasta después de comprobar al corredor que anota.
+m01-mkc.4.o1	Decir "Tag" en voz alta en el momento exacto del tag para ayudar al árbitro de home a juzgar el momento, y completar la decisión después de juzgar el control de la pelota. El árbitro de home señalará home y hará la señal con un dedo si juzga que la carrera anotó, o cruzará los brazos sobre los hombros si la carrera no anota.
+m01-mkc.4.o2	Cantar "Out" en cuanto el guante toque al corredor, antes de juzgar la posesión.
+m01-mkc.4.o3	Anunciar desde la base donde se produce el tag si la carrera cuenta.
+m01-mkc.4.why	La guía recomienda una señal verbal inmediata y fuerte, "Tag", en el punto de contacto. Esto ayuda al árbitro de home a comparar el tag con el toque de home mientras el árbitro que decide juzga el control de la pelota. La señal no declara por sí sola un out; si el corredor es safe, usa la señal y la voz de safe según corresponda.
+m01-pca.5.q	Un corredor avanza de primera a segunda en una jugada de tag. Tu visión está casi directamente sobre la segunda base, de modo que la pelota, el fildeador, el corredor y la base parecen alineados. ¿Qué ajuste sigue la guía?
+m01-pca.5.o0	Acercarte hasta que la base quede directamente bajo tus ojos.
+m01-pca.5.o1	Trabajar justo antes del borde de entrada, con un ligero ángulo y la profundidad suficiente para mantener visualmente separados los Cuatro Elementos Esenciales.
+m01-pca.5.o2	Colocarte directamente en la línea del tiro y quedarte ahí.
+m01-pca.5.o3	Mantener la misma posición y juzgar la jugada sobre todo por el sonido de la atrapada.
+m01-pca.5.why	Trabajar justo antes del borde de entrada, con un ángulo y una profundidad adecuados, mantiene los elementos separados visualmente y te ayuda a juzgar el momento del tag y el toque de la base.
+m01-pca.6.q	En una jugada de tag que se está desarrollando, alcanzas una buena posición de observación, pero el fildeador se cruza en tu línea de visión. ¿Cómo debes usar las posiciones de observación y de decisión que describe la guía?
+m01-pca.6.o0	Tratar la posición de observación como un punto fijo y decidir desde ahí.
+m01-pca.6.o1	Ir a la zona de espera y decidir desde ahí.
+m01-pca.6.o2	Quedarte en el punto inicial y suponer que el tag se aplicó.
+m01-pca.6.o3	Usar la posición de observación para leer la jugada en desarrollo y luego ajustarte a una posición de decisión con visión sin obstáculos antes de señalar.
+m01-pca.6.why	La posición de observación es una zona desde la que leer la jugada, no necesariamente la posición final de decisión. Ajústate a medida que se desarrolla la jugada para ver la acción completa antes de señalar.
+m01-pca.7.q	En una jugada de tag, la posición nominal a 90 grados deja al fildeador entre tú y el tag. ¿Qué enfoque sigue el tratamiento del ángulo de 90 grados en la guía?
+m01-pca.7.o0	Usar los 90 grados como referencia y ajustarte después para obtener una visión sin obstáculos de los Cuatro Elementos Esenciales.
+m01-pca.7.o1	Mantener el ángulo exacto de 90 grados aunque el tag quede oculto.
+m01-pca.7.o2	Colocarte directamente sobre la base para no necesitar ningún ángulo.
+m01-pca.7.o3	Mantener el ángulo y cantar out al corredor si el tiro llega primero.
+m01-pca.7.why	El ángulo de 90 grados es una pauta, no un requisito absoluto. Ver la jugada con claridad tiene prioridad sobre alcanzar un ángulo exacto. El manual anterior ya exigía ajustar el ángulo; la guía de 2026 hace explícito este concepto de referencia.
+m01-pca.8.q	Cuando un corredor se desliza apartándose de un tag y el fildeador se estira para alcanzarlo, ¿qué foco y qué movimiento siguen mejor la instrucción de la guía sobre las jugadas de tag?
+m01-pca.8.o0	Mirar solo el pie del corredor y deducir el tag por la reacción del fildeador.
+m01-pca.8.o1	Quedarte quieto aunque el fildeador tape el guante.
+m01-pca.8.o2	Seguir la pelota o el conjunto pelota-guante hasta el tag, ajustándote al ritmo de la jugada en desarrollo, manteniendo la cabeza lo más quieta posible y los demás elementos a la vista.
+m01-pca.8.o3	Mirar solo el guante e ignorar la posición del corredor respecto a la base.
+m01-pca.8.why	La guía vincula explícitamente el movimiento al conjunto pelota-guante y a la aplicación del tag. Mantén a la vista los Cuatro Elementos Esenciales, ajústate cuando sea necesario y mantén el foco de la cabeza y la vista en todo momento.
+m01-pca.9.q	Durante la preparación previa al lanzamiento, valoras la profundidad y la capacidad de los jardineros. Después se batea un fly a tu zona de cobertura sin posibilidades reales de ser atrapado. ¿Qué destaca la nueva indicación sobre la cobertura del outfield?
+m01-pca.9.o0	Salir en cada pelota bateada al outfield, sea cual sea la posibilidad de atrapada.
+m01-pca.9.o1	Usar la valoración previa al lanzamiento y la comunicación del equipo arbitral para no salir sin necesidad y conservar una cobertura eficaz de las bases, teniendo en cuenta que en cualquier fly que pueda ser atrapado, atrapado a ras de suelo o cerca de la línea de fair/foul o del poste, los árbitros deben salir.
+m01-pca.9.o2	Cantar "No atrapada" de inmediato, antes de que la pelota caiga.
+m01-pca.9.o3	Salir primero y volver luego por la zona de otro árbitro mientras se desarrolla una jugada en base.
+m01-pca.9.why	La sección 9.2.1 advierte específicamente contra salir en pelotas sin posibilidades reales de ser atrapadas. Lee la jugada, ten en cuenta la cobertura asignada y comunícate para que el equipo arbitral mantenga una cobertura eficaz del outfield y de las bases.
+m01-pca.10.q	Un fly cerca de la línea de foul es tocado primero por un jardinero mientras la pelota está sobre territorio fair. El fildeador hace malabares con ella, pasa a territorio foul y la suelta. ¿Qué momento y qué estado se derivan de la instrucción de la guía sobre el primer toque?
+m01-pca.10.o0	Esperar a una atrapada completa antes de indicar fair o foul.
+m01-pca.10.o1	Declararla foul porque se soltó en territorio foul.
+m01-pca.10.o2	Usar la posición de los pies del fildeador en el momento en que suelta la pelota para determinar fair o foul.
+m01-pca.10.o3	Seguir la pelota, observar su posición en el primer toque e indicar fair en ese momento; que se suelte después en territorio foul no cambia ese estado.
+m01-pca.10.why	La nueva sección separa el momento del fair/foul del momento de la atrapada. En este fly, el estado fair/foul lo determina la posición de la pelota en el primer toque, y la indicación no debe esperar a una atrapada completa.
+m01-pca.11.q	En primera base, el fildeador está claramente fuera de la base mucho antes de que llegue el tiro. El corredor llega a primera sin ser tocado. ¿Cómo debes aplicar el nuevo énfasis de la guía en las decisiones de pie levantado?
+m01-pca.11.o0	Dar el safe con el énfasis rutinario adecuado; reservar el señalamiento descriptivo y el "Off" enérgico para una jugada que necesite ese énfasis y esa explicación.
+m01-pca.11.o1	Señalar siempre con energía y cantar "Off" en voz alta, por obvia que sea la jugada.
+m01-pca.11.o2	Cantar out al corredor porque la pelota llegó antes que él.
+m01-pca.11.o3	No tomar ninguna decisión porque el pie levantado era evidente.
+m01-pca.11.why	La guía de 2026 indica que no hay que vender innecesariamente un pie levantado evidente. La mecánica descriptiva más enérgica es para un pie levantado tardío o ajustado en el que la razón del safe debe quedar clara. Reserva este tipo de mecánica para cuando tenga más impacto, solo cuando haga falta.
+m01-pca.12.q	Durante una entrada, el árbitro de home está ocupado con sustituciones. La pelota está muerta y varios jugadores ofensivos de más se reúnen cerca de home con el bateador en espera. ¿Qué deben hacer los árbitros de base?
+m01-pca.12.o0	Esperar a que el árbitro de home termine antes de dirigirse a los jugadores.
+m01-pca.12.o1	Permitir jugadores de más cerca del plato porque la pelota está muerta.
+m01-pca.12.o2	Controlar la zona del bateador en espera y mantener segura la zona del plato; normalmente se encarga el árbitro de base más cercano al dugout ofensivo y los compañeros se ajustan según sea necesario.
+m01-pca.12.o3	Reanudar el juego para que los jugadores de más vuelvan al dugout.
+m01-pca.12.why	La nueva sección sobre pelota muerta da a los árbitros de base responsabilidades concretas mientras el árbitro de home gestiona las notificaciones. Arbitra de forma preventiva, controla a los jugadores no autorizados y mantén una zona de trabajo segura alrededor de home.
+m01-pca.13.q	El juego se ha suspendido por rayos. Veinte minutos después del último rayo visto, se vuelve a oír un trueno. Según la guía, ¿cuándo puede reanudarse el juego?
+m01-pca.13.o0	Diez minutos después, porque el periodo original de 30 minutos casi se ha cumplido.
+m01-pca.13.o1	No antes de 30 minutos después de ese trueno, siempre que no haya más rayos ni truenos y la reanudación se apruebe según los procedimientos de la competición.
+m01-pca.13.o2	De inmediato, porque un trueno sin rayo visible no afecta a la reanudación.
+m01-pca.13.o3	En cuanto los dos entrenadores principales acepten reanudar.
+m01-pca.13.why	El protocolo de 2026 cuenta el tiempo de espera desde el último rayo visto o el último trueno oído. Un trueno posterior inicia una nueva espera de 30 minutos. Consulta al UIC o a los responsables del torneo y aplica los procedimientos de la competición.
+m01-pca.14.q	En el vestuario, después del partido, quieres cuestionar la decisión de un compañero en una jugada difícil. ¿Qué enfoque sigue la indicación de la guía sobre la reunión posterior del equipo arbitral?
+m01-pca.14.o0	Plantearlo públicamente ante los equipos para que todos oigan la explicación.
+m01-pca.14.o1	Decirle al compañero qué hizo mal antes de dejarle describir la jugada.
+m01-pca.14.o2	Evitar hablar de decisiones difíciles, porque una reunión posterior solo debe tratar las jugadas bien resueltas.
+m01-pca.14.o3	Dejar que el compañero comparta sus observaciones, pedir permiso antes de cuestionar su decisión y comentar la jugada con honestidad, respeto y confidencialidad, centrándose en aprender.
+m01-pca.14.why	La indicación ampliada sobre la reunión posterior pide dejar que los compañeros compartan sus observaciones y pedir permiso antes de cuestionarlos. Mantén la conversación confidencial y constructiva, y escucha todos los puntos de vista.
+m01-pca.15.q	Un jugador es retirado por una infracción de las reglas en lugar de ser expulsado por mala conducta. ¿Qué distinción exige la Guía de Aprendizaje de Fundamentos que reconozca el equipo arbitral?
+m01-pca.15.o0	Un jugador retirado por una infracción de las reglas puede quedarse en el dugout y puede dirigir; una persona expulsada debe abandonar el partido e ir al vestuario o abandonar por completo la instalación.
+m01-pca.15.o1	Tanto el jugador retirado como la persona expulsada deben quedarse en el dugout.
+m01-pca.15.o2	Un jugador retirado puede seguir jugando si el entrenador está de acuerdo.
+m01-pca.15.o3	La expulsión se aplica solo a los entrenadores y la retirada solo a los jugadores.
+m01-pca.15.why	La guía distingue la expulsión de la retirada. Su instrucción es que la persona expulsada abandona la instalación; un jugador retirado por una infracción de las reglas puede quedarse en el dugout y dirigir. Esto no hace que el jugador retirado pueda seguir jugando.
+m01-pca.16.q	Un compañero te aporta información adicional fiable y, tras consultarlo con el equipo arbitral, decides cambiar tu decisión. ¿Qué secuencia de comunicación indica la guía?
+m01-pca.16.o0	Anunciar primero la nueva decisión al público y dejar que los entrenadores pidan los detalles.
+m01-pca.16.o1	Pedir a los dos entrenadores que se unan a la conversación del equipo arbitral antes de decidir.
+m01-pca.16.o2	Informar primero al equipo afectado, dar una explicación sencilla y comunicar después con claridad la decisión final.
+m01-pca.16.o3	Cambiar la señal sin explicarla para que el juego se reanude antes.
+m01-pca.16.why	La consulta del equipo arbitral se hace lejos de jugadores y entrenadores. Si la decisión cambia, informa primero al equipo afectado, explícalo de forma sencilla y comunica con claridad la decisión final. La consulta debe basarse en información, no solo en la presión.
+m01-pca.17.q	El DP ocupa la posición defensiva del jugador FLEX y el FLEX sale del partido. ¿Qué confirmación concreta añade la guía al proceso de gestión de la alineación?
+m01-pca.17.o0	Decir al anotador que el equipo sigue teniendo diez jugadores porque el DP continúa en el orden al bate.
+m01-pca.17.o1	Cuando el DP defiende en lugar del FLEX, se trata como una sustitución del FLEX o de su sustituto y debe comunicarse al árbitro. Confirmar con el entrenador y el anotador que el equipo juega ahora con nueve, además de registrar y comunicar el cambio.
+m01-pca.17.o2	Permitir que el entrenador comunique el cambio directamente al anotador sin pasar por el árbitro de home.
+m01-pca.17.o3	Esperar al final de la entrada para registrar si el FLEX salió del partido.
+m01-pca.17.why	En un cambio en el que el DP o el FLEX salen o vuelven al partido, la guía indica explícitamente al árbitro que confirme con el entrenador y el anotador si el equipo juega con nueve o con diez. Aquí el FLEX ha salido, así que el equipo tiene nueve.
+m01-pca.18.q	Después de varios lanzamientos exigentes, notas que tu concentración disminuye. ¿Qué rutina entre lanzamientos recomienda la guía para mantener el foco?
+m01-pca.18.o0	Permanecer fijo en la posición de set durante todo el turno al bate.
+m01-pca.18.o1	Cambiar el ritmo de tu decisión en el siguiente lanzamiento para obligarte a concentrarte.
+m01-pca.18.o2	Repasar mentalmente el lanzamiento anterior mientras se realiza el siguiente.
+m01-pca.18.o3	Tras completar la decisión y comprobar que no hay acción en curso, dar un paso atrás, relajarte, respirar y fijarte brevemente en el entorno, y volver a concentrarte antes del siguiente lanzamiento.
+m01-pca.18.why	La guía añade un ciclo deliberado de concentración en cada lanzamiento y una breve pausa entre lanzamientos. La pausa llega tras completar el lanzamiento y la decisión, y no debe distraer de las jugadas en curso del receptor o de los corredores.
+m01-pca.19.q	En un torneo, un entrenador dice que hay que ignorar una infracción clara porque en la competición nacional de su equipo se tolera habitualmente. ¿Qué enfoque sigue el marco de la WBSC de la guía?
+m01-pca.19.o0	Aplicar la norma de la WBSC de forma coherente e imparcial, abordando las infracciones claras que afectan a la equidad sin buscar tecnicismos marginales o triviales.
+m01-pca.19.o1	Aplicar la norma nacional del equipo que esté bateando.
+m01-pca.19.o2	Relajar la aplicación de las reglas con los equipos que no conocen la competición internacional.
+m01-pca.19.o3	Cambiar la norma al final del partido para no influir en un resultado ajustado.
+m01-pca.19.why	El nuevo marco establece que el juego de campeonato no varía según las costumbres nacionales de aplicación de las reglas. Aplica una norma WBSC coherente desde el primer lanzamiento hasta el último out, equilibrando una aplicación clara con evitar arbitrar en exceso tecnicismos triviales.
+m01-pca.0.q	¿Qué afirmaciones describen la colocación en el plato que enseña la Guía de Aprendizaje de Fundamentos de enero de 2026?
+m01-pca.0.o0	Situar los ojos justo por dentro del borde interior del plato, en lugar de usar la oreja interior como referencia de alineación.
+m01-pca.0.o1	Usar una Buena Alineación Pélvica (GPA), con el ombligo apuntando entre el centro de la parte delantera del plato y no más allá de la esquina delantera exterior.
+m01-pca.0.o2	Usar una postura equilibrada con los pies separados aproximadamente al ancho de los hombros o más, ajustando la anchura para que el árbitro vea la zona de strike desde el esternón y la rodilla del bateador y los bordes interior y exterior.
+m01-pca.0.o3	Todas las anteriores.
+m01-pca.0.why	La guía cambia la referencia de alineación en el slot, de la oreja interior a los ojos justo por dentro del borde del plato, enseña de forma explícita la GPA y revisa la recomendación sobre la anchura de la postura. La alineación pélvica ya se describía en el manual anterior; la denominación GPA y la instrucción más completa son novedades.
+m01-pca.1.q	Estás trabajando desde una posición inicial cercana con corredor en base cuando se desarrolla una jugada forzada. ¿Qué primer movimiento sigue mejor la nueva indicación de la Guía de Aprendizaje de Fundamentos de enero de 2026?
+m01-pca.1.o0	Moverte en diagonal hacia la base para mantener la misma distancia de trabajo cercana.
+m01-pca.1.o1	Moverte en ángulo recto o más respecto a la línea de base para crear distancia de trabajo y abrir el ángulo de visión según sea necesario, manteniendo a la vista los cuatro elementos esenciales.
+m01-pca.1.o2	Quedarte en la posición inicial, porque una jugada forzada debe juzgarse desde la misma distancia que una jugada de tag.
+m01-pca.1.o3	Acercarte hasta que la base ocupe todo tu campo visual.
+m01-pca.1.why	La nueva instrucción se centra en la trayectoria del movimiento. Un primer movimiento en ángulo recto o más respecto a la línea de base crea distancia y mejora la separación visual. Moverse en diagonal hacia la base mantiene en gran medida la distancia corta propia de una jugada de tag.
+m01-pca.2.q	Un tiro desviado lleva al primera base hacia home para un posible tag de barrido. Eres el árbitro de base responsable, pero tienes bloqueada la visión del tag. ¿Qué procedimiento sigue la Guía de Aprendizaje de Fundamentos de enero de 2026?
+m01-pca.2.o0	Pedir ayuda antes de decidir y transferir automáticamente la decisión al árbitro de home.
+m01-pca.2.o1	Cantar out al corredor porque la pelota llegó al fildeador antes de que el corredor llegara a la base.
+m01-pca.2.o2	Moverte de forma dinámica para mantener a la vista los cuatro elementos esenciales siempre que sea posible. Tomar una decisión sobre la jugada y luego consultar a todo el equipo arbitral si hace falta ayuda; no pasar la decisión a otro árbitro salvo que estés seguro de que tiene toda la información necesaria para decidir la jugada completa.
+m01-pca.2.o3	Dejar la jugada sin decidir hasta que un entrenador pida una reunión.
+m01-pca.2.why	El árbitro responsable debe tomar una decisión y después consultar al equipo arbitral si es necesario. Un compañero puede haber visto el tag pero haberse perdido otra parte de la jugada, así que la decisión no debe transferirse sin más. Nunca adivines un out.
+m01-pca.3.q	Un tercer strike cantado no es atrapado. La primera base está ocupada y hay un out. ¿Qué comunicación sigue la indicación explícita sobre el tercer strike de la Guía de Aprendizaje de Fundamentos de enero de 2026?
+m01-pca.3.o0	Cantar con claridad "Strike tres... ¡Out!" y reforzar el out si el bateador empieza a correr hacia primera.
+m01-pca.3.o1	Hacer solo la señal de strike y dejar que los jugadores determinen si el bateador está out.
+m01-pca.3.o2	Cantar "No atrapada" y enviar al bateador a primera base.
+m01-pca.3.o3	Esperar a que la defensa apele antes de declarar out al bateador.
+m01-pca.3.why	Con la primera base ocupada y menos de dos outs, el bateador queda out automáticamente en el tercer strike aunque no sea atrapado. La guía exige expresamente comunicar con claridad el strike y el out, incluido reforzarlo si el bateador empieza a correr hacia primera.
+m01-pca.4.q	Hay dos outs. Un corredor se acerca a home mientras otro corredor afronta una jugada de tag en otra base. ¿Qué comunicación verbal adicional recomienda preferentemente la Guía de Aprendizaje de Fundamentos de enero de 2026 al árbitro de base?
+m01-pca.4.o0	Retrasar toda comunicación verbal hasta después de comprobar al corredor que anota.
+m01-pca.4.o1	Decir "Tag" en voz alta en el momento exacto del tag para ayudar al árbitro de home a juzgar el momento, y completar la decisión después de juzgar el control de la pelota. El árbitro de home señalará home y hará la señal con un dedo si juzga que la carrera anotó, o cruzará los brazos sobre los hombros si la carrera no anota.
+m01-pca.4.o2	Cantar "Out" en cuanto el guante toque al corredor, antes de juzgar la posesión.
+m01-pca.4.o3	Anunciar desde la base donde se produce el tag si la carrera cuenta.
+m01-pca.4.why	La guía recomienda una señal verbal inmediata y fuerte, "Tag", en el punto de contacto. Esto ayuda al árbitro de home a comparar el tag con el toque de home mientras el árbitro que decide juzga el control de la pelota. La señal no declara por sí sola un out; si el corredor es safe, usa la señal y la voz de safe según corresponda.
+m03-mkc.0.q	Según el manual del Sistema de Dos Árbitros, ¿cuál de los siguientes NO es uno de los «Cuatro Elementos Esenciales» que el árbitro debe mantener a la vista sin obstáculos?
+m03-mkc.0.o0	La pelota.
+m03-mkc.0.o1	El marcador.
+m03-mkc.0.o2	Los jugadores ofensivos.
+m03-mkc.0.o3	Los jugadores defensivos.
+m03-mkc.0.why	Los Cuatro Elementos Esenciales son la pelota, los jugadores defensivos, los jugadores ofensivos y la base o la zona de la jugada.
+m03-mkc.1.q	Según el Principio de División, y salvo sus excepciones indicadas, ¿qué árbitro decide normalmente en home y en tercera base?
+m03-mkc.1.o0	Los dos árbitros conjuntamente.
+m03-mkc.1.o1	El árbitro de base.
+m03-mkc.1.o2	El árbitro que llegue primero.
+m03-mkc.1.o3	El árbitro de home.
+m03-mkc.1.why	El árbitro de home cubre normalmente home y tercera; el árbitro de base cubre normalmente primera y segunda. Las excepciones indicadas modifican esta división.
+m03-mkc.2.q	Según el Principio Infield/Outfield, ¿hacia dónde se mueve el árbitro de base cuando la pelota se batea al outfield?
+m03-mkc.2.o0	Hacia el infield
+m03-mkc.2.o1	Más hacia el outfield, hacia la pelota
+m03-mkc.2.o2	A una posición sobre la línea de foul
+m03-mkc.2.o3	Detrás de home
+m03-mkc.2.why	Con la pelota en el outfield, el árbitro de base entra en el infield para mantener la jugada delante.
+m03-mkc.3.q	¿Cuál es la razón del Principio del Corredor Adelantado en el Sistema de Dos Árbitros?
+m03-mkc.3.o0	El corredor adelantado es siempre el más rápido en base y necesita una supervisión más cercana
+m03-mkc.3.o1	El árbitro de base debe empezar siempre lo más cerca posible de segunda, haya o no corredores
+m03-mkc.3.o2	El árbitro de base se coloca en función del corredor adelantado porque se espera que el receptor intente un pickoff sobre ese corredor
+m03-mkc.3.o3	El árbitro de home delega la cobertura del corredor adelantado para evitar el cansancio
+m03-mkc.3.why	El pickoff esperado sobre el corredor adelantado determina la prioridad de la posición inicial del árbitro de base.
+m03-mkc.4.q	Sin corredores en base, ¿cuál es la posición inicial del árbitro de base según el manual?
+m03-mkc.4.o0	4-5 metros (15 pies) detrás de la línea de base, en territorio fair
+m03-mkc.4.o1	Justo detrás de la placa del lanzador, mirando hacia home
+m03-mkc.4.o2	3,5 metros (10-12 pies) detrás de primera base, sobre la línea de foul
+m03-mkc.4.o3	5,5 metros (18 pies) detrás de primera base en territorio foul, a 150 mm (6 pulgadas) de la línea
+m03-mkc.4.why	Sin corredores, el árbitro de base empieza a unos 5,5 metros (18 pies) detrás de primera base en territorio foul y a 150 mm (6 pulgadas) de la línea.
+m03-pca.0.q	Sin corredores en base, el bateador batea un rodado normal al campocorto, que tira a primera. ¿Quién decide la jugada en primera?
+m03-pca.0.o0	El árbitro de home, porque es una jugada forzada.
+m03-pca.0.o1	El árbitro que esté más cerca de la base.
+m03-pca.0.o2	El árbitro de base.
+m03-pca.0.o3	El árbitro de home, porque la pelota bateada fue fair.
+m03-pca.0.why	El árbitro de base entra en territorio fair, deja que la pelota lo oriente hacia la jugada y después se detiene, espera, decide y señala. La jugada en primera es del árbitro de base.
+m03-pca.1.q	Con un corredor en primera base, el bateador batea un rodado que puede convertirse en doble play. Según el manual, ¿qué debe hacer el árbitro de base?
+m03-pca.1.o0	Anticipar el doble play, moverse rápidamente hacia la base donde se hará la primera jugada y decidir todas las jugadas del primer tiro
+m03-pca.1.o1	Quedarse en posición de preparado en primera base hasta que termine el tiro
+m03-pca.1.o2	Ir de inmediato a tercera base para cubrir el avance de R1
+m03-pca.1.o3	Ceder la cobertura de primera base al árbitro de home
+m03-pca.1.why	Anticipa el doble play y muévete hacia la base donde se producirá la primera jugada. Deja que la pelota te oriente hacia la jugada y después detente, espera, decide y señala.
+m03-pca.2.q	Con un corredor en primera base, el bateador batea un fly al outfield que es atrapado. ¿Qué árbitro es responsable de la decisión del tag-up en primera?
+m03-pca.2.o0	El árbitro de home
+m03-pca.2.o1	El árbitro de base
+m03-pca.2.o2	Los dos árbitros conjuntamente
+m03-pca.2.o3	Ninguno: en los fly atrapados no se juzgan los tag-ups
+m03-pca.2.why	Con un corredor en primera y un fly al outfield, el árbitro de base entra en el diamante y se encarga del tag-up en primera. El árbitro de home juzga si la pelota es atrapada o no.
+m03-pca.3.q	Con corredores en primera y segunda, el corredor que estaba en segunda intenta robar tercera en el lanzamiento. ¿Qué árbitro decide en tercera?
+m03-pca.3.o0	El árbitro de home, porque la división normal siempre se aplica en tercera.
+m03-pca.3.o1	El árbitro que esté más cerca de home.
+m03-pca.3.o2	El árbitro que tenga en ese momento el ángulo más claro.
+m03-pca.3.o3	El árbitro de base, según la excepción indicada para el robo.
+m03-pca.3.why	Un robo de segunda a tercera es una excepción explícita a la división normal: decide el árbitro de base.
+m03-pca.4.q	Con corredores en segunda y tercera, el bateador batea una pelota al outfield. ¿Qué reparto completo sigue la guía?
+m03-pca.4.o0	El árbitro de base lleva al corredor que estaba en segunda hasta tercera y al bateador-corredor por primera, segunda y tercera; el árbitro de home vigila el tag-up en tercera y se prepara para una jugada en tercera o en home.
+m03-pca.4.o1	El árbitro de base lleva solo al bateador-corredor por primera y segunda; el árbitro de home se encarga de los dos corredores originales y del bateador-corredor en tercera.
+m03-pca.4.o2	El árbitro de base lleva al corredor que estaba en tercera hasta home; el árbitro de home lleva al bateador-corredor por todas las bases.
+m03-pca.4.o3	Los dos árbitros siguen al corredor que estaba en tercera y dejan que el bateador-corredor avance sin cobertura.
+m03-pca.4.why	La página 27 asigna al árbitro de base el corredor original de segunda en tercera, junto con el bateador-corredor hasta tercera. El árbitro de home vigila el tag-up en tercera y anticipa la acción en tercera o en home. Comunica cualquier desviación necesaria.
+m03-pca.5.q	Con las bases llenas, se fildea un rodado y el primer tiro va directamente a home para una jugada forzada. ¿Qué árbitro decide la jugada en home?
+m03-pca.5.o0	El árbitro de base, porque todo primer tiro corresponde al árbitro de base.
+m03-pca.5.o1	El árbitro que esté más cerca del lanzador.
+m03-pca.5.o2	Los dos árbitros a la vez.
+m03-pca.5.o3	El árbitro de home, que anticipa y cubre la jugada en home.
+m03-pca.5.why	El árbitro de home cubre home y debe anticipar la jugada allí. No interpretes la asignación del primer tiro al árbitro de base como una transferencia de la cobertura de home.
+m03-pca.6.q	El bateador batea una pelota al outfield y, como bateador-corredor, avanza hasta tercera base. Según las excepciones al Principio de División, ¿quién decide sobre el bateador-corredor en tercera?
+m03-pca.6.o0	El árbitro de home, ya que según el Principio de División las decisiones en tercera son siempre suyas
+m03-pca.6.o1	El árbitro de base
+m03-pca.6.o2	El árbitro que empezó la jugada más cerca de tercera
+m03-pca.6.o3	El árbitro de home, porque el árbitro de base solo cubre primera y segunda
+m03-pca.6.why	El bateador-corredor que avanza hasta tercera es una excepción explícita a la división normal. El árbitro de base lleva al bateador-corredor por primera, segunda y tercera.
+m03-pca.7.q	Con un corredor solo en segunda base, y antes del lanzamiento, ¿dónde debe colocarse el árbitro de base?
+m03-pca.7.o0	A 5,5 metros (18 pies) detrás de primera base en territorio foul
+m03-pca.7.o1	Detrás y a un lado del segunda base, inclinado hacia primera
+m03-pca.7.o2	Detrás y a un lado del campocorto, inclinado hacia el corredor de segunda, con visión del lanzador, el corredor y la zona de home
+m03-pca.7.o3	En el césped del outfield detrás de segunda base
+m03-pca.7.why	Con un corredor solo en segunda, el árbitro de base empieza detrás y a un lado del campocorto, inclinado hacia ese corredor, manteniendo la visión del lanzador, el corredor y la zona de home.
+m03-pca.8.q	El árbitro de base está colocado para una posible jugada en primera y queda claro que el tiro exigirá un tag en lugar de un forzado. Según el manual, ¿qué ajuste debe hacer?
+m03-pca.8.o0	Acercarse a unos 3,5 metros (10-12 pies) para ver y decidir la jugada
+m03-pca.8.o1	Quedarse a 5,5 metros (18 pies), ya que esa distancia vale para todas las decisiones
+m03-pca.8.o2	Moverse a 4-5 metros (15 pies) detrás de la línea de base
+m03-pca.8.o3	Retroceder más hacia territorio foul para tener un ángulo más amplio
+m03-pca.8.why	La guía indica unos 5,5 metros (18 pies) para las jugadas forzadas y 3,5 metros (10-12 pies) para las jugadas de tag. Ajústate para la jugada de tag manteniendo delante los Cuatro Elementos Esenciales.
+m03-pca.9.q	Con corredores en primera y tercera, se batea un rodado al infield. La defensa hace la primera jugada (un forzado en segunda) y luego tira a home para intentar sacar al corredor de tercera. ¿Qué árbitro es responsable de decidir esta segunda jugada en home?
+m03-pca.9.o0	El árbitro de base, ya que decide todas las jugadas, incluidos los tiros posteriores
+m03-pca.9.o1	Los dos árbitros deben decidirla a la vez
+m03-pca.9.o2	El árbitro que esté colocado en territorio fair
+m03-pca.9.o3	El árbitro de home, responsable de las jugadas siguientes en tercera o en home después de la primera jugada del infield
+m03-pca.9.why	Después de la primera jugada del infield, el árbitro de home cubre las jugadas siguientes en tercera o en home. En este caso el tiro a home es la jugada siguiente.
+m03-pca.10.q	Con corredores en primera y segunda, el bateador batea un rodado y la defensa hace su primera jugada en tercera base. ¿Quién decide esa primera jugada en tercera?
+m03-pca.10.o0	El árbitro de home, porque tercera siempre le corresponde.
+m03-pca.10.o1	El árbitro de base, según la excepción para la primera decisión del infield en una base.
+m03-pca.10.o2	Los dos árbitros deben señalar.
+m03-pca.10.o3	Ningún árbitro hasta que se haga el siguiente tiro.
+m03-pca.10.why	La primera decisión del infield en una base corresponde al árbitro de base aunque sea en tercera. El árbitro de home se prepara para las jugadas siguientes en tercera o en home.
+m03-pca.11.q	Sin corredores en base, se batea un fly cerca de la línea de foul del jardín derecho. ¿Qué exige la guía al árbitro de home?
+m03-pca.11.o0	Quedarse detrás del receptor y dejar el fair/foul y la atrapada al árbitro de base.
+m03-pca.11.o1	Seguir al bateador-corredor hasta segunda sin decidir sobre el fly.
+m03-pca.11.o2	Moverse hacia la trayectoria de la pelota, ponerse a horcajadas sobre la línea para la decisión ajustada de fair/foul y juzgar si es atrapada o no.
+m03-pca.11.o3	Ir directamente a tercera base sin mirar la pelota.
+m03-pca.11.why	El árbitro de home se mueve hacia la trayectoria de la pelota y juzga su estado. En una pelota cerca de la línea de foul, se coloca a horcajadas sobre la línea para la decisión de fair/foul. El árbitro de base lleva al bateador-corredor por las bases.
+m03-pca.12.q	Una jugada en desarrollo te obliga a desviarte del reparto normal de la cobertura en el sistema de dos árbitros. ¿Qué debes hacer?
+m03-pca.12.o0	Comunicar la desviación a tu compañero.
+m03-pca.12.o1	Suponer que tu compañero entenderá el cambio sin comunicación.
+m03-pca.12.o2	Cantar "Tiempo" de inmediato en cada desviación.
+m03-pca.12.o3	Seguir decidiendo tú todas las jugadas en ambas bases.
+m03-pca.12.why	La sección de excepciones exige expresamente comunicar cuando los árbitros deben desviarse. Una comunicación clara ayuda al equipo arbitral a mantener la cobertura y a evitar decisiones contradictorias.
+m03-pca.13.q	Cuando el lanzador adopta la posición de set, ¿cómo debe colocar los pies el árbitro de base?
+m03-pca.13.o0	Un pie bastante más adelantado que el otro
+m03-pca.13.o1	Juntos, con el peso en los talones
+m03-pca.13.o2	Lo más separados posible
+m03-pca.13.o3	A una distancia cómoda, al menos al ancho de los hombros, relajado pero quieto
+m03-pca.13.why	Cuando el lanzador junta las manos, coloca los pies a una distancia cómoda, al menos al ancho de los hombros, y permanece relajado pero quieto. En el lanzamiento, desbloquea ligeramente las rodillas, con el peso suavemente sobre la parte delantera de los pies y las manos cerca del cinturón.
+m03-pca.14.q	El bateador es zurdo y batea la pelota. ¿Por qué lado del receptor exige la guía que salga el árbitro de home?
+m03-pca.14.o0	Por la derecha, porque el bateador es zurdo.
+m03-pca.14.o1	Por el lado que lleve directamente hacia el movimiento del receptor.
+m03-pca.14.o2	Quedarse detrás del receptor hasta que todos los corredores lleguen a una base.
+m03-pca.14.o3	Por la izquierda, también cuando el bateador es zurdo.
+m03-pca.14.why	La guía indica que en cada batazo el árbitro de home sale por la izquierda del receptor, incluso con un bateador zurdo, y luego va a la posición necesaria.
+m03-pca.15.q	Sin corredores en base al inicio, el tiro a primera tras un batazo al infield se escapa pero la pelota sigue en juego. El bateador-corredor avanza. ¿Qué debe hacer a continuación el árbitro de base?
+m03-pca.15.o0	Quedarse fuera de primera y dejar segunda y tercera al árbitro de home.
+m03-pca.15.o1	Entrar en el infield y prepararse para llevar al bateador-corredor en segunda y tercera.
+m03-pca.15.o2	Cantar "Bola muerta" solo porque el tiro se pasó.
+m03-pca.15.o3	Seguir la pelota hacia el outfield y abandonar al bateador-corredor.
+m03-pca.15.why	En un tiro desviado tras esta jugada del infield, el árbitro de base entra en el infield y se prepara para segunda y tercera. El enunciado indica que la pelota sigue en juego.
+m03-pca.16.q	¿Qué NO debe hacer el árbitro de base al colocarse antes del lanzamiento?
+m03-pca.16.o0	Estar relajado
+m03-pca.16.o1	Mirar hacia home
+m03-pca.16.o2	Mantener una visión clara de home
+m03-pca.16.o3	Colocarse por delante de algún jugador de cuadro antes de que el receptor reciba el lanzamiento o se batee la pelota
+m03-pca.16.why	Antes de que el receptor reciba el lanzamiento o se batee la pelota, el árbitro de base no debe colocarse por delante de un jugador de cuadro y debe mantener una visión sin obstáculos de home.
+m03-pca.17.q	En un batazo al infield sin corredores en base, ¿qué hace el árbitro de home?
+m03-pca.17.o0	Ir a segunda base
+m03-pca.17.o1	Seguir al bateador-corredor aproximadamente un tercio del camino hacia primera, vigilando una posible interferencia u obstrucción
+m03-pca.17.o2	Ir directamente a tercera base
+m03-pca.17.o3	Quedarse detrás del plato
+m03-pca.17.why	Sin corredores, en un batazo al infield el árbitro de home sigue al bateador-corredor aproximadamente un tercio del camino hacia primera, vigilando una posible interferencia u obstrucción y ayudando si hace falta.
+m03-pca.18.q	Entre entradas en el Sistema de Dos Árbitros, ¿dónde se coloca el árbitro de home?
+m03-pca.18.o0	Justo fuera de la línea de tercera en territorio foul, aproximadamente a un tercio del camino hacia tercera
+m03-pca.18.o1	Justo fuera de la línea de primera, aproximadamente a un tercio del camino hacia primera
+m03-pca.18.o2	Detrás del receptor
+m03-pca.18.o3	En la placa del lanzador
+m03-pca.18.why	Entre entradas, el árbitro de home se coloca en territorio foul justo fuera de la línea de tercera, aproximadamente a un tercio del camino hacia tercera. El árbitro de base usa la posición equivalente en el lado de primera.
+m03-pca.19.q	En el Sistema de Dos Árbitros, ¿quién es responsable de cantar los lanzamientos ilegales?
+m03-pca.19.o0	Solo el árbitro de home
+m03-pca.19.o1	El árbitro que esté más cerca de la placa del lanzador
+m03-pca.19.o2	Los dos árbitros comparten la responsabilidad
+m03-pca.19.o3	Solo el árbitro de base
+m03-pca.19.why	Los dos árbitros comparten la responsabilidad de los lanzamientos ilegales. El árbitro de home tiene además las responsabilidades indicadas de fair/foul e infracciones de bateo; las responsabilidades concretas sobre el lanzamiento se desarrollan en la guía de Fundamentos.
+m04-mkc.0.q	Según los «Cuatro Elementos Esenciales» del manual del Sistema de Tres Árbitros, ¿qué cuatro cosas debe mantener el árbitro a la vista sin obstáculos para tener la jugada delante?
+m04-mkc.0.o0	La pelota, los jugadores defensivos, los jugadores ofensivos y la base o la zona de la jugada
+m04-mkc.0.o1	La pelota, el lanzador, el receptor y la base
+m04-mkc.0.o2	La pelota, el corredor, el entrenador y el marcador
+m04-mkc.0.o3	La pelota, el fildeador, el dugout y la línea de foul
+m04-mkc.0.why	Los cuatro elementos son la pelota, los jugadores defensivos, los jugadores ofensivos y la base o la zona de la jugada.
+m04-mkc.1.q	Según el Principio de División general, salvo las excepciones indicadas y las instrucciones concretas de cada situación, ¿qué árbitro decide normalmente en home y en tercera cuando un árbitro de base sale a un fly?
+m04-mkc.1.o0	El árbitro de base que queda
+m04-mkc.1.o1	El árbitro de home
+m04-mkc.1.o2	El árbitro que esté más cerca de tercera
+m04-mkc.1.o3	Los dos árbitros conjuntamente
+m04-mkc.1.why	La división general asigna home y tercera al árbitro de home, y primera y segunda al árbitro de base que queda. Aplica las excepciones indicadas y las instrucciones detalladas de cada situación.
+m04-mkc.2.q	¿Qué significa «despejar al receptor» para el árbitro de home, según el manual del Sistema de Tres Árbitros?
+m04-mkc.2.o0	Correr hasta el backstop para comprobar si hay interferencia
+m04-mkc.2.o1	Indicar al receptor que se ponga de pie antes de cada lanzamiento
+m04-mkc.2.o2	Dar un pequeño paso a la izquierda del árbitro de home para salir de detrás del receptor
+m04-mkc.2.o3	Colocarse justo detrás del receptor para tener el mejor ángulo
+m04-mkc.2.why	Despejar al receptor significa dar un pequeño paso a la izquierda del árbitro de home, creando espacio y abriendo la visión antes de que se desarrolle la jugada.
+m04-mkc.3.q	En la posición de preparado del árbitro de base que describe este manual, ¿cuándo debe el árbitro adoptar la posición de «preparado», desbloqueando ligeramente las rodillas y apoyando el peso en la parte delantera de los pies?
+m04-mkc.3.o0	En cuanto el lanzador adopta la posición de set
+m04-mkc.3.o1	Durante la reunión previa al partido
+m04-mkc.3.o2	Solo después de que la pelota esté en juego
+m04-mkc.3.o3	Cuando el lanzador inicia el lanzamiento
+m04-mkc.3.why	Los pies se colocan cómodamente separados cuando el lanzador hace el set. Cuando el lanzador inicia el lanzamiento, desbloquea ligeramente las rodillas, con el peso suavemente sobre la parte delantera de los pies y las manos cerca del cinturón.
+m04-mkc.4.q	Según el Principio Infield/Outfield del Sistema de Tres Árbitros, ¿qué debe hacer un árbitro de base que NO sale a un fly una vez que la pelota está en el outfield?
+m04-mkc.4.o0	Salir más allá de la línea de base para respaldar la jugada
+m04-mkc.4.o1	Quedarse en posición de preparado en su base original
+m04-mkc.4.o2	Rotar hacia el interior del diamante
+m04-mkc.4.o3	Seguir la pelota hacia la cerca del outfield
+m04-mkc.4.why	Los árbitros de base que no salen rotan hacia dentro cuando la pelota está en el outfield. Cuando un árbitro sale, el árbitro de base que queda debe rotar hacia dentro.
+m04-pca.0.q	Sin corredores en base, se batea un rodado al infield que da lugar a una posible jugada forzada en primera. Si el bateador-corredor es safe en primera y sigue hacia segunda, ¿qué árbitro ha rotado para decidir esa jugada, según el manual del Sistema de Tres Árbitros?
+m04-pca.0.o0	El árbitro de home, siguiendo al corredor hasta segunda
+m04-pca.0.o1	U1, que se queda en primera y cubre también segunda
+m04-pca.0.o2	U3, que rota a segunda en línea con el árbitro de home
+m04-pca.0.o3	U3 se queda en tercera y no rota
+m04-pca.0.why	U3 rota a segunda, en línea con el árbitro de home, preparado para decidir si el bateador-corredor es safe en primera y sigue hacia segunda.
+m04-pca.1.q	Sin corredores en base, U1 sale a un fly al outfield. Si la pelota no es atrapada, ¿qué árbitro es responsable de llevar al bateador-corredor a segunda y hasta tercera?
+m04-pca.1.o0	El árbitro de home
+m04-pca.1.o1	U3
+m04-pca.1.o2	U1 vuelve del outfield para encargarse del corredor
+m04-pca.1.o3	La cobertura se reparte a partes iguales entre el árbitro de home y U3
+m04-pca.1.why	En esta situación concreta, U3 entra en el diamante y lleva al bateador-corredor a segunda y hasta tercera si la pelota no es atrapada. El árbitro de home ayuda primero en una posible jugada en primera y luego se prepara para home.
+m04-pca.2.q	Con un corredor en primera base, se batea un rodado al infield con posibilidad de doble play. ¿Qué hace U3 anticipando el tiro a segunda?
+m04-pca.2.o0	Da un paso adelante hacia segunda para tener ángulo sobre el tiro
+m04-pca.2.o1	Va a tercera para cubrir un posible avance
+m04-pca.2.o2	Se queda en su posición de preparado original fuera de la línea de tercera
+m04-pca.2.o3	Sale hacia el outfield para respaldar el tiro
+m04-pca.2.why	U3 suele dar un paso adelante hacia segunda y ajustarse para tener el mejor ángulo sobre el tiro a segunda. U1 se prepara para la jugada siguiente en primera.
+m04-pca.3.q	Con un corredor solo en segunda base, se batea un rodado al infield. ¿Qué árbitro es responsable de las decisiones tanto en primera como en segunda en esta situación?
+m04-pca.3.o0	U3
+m04-pca.3.o1	El árbitro de home
+m04-pca.3.o2	U1 y U3 comparten las decisiones
+m04-pca.3.o3	U1
+m04-pca.3.why	U1 se mueve hacia la jugada inicial y es responsable de primera y segunda. U3 se prepara para el corredor que avanza de segunda hacia tercera.
+m04-pca.4.q	Con un corredor solo en tercera base, se batea un rodado al infield. Si U3 no puede soltar a R1 en tercera (R1 no va hacia home), ¿qué árbitro puede tener que llevar al bateador-corredor a segunda y decidir la jugada?
+m04-pca.4.o0	U1
+m04-pca.4.o1	U3, después de soltar tercera
+m04-pca.4.o2	El árbitro de home, subiendo por la línea de primera
+m04-pca.4.o3	Ningún árbitro: la pelota está muerta
+m04-pca.4.why	Si el corredor se queda en tercera y U3 no puede soltar esa cobertura, U1 puede tener que llevar al bateador-corredor a segunda. Lee a los corredores y las posiciones de los demás árbitros.
+m04-pca.5.q	Con un corredor en tercera base, U1 sale a un fly. ¿Qué árbitro se mueve a la zona de espera entre home y tercera para vigilar el tag-up de R1, preparándose a la vez para una posible jugada en home?
+m04-pca.5.o0	U3
+m04-pca.5.o1	El árbitro de home
+m04-pca.5.o2	U1, antes de salir al outfield
+m04-pca.5.o3	Ningún árbitro vigila el tag-up en esta situación
+m04-pca.5.why	El árbitro de home usa la zona de espera entre home y tercera para observar el tag-up en tercera y después se mueve según haga falta para una jugada en tercera o en home. U3 entra en el diamante para cubrir al bateador-corredor.
+m04-pca.6.q	Con las bases llenas, U1 sale a un fly dentro de la zona de cobertura de U1, lejos de la excepción de la línea del jardín derecho. ¿Cómo deben repartirse los demás árbitros la observación de los tag-ups?
+m04-pca.6.o0	El árbitro de home vigila primera y segunda; U3 vigila tercera.
+m04-pca.6.o1	U3 vigila los tres tag-ups mientras el árbitro de home solo mira la atrapada.
+m04-pca.6.o2	El árbitro de home vigila el tag-up en tercera; U3 entra en el diamante y vigila los tag-ups en primera y segunda.
+m04-pca.6.o3	No hace falta observar los tag-ups hasta que la pelota sea atrapada.
+m04-pca.6.why	Cuando U1 sale en esta situación, el árbitro de home observa el tag-up en tercera y se prepara para la acción en tercera o en home. U3 entra en el diamante para observar primera y segunda. Observa el primer toque y el contacto de los corredores con sus bases.
+m04-pca.7.q	Con corredores en segunda y tercera, se batea un rodado al infield. Si R1 (el corredor de tercera) avanza hacia home, ¿qué hace U3, según el manual?
+m04-pca.7.o0	Se queda en tercera sea cual sea el avance de R1
+m04-pca.7.o1	Sigue a R1 hacia home
+m04-pca.7.o2	Rota de inmediato a primera base
+m04-pca.7.o3	Entra aproximadamente un paso en territorio fair, anticipando una jugada sobre R2, que avanza desde segunda
+m04-pca.7.why	Si el corredor adelantado avanza hacia home, U3 entra en territorio fair para prepararse para el corredor que viene de segunda. Si el corredor adelantado se queda en tercera, U3 mantiene la cobertura de tercera.
+m04-pca.8.q	Con un corredor en primera base, la pelota atraviesa el infield hacia el outfield y ningún árbitro sale. Mientras R1 avanza hacia segunda, ¿hacia dónde rota el árbitro de home para prepararse para una posible decisión?
+m04-pca.8.o0	Primera base
+m04-pca.8.o1	Tercera base
+m04-pca.8.o2	El árbitro de home se queda en home
+m04-pca.8.o3	Segunda base, junto a U3
+m04-pca.8.why	Mientras el corredor de primera avanza hacia segunda, el árbitro de home rota hacia tercera para una posible decisión. El equipo arbitral también debe mantener la cobertura de home mientras se desarrolla la rotación.
+m04-pca.9.q	Con un corredor en segunda base, la pelota atraviesa el infield hacia el jardín derecho. Según la nota del manual, si existe la posibilidad de una jugada en tercera con el tiro de vuelta, ¿qué debe hacer U3?
+m04-pca.9.o0	Soltar para cubrir home
+m04-pca.9.o1	Volver más allá de la línea de base en territorio fair
+m04-pca.9.o2	Quedarse en la línea de foul a la altura de la base
+m04-pca.9.o3	Rotar hacia el interior del diamante
+m04-pca.9.why	En un batazo al jardín derecho o al centro-derecho, U3 puede leer la jugada desde cerca de la línea. Si es posible una jugada en tercera con el tiro de vuelta, rota hacia dentro. Si el tiro va a home sin jugada inmediata en tercera, la guía permite volver más allá de la línea de base en territorio fair.
+m04-pca.10.q	Un árbitro de base ha salido y el fly es atrapado. El árbitro de base que queda entra en el diamante por delante del último corredor. Según la excepción indicada, ¿cuándo puede ese árbitro llevar al corredor hasta tercera?
+m04-pca.10.o0	Automáticamente, sin comunicarse con el árbitro de home.
+m04-pca.10.o1	Solo si el árbitro del outfield vuelve para cubrir home.
+m04-pca.10.o2	Después de comunicar esa cobertura al árbitro de home.
+m04-pca.10.o3	Nunca; el árbitro de home debe encargarse de todos los corredores en tercera sin excepción.
+m04-pca.10.why	Tras un fly atrapado, el árbitro de base que queda y entra por delante del último corredor puede llevarlo hasta tercera, pero solo después de comunicarlo al árbitro de home.
+m04-pca.11.q	Antes de dar la espalda para salir a un fly, ¿qué debe hacer el árbitro?
+m04-pca.11.o0	Mirar a sus compañeros y luego indicar y decir en voz alta «voy»
+m04-pca.11.o1	Esperar a que el árbitro de home decida sobre la pelota
+m04-pca.11.o2	Preguntar al entrenador
+m04-pca.11.o3	Salir corriendo directamente sin ninguna señal
+m04-pca.11.why	Observa la trayectoria de la pelota, establece contacto visual con los otros árbitros y luego indica y di en voz alta «Voy» antes de dar la espalda para encargarte del fly.
+m04-pca.12.q	¿Hacia dónde señalan los árbitros el out en un fly atrapado en el outfield?
+m04-pca.12.o0	Hacia el anotador
+m04-pca.12.o1	Hacia home
+m04-pca.12.o2	Hacia la pelota, después de detenerse, decidir y comunicar
+m04-pca.12.o3	Hacia el dugout
+m04-pca.12.why	Detente, decide y comunica. Señala el out hacia la pelota. Haz la señal de no atrapada cuando la pelota se atrape a ras de suelo y haga falta; una no atrapada evidente no requiere una señal de safe rutinaria.
+m04-pca.13.q	Una vez que un árbitro ha salido al outfield, ¿qué debe hacer?
+m04-pca.13.o0	Quedarse en el outfield hasta que termine toda la acción, pero seguir observando las jugadas del infield para poder ayudar si se lo piden
+m04-pca.13.o1	Volver de inmediato al infield
+m04-pca.13.o2	Ir a segunda base
+m04-pca.13.o3	Quedarse mirando solo el outfield
+m04-pca.13.why	El árbitro que sale se queda en el outfield hasta que termina toda la acción, sin dejar de observar lo que ocurre en el infield por si se necesita información en una consulta del equipo arbitral.
+m04-pca.14.q	¿Quién señala un home run en el Sistema de Tres Árbitros?
+m04-pca.14.o0	Siempre el árbitro de primera base
+m04-pca.14.o1	El árbitro más cercano al dugout
+m04-pca.14.o2	Siempre el árbitro de home
+m04-pca.14.o3	El árbitro que está en el outfield; si ningún árbitro de base salió al outfield, el árbitro de home
+m04-pca.14.why	El árbitro del outfield señala el home run. Si ningún árbitro de base sale al outfield, esa responsabilidad corresponde al árbitro de home.
+m04-pca.15.q	Un árbitro de base, por error, no sale a un fly. ¿Quién decide?
+m04-pca.15.o0	El árbitro de segunda base, si lo hay
+m04-pca.15.o1	El árbitro de home
+m04-pca.15.o2	El entrenador
+m04-pca.15.o3	El jardinero más cercano
+m04-pca.15.why	Si un árbitro de base no sale a un fly por error, decide el árbitro de home. Los árbitros de base pueden ayudar en las pelotas atrapadas a ras de suelo. Esto no obliga al equipo arbitral a abandonar el resto de su cobertura.
+m04-pca.16.q	Con un corredor en tercera, el despegue del corredor tapa la visión de home a U3. ¿Qué ajuste de la posición inicial permite la guía?
+m04-pca.16.o0	Colocarse delante del campocorto para que el corredor quede detrás del árbitro.
+m04-pca.16.o1	Quedarse justo sobre la línea de foul y aceptar la visión tapada.
+m04-pca.16.o2	Ir detrás del receptor para compartir la visión del árbitro de home.
+m04-pca.16.o3	Trabajar en territorio foul detrás de tercera, hasta unos 2 metros (6 pies) de la línea de foul, para mantener una visión sin obstáculos de home y del bateador.
+m04-pca.16.why	U3 debe evitar que lo tape el corredor que despega de tercera o que vuelve a ella. La posición inicial más abierta en territorio foul conserva la visión necesaria para las situaciones de pelota muerta y para ayudar en los swings a medias.
+m04-pca.17.q	En la reunión previa al partido en el Sistema de Tres Árbitros, ¿dónde se coloca U1?
+m04-pca.17.o0	Detrás del receptor
+m04-pca.17.o1	En el extremo del cajón de bateo del diestro que da al infield
+m04-pca.17.o2	En el extremo del cajón de bateo del zurdo que da al infield, mirando hacia la red de fondo
+m04-pca.17.o3	En primera base
+m04-pca.17.why	U1 se coloca en el extremo del cajón de bateo del zurdo que da al infield, mirando hacia la red de fondo. U3 ocupa la posición equivalente en el cajón de bateo del diestro.
+m04-pca.18.q	Después del tercer out sin corredores en base, ¿quién limpia la placa del lanzador camino de las líneas de base?
+m04-pca.18.o0	U3
+m04-pca.18.o1	Quien esté más cerca del dugout
+m04-pca.18.o2	El árbitro de home
+m04-pca.18.o3	U1
+m04-pca.18.why	Normalmente limpia la placa del lanzador el árbitro de base más cercano. Sin corredores, o si los dos árbitros de base están a la misma distancia, se encarga U3.
+m04-pca.19.q	En un tag de vuelta en primera base, la posición inicial no da a U1 una visión clara del tag y del borde de entrada. ¿Qué ajuste permite la guía?
+m04-pca.19.o0	Quedarse quieto y deducir el tag por la reacción del corredor.
+m04-pca.19.o1	Ajustarse para mantener a la vista los Cuatro Elementos Esenciales, incluso entrando en territorio foul si es necesario, sin perder de vista el borde de entrada.
+m04-pca.19.o2	Colocarse justo detrás del fildeador, de modo que la zona del tag quede oculta.
+m04-pca.19.o3	Ignorar el borde de entrada y mirar solo el guante.
+m04-pca.19.why	El tiro de vuelta a primera suele acabar en un tag de barrido. La guía permite una posición en territorio foul cuando hace falta para mantener delante los Cuatro Elementos Esenciales, pero U1 debe seguir viendo el borde de entrada. Ajústate a medida que se desarrolla la jugada.
+m06-mkc.0.q	En la Teoría de los Cuatro Elementos Esenciales (FEET) del Apéndice 5a, ¿cuáles son los cuatro elementos que los árbitros deben observar a la vez para tomar una decisión correcta?
+m06-mkc.0.o0	El lanzador, el receptor, el bateador y el árbitro de base
+m06-mkc.0.o1	La pelota, el jugador defensivo, los jugadores ofensivos y la base o la zona de la jugada
+m06-mkc.0.o2	La zona de strike, el despegue del corredor, el tag y el guante del fildeador
+m06-mkc.0.o3	La posición inicial, la posición de observación, la posición de decisión y la base
+m06-mkc.0.why	La pelota, el jugador defensivo, los jugadores ofensivos y la base o la zona de la jugada deben verse a la vez, incluido el control de la pelota y la relación entre el tag y la base.
+m06-mkc.1.q	Según el Apéndice 5a, ¿aproximadamente a qué distancia detrás de home se encuentra la posición Point of Plate (POP)?
+m06-mkc.1.o0	1-2 metros (3-6 pies)
+m06-mkc.1.o1	6-12 metros (20-40 pies)
+m06-mkc.1.o2	3-5 metros (9-15 pies)
+m06-mkc.1.o3	2-4 metros (6-12 pies)
+m06-mkc.1.why	El POP es una zona situada aproximadamente a 2-4 metros detrás de home, no un punto fijo de decisión. Úsalo cuando tus funciones principales lo permitan y ajústate a medida que se desarrolla la jugada.
+m06-mkc.2.q	Según el Apéndice 5a, ¿a qué se refiere el «Backfilling»?
+m06-mkc.2.o0	A un árbitro que despeja al receptor para tener una visión sin obstáculos del campo
+m06-mkc.2.o1	A un árbitro que se mueve al borde de entrada de una base para juzgar una jugada de tag
+m06-mkc.2.o2	A un árbitro que contrarrota para cubrir una posición que no ocupa otro árbitro, porque este debe cubrir una jugada en otro lugar
+m06-mkc.2.o3	A un árbitro que vuelve a su posición entre entradas cuando termina una jugada
+m06-mkc.2.why	En el backfilling un árbitro contrarrota hacia una cobertura que ha quedado libre porque otro árbitro debe cubrir una jugada en otro lugar. Lee la jugada y comunícate.
+m06-mkc.3.q	¿Qué finalidad atribuye el Apéndice 5a al uso de los Sistemas de Cinco y Seis Árbitros?
+m06-mkc.3.o0	Permitir que dos árbitros de outfield dedicados cubran los fly, de modo que los demás árbitros puedan quedarse en el infield y cubrir las bases en todo momento
+m06-mkc.3.o1	Sustituir al árbitro de home por dos árbitros de outfield adicionales
+m06-mkc.3.o2	Eliminar la necesidad de rotaciones entre bases
+m06-mkc.3.o3	Permitir que todos los árbitros trabajen exclusivamente desde territorio foul
+m06-mkc.3.why	La cobertura dedicada del outfield permite a los demás árbitros mantener la cobertura del infield y de las bases, sobre todo en tercera y en home. Esta finalidad se indica en el propio Apéndice 5a; aquí no se evalúa la mecánica detallada de estos sistemas.
+m06-mkc.4.q	¿Cuál es la finalidad de la posición de espera que describe el Apéndice 5a?
+m06-mkc.4.o0	Ofrecer una zona de observación flexible en territorio foul desde la que el árbitro lee qué base, 3B o HP, necesita cobertura y puede moverse hacia ella.
+m06-mkc.4.o1	Sustituir todas las responsabilidades de rotación por un punto fijo de decisión.
+m06-mkc.4.o2	Hacer que U1 espere cerca de primera en lugar de completar una rotación obligatoria a home.
+m06-mkc.4.o3	Mantener al árbitro de home en una posición desde la que pueda decidir en ambas bases a distancia.
+m06-mkc.4.why	La posición de espera es una zona ovalada que permite observar activamente y ajustarse. Puede estar más cerca de la jugada probable sin dejar de permitir el movimiento hacia la otra base si hace falta.
+m06-pca.0.q	Estás preparado para juzgar una jugada forzada cuando el fildeador deja la base para atrapar un tiro desviado e intenta un tag de barrido. ¿Qué debes hacer?
+m06-pca.0.o0	Mantener la visión original y juzgar solo si el tiro llegó primero.
+m06-pca.0.o1	Mirar solo al corredor, porque la pelota y la posesión del fildeador pueden suponerse con la visión periférica.
+m06-pca.0.o2	Leer el cambio en la jugada, ajustarte de forma controlada para ver la relación entre pelota-guante, tag, corredor y base, y juzgar la jugada completa cuando todos los elementos confluyen antes de señalar.
+m06-pca.0.o3	Colocarte directamente sobre la base para acortar la visión, ya que se prefiere el ángulo a la distancia.
+m06-pca.0.why	Un tag que se desarrolla puede requerir un ángulo distinto del de la visión inicial de la jugada forzada. Mantén a la vista los cuatro elementos, incluido el control y el toque de la base, en lugar de suponer que la posición de decisión original sigue siendo suficiente.
+m06-pca.1.q	Según el Apéndice 5a, ¿cuándo se produce con más frecuencia el error de paralaje?
+m06-pca.1.o0	El error de paralaje se debe sobre todo a la distancia. Acercarse mejora el juicio sea cual sea el ángulo, siempre que el árbitro vea al corredor y al fildeador.
+m06-pca.1.o1	Un ángulo de visión inadecuado puede distorsionar la relación entre el corredor, la base y el punto del tag. Una mayor distancia puede agravarlo, y la alineación de todos los elementos en línea recta es lo que causa la mayor pérdida de separación visual.
+m06-pca.1.o2	El error de paralaje solo se produce cuando los elementos están completamente alineados. Hasta entonces, el árbitro puede juzgar la secuencia con precisión sin ajustar su posición.
+m06-pca.1.o3	Permanecer quieto en la posición de observación original evita el error de paralaje. Moverse durante la jugada cambia la perspectiva y hace menos fiable la secuencia, incluso cuando la visión original queda parcialmente bloqueada.
+m06-pca.1.why	El error de paralaje puede afectar al juicio antes de que el árbitro quede completamente alineado. Un ángulo inadecuado puede distorsionar la relación aparente entre el corredor, la base y el punto del tag, y una mayor distancia puede agravar el problema. La alineación en línea recta es especialmente peligrosa porque los elementos se superponen, lo que reduce la percepción de profundidad y puede ocultar si el corredor tocó la base antes del tag. Usa el borde de entrada cuando te dé la visión necesaria y ajústate de forma deliberada para mantener un ángulo sin obstáculos y la separación visual.
+m06-pca.2.q	Un árbitro quiere eliminar el error de paralaje en una decisión de fair/foul. ¿Qué dice el Apéndice 5a que debe hacer?
+m06-pca.2.o0	Situarse lo más atrás posible para ver todo el campo
+m06-pca.2.o1	Confiar en que el árbitro de base tome la decisión
+m06-pca.2.o2	Esperar a que la pelota se detenga antes de decidir
+m06-pca.2.o3	Colocarse en el plano de la decisión, por ejemplo sobre la línea de fair/foul
+m06-pca.2.why	En una decisión de fair/foul, colócate sobre la línea de fair/foul correspondiente para juzgar la pelota directamente respecto a ese plano. Puede que sigan siendo necesarios ajustes de momento y de ángulo para otros elementos de la jugada.
+m06-pca.3.q	Con un corredor en segunda, el árbitro que trabaja en la 2BDA puede tener que cubrir primera si U1 sale. ¿Qué posición inicial prefiere el Apéndice 5a?
+m06-pca.3.o0	Empezar en el lado de 1B o estar preparado para moverse hacia el lado de primera de la 2BDA, manteniendo una visión sin obstáculos de home y del bateador, para poder entrar rápidamente en el diamante y cubrir una posible jugada en primera.
+m06-pca.3.o1	Usar la posición alternativa del lado de tercera para tener el mejor ángulo sobre un posible pickoff en segunda y cruzar luego el diamante si hace falta cubrir primera.
+m06-pca.3.o2	Empezar más atrás de segunda en la 2BDA para tener una visión más amplia del outfield, aceptando el movimiento adicional necesario para establecer una posición de decisión en primera.
+m06-pca.3.o3	Empezar hacia la prolongación de la línea de tercera para dar prioridad al corredor que avanza a tercera, dejando primera a cargo de U1 hasta que termine la jugada del outfield.
+m06-pca.3.why	Con un corredor en segunda, empezar en el lado de 1B, el lado preferido o ligeramente hacia el lado de primera de la 2BDA, ayuda al árbitro a entrar en el diamante y cubrir primera si U1 sale. La posición debe seguir dando una visión sin obstáculos de home y del bateador y permitir al árbitro establecer el ángulo y la distancia necesarios para la jugada en desarrollo. Así U2 no tiene que preocuparse por el despegue del corredor desde 2B.
+m06-pca.4.q	En una jugada, ¿qué distancia a la base indica el Apéndice 5a para una jugada forzada y para una jugada de tag?
+m06-pca.4.o0	Unos 3 m (10 pies) para una jugada forzada y 5 m (16 pies) para una jugada de tag
+m06-pca.4.o1	Unos 5 m (16 pies) para una jugada forzada y 3 m (10 pies) para una jugada de tag
+m06-pca.4.o2	Unos 5 m (16 pies) para ambas
+m06-pca.4.o3	Unos 3 m (10 pies) para ambas
+m06-pca.4.why	El Apéndice 5a indica aproximadamente 5 metros para una jugada forzada y 3 metros para una jugada de tag. Son distancias de trabajo, no las distancias iniciales previas al lanzamiento. El ángulo tiene prioridad cuando ángulo y distancia no pueden ser ideales a la vez; conserva margen para ajustarte y llegar al borde de entrada.
+m06-pca.5.q	U1 necesita entrar en el diamante para cubrir varias bases y seguir pudiendo adaptarse a una decisión tardía de salir o a un backfill. ¿Qué técnica sigue el Apéndice 5a?
+m06-pca.5.o0	Entrar en el diamante y hacer el button-hook girando sobre el hombro izquierdo, conservando la visión y la flexibilidad para la cobertura necesaria.
+m06-pca.5.o1	Mantener el pie derecho fijo en primera y girar solo la parte superior del cuerpo.
+m06-pca.5.o2	Seguir la pelota hacia el outfield sin comprobar al corredor ni al equipo arbitral.
+m06-pca.5.o3	Quedarse en territorio foul aunque eso impida cubrir la base necesaria.
+m06-pca.5.why	El button-hook gira sobre el hombro izquierdo después de entrar en el diamante. Facilita cubrir varias bases y adaptarse a un cambio de rotación, a un backfill o a la decisión tardía de un compañero. U2 también lo usa en el ejemplo de cuatro árbitros cuando U1 sale.
+m06-pca.6.q	¿Por qué dice el Apéndice 5a que el árbitro nunca debe colocarse directamente sobre una base al decidir?
+m06-pca.6.o0	Porque coloca al árbitro demasiado cerca para seguir el tiro hasta el guante, así que la posición de decisión debe mantenerse a la distancia de una jugada forzada aunque se desarrolle un tag.
+m06-pca.6.o1	Porque impide al árbitro mantener un ángulo de 90 grados respecto al tiro, que debe mantenerse en todas las jugadas forzadas y de tag.
+m06-pca.6.o2	Porque limita la visión del árbitro sobre las jugadas secundarias, así que la posición de decisión debe dar prioridad al siguiente tiro posible antes que al tag y al toque de la base.
+m06-pca.6.o3	Porque alinea verticalmente los ojos del árbitro con la base, lo que hace que la pelota, el tag y el borde de entrada se superpongan, reduce la percepción de profundidad y hace más difícil juzgar el momento.
+m06-pca.6.why	Decidir directamente sobre la base puede reducir los elementos a una visión alineada en línea recta. Esto reduce la separación visual y puede distorsionar si el corredor tocó la base antes del tag. Una posición justo antes del borde de entrada, con el ángulo, la profundidad y el ajuste adecuados, ayuda al árbitro a ver con claridad cómo confluyen los elementos.
+m06-pca.7.q	Se batea una pelota al outfield y ningún árbitro sale. U2 puede mantener delante los Cuatro Elementos Esenciales desde fuera. ¿Qué afirmación aplica correctamente el Apéndice 5a?
+m06-pca.7.o0	Todos los árbitros de base deben quedarse fuera siempre que nadie salga.
+m06-pca.7.o1	U2 debe pedir tiempo antes de elegir una posición.
+m06-pca.7.o2	U2 puede quedarse fuera en ese caso; si un árbitro sale, los demás árbitros de base deben entrar en el diamante para la cobertura y el backfill.
+m06-pca.7.o3	U2 puede quedarse fuera incluso cuando un compañero sale y se necesita cobertura interior.
+m06-pca.7.why	Entrar en el diamante es la respuesta habitual cuando la pelota está en el outfield. La sección 5a permite expresamente a U2 quedarse fuera si los cuatro elementos siguen delante y nadie sale. Cualquier situación en la que un árbitro sale obliga a los demás árbitros de base a entrar para la cobertura y, en particular, para el backfill.
+m06-pca.8.q	En el ejemplo de backfill de cuatro árbitros, U2 o U3 sale y el árbitro de home comunica que se queda en home para una jugada. ¿Qué deben hacer los demás árbitros de base?
+m06-pca.8.o0	El árbitro que queda, U2 o U3, cubre tercera; U1 entra en el diamante para cubrir primera y segunda si es posible, con una posición alternativa y un ajuste del equipo arbitral si entrar interfiriera en el juego.
+m06-pca.8.o1	Los dos árbitros de base que quedan permanecen en segunda hasta que termina la jugada en home.
+m06-pca.8.o2	Ordenar al árbitro de home que deje home y vaya a tercera aunque la jugada sea en home.
+m06-pca.8.o3	Exigir que U1 entre en el diamante aunque al hacerlo interfiera con un corredor o un tiro.
+m06-pca.8.why	La comunicación del árbitro de home sobre la cobertura de home activa este ejemplo. El U2/U3 que queda hace el backfill a tercera. Si U1 no puede entrar sin interferir, U1 se desplaza hacia la cerca cerca del dugout de primera y el compañero tiene en cuenta una posible cobertura de segunda.
+m06-pca.9.q	En una jugada forzada ajustada en la que el corredor llega a la base y después el fildeador recibe el tiro, ¿qué error es más probable que cometa un árbitro que mira el tiro o se precipita en la decisión, según el Apéndice 5a?
+m06-pca.9.o0	Cantar safe al corredor
+m06-pca.9.o1	Cantar out al corredor, porque aún está procesando la recepción del tiro
+m06-pca.9.o2	Cantar interferencia
+m06-pca.9.o3	No ver la base
+m06-pca.9.why	En la secuencia indicada el corredor es safe, pero un árbitro que se precipita puede reaccionar a la recepción posterior y cantar out. Una breve pausa permite procesar todos los datos en orden antes de decidir y comunicar.
+m06-pca.10.q	U1 debe rotar a home mientras avanza el corredor adelantado. ¿Qué enfoque sigue la prioridad de cobertura de home del Apéndice 5a?
+m06-pca.10.o0	Esperar en la antigua zona de espera de primera hasta que el corredor llegue a primera.
+m06-pca.10.o1	Detenerse en la prolongación de la línea de tercera en cada posible tag de barrido.
+m06-pca.10.o2	Soltar primera sin observar el tag-up o el toque de base necesarios y dejar que el equipo arbitral adivine la rotación.
+m06-pca.10.o3	Completar la observación necesaria en primera, aunque sea mirando por encima del hombro, soltar rápidamente, comunicar para empujar al árbitro de home hacia tercera y moverse hacia el POP sin una demora innecesaria en la zona de espera.
+m06-pca.10.why	El corredor adelantado y la cobertura de home tienen prioridad. Observa los tag-ups necesarios y el toque de primera del bateador-corredor, también por encima del hombro derecho cuando corresponda, y después rota rápidamente. La antigua zona de espera de U1 en primera se omite y queda solo como punto de referencia porque retrasa la cobertura de home. El POP es una referencia de observación flexible, no una decisión final fija.
+m06-pca.11.q	¿Qué quiere decir el Apéndice 5a con «pies activos»?
+m06-pca.11.o0	Que el árbitro trota en el sitio entre lanzamientos para no enfriarse
+m06-pca.11.o1	Que el árbitro da pasos cortos y rápidos mientras la pelota está en el aire
+m06-pca.11.o2	Que el árbitro mueve ambos pies al ajustar su posición para mantenerse equilibrado sobre la parte delantera de los pies y preparado para moverse
+m06-pca.11.o3	Que el árbitro mantiene un pie fijo hasta tomar la decisión
+m06-pca.11.why	Mueve ambos pies siempre que puedas para mantenerte equilibrado sobre la parte delantera de los pies y preparado para ajustarte. Esto no significa moverse sin necesidad: quédate quieto si la visión es estable y clara; ajústate cuando la visión del tag se estreche o quede bloqueada, controlando la cabeza y la vista.
+m06-pca.12.q	Un árbitro se plantea usar la posición inicial alternativa en segunda en lugar del lado preferido, el de 1B, de la 2BDA. Debe tener en cuenta si el bateador es diestro o zurdo y la trayectoria de salida del lanzador, que puede tapar la visión del bateador y de la zona de home. ¿Qué descripción identifica correctamente cuándo y dónde puede usarse esta alternativa?
+m06-pca.12.o0	Con un corredor en primera o corredores en primera y tercera, unos 3,5 metros atrás en el lado de primera de la 2BDA, lo que ofrece una ruta directa hacia dentro para cubrir primera.
+m06-pca.12.o1	Con un corredor en segunda o corredores en segunda y tercera, unos 3,5 metros atrás en la zona alternativa del lado de tercera, dando prioridad a ver al corredor que vuelve a segunda.
+m06-pca.12.o2	Con un corredor en primera o corredores en primera y tercera, unos 3,5 metros atrás, justo al lado de la 2BDA en el lado de tercera, siempre que el bateador y home sigan visibles y se conserve el acceso al borde de entrada y a la cobertura interior necesaria.
+m06-pca.12.o3	Con un corredor en primera o corredores en primera y tercera, unos 3,5 metros atrás hacia la prolongación de la línea de primera, usando la base como referencia de alineación para el tag previsto.
+m06-pca.12.why	La alternativa es condicional, no la opción preferida por defecto. Úsala en las configuraciones de corredores indicadas cuando dé una visión sin obstáculos de home y del bateador. Comprueba la línea de visión con bateadores zurdos y diestros, incluido el efecto de la trayectoria de salida del lanzador. El árbitro debe seguir pudiendo ajustarse hacia la 2BDA, llegar al borde de entrada o entrar para cubrir primera si U1 sale. No debe desplazarse más hacia la prolongación de la línea de primera.
+m06-pca.13.q	Desde la posición alternativa del lado de tercera en segunda, ¿por qué debe evitar el árbitro desplazarse más a la derecha, hacia la prolongación de la línea que va de primera a segunda?
+m06-pca.13.o0	Porque puede dejar la base entre el árbitro y la jugada, aumentando el paralaje y ocultando el contacto del corredor con la base. El movimiento debe conservar el acceso hacia la 2BDA y el lado de 1B en el borde de entrada.
+m06-pca.13.o1	Porque aleja al árbitro de un ángulo de 90 grados respecto al tiro del receptor, que debe seguir siendo la alineación principal durante todo el intento de tag.
+m06-pca.13.o2	Porque aumenta la distancia al punto del tag, así que el árbitro debe moverse directamente hacia la base en lugar de ajustar el ángulo de visión a medida que se desarrolla la jugada.
+m06-pca.13.o3	Porque saca al árbitro de la zona inicial estándar, que debe mantenerse hasta completar el tag antes de ajustarse para una jugada secundaria.
+m06-pca.13.why	La alternativa ya sitúa al árbitro en el lado de tercera de la 2BDA. Desplazarse más hacia la 1BLE puede dejar la base entre el árbitro y el tag, reduciendo la separación visual y distorsionando si el corredor sigue en contacto con la base. Lee la jugada y muévete primero hacia la 2BDA, y después ajústate hacia el lado de primera o hacia el borde de entrada según haga falta. La prioridad es una visión sin obstáculos de los elementos, no un ángulo fijo respecto al tiro ni permanecer dentro de una zona inicial.
+m06-pca.14.q	En un passed ball o un wild pitch, el árbitro de home no tiene que rotar hacia tercera y un corredor avanza hacia home. ¿Qué movimiento sigue el Apéndice 5a?
+m06-pca.14.o0	Moverse a la izquierda automáticamente sin leer el movimiento del receptor al recuperar la pelota y quedarse quieto.
+m06-pca.14.o1	Quedarse justo detrás del receptor durante la recuperación y el intento de tag.
+m06-pca.14.o2	Colocarse de inmediato en la prolongación de la línea de tercera en todas las jugadas.
+m06-pca.14.o3	Leer los hombros del receptor, despejar para permitir la recuperación, localizar la pelota, evitar la línea de tiro y establecer una posición de observación y de decisión que conserve los cuatro elementos; el despeje puede ser a la izquierda o a la derecha.
+m06-pca.14.why	El movimiento inicial habitual a la izquierda tiene excepciones. En un passed ball o un wild pitch sin rotación ni cobertura obligatorias en tercera, despeja según el giro del receptor y luego lee la jugada en home y ajústate. Evita la 3BLE cuando deje el plato entre tú y el corredor.
+m06-pca.15.q	¿Qué enfoque describe mejor la información que el árbitro debe tener en cuenta en la Preparación Previa al Lanzamiento (PPP) según el Apéndice 5a?
+m06-pca.15.o0	Repasar la cuenta, los outs, la posición de los corredores y la cobertura asignada, y aplicar los patrones de rotación estándar sin adaptar la preparación a la velocidad, el alcance o el brazo de cada jugador.
+m06-pca.15.o1	Combinar la cuenta, los outs y el marcador con la velocidad y las posibilidades de avance de los corredores, la profundidad y el brazo de los jardineros y la capacidad de los fildeadores, para anticipar las jugadas probables sin dejar de estar preparado para adaptarse.
+m06-pca.15.o2	Identificar la jugada más probable a partir de la alineación defensiva y comprometerse con su posición de decisión antes del contacto, para llegar antes que el corredor y el tiro.
+m06-pca.15.o3	Dar prioridad a la velocidad del corredor adelantado y a la posición del fildeador más cercano, dejando para cuando se batee la pelota la valoración de los demás corredores, la profundidad del outfield y las posibles jugadas secundarias.
+m06-pca.15.why	La PPP combina la colocación inicial correcta con el conocimiento de la situación del partido y de las capacidades de los jugadores. Ten en cuenta la cuenta, los outs, el marcador, la velocidad y las intenciones de los corredores, la colocación y el brazo de los jardineros, y el alcance de los fildeadores y su capacidad para ejecutar una jugada. Usa esa información para anticipar posibilidades y adaptarte con rapidez. Anticipar una jugada no significa comprometerse con su resultado ni moverse antes de tiempo a una posición de decisión predeterminada.
+m06-pca.16.q	Según el Apéndice 5a, ¿qué debe hacer un árbitro de base antes de decidir salir a un fly?
+m06-pca.16.o0	Usar las posiciones iniciales de los jardineros para elegir la cobertura en el momento del contacto, y luego confirmar la trayectoria de la pelota y comunicarlo una vez que se mueve hacia el outfield.
+m06-pca.16.o1	Leer la dirección inicial de la pelota y comprometerse si entra en su zona de cobertura, dejando que los compañeros se ajusten al ver su movimiento.
+m06-pca.16.o2	Leer la trayectoria y las reacciones de los jardineros, pero dar la primera opción al árbitro de 2B, porque su posición central ofrece la cobertura más amplia.
+m06-pca.16.o3	Leer la trayectoria de la pelota y la posibilidad de atrapada, comprobar los movimientos y las prioridades de cobertura de los compañeros y comunicar antes de comprometerse a salir.
+m06-pca.16.why	Observa la trayectoria real antes de comprometerte. Conocer antes del lanzamiento la profundidad y la capacidad de los jardineros ayuda a decidir, pero no sustituye leer la pelota. Comprueba a tus compañeros y comunícate. El árbitro de esquina tiene la primera opción sobre el árbitro de segunda; con las dos esquinas ocupadas en el ejemplo de tres árbitros, U1 tiene la primera opción. Sal cuando la jugada lo exija dentro de la cobertura asignada, evitando movimientos innecesarios que debiliten la cobertura de las bases o de home.
+m06-pca.17.q	Un batazo normal ha caído claramente y bota por el outfield, sin que ninguna decisión de atrapada, fair/foul o home run te obligue a salir. Varios corredores avanzan. ¿Qué debes hacer?
+m06-pca.17.o0	Seguir hacia el outfield para confirmar cómo se fildea la pelota, dejando que los demás árbitros amplíen su cobertura de bases hasta que vuelva la pelota.
+m06-pca.17.o1	Moverte hacia el jardinero para tener un mejor ángulo sobre el tiro de vuelta y volver luego hacia las bases cuando la defensa elija su jugada.
+m06-pca.17.o2	Mantener la cobertura de bases necesaria, seguir conectado visualmente con la pelota y los corredores y evitar una salida innecesaria.
+m06-pca.17.o3	Seguir la pelota más allá de las bases hasta que el jardinero la controle y decidir después qué base necesita cobertura según la dirección del tiro.
+m06-pca.17.why	Una vez que la pelota ha caído claramente y ninguna decisión del outfield exige salir, mantén la cobertura de bases asignada y prepárate para los corredores que avanzan y las jugadas secundarias. Mantén a la vista la pelota y los corredores, lee el tiro que se va formando y ajústate para tener el ángulo y la distancia necesarios. Salir sin necesidad puede debilitar la cobertura, sobre todo en tercera y en home.
+m06-pca.18.q	Tras completar su decisión en el outfield, el árbitro que salió mira hacia atrás y ve que una base cercana ha quedado sin cubrir por una rotación fallida, con una jugada a punto de producirse. ¿Qué puede hacer ese árbitro según el Apéndice 5a?
+m06-pca.18.o0	Volver para cubrir ese lugar vacío si hace falta y comunicar con claridad la responsabilidad al equipo arbitral, o aportar lo que observó si el árbitro responsable le pide información.
+m06-pca.18.o1	Volver automáticamente y hacerse cargo de la base que no cubre otro árbitro.
+m06-pca.18.o2	Tomar una decisión en el infield sin decir al equipo arbitral que la cobertura ha cambiado.
+m06-pca.18.o3	Ignorar la jugada sin cubrir, porque al haber salido el árbitro terminan todas sus funciones de árbitro de base.
+m06-pca.18.why	Se trata de una corrección de élite concreta para una cobertura que falta, no de volver por rutina a una zona ya ocupada. El árbitro que sale debe mirar hacia atrás y observar las jugadas del infield. Una comunicación clara como «Estoy aquí» y el nombre del árbitro indica a los compañeros que el lugar vacío está cubierto.
+m06-pca.19.q	Han terminado todas las jugadas y U1 está en home. ¿Qué da paso a que el equipo arbitral contrarrote hacia las posiciones del siguiente lanzamiento?
+m06-pca.19.o0	Que el lanzador tenga la pelota bien sujeta en el círculo y todos los corredores vuelvan a sus bases, lo que permite que cada árbitro empiece a moverse por su cuenta.
+m06-pca.19.o1	Que U1, en home, pida tiempo, seguido de una contrarrotación coordinada en la que el árbitro que llega asume el control antes de que el que sale deje la zona.
+m06-pca.19.o2	Que U2 o U3 empiece a volver hacia su posición inicial, lo que lleva a U1 y al árbitro de home a seguirle cuando reconocen el movimiento.
+m06-pca.19.o3	Que el árbitro de home inicie la vuelta hacia home y los árbitros de base se ajusten a medida que ese movimiento deja espacio para la contrarrotación.
+m06-pca.19.why	Cuando han terminado todas las jugadas y U1 está en home, U1 pide tiempo para que el equipo arbitral contrarrote. La vuelta es coordinada: un árbitro mantiene su responsabilidad hasta que el árbitro que llega asume el control. La posesión de la pelota en el círculo del lanzador no inicia por sí sola esta secuencia, y marcharse antes de tiempo puede dejar una base sin cubrir.
+m07-mkc.0.q	Sin corredores en base, ¿qué posición inicial de U3 sigue el Apéndice 5b?
+m07-mkc.0.o0	Unos 3,5 metros detrás de tercera, hasta 2 metros fuera de la línea en territorio foul.
+m07-mkc.0.o1	Unos 5,5 metros detrás de tercera, justo fuera de la línea en territorio foul.
+m07-mkc.0.o2	Unos 4,5 metros detrás de tercera, justo fuera de la línea en territorio foul.
+m07-mkc.0.o3	Unos 3,5 metros atrás cerca de la 2BDA, en el lado de primera de segunda.
+m07-mkc.0.why	La referencia sin corredores es unos 5,5 metros detrás de tercera, justo fuera de la línea. Las demás distancias y ubicaciones corresponden a otras configuraciones de corredores. La profundidad es aproximada y debe permitir moverse a tiempo y tener una visión clara.
+m07-mkc.1.q	U3 empieza cerca de la 2BDA y lee un pickoff en segunda. ¿Qué descripción sigue la indicación sobre pickoffs?
+m07-mkc.1.o0	Retroceder unos 3 metros desde la posición inicial antes de leer el tag.
+m07-mkc.1.o1	Mantener la posición inicial todo el tiempo, porque la 2BDA es el punto final de decisión.
+m07-mkc.1.o2	Ajustarse a una posición a unos 3 metros de la base, manteniendo a la vista los Cuatro Elementos Esenciales mientras se desarrolla el tag.
+m07-mkc.1.o3	Colocarse en la prolongación de la línea de primera antes de que llegue el tiro para prepararse para cualquier tag de barrido.
+m07-mkc.1.why	Unos 3 metros describe la distancia de trabajo respecto a la base, no un retroceso obligatorio de tres metros. Lee al corredor y al fildeador y ajústate para tener una visión sin obstáculos. El encabezado del PDF se refiere a U3, aunque la frase que sigue dice U2 por error.
+m07-mkc.2.q	En un sistema de tres árbitros con corredores en 1B y 3B, ¿qué reparto de la responsabilidad sobre los despegues sigue el Apéndice 5b?
+m07-mkc.2.o0	U1 se encarga de primera, U3 de segunda y el árbitro de home de tercera.
+m07-mkc.2.o1	El árbitro más cercano a cada corredor se encarga de ese corredor, sea cual sea la posición asignada.
+m07-mkc.2.o2	U1 se encarga de primera y segunda; U3, de tercera.
+m07-mkc.2.o3	U1 se encarga de primera, y el árbitro de home de segunda y tercera mientras U3 lee el outfield.
+m07-mkc.2.why	El reparto de los despegues es U1 en primera y segunda y U3 en tercera. No confundas salir antes de tiempo en el lanzamiento con las responsabilidades de tag-up en un fly atrapado.
+m07-mkc.3.q	En un sistema de tres árbitros con un corredor en primera, U1 en primera y U3 en segunda, ¿por qué se asigna a U1 la zona del jardín derecho, incluidas algunas pelotas justo detrás de U3?
+m07-mkc.3.o0	U1 tiene un buen ángulo sobre la línea del jardín derecho y las pelotas atrapadas a ras de suelo que van hacia la línea, mientras que U3 puede entrar más fácilmente para cubrir las bases y el tag-up sin que U1 tenga que hacer el button-hook cruzando la trayectoria del corredor.
+m07-mkc.3.o1	U3 debe quedarse fuera en segunda durante toda la jugada, así que U1 toma la pelota sobre todo para no cambiar el ángulo de visión inicial de U3.
+m07-mkc.3.o2	Que U1 salga quita al equipo arbitral todas las responsabilidades en primera hasta que la pelota vuelve al infield.
+m07-mkc.3.o3	La ruta más profunda de U1 le da prioridad sobre U3 en cualquier pelota al outfield.
+m07-mkc.3.why	El reparto combina buenos ángulos sobre la línea y las pelotas atrapadas a ras de suelo con una cobertura eficaz de las bases. U3 puede entrar en el diamante, vigilar el tag-up y cubrir primera y segunda con más facilidad de lo que U1 puede hacer a tiempo un button-hook alrededor del corredor.
+m07-mkc.4.q	Un árbitro de base sale y el fly no es atrapado. ¿Quién lleva al bateador-corredor hasta tercera en el sistema de tres árbitros de élite?
+m07-mkc.4.o0	El árbitro de home lleva al bateador-corredor hasta tercera mientras el árbitro de base que queda se encarga de 1B y 2B.
+m07-mkc.4.o1	El árbitro de base que queda lleva al bateador-corredor hasta tercera y lo comunica para que el árbitro de home pueda cubrir home.
+m07-mkc.4.o2	El árbitro del outfield vuelve a tercera después de decidir sobre la atrapada mientras el árbitro de base que queda se mantiene en segunda.
+m07-mkc.4.o3	El árbitro de base que queda deja de cubrir en segunda y transfiere todas las jugadas en tercera al árbitro de home.
+m07-mkc.4.why	El árbitro de base que queda cubre primera y segunda y lleva al bateador-corredor hasta tercera. En un fly atrapado, llevar al último corredor a tercera depende de llegar a una posición ventajosa y de comunicarse con el árbitro de home.
+m07-pca.0.q	¿Qué colocación completa entre entradas sigue el Apéndice 5b, con todos los árbitros fuera de las líneas de fair/foul?
+m07-pca.0.o0	PU a un tercio hacia tercera; U1 a mitad de camino hacia primera; U3 a dos tercios hacia tercera.
+m07-pca.0.o1	PU a mitad de camino hacia tercera; U1 a un tercio hacia primera; U3 a dos tercios hacia tercera.
+m07-pca.0.o2	PU a un tercio hacia tercera; U1 a dos tercios hacia primera; U3 a mitad de camino hacia tercera.
+m07-pca.0.o3	PU a un tercio hacia primera; U1 a mitad de camino hacia primera; U3 a dos tercios hacia tercera.
+m07-pca.0.why	La colocación indicada es PU a un tercio en el lado de tercera, U1 a mitad de camino en el lado de primera y U3 a dos tercios en el lado de tercera, todos fuera de las líneas.
+m07-pca.1.q	Con un corredor solo en primera, ¿qué posición inicial de U1 sigue el Apéndice 5b?
+m07-pca.1.o0	Unos 3,5 metros detrás de primera y a 2-3 metros de la línea en territorio foul, con la misma separación lateral que U3 con un corredor en tercera.
+m07-pca.1.o1	Unos 5,5 metros detrás de primera, justo fuera de la línea en territorio foul.
+m07-pca.1.o2	Unos 3,5 metros detrás de primera en territorio foul, cerca de la línea, con visión sin obstáculos de home y preparado para un tiro de vuelta.
+m07-pca.1.o3	Unos 3,5 metros atrás en el lado de tercera de la 2BDA, usando la colocación alternativa de segunda.
+m07-pca.1.why	U1 empieza unos 3,5 metros detrás de primera en territorio foul. La posición junto a la línea facilita un tiro de vuelta rápido y la cobertura de fair/foul. U1 puede ajustarse ligeramente para ver bien home; la separación más amplia de U3 en tercera no se copia automáticamente en primera.
+m07-pca.2.q	¿Por qué puede U3 empezar unos 3,5 metros detrás de tercera y hasta 2 metros fuera de la línea en territorio foul cuando hay un corredor en tercera?
+m07-pca.2.o0	Para alinearse directamente con el tiro del receptor y mantener esa alineación fija en cualquier pickoff, aunque el tag se desplace.
+m07-pca.2.o1	Para tener una ruta más temprana hacia segunda y soltar tercera antes de que el corredor se comprometa hacia home.
+m07-pca.2.o2	Para tener una única posición de decisión cercana que sirva para cualquier tag posible sin más ajustes.
+m07-pca.2.o3	Para mantener la visión del lanzador, el corredor, el bateador y home incluso cuando el corredor despega hacia territorio foul y taparía una posición junto a la línea.
+m07-pca.2.why	La separación protege la visión de U3 durante el lanzamiento y el despegue, sobre todo cuando un corredor despega muy abierto en territorio foul. U3 lee el regreso del corredor y el tag del fildeador y se ajusta en lugar de mantener un punto fijo de decisión.
+m07-pca.3.q	Desde primera, U1 lee un tiro de pickoff de vuelta a la base. ¿Qué colocación sigue el Apéndice 5b?
+m07-pca.3.o0	Mantener la distancia de unos cinco metros de la jugada forzada y quedarse a 90 grados del tiro aunque el fildeador intente un tag de barrido.
+m07-pca.3.o1	Empezar justo fuera de la línea de fair/foul y trabajar hasta unos 3 metros en territorio foul sin pasar de una línea de 45 grados que atraviesa primera, o entrar en territorio fair cuando la jugada en el borde de entrada exige esa visión.
+m07-pca.3.o2	Ir a la prolongación de la línea de primera antes de leer el regreso del corredor, usando la misma posición en todos los tiros de vuelta.
+m07-pca.3.o3	Colocarse justo al lado del guante del fildeador y usar la llegada de la pelota para determinar si el corredor está out.
+m07-pca.3.why	Lee la trayectoria del corredor y la acción del fildeador. La guía permite un ángulo en territorio foul dentro del límite indicado o entrar un paso para ver el borde de entrada. El objetivo es ver a la vez el tag y el contacto con la base.
+m07-pca.4.q	Un árbitro de base sale a un fly al outfield. ¿Qué afirmaciones describen correctamente la cobertura de los tag-ups?
+m07-pca.4.s0	El árbitro de base que queda es responsable de los tag-ups en primera y segunda.
+m07-pca.4.s1	PU es responsable del tag-up en tercera.
+m07-pca.4.s2	El árbitro de base que queda debe rotar hacia dentro rápidamente y mirar por encima del hombro cuando haga falta para observar el primer toque y al corredor.
+m07-pca.4.s3	Si no se vio la relación necesaria, el equipo arbitral debe pedir ayuda e identificar con claridad al árbitro que hizo la observación pertinente.
+m07-pca.4.o0	Solo las afirmaciones 1 y 2.
+m07-pca.4.o1	Solo las afirmaciones 1, 3 y 4.
+m07-pca.4.o2	Solo las afirmaciones 2, 3 y 4.
+m07-pca.4.o3	Las cuatro afirmaciones.
+m07-pca.4.why	Las cuatro son correctas. La cobertura interior restante se reparte para que el árbitro de base vigile los tag-ups de primera y segunda y PU el de tercera. Si una rotación impide ver a la vez el primer toque y al corredor, usa la información del compañero y comunica quién hizo la observación; no la deduzcas.
+m07-pca.5.q	Hay un corredor en segunda y U3 está en tercera. ¿Qué árbitro decide sobre el despegue cuando se realiza el lanzamiento?
+m07-pca.5.o0	U1, porque el reparto de los despegues asigna primera y segunda a U1 y tercera a U3.
+m07-pca.5.o1	U3, porque la excepción aparte del tag-up en segunda también le transfiere todos los despegues allí.
+m07-pca.5.o2	PU, porque el árbitro de home es quien ve más directamente la suelta del lanzamiento.
+m07-pca.5.o3	U1 y U3 conjuntamente, y decide el que señale primero.
+m07-pca.5.why	U1 tiene la responsabilidad del despegue en segunda. Un despegue en el lanzamiento y un tag-up en un fly atrapado son observaciones distintas con repartos distintos; la excepción del tag-up no cambia esta asignación del despegue.
+m07-pca.6.q	Sin corredores, con U1 en primera y U3 en tercera, un fly lleva al jardinero central, en su posición normal, hacia el jardín derecho. ¿Qué cobertura es correcta?
+m07-pca.6.o0	U3 toma la atrapada porque el jardinero central empezó dentro del sector central normal de U3, mientras U1 se queda en primera.
+m07-pca.6.o1	U1 toma el fly hacia la derecha; U3 entra en el diamante, lee el movimiento y prepara la cobertura del resto de bases.
+m07-pca.6.o2	PU toma la atrapada siempre que el jardinero central se desplace, y los dos árbitros de base mantienen sus bases iniciales.
+m07-pca.6.o3	U1 y U3 salen los dos hasta que se vea por qué lado del centro se hará la atrapada.
+m07-pca.6.why	Desde las esquinas, U1 cubre al jardinero central en posición normal que se desplaza hacia la derecha y el sector de foul del jardín derecho. U3 cubre el centro hacia la izquierda. Lee la trayectoria y a los compañeros y comunícate antes de comprometerte.
+m07-pca.7.q	Con un corredor en primera, U1 en primera y U3 en segunda, un fly lleva al jardinero izquierdo hacia la línea de foul del jardín izquierdo. ¿Quién toma las decisiones de fair/foul y de atrapada?
+m07-pca.7.o0	U3 toma las dos decisiones porque U3 es el árbitro asignado al lado de tercera.
+m07-pca.7.o1	U1 toma las dos decisiones cruzando la zona de cobertura central y deja a U3 la cobertura de primera.
+m07-pca.7.o2	PU toma las dos decisiones en el sector abierto de la línea del jardín izquierdo mientras los árbitros de base mantienen la rotación necesaria.
+m07-pca.7.o3	U3 toma la atrapada desde segunda mientras PU toma por separado el fair/foul, sin traspaso de cobertura.
+m07-pca.7.why	Con U3 empezando en segunda, PU cubre al jardinero izquierdo que va hacia la línea de foul abierta del jardín izquierdo. U3 cubre el sector central y al jardinero izquierdo que va hacia el centro. Especificar la dirección del fildeador evita la ambigüedad de decir solo «a F7».
+m07-pca.8.q	Sin corredores, U1 sale hacia la derecha y se produce una posible jugada sobre el bateador-corredor en primera. ¿Qué cobertura inicial y qué traspaso siguen el Apéndice 5b?
+m07-pca.8.o0	U3 toma la jugada inicial en primera mientras PU se queda en home todo el tiempo.
+m07-pca.8.o1	PU entra en el diamante, toma la posible jugada inicial en primera y luego suelta primera a U3 cuando el bateador-corredor pasa primera; U3 cubre el resto del avance y PU se prepara para cubrir tercera o home.
+m07-pca.8.o2	U1 vuelve del outfield para la jugada en primera y sale de nuevo si la pelota sigue fuera.
+m07-pca.8.o3	PU sigue al bateador-corredor por primera, segunda y tercera mientras U3 se encarga de home.
+m07-pca.8.why	El caso sin corredores con U1 fuera es una excepción a un reparto general de primera y segunda. PU se encarga de la posible jugada inicial en primera. U3 rota hacia dentro y asume primera y segunda cuando el bateador-corredor pasa primera, y después lleva al bateador-corredor hacia tercera mientras PU se prepara para home.
+m07-pca.9.q	Sin corredores y con un rodado al infield, ¿qué enfoque combina correctamente las funciones de seguimiento y de cobertura de PU?
+m07-pca.9.o0	Quedarse en el POP y dejar a U1 la interferencia, un posible tag antes de primera y el fair/foul.
+m07-pca.9.o1	Rotar de inmediato a tercera y transferir a U3 todas las observaciones de la zona de primera antes del tiro.
+m07-pca.9.o2	Seguir al bateador-corredor hasta primera y continuar hacia segunda aunque U3 haya rotado allí.
+m07-pca.9.o3	Seguir aproximadamente un tercio del camino hacia primera, más si hace falta, conservar la decisión de fair/foul y las funciones de ayuda, y rotar hacia tercera si el bateador-corredor avanza hacia segunda.
+m07-pca.9.why	PU sigue al bateador-corredor por una posible interferencia, un tag más cerca de home y para ayudar en primera, conservando la responsabilidad de fair/foul. Cuando el bateador-corredor llega a primera y avanza hacia segunda, PU se prepara para cubrir tercera en lugar de duplicar a U3 en segunda.
+m07-pca.10.q	PU o U1 cubre home desde la zona de observación POP. ¿Qué afirmaciones siguen la presentación del Apéndice 5b?
+m07-pca.10.s0	Si el receptor ya tiene la pelota y la jugada es en el borde de entrada, moverse hacia delante y a la izquierda según haga falta para conservar la visión.
+m07-pca.10.s1	Si la pelota y el corredor llegan a la vez y se desarrolla un tag de barrido más profundo o por fuera, ajustarse hacia delante y a la derecha según haga falta para ver el tag.
+m07-pca.10.s2	Moverse hacia la prolongación de la línea de tercera antes de que se desarrolle el tag, comprometiéndose pronto con una posición de tag de barrido en lugar de conservar el acceso al borde de entrada.
+m07-pca.10.s3	Usar la trayectoria del corredor, el momento de la pelota y la posible obstrucción o interferencia para leer la jugada, manteniendo los elementos a la vista mientras cambia.
+m07-pca.10.o0	Solo las afirmaciones 1, 2 y 4.
+m07-pca.10.o1	Solo las afirmaciones 1 y 3.
+m07-pca.10.o2	Solo las afirmaciones 2 y 3.
+m07-pca.10.o3	Las cuatro afirmaciones.
+m07-pca.10.why	Las afirmaciones 1, 2 y 4 son correctas. La posesión del receptor, la llegada del corredor y la llegada de la pelota ayudan a identificar la zona probable de contacto. Lee la jugada y ajústate desde el POP, conservando la visión y la capacidad de reaccionar a un cambio. Una posición poco habitual de tag de barrido no es el destino rutinario.
+m07-pca.11.q	Con un corredor en primera, U3 empieza en el lado de primera de la 2BDA, más cerca de segunda. Un tiro del infield da lugar a una jugada forzada en segunda. ¿Qué ajuste sigue la mecánica de élite?
+m07-pca.11.o0	Moverse a la derecha hacia la 2BDA como respuesta rutinaria a cualquier jugada en segunda, aplicando a la jugada forzada el movimiento del tag en un robo y manteniendo la diagonal como referencia final de decisión.
+m07-pca.11.o1	Acercarse siguiendo la alineación inicial sin cambiar el ángulo lateral, usando la cercanía para juzgar la posesión y el contacto con la base aunque el fildeador tape la llegada del corredor.
+m07-pca.11.o2	Leer el tiro y moverse a la izquierda hacia el borde de entrada, buscando unos 90 grados respecto al tiro y no más de 45 grados respecto al borde de entrada, con los cuatro elementos a la vista.
+m07-pca.11.o3	Moverse a la derecha hacia la prolongación de la línea de primera a segunda para centrar la base en la visión y mantener esa alineación para decidir el forzado antes de plantearse otro ángulo para un tag posterior.
+m07-pca.11.why	Estar más cerca de segunda no corrige un mal ángulo. Desde la posición estándar en el lado de primera, lee la jugada forzada y trabaja hacia tu izquierda, hacia el borde de entrada. No te muevas automáticamente a la derecha en una jugada forzada. Un ajuste hacia la 2BDA puede servir para un tag en un robo, pero esa es otra jugada. Mantén a la vista la posesión, el contacto del fildeador con la base y al corredor, y vuelve a ajustarte si se desarrolla un tag.
+m07-pca.12.q	Con un corredor solo en primera, U3 elige una posición inicial en segunda teniendo en cuenta si el bateador es diestro o zurdo, el movimiento del lanzador y la posible cobertura de primera si U1 sale. ¿Qué enfoque es correcto?
+m07-pca.12.o0	Usar por defecto la alternativa del lado de tercera, porque un posible robo tiene siempre prioridad sobre la visión de todo el lanzamiento y el acceso a primera.
+m07-pca.12.o1	Usar la posición estándar preferida del lado de primera, cerca de la 2BDA hacia la 3BLE, unos 3,5 metros atrás, o la alternativa condicional del lado de tercera con home sin obstáculos; cuando haga falta ajustarse desde la alternativa, moverse primero hacia la 2BDA y conservar el acceso al interior y al borde de entrada.
+m07-pca.12.o2	Empezar hacia la prolongación de la línea de primera para tener una visión de tag de barrido antes de leer si el corredor intenta robar o se pasa de la base.
+m07-pca.12.o3	Empezar más atrás, fuera del alcance de los fildeadores, para que el lanzador no tape al bateador, aceptando una ruta más larga hacia dentro si U1 sale.
+m07-pca.12.why	La presentación señala como preferida la posición del lado de primera porque conserva la ruta más corta hacia dentro, incluida la cobertura de primera. La alternativa es condicional, cerca de la 2BDA, y debe conservar la visión durante todo el lanzamiento. Desde la alternativa, el movimiento inicial es hacia la 2BDA, no más hacia la 1BLE.
+m07-pca.13.q	Hay corredores en primera y segunda, nadie en tercera, y ningún árbitro de base sale. PU tiene un fly al sector abierto de la línea del jardín derecho. ¿Qué reparto de los tag-ups sigue la excepción indicada?
+m07-pca.13.o0	U3 vigila el tag-up en segunda, U1 vigila primera y PU juzga el fly, comunicando la ayuda si una observación necesaria queda bloqueada.
+m07-pca.13.o1	U1 debe vigilar los dos tag-ups porque U1 tiene las decisiones de despegue en primera y segunda.
+m07-pca.13.o2	PU debe vigilar los dos tag-ups además de la atrapada porque ningún árbitro de base salió.
+m07-pca.13.o3	U3 vigila primera y U1 vigila segunda, sean cuales sean sus líneas de visión reales durante la rotación.
+m07-pca.13.why	Con primera y segunda ocupadas y tercera vacía, U3 tiene el tag-up de segunda. La presentación explica que U3 puede ver esa relación mientras U1 rota hacia dentro y tiene que vigilar primera. La responsabilidad del despegue en el lanzamiento es un reparto aparte.
+m07-pca.14.q	Con un corredor solo en tercera, U1 en primera y U3 en tercera, se desarrolla un rodado al infield. ¿Qué debe hacer U3?
+m07-pca.14.o0	Rotar hacia dentro en cuanto se fildea la pelota, dejando a PU cualquier regreso inmediato a tercera.
+m07-pca.14.o1	Quedarse en tercera hasta que terminen todas las posibles jugadas en primera y segunda, incluso después de que el corredor se comprometa hacia home.
+m07-pca.14.o2	Mantener 3B hasta que el corredor se comprometa hacia home y luego rotar a segunda; si U3 se queda o se retrasa, U1 debe cubrir primera y segunda.
+m07-pca.14.o3	Seguir al corredor hasta home y obligar a PU a rotar por tercera hacia segunda.
+m07-pca.14.why	No abandones a un corredor sobre el que todavía puede haber jugada en tercera. Cuando el corredor se compromete hacia home, U3 puede soltar y rotar. U1 lee el movimiento de U3 y cubre primera y segunda si U3 no puede soltar.
+m07-pca.15.q	Sin corredores y con los dos árbitros de base en las esquinas, un rodado llega al outfield. ¿Qué secuencia de U1 sigue el Apéndice 5b?
+m07-pca.15.o0	Rotar al POP de inmediato en el contacto y dejar a PU la posible jugada forzada inicial en primera.
+m07-pca.15.o1	Hacer el button-hook hacia segunda y mantener toda la cobertura de home con PU hasta que el bateador-corredor se detenga en tercera.
+m07-pca.15.o2	Quedarse detrás de primera todo el tiempo, obligando a PU a cubrir al bateador-corredor en tercera y en home si el avance continúa.
+m07-pca.15.o3	Prepararse para una jugada forzada del outfield a primera y observar primera, y luego rotar al POP si el bateador-corredor avanza de segunda hacia tercera, comunicándolo para empujar a PU hacia tercera.
+m07-pca.15.why	Sin corredores originales, U1 protege primero la posible jugada del outfield a primera. En este caso, el avance del bateador-corredor de segunda hacia tercera activa la rotación de U1 a home. No apliques este momento a un caso con corredor en primera, en el que el corredor adelantado puede amenazar home antes.
+m07-pca.16.q	Con U1 en primera y U3 en tercera, U3 empieza a salir pero lee que la pelota no será atrapada. U1 ya ha iniciado la respuesta hacia dentro. ¿Qué corrección sigue la presentación del Apéndice 5b?
+m07-pca.16.o0	U3 vuelve a tercera sin decir nada mientras U1 sigue cubriendo segunda, tercera y home hasta el siguiente lanzamiento.
+m07-pca.16.o1	U3 toma segunda sin comunicarlo, suponiendo que U1 se dará cuenta y cambiará la rotación antes de que llegue el corredor.
+m07-pca.16.o2	U3 sigue saliendo solo para mantener la señal original de salida, aunque el equipo arbitral pueda recuperar con seguridad una mejor cobertura del infield.
+m07-pca.16.o3	U3 comunica con claridad, con la vista y con la voz, que tiene segunda y rota hacia dentro; U1 ajusta el button-hook y puede seguir hacia home, coordinando la cobertura de tercera de PU.
+m07-pca.16.why	La corrección recupera la rotación del infield de tres árbitros y mejora la cobertura alrededor del diamante. La comunicación es esencial porque U1 puede haber reaccionado ya al movimiento inicial de U3. Lee la jugada y coordínate en lugar de invertir la cobertura sin decir nada.
+m07-pca.17.q	Después de que U3 sale, U1 trabaja por dentro para primera y segunda. En segunda, ¿qué forma de moverse sigue la presentación cuando cambia el lugar del tag?
+m07-pca.17.o0	Reproducir desde dentro la posición exterior de la 2BDA y mantener el mismo ángulo aunque el corredor se aleje y el fildeador tape el tag.
+m07-pca.17.o1	Leer la jugada y elegir un carril de trabajo interior: hacia la línea de tercera para una jugada en el borde de entrada, o hacia la línea de primera para ver de vuelta un tag que se desarrolla fuera de la base.
+m07-pca.17.o2	Acercarse a la base en línea recta en todos los tags, confiando en la distancia para compensar un ángulo bloqueado a un lado de la base.
+m07-pca.17.o3	Elegir el carril según el tiro previsto antes de que llegue el corredor y mantenerlo durante el tag, dejando cualquier otro ajuste para la siguiente jugada.
+m07-pca.17.why	La colocación interior tiene restricciones distintas de las de una posición inicial exterior. Lee el lugar probable del tag y usa el carril que lo mantenga delante, y adáptate si cambia. Son carriles de trabajo interiores, no un permiso para desplazarse más hacia la 1BLE desde la alternativa exterior del lado de tercera. Protege la separación de los elementos y evita simplemente reproducir la mecánica exterior.
+m07-pca.18.q	¿Qué forma de actuar de U3 sigue la indicación sobre pickoffs en tercera base?
+m07-pca.18.o0	Quedarse a la profundidad inicial en todos los tiros de vuelta y usar la línea de tiro del receptor como ángulo fijo de decisión.
+m07-pca.18.o1	Ir de inmediato a territorio fair, al borde de entrada, en todos los tiros de vuelta, aunque el corredor vuelva por territorio foul.
+m07-pca.18.o2	Leer el regreso del corredor y el tag del fildeador, trabajar a unos 3 metros de tercera en territorio foul y ajustarse para tener la visión necesaria del tag o del borde de entrada.
+m07-pca.18.o3	Colocarse detrás del corredor que vuelve para alinear al corredor, el guante y la base, usando la cercanía para saber si el tag llegó primero.
+m07-pca.18.why	La trayectoria de regreso del corredor y la acción del fildeador marcan el ángulo. La referencia en territorio foul es de unos 3 metros con el límite de 45 grados. Ajústate para ver el tag real; no supongas que todos los regresos usan el mismo punto de contacto.
+m07-pca.19.q	U1 ha salido a un fly. ¿Qué respuesta de U3 sigue el Mapa de Memoria de Rotación de Tres Árbitros?
+m07-pca.19.o0	Rotar hacia dentro, pasando la línea de la placa del lanzador a segunda, asumir la cobertura de primera y segunda y estar preparado para llevar al bateador-corredor hacia tercera con una comunicación clara.
+m07-pca.19.o1	Quedarse fuera cerca de la 2BDA y cubrir primera y segunda desde allí para que PU se encargue de todas las jugadas en tercera.
+m07-pca.19.o2	Ir a la zona de espera de tercera y transferir primera y segunda a PU hasta que la pelota del outfield haya vuelto.
+m07-pca.19.o3	Mantener el borde de entrada de tercera para el siguiente tiro y dejar primera sin cubrir hasta que U1 vuelva del outfield.
+m07-pca.19.why	El mapa de memoria sitúa a U3 por dentro, pasada la línea del lanzador a segunda, para primera y segunda cuando U1 sale. Lee al corredor y comunica la cobertura continuada de tercera. Sin corredores originales, el caso detallado con U1 fuera da a PU la jugada inicial en primera antes de que U3 la asuma cuando el bateador-corredor pasa primera.

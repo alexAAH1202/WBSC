@@ -13,7 +13,9 @@ const BANK = vm.runInNewContext(fs.readFileSync(path.join(root, 'questions.js'),
 // The real marked questions carry no answers (the server marks them). These tests stand in for the server with a made-up key:
 // the right option of pool question i is (3i + 1) mod (number of options). The page must never see it.
 const { fp: keyFp } = require('./answer-key-build.js');
-Object.keys(BANK).filter(k => /-pca$/.test(k)).forEach(k => BANK[k].questions.forEach((q, i) => { q.correct = (3 * i + 1) % q.options.length; }));
+const PRACTICE_RIGHT = {}; Object.keys(BANK).filter(k => /-mkc$/.test(k)).forEach(k => BANK[k].questions.forEach(q => { PRACTICE_RIGHT[q.q] = q.correct; }));
+// (a practice question that is also in the marked pool keeps its real answer, so the two agree)
+Object.keys(BANK).filter(k => /-pca$/.test(k)).forEach(k => BANK[k].questions.forEach((q, i) => { q.correct = q.q in PRACTICE_RIGHT ? PRACTICE_RIGHT[q.q] : (3 * i + 1) % q.options.length; }));
 // What the server does with a save: marks the chosen options and refuses a question the key does not match.
 function markPayload(p) {
   const b = BANK[p.assessmentKey]; assert.ok(b && Array.isArray(p.answers), 'the page sends answers for a known assessment');
@@ -139,14 +141,41 @@ const verifyText = pg => pg.textContent('#verify-state');
 
   // practice quizzes for Appendix 5b and 5c & d
   for (const key of ['m07-mkc', 'm08-mkc']) {
+    const N = BANK[key].questions.length;
     t = await newPage(b, { unverified: true });
     await t.pg.click(`[data-assessment="${key}"]`); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
     assert.ok(/Practice quiz - not marked, not recorded/.test(await t.pg.textContent('#quiz-mode')));
-    assert.ok(/Question 1 of 8/.test(await t.pg.textContent('#quiz-progress-label')));
-    for (let i = 0; i < 8; i++) { const q = await t.pg.textContent('#quiz-question'), o = await t.pg.$$eval('.quiz-option .opt-text', a => a.map(x => x.textContent)); const r = o.indexOf(RIGHT[q]); assert.ok(r >= 0, 'known question'); await t.pg.click(`.quiz-option >> nth=${r}`); await t.pg.click('#quiz-submit-btn'); assert.ok(/Correct/.test(await t.pg.textContent('#quiz-feedback-head'))); await t.pg.click('#quiz-submit-btn'); }
-    assert.ok(/8 \/ 8/.test(await t.pg.textContent('#quiz-score-frac')) && t.posts.length === 0, 'practice is never saved');
+    assert.ok(new RegExp('Question 1 of ' + N).test(await t.pg.textContent('#quiz-progress-label')));
+    for (let i = 0; i < N; i++) { const q = await t.pg.textContent('#quiz-question'), o = await t.pg.$$eval('.quiz-option .opt-text', a => a.map(x => x.textContent)); const r = o.indexOf(RIGHT[q]); assert.ok(r >= 0, 'known question'); await t.pg.click(`.quiz-option >> nth=${r}`); await t.pg.click('#quiz-submit-btn'); assert.ok(/Correct/.test(await t.pg.textContent('#quiz-feedback-head'))); await t.pg.click('#quiz-submit-btn'); }
+    assert.ok(new RegExp(N + ' / ' + N).test(await t.pg.textContent('#quiz-score-frac')) && t.posts.length === 0, 'practice is never saved');
   }
-  ok('Appendix 5b and 5c & d have 8-question practice quizzes: unmarked, answers shown, nothing is sent to the server');
+  ok('Appendix 5b and 5c & d have practice quizzes: unmarked, answers shown, nothing is sent to the server');
+
+  // "All of the above" keeps its place; numbered statements are listed under the question
+  {
+    const fixed = BANK['m01-mkc'].questions.findIndex(q => q.shuffle === false); assert.ok(fixed >= 0);
+    for (let n = 0; n < 4; n++) {
+      t = await newPage(b, { unverified: true });
+      await t.pg.click('[data-assessment="m01-mkc"]'); await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
+      for (let i = 0; i < fixed; i++) { await t.pg.click('.quiz-option >> nth=0'); await t.pg.click('#quiz-submit-btn'); await t.pg.click('#quiz-submit-btn'); }
+      assert.deepStrictEqual(await t.pg.$$eval('.quiz-option .opt-text', a => a.map(x => x.textContent)), Array.from(BANK['m01-mkc'].questions[fixed].options), 'written order kept');
+    }
+    const SK = 'm07-pca', si = BANK[SK].questions.findIndex(q => q.statements); assert.ok(si >= 0);
+    t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false } });
+    await t.pg.evaluate(() => { QUIZ_BANK['m07-pca'].draw = 20; });
+    await t.pg.click(`[data-assessment="${SK}"]`); await t.pg.waitForSelector('#quiz-gate', { state: 'visible' }); await t.pg.check('#gate-check'); await t.pg.click('#gate-start');
+    let found = false;
+    for (let i = 0; i < 20 && !found; i++) {
+      await t.pg.waitForSelector('#quiz-question', { state: 'visible' });
+      if ((await t.pg.textContent('#quiz-question')) === BANK[SK].questions[si].q) {
+        found = true;
+        assert.ok(await t.pg.isVisible('#quiz-statements'));
+        assert.deepStrictEqual(await t.pg.$$eval('#quiz-statements li', a => a.map(x => x.textContent)), Array.from(BANK[SK].questions[si].statements));
+      } else { assert.ok(await t.pg.isHidden('#quiz-statements')); await t.pg.click('.quiz-option >> nth=0'); await t.pg.click('#quiz-submit-btn'); await t.pg.click('#quiz-submit-btn'); }
+    }
+    assert.ok(found, 'the statements question was asked');
+  }
+  ok('an "All of the above" question keeps its written order, and a "Which statements" question lists its numbered statements');
 
   t = await newPage(b, { unverified: true, sendCode: 'rate' });
   await t.pg.click('#verify-send-btn'); await t.pg.waitForFunction(() => /Too many codes/.test(document.getElementById('verify-state').textContent));
@@ -454,9 +483,9 @@ const verifyText = pg => pg.textContent('#verify-state');
   {
     t = await newPage(b, {});
     const pg = t.pg; await pg.fill('#inp-umpid', '007');
-    const seen = new Set(); const Q1 = Object.keys(RIGHT).find(q => /umpire acronym/.test(q));
+    const seen = new Set(); const Q1 = BANK['m03-mkc'].questions[0].q; assert.notStrictEqual(BANK['m03-mkc'].questions[0].shuffle, false);
     for (let i = 0; i < 24; i++) {
-      await pg.click('[data-assessment="m01-mkc"]'); await pg.waitForSelector('#quiz-question', { state: 'visible' });
+      await pg.click('[data-assessment="m03-mkc"]'); await pg.waitForSelector('#quiz-question', { state: 'visible' });
       const opts = await pg.$$eval('.quiz-option .opt-text', a => a.map(x => x.textContent)); const idx = opts.indexOf(RIGHT[Q1]); assert.ok(idx >= 0); seen.add(idx);
       assert.strictEqual(await pg.getAttribute('#quiz-options', 'role'), 'radiogroup'); assert.strictEqual(await pg.getAttribute('.quiz-option >> nth=0', 'role'), 'radio');
       await pg.click(`.quiz-option >> nth=${idx}`); assert.strictEqual(await pg.getAttribute(`.quiz-option >> nth=${idx}`, 'aria-checked'), 'true');
