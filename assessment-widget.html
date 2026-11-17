@@ -2007,7 +2007,7 @@
       els.nextBlock.style.display = 'none';
       pendingSave = null;
     } else {
-      setSaveState('failed', T('Your result could not be recorded: {error}. Press "Try saving again", and tell your program administrator if it keeps failing.', { error: m.error ? S(m.error) : T('unknown error') }), true);
+      setSaveState('failed', T('Your result could not be recorded: {error}. Press "Try saving again", and tell your program administrator if it keeps failing.', { error: m.error ? S(m.error).replace(/\.\s*$/, "") : T('unknown error') }), true);
       // pendingSave is kept so Retry can resend the same submission
     }
   });
