@@ -13,7 +13,7 @@
       var st = document.createElement('style');
       st.textContent = '#primary-nav a.progress-chip{display:inline-flex;align-items:center;align-self:center;gap:6px;height:auto;min-height:0;line-height:1.2;font-size:.78rem;font-weight:700;border:1px solid #c8a24a;border-radius:999px;padding:6px 14px;margin:0 0 0 6px;color:#fff;text-decoration:none;white-space:nowrap}' +
         '@media (max-width:900px){#primary-nav a.progress-chip{margin:12px 16px;justify-content:center;width:auto}}' +
-        '#primary-nav a.progress-chip:hover,#primary-nav a.progress-chip:focus-visible{background:#c8a24a;color:#0a1e46}.progress-chip:focus-visible{outline:3px solid #c8a24a;outline-offset:2px}';
+        '#primary-nav a.progress-chip:hover,#primary-nav a.progress-chip:focus-visible{background:#c8a24a;color:#2a2d31}.progress-chip:focus-visible{outline:3px solid #c8a24a;outline-offset:2px}';
       document.head.appendChild(st);
       var a = document.createElement('a');
       a.className = 'progress-chip'; a.href = 'assessment-widget.html#progress-strip';
@@ -27,15 +27,15 @@
   try { if (localStorage.getItem(KEY)) return; } catch (e) {}
   var css = document.createElement('style');
   css.textContent =
-    '.cookie-note{position:fixed;left:16px;bottom:16px;z-index:9000;max-width:380px;background:#fff;color:#16213a;' +
-    'border:1px solid #cfd5df;border-top:4px solid #c8a24a;border-radius:4px;padding:16px 18px;box-shadow:0 8px 28px rgba(10,20,45,.28);' +
+    '.cookie-note{position:fixed;left:16px;bottom:16px;z-index:9000;max-width:380px;background:#fff;color:#26292d;' +
+    'border:1px solid #cfd5df;border-top:4px solid #c8a24a;border-radius:4px;padding:16px 18px;box-shadow:0 8px 28px rgba(20,22,26,.28);' +
     'font-family:Roboto,Arial,sans-serif;font-size:.9rem;line-height:1.5;}' +
     '.cookie-note strong{display:block;margin-bottom:6px;font-size:.95rem;}' +
     '.cookie-note p{margin:0 0 12px;}' +
-    '.cookie-note a{color:#0a1e46;text-decoration:underline;}' +
+    '.cookie-note a{color:#2a2d31;text-decoration:underline;}' +
     '.cookie-note .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;}' +
-    '.cookie-note button{font:inherit;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:#0a1e46;color:#fff;' +
-    'border:2px solid #0a1e46;border-radius:2px;padding:8px 20px;cursor:pointer;}' +
+    '.cookie-note button{font:inherit;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:#2a2d31;color:#fff;' +
+    'border:2px solid #2a2d31;border-radius:2px;padding:8px 20px;cursor:pointer;}' +
     '.cookie-note button:focus-visible,.cookie-note a:focus-visible{outline:3px solid #c8a24a;outline-offset:2px;}' +
     '@media (max-width:520px){.cookie-note{left:8px;right:8px;bottom:8px;max-width:none;}}' +
     '@media print{.cookie-note{display:none;}}';
