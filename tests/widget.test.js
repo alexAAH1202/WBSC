@@ -665,9 +665,9 @@ const verifyText = pg => pg.textContent('#verify-state');
     const before = t.certLookups.length;
     // the preamble is short: the red box is gone, the notice is one paragraph with the rest folded away
     assert.ok(await t.pg.isVisible('.notice p'), 'the "not the official WBSC website" notice stays visible'); assert.ok(/This is not the official WBSC website/.test(await t.pg.textContent('.notice p')));
-    assert.ok(!(await t.pg.isVisible('.notice-more p')) && await t.pg.isVisible('.notice-more summary')); await t.pg.click('.notice-more summary'); assert.ok(await t.pg.isVisible('.notice-more p'));
+    assert.ok(/WBSC Oceania Softball Umpires/.test(await t.pg.textContent('.notice p')) && await t.pg.locator('.notice-more').count() === 0, 'the notice is the single owner-supplied paragraph');
     assert.ok(/Pass mark: 85%/.test(await t.pg.textContent('#rules-note')) && /watch the full presentation first/.test(await t.pg.textContent('#rules-note')));
-    ok('the preamble is shorter: one visible notice paragraph with "More about this site" folded away, and a single pass-mark note that points to the presentations');
+    ok('the preamble is shorter: one notice paragraph (the owner wording), and a single pass-mark note that points to the presentations');
 
     // ---- quiz progress bar, last-attempt warning, next module, menu chip, loading and error states
     t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false }, certificate: status });

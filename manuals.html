@@ -6,20 +6,21 @@
 <title>Manuals — Umpire Mechanics Training</title>
 <meta name="description" content="Temporary training site for the WBSC 2026–2029 Softball Umpire Mechanics accreditation and reaccreditation program. Not the official WBSC website.">
 <meta name="robots" content="noindex">
-<link rel="icon" href="images/wbsc-logo.svg">
+<link rel="icon" type="image/png" href="images/wbsc-oceania-logo.png">
 <link rel="preload" href="fonts/roboto-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/roboto-condensed-latin-900-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="fonts/fonts.css">
 <style>
   /* ---------- Tokens ---------- */
   :root{
-    --navy-950:#0b1a33;
-    --navy-800:#132a4d;
-    --navy-700:#1c3760;
+    --navy-950:#2a2d31;
+    --dark-grad:linear-gradient(90deg,#0a0a0b 0%,#2a2d31 100%);   /* black to charcoal, left to right */
+    --navy-800:#34383d;
+    --navy-700:#43484e;
     --white:#ffffff;
     --paper:#f6f3ea;         /* pale gold-neutral, for the temporary-site notice */
-    --ink:#0f1526;           /* near-black, navy-tinted, for on-white text */
-    --ink-soft:#3c4457;      /* secondary on-white text */
+    --ink:#1d1f23;           /* near-black, navy-tinted, for on-white text */
+    --ink-soft:#4a4d52;      /* secondary on-white text */
     --line:#dcd6c6;          /* warm-grey border, biased toward gold */
     --line-on-navy:rgba(255,255,255,0.16);
     --red-600:#c31f2f;
@@ -78,7 +79,7 @@
 
   :focus-visible{outline:3px solid var(--gold-500);outline-offset:3px;}
   .skip-link{
-    position:absolute;left:-9999px;top:0;background:var(--navy-950);color:var(--white);
+    position:absolute;left:-9999px;top:0;background:var(--dark-grad);color:var(--white);
     padding:12px 20px;z-index:200;font-family:var(--font-display);text-transform:uppercase;letter-spacing:0.06em;
   }
   .skip-link:focus{left:24px;top:24px;}
@@ -104,7 +105,7 @@
   .btn-outline-light{background:transparent;color:var(--white);border-color:rgba(255,255,255,0.6);}
   .btn-outline-light:hover{border-color:var(--white);background:rgba(255,255,255,0.08);}
   .btn-outline-navy{background:transparent;color:var(--navy-950);border-color:var(--navy-950);}
-  .btn-outline-navy:hover{background:var(--navy-950);color:var(--white);}
+  .btn-outline-navy:hover{background:var(--dark-grad);color:var(--white);}
   .btn-ghost{
     font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;font-size:0.85rem;
     color:var(--navy-950);text-decoration:underline;text-underline-offset:4px;background:none;border:none;padding:4px 0;
@@ -112,7 +113,7 @@
 
   /* ---------- Header ---------- */
   header.site-header{
-    background:var(--navy-950);
+    background:var(--dark-grad);
     border-bottom:3px solid var(--gold-500);
     position:sticky;top:0;z-index:100;
   }
@@ -121,14 +122,14 @@
     height:76px;gap:24px;
   }
   .brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--white);}
-  .brand-logo{height:38px;width:auto;flex-shrink:0;}
+  .brand-logo{height:54px;width:auto;flex-shrink:0;}
   .brand-mark{
     display:flex;flex-direction:column;line-height:1;
     font-family:var(--font-display);font-weight:900;letter-spacing:0.02em;
   }
   .brand-mark .top{font-size:1.5rem;}
   .brand-mark .bottom{font-size:0.62rem;letter-spacing:0.2em;color:#c9d3e6;margin-top:2px;text-transform:uppercase;}
-  .footer-logo{height:46px;width:auto;margin-bottom:14px;}
+  .footer-logo{height:70px;width:auto;margin-bottom:14px;}
 
   nav.primary-nav{display:flex;align-items:center;gap:4px;}
   nav.primary-nav a{
@@ -153,7 +154,7 @@
   @media (max-width:860px){
     nav.primary-nav{
       display:none;position:absolute;top:76px;left:0;right:0;
-      background:var(--navy-950);flex-direction:column;align-items:stretch;
+      background:var(--dark-grad);flex-direction:column;align-items:stretch;
       border-top:1px solid var(--line-on-navy);border-bottom:3px solid var(--gold-500);
     }
     nav.primary-nav.open{display:flex;}
@@ -165,7 +166,7 @@
 
   /* ---------- Hero ---------- */
   .hero{
-    position:relative;background:var(--navy-950);color:var(--white);
+    position:relative;background:var(--dark-grad);color:var(--white);
     overflow:hidden;padding:96px 0 88px;
   }
   .hero-field{position:absolute;inset:0;opacity:0.55;}
@@ -219,14 +220,14 @@
     font-family:var(--font-display);font-weight:700;text-transform:uppercase;font-size:1.02rem;letter-spacing:0.02em;color:var(--navy-950);
   }
   .intro-signature .why{color:var(--red-600);}
-  .intro-signature .how{color:var(--gold-500);background:var(--navy-950);padding:0 4px;}
+  .intro-signature .how{color:var(--gold-500);background:var(--dark-grad);padding:0 4px;}
   .intro-flow{border:1px solid var(--line);padding:28px;}
   .intro-flow .eyebrow{color:var(--red-600);display:block;margin-bottom:18px;}
   .flow-step{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line);}
   .flow-step:last-child{border-bottom:none;}
   .flow-num{
     font-family:var(--font-display);font-weight:900;font-size:0.85rem;color:var(--white);
-    background:var(--navy-950);width:26px;height:26px;flex-shrink:0;
+    background:var(--dark-grad);width:26px;height:26px;flex-shrink:0;
     display:flex;align-items:center;justify-content:center;
   }
   .flow-text{font-family:var(--font-display);font-weight:700;text-transform:uppercase;font-size:0.86rem;letter-spacing:0.02em;color:var(--navy-950);align-self:center;}
@@ -247,7 +248,7 @@
     display:flex;flex-direction:column;gap:14px;min-height:100%;
   }
   .pillar:last-child{border-right:none;}
-  .pillar.elite{background:var(--navy-950);color:var(--white);}
+  .pillar.elite{background:var(--dark-grad);color:var(--white);}
   .pillar-top{display:flex;align-items:center;justify-content:space-between;}
   .pillar-num{font-family:var(--font-display);font-weight:900;font-size:2.1rem;color:#7a7358;}
   .pillar.elite .pillar-num{color:var(--gold-500);}
@@ -258,7 +259,7 @@
   .pillar p.pillar-desc{color:var(--ink-soft);font-size:0.95rem;}
   .pillar.elite p.pillar-desc{color:#c9d3e6;}
   .pillar .corresponds{font-size:0.8rem;color:var(--ink-soft);}
-  .pillar.elite .corresponds{color:#9fb0cc;}
+  .pillar.elite .corresponds{color:#b9bcc1;}
   .pillar .corresponds strong{display:block;font-family:var(--font-display);text-transform:uppercase;letter-spacing:0.05em;font-size:0.72rem;color:var(--navy-950);margin-bottom:4px;}
   .pillar.elite .corresponds strong{color:var(--gold-500);}
   .status-pill{
@@ -282,7 +283,7 @@
   .sequence-cols{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--navy-950);}
   .seq-col{padding:32px 34px;}
   .seq-col + .seq-col{border-left:1px solid var(--navy-950);}
-  .seq-col.elite{background:var(--navy-950);color:var(--white);}
+  .seq-col.elite{background:var(--dark-grad);color:var(--white);}
   .seq-col-title{font-family:var(--font-display);font-weight:900;text-transform:uppercase;letter-spacing:0.1em;font-size:0.92rem;color:var(--red-600);margin-bottom:20px;}
   .seq-col.elite .seq-col-title{color:var(--gold-500);}
   .seq-item{display:flex;align-items:center;gap:14px;padding:13px 10px;margin:0 -10px;border-top:1px solid var(--line);text-decoration:none;color:inherit;transition:background 0.15s ease;}
@@ -305,7 +306,7 @@
   .sequence-note p{color:var(--ink-soft);max-width:70ch;}
   .sequence-note .sig{margin-top:12px;font-family:var(--font-display);font-weight:700;text-transform:uppercase;font-size:0.92rem;color:var(--navy-950);}
   .sequence-note .sig .why{color:var(--red-600);}
-  .sequence-note .sig .how{color:var(--gold-500);background:var(--navy-950);padding:1px 5px;}
+  .sequence-note .sig .how{color:var(--gold-500);background:var(--dark-grad);padding:1px 5px;}
 
   /* ---------- How to complete ---------- */
   .steps{
@@ -333,7 +334,7 @@
   .steps-legend{display:flex;flex-wrap:wrap;gap:22px;margin-top:20px;}
   .legend-item{display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--ink-soft);}
   .legend-swatch{width:16px;height:16px;border:2px solid var(--line);flex-shrink:0;}
-  .legend-swatch.done{background:var(--navy-950);border-color:var(--navy-950);}
+  .legend-swatch.done{background:var(--dark-grad);border-color:var(--navy-950);}
   .legend-swatch.current{background:var(--gold-500);border-color:var(--gold-500);}
   .steps-note{margin-top:18px;font-size:0.92rem;color:var(--ink-soft);font-style:italic;}
 
@@ -341,7 +342,7 @@
   .appendix-feature{padding:0;}
   .af-grid{display:grid;grid-template-columns:1fr 1fr;}
   .af-panel{padding:64px 48px;min-height:420px;display:flex;flex-direction:column;}
-  .af-panel.why{background:var(--navy-950);color:var(--white);}
+  .af-panel.why{background:var(--dark-grad);color:var(--white);}
   .af-panel.how{background:var(--white);color:var(--navy-950);border:1px solid var(--navy-950);border-left:none;}
   .af-tag{font-family:var(--font-display);font-weight:900;font-size:0.85rem;letter-spacing:0.14em;}
   .af-panel.why .af-tag{color:var(--gold-500);}
@@ -356,7 +357,7 @@
     padding-bottom:10px;border-bottom:1px solid var(--line-on-navy);
   }
   .af-panel.how .af-list li{border-bottom:1px solid var(--line);}
-  .af-foot{margin-top:auto;padding-top:28px;font-size:0.88rem;color:#9fb0cc;}
+  .af-foot{margin-top:auto;padding-top:28px;font-size:0.88rem;color:#b9bcc1;}
   .af-panel.how .af-foot{color:var(--ink-soft);}
   @media (max-width:860px){
     .af-grid{grid-template-columns:1fr;}
@@ -367,19 +368,19 @@
   .cta-band{background:var(--red-600);color:var(--white);padding:64px 0;text-align:center;}
   .cta-band h2{color:var(--white);font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:14px;}
   .cta-band p{color:#f7d9dc;max-width:56ch;margin:0 auto 30px;font-size:1.05rem;}
-  .cta-band .btn-primary{background:var(--navy-950);border-color:var(--navy-950);}
+  .cta-band .btn-primary{background:var(--dark-grad);border-color:var(--navy-950);}
   .cta-band .btn-primary:hover{background:var(--navy-800);border-color:var(--navy-800);}
   .cta-actions{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;}
 
   /* ---------- Footer ---------- */
-  footer{background:var(--navy-950);color:#c9d3e6;padding:60px 0 28px;}
+  footer{background:var(--dark-grad);color:#c9d3e6;padding:60px 0 28px;}
   .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.3fr;gap:40px;padding-bottom:40px;border-bottom:1px solid var(--line-on-navy);}
-  .footer-about{margin-top:14px;font-size:0.92rem;max-width:34ch;color:#9fb0cc;}
+  .footer-about{margin-top:14px;font-size:0.92rem;max-width:34ch;color:#b9bcc1;}
   .footer-col h2{font-family:var(--font-display);font-weight:700;color:var(--white);text-transform:uppercase;letter-spacing:0.08em;font-size:0.85rem;margin-bottom:16px;}
   .footer-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;}
   .footer-col a{font-size:0.92rem;color:#c9d3e6;text-decoration:none;}
   .footer-col a:hover{color:var(--gold-500);}
-  .footer-legal{padding-top:26px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:0.82rem;color:#8394b4;}
+  .footer-legal{padding-top:26px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:0.82rem;color:#9a9da2;}
   @media (max-width:860px){
     .footer-grid{grid-template-columns:1fr 1fr;}
   }
@@ -390,7 +391,7 @@
   /* ---------- Toast (nav "soon" pages) ---------- */
   .toast{
     position:fixed;left:50%;bottom:28px;transform:translate(-50%,140%);
-    background:var(--navy-950);color:var(--white);border:1px solid var(--gold-500);
+    background:var(--dark-grad);color:var(--white);border:1px solid var(--gold-500);
     padding:14px 22px;font-family:var(--font-display);font-weight:600;font-size:0.88rem;
     letter-spacing:0.02em;z-index:300;transition:transform 0.25s ease,opacity 0.25s ease,visibility 0.25s;max-width:90vw;text-align:center;
     opacity:0;visibility:hidden;pointer-events:none;
@@ -402,7 +403,7 @@
   .page-strip p{font-size:0.86rem;color:var(--ink-soft);}
   .page-strip a{color:var(--navy-950);text-decoration:underline;text-underline-offset:3px;}
 
-  .page-hero{background:var(--navy-950);color:var(--white);padding:64px 0 52px;}
+  .page-hero{background:var(--dark-grad);color:var(--white);padding:64px 0 52px;}
   .page-hero .eyebrow{color:var(--gold-500);margin-bottom:14px;display:block;}
   .page-hero h1{color:var(--white);font-size:clamp(2rem,4.4vw,3rem);margin-bottom:16px;}
   .page-hero p{color:#c9d3e6;max-width:70ch;font-size:1.05rem;}
@@ -439,7 +440,7 @@
   }
 
   .assess-block{border:1px solid var(--navy-950);margin-bottom:24px;}
-  .assess-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;padding:18px 24px;background:var(--navy-950);color:var(--white);}
+  .assess-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;padding:18px 24px;background:var(--dark-grad);color:var(--white);}
   .assess-eyebrow{font-family:var(--font-display);font-weight:900;letter-spacing:0.1em;font-size:0.76rem;color:var(--gold-500);}
   .assess-head h2{color:var(--white);font-size:1.05rem;letter-spacing:0.01em;}
   .assess-body{display:grid;grid-template-columns:1fr 1fr;}
@@ -460,14 +461,14 @@
   /* Quiz */
   .quiz-section{padding:60px 0 80px;}
   .quiz-frame{border:2px solid var(--navy-950);max-width:760px;margin:0 auto;}
-  .quiz-top{background:var(--navy-950);color:var(--white);padding:22px 30px;}
+  .quiz-top{background:var(--dark-grad);color:var(--white);padding:22px 30px;}
   .quiz-top .eyebrow{color:var(--gold-500);display:block;margin-bottom:6px;}
   .quiz-top h2{color:var(--white);font-size:1.2rem;}
   .quiz-progress-row{display:flex;align-items:center;justify-content:space-between;padding:18px 30px 0;}
   .quiz-progress-label{font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;font-size:0.8rem;color:var(--navy-950);}
   .quiz-dots{display:flex;gap:7px;}
   .quiz-dot{width:10px;height:10px;border:2px solid var(--line);flex-shrink:0;}
-  .quiz-dot.done{background:var(--navy-950);border-color:var(--navy-950);}
+  .quiz-dot.done{background:var(--dark-grad);border-color:var(--navy-950);}
   .quiz-dot.current{background:var(--gold-500);border-color:var(--gold-500);}
   .quiz-body{padding:26px 30px 32px;}
   .quiz-question{font-family:var(--font-display);font-weight:700;font-size:1.15rem;color:var(--navy-950);margin-bottom:22px;line-height:1.35;}
@@ -484,7 +485,7 @@
     width:26px;height:26px;border:1.5px solid var(--navy-950);flex-shrink:0;display:flex;align-items:center;justify-content:center;
   }
   .quiz-option.selected{border-color:var(--navy-950);background:var(--paper);}
-  .quiz-option.selected .opt-letter{background:var(--navy-950);color:var(--white);}
+  .quiz-option.selected .opt-letter{background:var(--dark-grad);color:var(--white);}
   .quiz-option.correct{border-color:#2f7a3d;background:#eaf5ec;}
   .quiz-option.correct .opt-letter{background:#2f7a3d;color:var(--white);border-color:#2f7a3d;}
   .quiz-option.incorrect{border-color:var(--red-600);background:#fbeceb;}
@@ -576,7 +577,7 @@
   .module-block{border:1px solid var(--navy-950);margin-bottom:36px;}
   .module-head{
     display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;
-    padding:22px 28px;background:var(--navy-950);color:var(--white);
+    padding:22px 28px;background:var(--dark-grad);color:var(--white);
   }
   .module-eyebrow{font-family:var(--font-display);font-weight:900;letter-spacing:0.12em;font-size:0.82rem;color:var(--gold-500);}
   .module-head h2{color:var(--white);font-size:1.3rem;letter-spacing:0.01em;}
@@ -634,7 +635,7 @@
 <header class="site-header">
   <div class="wrap header-row">
     <a class="brand" href="index.html" aria-label="WBSC Umpire Mechanics Training: home">
-      <img class="brand-logo" src="images/wbsc-logo.svg" alt="WBSC logo">
+      <img class="brand-logo" src="images/wbsc-oceania-logo.png" alt="WBSC Oceania logo">
     </a>
     <nav class="primary-nav" id="primary-nav" aria-label="Primary">
       <a href="index.html">Home</a>
@@ -656,11 +657,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M12 8v5M12 16.2v.1"/></svg>
             Important
           </div>
-          <p><strong>This is not the official WBSC website.</strong> This temporary training site has been established to support WBSC Softball Umpires during the implementation of the 2026-2029 Umpire Mechanics Program, while WBSC transitions the training program to the My.WBSC Officials Training Academy.</p>
-          <details class="notice-more">
-            <summary>More about this site</summary>
-            <p>All official WBSC manuals and publications accessed through this site remain hosted on the official WBSC website.</p>
-          </details>
+          <p><strong>This is not the official WBSC website.</strong> This temporary training site has been established to support WBSC Oceania Softball Umpires during the implementation of the 2026-2029 Umpire Mechanics Program, after testing and WBSC approval, we hope to have transitioned the My.WBSC Officials Training Academy.</p>
         </div>
       </div>
     </div>
@@ -889,7 +886,7 @@
   <div class="wrap">
     <div class="footer-grid">
       <div class="footer-col">
-        <img class="footer-logo" src="images/wbsc-logo.svg" alt="WBSC logo">
+        <img class="footer-logo" src="images/wbsc-oceania-logo.png" alt="WBSC Oceania logo">
         <p class="footer-about">Training and assessments for the WBSC 2026-2029 Softball Umpire Mechanics program. A temporary training site, not the official WBSC website.</p>
       </div>
       <div class="footer-col">

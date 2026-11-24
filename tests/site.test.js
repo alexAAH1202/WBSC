@@ -51,11 +51,11 @@ else for (const m of fs.readFileSync(fontsCss, 'utf8').matchAll(/url\('([^']+)'\
 }
 if (!fs.existsSync(path.join(root, 'fonts', 'OFL.txt'))) errors.push('fonts/OFL.txt (font licence) is missing');
 for (const f of fs.readdirSync(path.join(root, 'images'))) {
-  if (/logo/i.test(f) && f !== 'wbsc-logo.svg') errors.push('images/' + f + ': only the WBSC logo (wbsc-logo.svg) may be on this site');
+  if (/logo/i.test(f) && f !== 'wbsc-oceania-logo.png') errors.push('images/' + f + ': only the WBSC Oceania logo (wbsc-oceania-logo.png) may be on this site');
 }
 for (const page of pages) {
   for (const m of fs.readFileSync(page, 'utf8').matchAll(/(?:src|href)="(?:[^"]*\/)?([^"\/]*logo[^"\/]*)"/gi)) {
-    if (m[1] !== 'wbsc-logo.svg') errors.push(`${path.relative(root, page)}: uses a logo other than the WBSC logo: ${m[1]}`);
+    if (m[1] !== 'wbsc-oceania-logo.png') errors.push(`${path.relative(root, page)}: uses a logo other than the WBSC Oceania logo: ${m[1]}`);
   }
 }
 errors.forEach(e => console.error('error: ' + e));
