@@ -17,6 +17,8 @@ const dir = path.join(__dirname, '..', 'certificate');
   const logo = await doc.embedPng(fs.readFileSync(path.join(dir, 'wbsc-oceania-logo-dark.png')));
   const cx = page.getWidth() / 2;
   page.drawRectangle({ x: cx - 62, y: 438, width: 124, height: 120, color: rgb(1, 1, 1) });
+  // close the gold frame: the line the old emblem used to hide (3 pt thick, 113.5-116.5 pt from the top, colour 200/182/78)
+  page.drawRectangle({ x: cx - 68, y: page.getHeight() - 116.5, width: 136, height: 3, color: rgb(200 / 255, 182 / 255, 78 / 255) });
   const lw = 150, lh = lw * logo.height / logo.width;
   page.drawImage(logo, { x: cx - lw / 2, y: page.getHeight() - 44 - lh, width: lw, height: lh });
   fs.writeFileSync(path.join(dir, 'certificate-template.pdf'), await doc.save());
