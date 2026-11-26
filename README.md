@@ -15,7 +15,10 @@ Script Web App into a Google Sheet.
 | `images/` | The WBSC logo and the demo's photos. Only the WBSC logo is allowed on this site |
 | `fonts/` | Roboto and Roboto Condensed (SIL Open Font License), hosted here so visitors do not contact Google |
 | `tests/` | `bank`, `site` and `code-gs` tests run in CI; `widget` needs Playwright |
-| `demo/` | The earlier generic quiz site (own README), kept at `/demo/`, not linked from the portal, `noindex` |
+| `demo/` | The earlier generic quiz site (own README). Kept in the repository but **not published**: the Pages workflow leaves out `demo/`, `tests/`, `apps-script/` and `private/` |
+
+## Publishing
+`.github/workflows/pages.yml` publishes the site on every push to `main`: it runs the checks, copies the site files (without `demo/`, `tests/`, `apps-script/`, `private/`, `.git`, `.github`) into `_site`, and deploys. GitHub's Pages service sometimes refuses a deploy ("Deployment failed, try again later"); the workflow now tries once more automatically. If both fail, open the run in the Actions tab and choose Re-run jobs.
 
 ## Pages
 - `index.html`: the program home page (hero, temporary-site notice, Four Pillars, Required Learning Sequence, how to complete, Appendix 4 and 5).
@@ -156,6 +159,7 @@ A learner who has passed Appendix 4 and Appendix 5 (Modules 05, 06, 07 and 08; `
 A free Gmail account sends about 100 emails a day, so the site sends as few as it can (all switchable with Script properties):
 - **The Director** is not emailed for every result (the results page, the Monday summary and the program-completed notice cover it). `DIRECTOR_RESULT_EMAILS` = `on` brings back one email per result.
 - **Learners** get a receipt when they pass or use the last attempt of the month; after a first failed attempt the page says the result is on screen. `RECEIPT_EMAILS` = `all` sends one for every attempt. The Sheet's "Email Status" / "Receipt Status" columns say "not sent" for these rows and the health check ignores them.
+- **Question statistics** (anonymous): each recorded marked attempt adds one to *Asked* (and to *Missed* if wrong) for every question it contained, on a **Question stats** tab of the Sheet (assessment, question number, fingerprint, counts; no name or email). The Director page has a **Questions** tab ranking the most-missed questions (answered wrongly more than 3 times, all-time, ranked by times missed; matched to the question text by fingerprint, so an edited question is not shown under old text), and the Monday summary email lists the top 10. Practice quizzes are not counted. Needs the updated `Code.gs` deployed as a new version; counting starts from then.
 - **Sign-in** lasts 14 days (`SESSION_DAYS`): the token is kept in the browser's localStorage with the details typed, and the server keeps a record (hash of the token, email, expiry) on a **Sessions** tab of the Sheet, purged by the daily check, because the script cache holds a value for 6 hours at most. "Use a different email address" signs out. This means one login code per device per fortnight instead of one per visit.
 - **The daily health check** is emailed only when something is wrong. `HEALTH_REPORT` = `daily` restores the daily email.
 **Needs the Apps Script redeployed.** Privacy page and pop-up say all of this.

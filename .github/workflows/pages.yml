@@ -21,10 +21,10 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment2.outputs.page_url || steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       # Stop a broken questions.js or mismatched ?v= values from being published.
       - name: Validate questions and pages
@@ -39,12 +39,24 @@ jobs:
         with:
           enablement: true
 
-      # Publish the whole repo root as the site.
+      # Publish the site, without the earlier generic quiz (demo/), the tests, the Apps Script source or git files.
+      - name: Collect the site files
+        run: |
+          mkdir _site
+          tar cf - --exclude=./_site --exclude=./.git --exclude=./.github --exclude=./demo --exclude=./tests --exclude=./apps-script --exclude=./private . | tar xf - -C _site
+
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
 
+      # GitHub's Pages service sometimes refuses a deploy ("try again later"); try once more before giving up.
       - name: Deploy
         id: deployment
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+
+      - name: Deploy (second attempt)
+        if: steps.deployment.outcome == 'failure'
+        id: deployment2
         uses: actions/deploy-pages@v4
