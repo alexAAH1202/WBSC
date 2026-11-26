@@ -15,7 +15,10 @@ Script Web App into a Google Sheet.
 | `images/` | The WBSC logo and the demo's photos. Only the WBSC logo is allowed on this site |
 | `fonts/` | Roboto and Roboto Condensed (SIL Open Font License), hosted here so visitors do not contact Google |
 | `tests/` | `bank`, `site` and `code-gs` tests run in CI; `widget` needs Playwright |
-| `demo/` | The earlier generic quiz site (own README), kept at `/demo/`, not linked from the portal, `noindex` |
+| `demo/` | The earlier generic quiz site (own README). Kept in the repository but **not published**: the Pages workflow leaves out `demo/`, `tests/`, `apps-script/` and `private/` |
+
+## Publishing
+`.github/workflows/pages.yml` publishes the site on every push to `main`: it runs the checks, copies the site files (without `demo/`, `tests/`, `apps-script/`, `private/`, `.git`, `.github`) into `_site`, and deploys. GitHub's Pages service sometimes refuses a deploy ("Deployment failed, try again later"); the workflow now tries once more automatically. If both fail, open the run in the Actions tab and choose Re-run jobs.
 
 ## Pages
 - `index.html`: the program home page (hero, temporary-site notice, Four Pillars, Required Learning Sequence, how to complete, Appendix 4 and 5).
