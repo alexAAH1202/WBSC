@@ -106,6 +106,12 @@ var STALLED_DAYS = 14;                 // started, not finished and no activity 
 // Script properties restore the old behaviour: DIRECTOR_RESULT_EMAILS = on, RECEIPT_EMAILS = all, HEALTH_REPORT = daily.
 var SESSIONS_SHEET = 'Sessions';
 
+// Which questions are missed. One row per question (assessment, question number, fingerprint) counting how many times it was asked and
+// missed. Anonymous: no name, email or association is stored. It feeds the Director's "Questions" tab and the Monday summary.
+var STATS_SHEET = 'Question stats';
+var STATS_MIN_ASKED = 5;        // a question needs this many answers before it is ranked in the weekly summary
+var STATS_TOP = 10;             // how many most-missed questions the weekly summary lists
+
 // Health check.
 var HEALTH_MIN_MAIL_QUOTA = 20;
 var HEALTH_PENDING_MINUTES = 30;
@@ -808,6 +814,7 @@ function handleSave_(e) {
           clean.submissionId, 'pending', clean.result, 'pending'
         ]);
         var rowIndex = sheet.getLastRow();
+        try { recordQuestionStats_(clean); } catch (serr) { logError_('stats', serr); }   // never lets a statistics problem lose a result
         var after = completionSummary_(sheet, clean);
         result.success = true;
         result.attemptNumber = attemptNumber;
@@ -901,6 +908,43 @@ function sendAfterSave_(post) {
   } catch (e2) { /* the row is saved; a stale status is harmless (the health check flags it) */ }
 }
 
+// ------------------------------------------------------------------ question statistics (anonymous)
+
+function statsSheet_() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet(), sh = ss.getSheetByName(STATS_SHEET);
+  if (!sh) {
+    sh = ss.insertSheet(STATS_SHEET);
+    sh.appendRow(['Assessment', 'Question no.', 'Fingerprint', 'Asked', 'Missed', 'Updated']);
+    try { sh.setFrozenRows(1); } catch (e) { /* cosmetic */ }
+  }
+  return sh;
+}
+
+// Adds one marked attempt to the counts. Called under the save lock, once per recorded attempt (never for a duplicate).
+function recordQuestionStats_(c) {
+  if (!c.items || !c.items.length) return;
+  var sh = statsSheet_(), last = sh.getLastRow(), index = {}, rows = [], i;
+  if (last >= 2) {
+    rows = sh.getRange(2, 1, last - 1, 6).getValues();
+    for (i = 0; i < rows.length; i++) index[rows[i][0] + '|' + rows[i][1] + '|' + rows[i][2]] = i;
+  }
+  var now = new Date(), fresh = [], touched = {};
+  c.items.forEach(function (it) {
+    var key = c.assessmentKey + '|' + (it[0] + 1) + '|' + it[2];
+    if (key in index) { var r = rows[index[key]]; r[3] = Number(r[3]) + 1; r[4] = Number(r[4]) + (it[1] ? 0 : 1); r[5] = now; touched[index[key]] = true; }
+    else fresh.push([c.assessmentKey, it[0] + 1, it[2], 1, it[1] ? 0 : 1, now]);
+  });
+  Object.keys(touched).forEach(function (k) { sh.getRange(Number(k) + 2, 1, 1, 6).setValues([rows[k]]); });
+  if (fresh.length) sh.getRange(sh.getLastRow() + 1, 1, fresh.length, 6).setValues(fresh);
+}
+
+// [[assessment, question no., fingerprint, asked, missed], ...]
+function readQuestionStats_() {
+  var sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(STATS_SHEET);
+  if (!sh || sh.getLastRow() < 2) return [];
+  return sh.getRange(2, 1, sh.getLastRow() - 1, 5).getValues().map(function (r) { return [String(r[0]), Number(r[1]), String(r[2]), Number(r[3]), Number(r[4])]; });
+}
+
 // ------------------------------------------------------------------ validation
 
 function validate_(data) {
@@ -928,6 +972,7 @@ function validate_(data) {
   var marked = mark_(c.assessmentKey, data.answers);
   var score = marked.score, total = marked.total;
   c.missed = marked.missed;
+  c.items = marked.items;
   var elapsed = Number(data.elapsedSeconds);
   if (String(data.website || '') !== '' || !(isFinite(elapsed) && elapsed >= MIN_SECONDS_PER_QUESTION * total)) {
     throw new Error('Invalid submission: the assessment was completed too quickly to be a real attempt');
@@ -962,7 +1007,7 @@ function mark_(assessmentKey, answers) {
   if (!Array.isArray(answers)) throw new Error('Invalid request: please reload the page and try again');
   var k = answerKey_(assessmentKey);
   if (answers.length !== k.draw) throw new Error('Invalid answers');
-  var seen = {}, score = 0, missed = [];
+  var seen = {}, score = 0, missed = [], items = [];
   for (var n = 0; n < answers.length; n++) {
     var a = answers[n];
     if (!Array.isArray(a) || a.length !== 3) throw new Error('Invalid answers');
@@ -971,8 +1016,9 @@ function mark_(assessmentKey, answers) {
     seen[i] = true;
     if (String(a[2]) !== k.f[i]) throw new Error('Invalid submission: this assessment was updated. Please reload the page and start again.');
     if (o === k.c[i]) score++; else missed.push([i, k.c[i]]);
+    items.push([i, o === k.c[i] ? 1 : 0, k.f[i]]);   // for the question statistics
   }
-  return { score: score, total: answers.length, missed: missed };
+  return { score: score, total: answers.length, missed: missed, items: items };
 }
 
 // Trim, cap the length, and stop text from being read as a spreadsheet formula.
@@ -1216,6 +1262,7 @@ function handleResults_(p) {
     msg.cols = ['timestamp', 'name', 'email', 'umpireId', 'association', 'module', 'type', 'score', 'total', 'percent', 'attempt', 'result', 'emailStatus', 'receiptStatus'];
     msg.rows = rows;
     msg.truncated = last - 1 > RESULTS_MAX_ROWS;
+    msg.questionStats = readQuestionStats_();
     msg.config = { passMark: PASS_MARK, maxAttempts: MAX_ATTEMPTS, totalModules: TOTAL_MODULES, completionType: COMPLETION_TYPE };
   } catch (err) {
     logError_('results', err);
@@ -1277,6 +1324,17 @@ function people_() {
 // Run weekly (installTriggers schedules it for Monday morning). Emails the Director a plain-text summary:
 // who finished this week, who has used every attempt without passing, who started and then went quiet, and a
 // breakdown by association / federation. Nothing is sent to learners.
+// The most-missed questions as text lines for the weekly summary.
+function topMissedLines_() {
+  var rows = readQuestionStats_().filter(function (r) { return r[3] >= STATS_MIN_ASKED && r[4] > 0; });
+  rows.sort(function (a, b) { return (b[4] / b[3]) - (a[4] / a[3]) || b[3] - a[3]; });
+  if (!rows.length) return '- not enough answers yet';
+  return rows.slice(0, STATS_TOP).map(function (r) {
+    var mod = String(r[0]).slice(1, 3);
+    return '- M' + mod + '.' + r[1] + ': missed ' + r[4] + ' of ' + r[3] + ' times (' + Math.round(r[4] / r[3] * 100) + '%)';
+  }).join('\n');
+}
+
 function weeklySummary() {
   var DAY = 86400000, now = Date.now(), people = people_();
   if (!people.length) return { sent: false, reason: 'no results yet' };
@@ -1307,6 +1365,7 @@ function weeklySummary() {
     (repeat.length ? repeat.map(function (p) { return line(p) + ', module' + (p.repeat.length === 1 ? '' : 's') + ' ' + p.repeat.map(function (n) { return ('0' + n).slice(-2); }).join(', '); }).join('\n') : '- none') + '\n\n' +
     'WENT QUIET: started, not finished, no activity for ' + STALLED_DAYS + ' days or more (' + stalled.length + ')\n' +
     (stalled.length ? stalled.map(function (p) { return line(p) + ', last active ' + days(p) + ' days ago, ' + p.email; }).join('\n') : '- none') + '\n\n' +
+    'MOST-MISSED QUESTIONS (at least ' + STATS_MIN_ASKED + ' answers; the ids match the question bank, for example M07.5 is the fifth question of Module 07)\n' + topMissedLines_() + '\n\n' +
     'BY ASSOCIATION / FEDERATION\n' + assocLines.join('\n') + '\n\n' +
     'Full results: ' + SPREADSHEET_URL + '\n' +
     'Only umpires who have saved a result appear here. The site does not hold a list of everyone who should do the training.';

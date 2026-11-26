@@ -26,15 +26,16 @@ function makeEnv({ failMail = null, quota = 100, quiet = true, legacyMail = true
       return {
         getValues: () => Array.from({ length: nr }, (_, i) => Array.from({ length: nc }, (_, j) => (r[rr - 1 + i] || [])[c - 1 + j] ?? '')),
         getValue: () => (r[rr - 1] || [])[c - 1],
-        setValue: v => { r[rr - 1] = r[rr - 1] || []; r[rr - 1][c - 1] = v; }
+        setValue: v => { r[rr - 1] = r[rr - 1] || []; r[rr - 1][c - 1] = v; },
+        setValues: vs => vs.forEach((row, i) => { r[rr - 1 + i] = r[rr - 1 + i] || []; row.forEach((v, j) => { r[rr - 1 + i][c - 1 + j] = v; }); })
       };
     }
   });
   const sheet = makeSheet(rows, raw, true);
-  const progressRows = [], sessionRows = [], extraSheets = new Map();
-  const rowsFor = n => n === 'Sessions' ? sessionRows : progressRows;
+  const progressRows = [], sessionRows = [], statsRows = [], extraSheets = new Map();
+  const rowsFor = n => n === 'Sessions' ? sessionRows : n === 'Question stats' ? statsRows : progressRows;
   const spreadsheet = {
-    getSheetByName: n => (n === 'Progress' || n === 'Sessions') ? (extraSheets.get(n) || null) : sheet,
+    getSheetByName: n => (n === 'Progress' || n === 'Sessions' || n === 'Question stats') ? (extraSheets.get(n) || null) : sheet,
     insertSheet: n => { const sh = makeSheet(rowsFor(n), [], false); extraSheets.set(n, sh); return sh; },
     getSheets: () => [sheet]
   };
@@ -74,7 +75,7 @@ function makeEnv({ failMail = null, quota = 100, quiet = true, legacyMail = true
   };
   vm.createContext(ctx); vm.runInContext(code, ctx);
   if (legacyMail) { props.set('DIRECTOR_RESULT_EMAILS', 'on'); props.set('RECEIPT_EMAILS', 'all'); props.set('HEALTH_REPORT', 'daily'); }
-  return Object.assign(env, { ctx, rows, raw, mails, props, triggers, clock, progressRows, sessionRows, cache: cacheStore });
+  return Object.assign(env, { ctx, rows, raw, mails, props, triggers, clock, progressRows, sessionRows, statsRows, cache: cacheStore });
 }
 
 // ---- helpers
@@ -377,6 +378,20 @@ ok('results: not configured, wrong password, then the data for the right one (no
   assert.strictEqual(row.email, 'jo@x.com'); assert.strictEqual(row.result, 'NOT PASSED'); assert.strictEqual(row.attempt, 1); assert.strictEqual(row.percent, 80);
   assert.deepStrictEqual(r.config, { passMark: 85, maxAttempts: 2, totalModules: 8, completionType: 'Presentation Competency Assessment' });
   assert.ok(!JSON.stringify(r).includes('correct horse'));
+});
+ok('question statistics: anonymous asked/missed counts per question, returned to the Director and listed in the weekly summary', () => {
+  const e = makeEnv(); const t = login(e, 'a@x.com'); save(e, t, { score: 8, totalQuestions: 10 });          // 2 missed (questions 9 and 10)
+  const t2 = login(e, 'b@x.com'); save(e, t2, { score: 10, totalQuestions: 10 });
+  assert.strictEqual(e.statsRows.length, 11);                                                              // header + 10 questions
+  assert.strictEqual(JSON.stringify(e.statsRows[0].slice(0, 5)), JSON.stringify(['Assessment', 'Question no.', 'Fingerprint', 'Asked', 'Missed']));
+  const q10 = e.statsRows.find(r => r[0] === 'm01-pca' && r[1] === 10); assert.strictEqual(q10[3], 2); assert.strictEqual(q10[4], 1);
+  const q1 = e.statsRows.find(r => r[1] === 1); assert.strictEqual(q1[3], 2); assert.strictEqual(q1[4], 0);
+  assert.ok(!JSON.stringify(e.statsRows).includes('a@x.com') && !JSON.stringify(e.statsRows).includes('b@x.com'));
+  e.props.set('RESULTS_PASSWORD', 'pw'); const r = act(e, 'results', { password: 'pw' });
+  assert.ok(Array.isArray(r.questionStats) && r.questionStats.length === 10); assert.strictEqual(JSON.stringify(r.questionStats.find(x => x[1] === 10)), JSON.stringify(['m01-pca', 10, 'f9', 2, 1]));
+  const lines = e.ctx.topMissedLines_(); assert.ok(/not enough answers yet/.test(lines), lines);       // fewer than 5 answers: not ranked
+  for (let i = 0; i < 3; i++) { const tk = login(e, 'c' + i + '@x.com'); const sr = save(e, tk, { score: 9, totalQuestions: 10, umpireId: 'u' + i, participantName: 'Pat ' + i }); assert.ok(sr.success, sr.error); }
+  assert.ok(/M01\.10: missed \d+ of 5/.test(e.ctx.topMissedLines_()), e.ctx.topMissedLines_());
 });
 ok('results: 10 wrong passwords lock the page for 15 minutes (even for the right password) and alert the owner', () => {
   const e = makeEnv(); e.props.set('RESULTS_PASSWORD', 'pw');
