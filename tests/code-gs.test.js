@@ -711,14 +711,17 @@ ok('marking: the server scores the chosen options from its private key; a claime
   const m = msgOf(e.ctx.doPost({ parameter: { payload: JSON.stringify(Object.assign(base(), { token: t, assessmentKey: 'm01-pca', answers: answersFor(8, 10), score: 10, percentage: 100 })) } }));
   assert.strictEqual(m.success, true); assert.strictEqual(m.result, 'NOT PASSED'); assert.strictEqual(m.score, 8); assert.strictEqual(m.total, 10); assert.strictEqual(m.percentage, 80);
   assert.strictEqual(e.rows[1][7], 8); assert.strictEqual(e.rows[1][8], 10);
-  assert.ok(!JSON.stringify(m).includes('"c"') && m.review == null, 'the first failed attempt reveals no answers');
+  assert.ok(!JSON.stringify(m).includes('"c"') && Array.isArray(m.review) && m.review.length === 2, 'the missed questions come back with their right options, and nothing else of the key');
 });
-ok('marking: the right answers to the missed questions come back only when the last attempt of the month is used', () => {
+ok('marking: the right answers to the missed questions come back as soon as the attempt is marked (passed or not); REVIEW_AFTER=last keeps them back until the last attempt', () => {
   const e = makeEnv(); const t = login(e);
-  save(e, t, { score: 7 });
+  const first = save(e, t, { score: 7 }); assert.deepStrictEqual(Array.from(first.review, r => Array.from(r)), [[7, 3], [8, 0], [9, 1]], 'the first attempt already shows the missed questions');
   const last = save(e, t, { score: 8 });
   assert.strictEqual(last.attemptNumber, 2); assert.deepStrictEqual(Array.from(last.review, r => Array.from(r)), [[8, 0], [9, 1]], 'the two missed questions and their right options');
-  const pass = save(e, login(e, 'p@x.com'), { score: 9, umpireId: 'p' }); assert.strictEqual(pass.review, null);
+  const pass = save(e, login(e, 'p@x.com'), { score: 9, umpireId: 'p' }); assert.deepStrictEqual(Array.from(pass.review, r => Array.from(r)), [[9, 1]], 'a pass with one miss still shows it');
+  const perfect = save(e, login(e, 'q@x.com'), { score: 10, umpireId: 'q' }); assert.strictEqual(perfect.review, null, 'nothing missed: nothing to review');
+  const e2 = makeEnv(); e2.props.set('REVIEW_AFTER', 'last'); const t2 = login(e2);
+  assert.strictEqual(save(e2, t2, { score: 7 }).review, null, 'last: held back after the first attempt'); assert.strictEqual(save(e2, t2, { score: 8 }).review.length, 2, 'last: shown once the attempts are used');
   const dup = save(e, t, { submissionId: last.submissionId, score: 8 }); assert.strictEqual(dup.duplicate, true); assert.strictEqual(dup.score, 8); assert.strictEqual(dup.review.length, 2, 'a retry of the saved result gets the same reply');
 });
 ok('marking: an old page that still sends a score, a missing key, or a stale question fingerprint is refused and nothing is written', () => {

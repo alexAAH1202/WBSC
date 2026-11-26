@@ -1470,8 +1470,8 @@
     }
   }
 
-  // Once both attempts are used without a pass, show what was missed with the right answers.
-  // `missed` comes from the server: [[pool question index, index of the right option]], only once the attempts are used.
+  // Shows the questions missed with their right answers.
+  // `missed` comes from the server: [[pool question index, index of the right option]].
   function showReview(missed){
     if (!missed || !missed.length) return;
     var h = '<h3>' + escHtml(T('Review: the questions you missed')) + '</h3><ol>';
@@ -1984,7 +1984,7 @@
         : T('✓ Your result has been recorded. A receipt will be emailed to {email}.', { email: rcpt }), false);
       if (m.total) { els.scoreFrac.textContent = m.score + ' / ' + m.total; els.scorePct.textContent = m.percentage + '%'; }   // marked by the server
       if (m.result) showResult(m.result === 'PASS', m.attemptNumber, true);   // the server's decision is final
-      if (m.result !== 'PASS' && m.attemptNumber >= max) showReview(m.review);  // all attempts used: now the answers can be shown
+      if (m.review) showReview(m.review);   // the right answers to the questions missed, as the server decides to send them
       if (m.completedAll) els.resultText.textContent += ' ' + T('You have now passed all {total} modules. A summary will be emailed to you.', { total: TOTAL_MODULES });
       if (m.certReady) { els.resultText.textContent += ' ' + T('Your certificate of completion is ready: you have completed Appendix 4 and Appendix 5.'); setCertificate({ name: m.certName, date: m.certDate }); }
       pendingSave = null;

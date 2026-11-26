@@ -277,7 +277,7 @@ function saveMessage_(result) {
     score: result.score == null ? null : result.score,   // marked here from the answers sent
     total: result.total || 0,
     percentage: result.percentage == null ? null : result.percentage,
-    review: result.review || null,   // [[question, right option]] for the questions missed, only once the attempts are used
+    review: result.review || null,   // [[question, right option]] for the questions missed (see REVIEW_AFTER)
     error: result.error || ''
   };
 }
@@ -778,7 +778,7 @@ function handleSave_(e) {
         result.result = String(sheet.getRange(existing, COL_RESULT).getValue() || '');
         result.passed = result.result === 'PASS';
         result.score = clean.score; result.total = clean.total; result.percentage = clean.percentage;
-        if (!result.passed && Number(result.attemptNumber) >= MAX_ATTEMPTS) result.review = clean.missed;
+        if (reviewWanted_(result.passed, Number(result.attemptNumber)) && clean.missed.length) result.review = clean.missed;
         result.maxAttempts = MAX_ATTEMPTS;
         result.resetsOn = result.passed ? '' : nextResetDate_();
         result.receipt = receiptWanted_(result.passed, Number(result.attemptNumber));
@@ -814,7 +814,7 @@ function handleSave_(e) {
         result.result = clean.result;
         result.passed = clean.passed;
         result.score = clean.score; result.total = clean.total; result.percentage = clean.percentage;
-        if (!clean.passed && attemptNumber >= MAX_ATTEMPTS) result.review = clean.missed;   // the right answers to the questions missed, shown only once the attempts are used
+        if (reviewWanted_(clean.passed, attemptNumber) && clean.missed.length) result.review = clean.missed;   // the right answers to the questions missed (see REVIEW_AFTER)
         result.maxAttempts = MAX_ATTEMPTS;
         result.resetsOn = clean.passed ? '' : nextResetDate_();   // when this month's attempts are renewed
         result.receipt = receiptWanted_(clean.passed, attemptNumber);
@@ -850,6 +850,14 @@ function handleSave_(e) {
 }
 
 // Who is emailed about a saved result (see the "Fewer emails" settings).
+// When the right answers to missed questions are sent back after an attempt is marked. Script property REVIEW_AFTER:
+//   'every' (default): after every attempt, passed or not  -  'last': only once the month's attempts are used without a pass.
+// 'last' protects the question pool better (a retake cannot repeat answers just seen); 'every' lets learners learn from each miss.
+function reviewWanted_(passed, attemptNumber) {
+  var mode = String(PropertiesService.getScriptProperties().getProperty('REVIEW_AFTER') || 'every').toLowerCase();
+  return mode === 'last' ? (!passed && attemptNumber >= MAX_ATTEMPTS) : true;
+}
+
 function directorEmailsOn_() { return PropertiesService.getScriptProperties().getProperty('DIRECTOR_RESULT_EMAILS') === 'on'; }
 function receiptWanted_(passed, attemptNumber) {
   return PropertiesService.getScriptProperties().getProperty('RECEIPT_EMAILS') === 'all' || !!passed || attemptNumber >= MAX_ATTEMPTS;

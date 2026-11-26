@@ -380,10 +380,10 @@ const verifyText = pg => pg.textContent('#verify-state');
   ok('after the last attempt is used without a pass, the missed questions are reviewed with the right answers the server sends');
 
 
-  t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false } }, (r, p) => r.fulfill(page_(markReply(p, {}))));
+  t = await newPage(b, { attempts: { attempts: 0, remaining: 2, passed: false } }, (r, p) => r.fulfill(page_(markReply(p, { review: markPayload(p).missed }))));
   await runQuiz(t.pg, 'm01-pca', 2); await t.pg.waitForFunction(() => /recorded/.test(document.getElementById('quiz-save-state').textContent));
-  assert.ok(!(await t.pg.isVisible('#quiz-review')), 'no answers while an attempt is left');
-  ok('with an attempt still left, no answers are revealed');
+  assert.ok(await t.pg.isVisible('#quiz-review') && await t.pg.locator('#quiz-review li').count() === 2 && /Correct answer:/.test(await t.pg.textContent('#quiz-review')), 'after the first attempt the missed questions are shown with their right answers');
+  ok('after the first attempt is marked, the missed questions are shown with their right answers (an attempt is still left)');
 
   t = await newPage(b, {});
   await runQuiz(t.pg); await t.pg.waitForFunction(() => /recorded/.test(document.getElementById('quiz-save-state').textContent));
