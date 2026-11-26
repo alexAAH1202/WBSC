@@ -109,7 +109,7 @@ var SESSIONS_SHEET = 'Sessions';
 // Which questions are missed. One row per question (assessment, question number, fingerprint) counting how many times it was asked and
 // missed. Anonymous: no name, email or association is stored. It feeds the Director's "Questions" tab and the Monday summary.
 var STATS_SHEET = 'Question stats';
-var STATS_MIN_ASKED = 5;        // a question needs this many answers before it is ranked in the weekly summary
+var STATS_MIN_MISSED = 4;       // a question is listed once it has been answered wrongly MORE than 3 times (all-time, not per week)
 var STATS_TOP = 10;             // how many most-missed questions the weekly summary lists
 
 // Health check.
@@ -1326,9 +1326,9 @@ function people_() {
 // breakdown by association / federation. Nothing is sent to learners.
 // The most-missed questions as text lines for the weekly summary.
 function topMissedLines_() {
-  var rows = readQuestionStats_().filter(function (r) { return r[3] >= STATS_MIN_ASKED && r[4] > 0; });
-  rows.sort(function (a, b) { return (b[4] / b[3]) - (a[4] / a[3]) || b[3] - a[3]; });
-  if (!rows.length) return '- not enough answers yet';
+  var rows = readQuestionStats_().filter(function (r) { return r[4] >= STATS_MIN_MISSED; });
+  rows.sort(function (a, b) { return b[4] - a[4] || (b[4] / b[3]) - (a[4] / a[3]); });
+  if (!rows.length) return '- none yet (a question is listed once it has been answered wrongly more than 3 times)';
   return rows.slice(0, STATS_TOP).map(function (r) {
     var mod = String(r[0]).slice(1, 3);
     return '- M' + mod + '.' + r[1] + ': missed ' + r[4] + ' of ' + r[3] + ' times (' + Math.round(r[4] / r[3] * 100) + '%)';
@@ -1365,7 +1365,7 @@ function weeklySummary() {
     (repeat.length ? repeat.map(function (p) { return line(p) + ', module' + (p.repeat.length === 1 ? '' : 's') + ' ' + p.repeat.map(function (n) { return ('0' + n).slice(-2); }).join(', '); }).join('\n') : '- none') + '\n\n' +
     'WENT QUIET: started, not finished, no activity for ' + STALLED_DAYS + ' days or more (' + stalled.length + ')\n' +
     (stalled.length ? stalled.map(function (p) { return line(p) + ', last active ' + days(p) + ' days ago, ' + p.email; }).join('\n') : '- none') + '\n\n' +
-    'MOST-MISSED QUESTIONS (at least ' + STATS_MIN_ASKED + ' answers; the ids match the question bank, for example M07.5 is the fifth question of Module 07)\n' + topMissedLines_() + '\n\n' +
+    'MOST-MISSED QUESTIONS (all-time, answered wrongly more than 3 times; the ids match the question bank, for example M07.5 is the fifth question of Module 07)\n' + topMissedLines_() + '\n\n' +
     'BY ASSOCIATION / FEDERATION\n' + assocLines.join('\n') + '\n\n' +
     'Full results: ' + SPREADSHEET_URL + '\n' +
     'Only umpires who have saved a result appear here. The site does not hold a list of everyone who should do the training.';

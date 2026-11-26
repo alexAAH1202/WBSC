@@ -37,7 +37,7 @@ async function open(b, handler) {
   await pg.goto('http://localhost:' + PORT + '/results.html');
   return { pg, hosts, calls };
 }
-const good = () => ({ success: true, cols: COLS, rows: ROWS, config: CONFIG, questionStats: [['m01-pca', 1, 'deadbeef', 8, 6], ['m01-pca', 2, 'cafef00d', 3, 3]] });
+const good = () => ({ success: true, cols: COLS, rows: ROWS, config: CONFIG, questionStats: [['m01-pca', 1, 'deadbeef', 8, 6], ['m01-pca', 2, 'cafef00d', 9, 3]] });
 let PORT;
 (async () => {
   await new Promise(r => server.listen(0, r)); PORT = server.address().port;
@@ -93,7 +93,7 @@ let PORT;
     assert(/Failed/.test(await pg.textContent('#attempts-table'))); ok('attempts tab flags a failed email');
     // questions tab (anonymous most-missed list)
     await pg.click('#tab-questions'); assert(await pg.isVisible('#questions-table'));
-    { const t = await pg.textContent('#questions-table'); assert(/75%/.test(t) && /since been edited/.test(t) && !/100%/.test(t)); } ok('questions tab ranks questions with at least 5 answers (an edited question is not shown under old text)');
+    { const t = await pg.textContent('#questions-table'); assert(/75%/.test(t) && /since been edited/.test(t) && !/33%/.test(t)); } ok('questions tab lists only questions missed more than 3 times (an edited question is not shown under old text)');
     // logout
     await pg.click('#logout-btn'); assert(await pg.isVisible('#login-view')); assert.strictEqual(await pg.evaluate(() => sessionStorage.getItem('wbscResultsPw')), null); ok('logout clears the stored password');
     // only google hosts

@@ -389,9 +389,9 @@ ok('question statistics: anonymous asked/missed counts per question, returned to
   assert.ok(!JSON.stringify(e.statsRows).includes('a@x.com') && !JSON.stringify(e.statsRows).includes('b@x.com'));
   e.props.set('RESULTS_PASSWORD', 'pw'); const r = act(e, 'results', { password: 'pw' });
   assert.ok(Array.isArray(r.questionStats) && r.questionStats.length === 10); assert.strictEqual(JSON.stringify(r.questionStats.find(x => x[1] === 10)), JSON.stringify(['m01-pca', 10, 'f9', 2, 1]));
-  const lines = e.ctx.topMissedLines_(); assert.ok(/not enough answers yet/.test(lines), lines);       // fewer than 5 answers: not ranked
+  const lines = e.ctx.topMissedLines_(); assert.ok(/none yet/.test(lines), lines);       // missed only once: not listed
   for (let i = 0; i < 3; i++) { const tk = login(e, 'c' + i + '@x.com'); const sr = save(e, tk, { score: 9, totalQuestions: 10, umpireId: 'u' + i, participantName: 'Pat ' + i }); assert.ok(sr.success, sr.error); }
-  assert.ok(/M01\.10: missed \d+ of 5/.test(e.ctx.topMissedLines_()), e.ctx.topMissedLines_());
+  assert.ok(/M01\.10: missed 4 of 5/.test(e.ctx.topMissedLines_()), e.ctx.topMissedLines_());
 });
 ok('results: 10 wrong passwords lock the page for 15 minutes (even for the right password) and alert the owner', () => {
   const e = makeEnv(); e.props.set('RESULTS_PASSWORD', 'pw');

@@ -769,7 +769,7 @@
             <div class="tablewrap"><table class="grid" id="attempts-table"></table></div>
           </div>
           <div class="inner" id="view-questions" role="tabpanel" aria-labelledby="tab-questions" style="display:none;">
-            <p class="sub" style="margin:0 0 12px;color:var(--ink-soft);font-size:0.88rem;">The questions answered wrongly most often, to show which topics need more teaching. These are anonymous totals: no name or email is kept with them. A question needs at least 5 answers before it is ranked. Practice quizzes are not counted.</p>
+            <p class="sub" style="margin:0 0 12px;color:var(--ink-soft);font-size:0.88rem;">The questions answered wrongly most often, to show which topics need more teaching. These are anonymous totals: no name or email is kept with them. A question is listed once it has been answered wrongly more than 3 times, counted over all time (not per week). Practice quizzes are not counted.</p>
             <div class="toolbar"><label class="assoc-label" for="q-filter"><span class="sr-only">Module</span><select id="q-filter" aria-label="Filter by module"><option value="">All modules</option></select></label><span class="count" id="q-shown"></span></div>
             <div class="tablewrap"><table class="grid" id="questions-table"></table></div>
           </div>
@@ -1043,12 +1043,12 @@
       return { key: r[0], mod: b ? b.moduleShort : r[0], no: r[1], asked: r[3], missed: r[4], rate: r[3] ? r[4] / r[3] : 0, text: same ? q.q : '(this question has since been edited or replaced)', ref: same ? (q.ref || '') : '' };
     });
     if (sel.options.length <= 1) Object.keys(mods).sort().forEach(function(k){ var o = document.createElement('option'); o.value = k; o.textContent = mods[k]; sel.appendChild(o); });
-    rows = rows.filter(function(r){ return (!want || r.key === want) && r.asked >= 5 && r.missed > 0; });
-    rows.sort(function(a, b){ return b.rate - a.rate || b.asked - a.asked; });
+    rows = rows.filter(function(r){ return (!want || r.key === want) && r.missed > 3; });
+    rows.sort(function(a, b){ return b.missed - a.missed || b.rate - a.rate; });
     $('q-shown').textContent = rows.length + ' ranked';
     $('questions-table').innerHTML = '<thead><tr><th>Module</th><th>Q</th><th>Question</th><th>Missed</th><th>Asked</th><th>Rate</th></tr></thead><tbody>' + (rows.length ? rows.slice(0, 50).map(function(r){
       return '<tr><td>' + esc(r.mod) + '</td><td>' + r.no + '</td><td>' + esc(r.text) + (r.ref ? '<div class="sub" style="font-size:0.78rem;color:var(--ink-soft);">' + esc(r.ref) + '</div>' : '') + '</td><td>' + r.missed + '</td><td>' + r.asked + '</td><td><strong>' + Math.round(r.rate * 100) + '%</strong></td></tr>';
-    }).join('') : '<tr><td colspan="6" class="empty">Not enough answers yet.</td></tr>') + '</tbody>';
+    }).join('') : '<tr><td colspan="6" class="empty">No question has been answered wrongly more than 3 times yet.</td></tr>') + '</tbody>';
   }
   $('q-filter').addEventListener('change', renderQuestions);
 
