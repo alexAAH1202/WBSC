@@ -149,7 +149,7 @@ A learner who has passed Appendix 4 and Appendix 5 (Modules 05, 06, 07 and 08; `
 - **How.** The certificate is made in the learner's browser: `vendor/pdf-lib.min.js` (MIT, licence in `vendor/`) fills the two fields, flattens the form and saves the PDF.
   The library and `certificate/template.js` (the template as base64, built by `node tests/certificate-build.js`) are loaded only when a certificate is requested. Downloading stores and sends nothing. **"Email me my certificate"** sends the PDF the browser made to the server (`handleEmailCertificate_`), which checks the verified session and that Modules 05-08 are passed, then emails it to the verified address only (3 requests per 6 hours; uses one of the ~100 emails a day).
 - **Names.** Latin letters and accents print. Anything the certificate font cannot print (for example Japanese or Chinese names) shows a message to contact the Director.
-- **Changing the template.** Replace `certificate/certificate-template-unsigned.pdf` (keep the two field names), run `node tests/certificate-sign.js && node tests/certificate-build.js` (the first adds the Chair's signature image), then `node tests/certificate.test.js`.
+- **Changing the template.** Replace `certificate/certificate-template-unsigned.pdf` (keep the two field names), run `node tests/certificate-sign.js && node tests/certificate-build.js` (the first replaces the printed signatory with Leigh Evans and adds the signature image), then `node tests/certificate.test.js`.
 - The certificate wording lists Appendix 4 and 5a to 5d, as supplied by WBSC. `node tests/certificate.test.js` checks the template and its base64 copy.
 
 ## Fewer emails

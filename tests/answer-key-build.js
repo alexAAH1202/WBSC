@@ -2,6 +2,7 @@
 //   node tests/answer-key-build.js            -> writes private/ANSWER_KEY.json and prints a summary
 // The answers for the marked assessments are NOT in the public repo. They live in private/answers.json (git-ignored):
 //   { "m01-pca": [correctIndex for question 1, for question 2, ...], ... }   (index into that question's options, in the order written in questions.js)
+// If private/ is lost, rebuild it from a copy of the ANSWER_KEY Script property: node tests/answer-key-build.js --from-key ANSWER_KEY.json
 // To rebuild that file from the last public version that still had them:  git show b481983:questions.js > /tmp/old-questions.js
 //   node tests/answer-key-build.js --from-legacy /tmp/old-questions.js
 // Each question is fingerprinted from its text and options, so the server refuses a result if the page and the key disagree
@@ -23,6 +24,19 @@ function build(bank, answers) {
 module.exports = { fp, build };
 if (require.main === module) {
   const bank = load(path.join(root, 'questions.js'));
+  // --from-key ANSWER_KEY.json: rebuild private/answers.json from a copy of the Script property (for example after a fresh checkout)
+  const fromKey = process.argv.indexOf('--from-key');
+  if (fromKey > 0) {
+    const k = JSON.parse(fs.readFileSync(process.argv[fromKey + 1], 'utf8')), a = {};
+    for (const key of Object.keys(k)) {
+      const qs = bank[key] && bank[key].questions;
+      if (!qs || qs.length !== k[key].c.length) throw new Error(key + ': the key does not fit the current questions');
+      qs.forEach((q, i) => { if (fp(q) !== k[key].f[i]) throw new Error(key + ' Q' + (i + 1) + ': fingerprint differs (question edited since this key was made)'); });
+      a[key] = k[key].c.slice();
+    }
+    fs.mkdirSync(path.join(root, 'private'), { recursive: true });
+    fs.writeFileSync(path.join(root, 'private', 'answers.json'), JSON.stringify(a));
+  }
   const legacy = process.argv.indexOf('--from-legacy');
   if (legacy > 0) {
     const old = load(process.argv[legacy + 1]), a = {};

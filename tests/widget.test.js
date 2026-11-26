@@ -592,7 +592,7 @@ const verifyText = pg => pg.textContent('#verify-state');
     assert.ok(/^WBSC-Umpire-Mechanics-2026-Certificate-Zoe-Nandu-Ump\.pdf$/.test(dl.suggestedFilename()), dl.suggestedFilename());
     const file = await dl.path(), doc = await PDFDocument.load(fs.readFileSync(file));
     assert.strictEqual(doc.getPageCount(), 1); assert.strictEqual(doc.getForm().getFields().length, 0, 'the form is flattened: name and date cannot be edited');
-    const txt = pdfText(file); if (txt) { assert.ok(/Zoë Ñandú Ump/.test(txt) && /28 October 2026/.test(txt) && /CERTIFICATE OF COMPLETION/.test(txt) && /Nacho Pardo/.test(txt), txt); }
+    const txt = pdfText(file); if (txt) { assert.ok(/Zoë Ñandú Ump/.test(txt) && /28 October 2026/.test(txt) && /CERTIFICATE OF COMPLETION/.test(txt) && /Leigh Evans/.test(txt) && /Umpire Director, WBSC Oceania/.test(txt), txt); }
     await t.pg.waitForFunction(() => /saved to your device/.test(document.getElementById('cert-state').textContent));
     ok('a learner who has passed every module can download the official certificate with their name and completion date filled in' + (txt ? ' (text checked in the PDF)' : ''));
     // the last result: the save reply carries the name and date, and a button appears under the result
